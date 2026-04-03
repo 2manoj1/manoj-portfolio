@@ -1,16 +1,26 @@
 @import "tailwindcss";
 
 :root {
-	--background: #0a0a0b;
-	--foreground: #ededed;
+	color-scheme: dark;
+	--background: #020206;
+	--foreground: #f8fafc;
+	--muted: #94a3b8;
+	--surface: rgba(15, 23, 42, 0.72);
+	--surface-strong: rgba(15, 23, 42, 0.85);
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 body {
-	background: var(--background);
+	min-height: 100vh;
+	background: radial-gradient(circle at top, rgba(34, 211, 238, 0.08), transparent 22%),
+		radial-gradient(circle at 100% 10%, rgba(99, 102, 241, 0.12), transparent 20%),
+		#020206;
 	color: var(--foreground);
 }
 
-/* Apple noise */
 body::before {
 	content: "";
 	position: fixed;
@@ -18,4 +28,14 @@ body::before {
 	background: url("https://grainy-gradients.vercel.app/noise.svg");
 	opacity: 0.04;
 	pointer-events: none;
+	z-index: 50;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+::selection {
+	background: rgba(34, 211, 238, 0.32);
+	color: var(--foreground);
 }

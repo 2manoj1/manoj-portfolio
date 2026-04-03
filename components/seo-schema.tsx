@@ -7,6 +7,9 @@ export default function SeoSchema() {
 		name: "Manoj Mukherjee",
 		url: "https://www.manojmukherjee.co.in",
 		jobTitle: "AI Architect",
+		description:
+			"AI Architect and systems designer building MCP, RAG, and agentic platforms that unify enterprise intelligence.",
+		email: "mailto:hello@manojmukherjee.co.in",
 		sameAs: [
 			"https://www.linkedin.com/in/YOUR-LINK",
 			"https://github.com/2manoj1",
