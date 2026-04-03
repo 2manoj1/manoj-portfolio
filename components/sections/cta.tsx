@@ -24,7 +24,9 @@ export default function CTA() {
 						asChild
 						size="lg"
 						className="rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 px-10 py-5 text-lg font-semibold text-slate-950 shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-105 transition-all duration-300">
-						<a href="https://www.linkedin.com/in/YOUR-LINK" aria-label="Open LinkedIn profile">
+						<a
+							href="https://www.linkedin.com/in/YOUR-LINK"
+							aria-label="Open LinkedIn profile">
 							Connect on LinkedIn
 						</a>
 					</Button>

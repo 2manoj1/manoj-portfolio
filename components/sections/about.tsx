@@ -12,18 +12,20 @@ export default function About() {
 					From product engineering to
 					<span className="block text-cyan-400">AI systems architecture</span>.
 				</h2>
-			<div className="mt-10 space-y-6 text-xl leading-9 text-zinc-300">
-				<p className="text-xl">
-					I began in product engineering, then shifted to architecting systems
-					where AI, data, and workflows converge into a single operational layer.
-				</p>
-				<p className="text-xl">
-					Today I design MCP platforms that make intelligence composable,
-					observable, and dependable across engineering, operations, and product.
-				</p>
-				<p className="text-xl">
-					I help leadership turn technical complexity into clarity, building systems
-					that scale teams as much as they scale code.
+				<div className="mt-10 space-y-6 text-xl leading-9 text-zinc-300">
+					<p className="text-xl">
+						I began in product engineering, then shifted to architecting systems
+						where AI, data, and workflows converge into a single operational
+						layer.
+					</p>
+					<p className="text-xl">
+						Today I design MCP platforms that make intelligence composable,
+						observable, and dependable across engineering, operations, and
+						product.
+					</p>
+					<p className="text-xl">
+						I help leadership turn technical complexity into clarity, building
+						systems that scale teams as much as they scale code.
 					</p>
 				</div>
 			</div>
