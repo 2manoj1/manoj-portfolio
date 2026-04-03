@@ -51,7 +51,12 @@ const particleRoutes: RouteDefinition[] = [
 	{ from: 0, to: 2 },
 ];
 
-function NodeSphere({ position, color, scroll, visible }: {
+function NodeSphere({
+	position,
+	color,
+	scroll,
+	visible,
+}: {
 	position: [number, number, number];
 	color: string;
 	scroll: { get: () => number };
@@ -62,16 +67,24 @@ function NodeSphere({ position, color, scroll, visible }: {
 	useFrame(({ clock }) => {
 		if (!ref.current) return;
 		const progress = scroll.get();
-		const pulse = 1 + Math.sin(clock.elapsedTime * 2.2) * (0.08 + progress * 0.08);
+		const pulse =
+			1 + Math.sin(clock.elapsedTime * 2.2) * (0.08 + progress * 0.08);
 		ref.current.scale.setScalar(pulse);
-		(ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.75 + progress * 0.8;
+		(ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity =
+			0.75 + progress * 0.8;
 		ref.current.visible = visible;
 	});
 
 	return (
 		<mesh ref={ref} position={position}>
 			<sphereGeometry args={[0.26, 32, 32]} />
-			<meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8} metalness={0.25} roughness={0.15} />
+			<meshStandardMaterial
+				color={color}
+				emissive={color}
+				emissiveIntensity={0.8}
+				metalness={0.25}
+				roughness={0.15}
+			/>
 		</mesh>
 	);
 }
@@ -83,10 +96,10 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 			Array.from({ length: 14 }, (_, index) => ({
 				path: particleRoutes[index % particleRoutes.length],
 				offset: index * 0.07,
-				speed: 0.22 + ((index % 4) * 0.05),
+				speed: 0.22 + (index % 4) * 0.05,
 				color: index % 2 === 0 ? "#22d3ee" : "#8b5cf6",
 			})),
-		[]
+		[],
 	);
 
 	useFrame(({ clock }) => {
@@ -96,12 +109,19 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 			const mesh = refs.current[index];
 			if (!mesh) return;
 
-			const from = new THREE.Vector3(...nodeDefinitions[particle.path.from].position);
-			const to = new THREE.Vector3(...nodeDefinitions[particle.path.to].position);
-			const t = (particle.offset + clock.elapsedTime * particle.speed * speedFactor) % 1;
+			const from = new THREE.Vector3(
+				...nodeDefinitions[particle.path.from].position,
+			);
+			const to = new THREE.Vector3(
+				...nodeDefinitions[particle.path.to].position,
+			);
+			const t =
+				(particle.offset + clock.elapsedTime * particle.speed * speedFactor) %
+				1;
 			const eased = 0.5 - Math.cos(t * Math.PI) / 2;
 			mesh.position.copy(from.lerp(to, eased));
-			(mesh.material as THREE.MeshStandardMaterial).opacity = 0.55 + progress * 0.3;
+			(mesh.material as THREE.MeshStandardMaterial).opacity =
+				0.55 + progress * 0.3;
 		});
 	});
 
@@ -113,7 +133,13 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 					ref={(el) => (refs.current[index] = el)}
 					position={nodeDefinitions[particle.path.from].position}>
 					<sphereGeometry args={[0.05, 12, 12]} />
-					<meshStandardMaterial transparent opacity={0.6} color={particle.color} emissive={particle.color} emissiveIntensity={1.1} />
+					<meshStandardMaterial
+						transparent
+						opacity={0.6}
+						color={particle.color}
+						emissive={particle.color}
+						emissiveIntensity={1.1}
+					/>
 				</mesh>
 			))}
 		</>
@@ -123,7 +149,7 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 	const positions = useMemo(
 		() => nodeDefinitions.map((node) => new THREE.Vector3(...node.position)),
-		[]
+		[],
 	);
 
 	useFrame(({ camera }) => {
@@ -143,13 +169,24 @@ function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 
 			{nodeDefinitions.map((node) => {
 				const visible = node.id !== "rag" || scroll.get() > 0.24;
-				return <NodeSphere key={node.id} position={node.position} color={node.color} scroll={scroll} visible={visible} />;
+				return (
+					<NodeSphere
+						key={node.id}
+						position={node.position}
+						color={node.color}
+						scroll={scroll}
+						visible={visible}
+					/>
+				);
 			})}
 
 			{connectionDefinitions.map((connection, index) => {
 				const start = positions[connection.start];
 				const end = positions[connection.end];
-				const visibility = Math.max(0, Math.min(1, (scroll.get() - connection.revealAt) / 0.18));
+				const visibility = Math.max(
+					0,
+					Math.min(1, (scroll.get() - connection.revealAt) / 0.18),
+				);
 				return (
 					<Line
 						key={index}
@@ -167,7 +204,11 @@ function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 	);
 }
 
-export default function MCPInsane({ scroll }: { scroll: { get: () => number } }) {
+export default function MCPInsane({
+	scroll,
+}: {
+	scroll: { get: () => number };
+}) {
 	return (
 		<Canvas className="h-full w-full" gl={{ antialias: true }}>
 			<MCPScene scroll={scroll} />

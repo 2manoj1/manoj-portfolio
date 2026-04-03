@@ -14,7 +14,10 @@ const STAGE_COPY = [
 
 export default function MCPStory() {
 	const ref = useRef<HTMLDivElement | null>(null);
-	const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+	const { scrollYProgress } = useScroll({
+		target: ref,
+		offset: ["start end", "end start"],
+	});
 	const [stage, setStage] = useState(0);
 
 	useMotionValueEvent(scrollYProgress, "change", (latest) => {
