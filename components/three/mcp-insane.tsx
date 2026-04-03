@@ -3,7 +3,7 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Line, PerspectiveCamera } from "@react-three/drei";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 type NodeDefinition = {
@@ -63,12 +63,15 @@ function NodeSphere({
 	visible: boolean;
 }) {
 	const ref = useRef<THREE.Mesh>(null);
+	const [hovered, setHovered] = useState(false);
 
 	useFrame(({ clock }) => {
 		if (!ref.current) return;
 		const progress = scroll.get();
-		const pulse =
+		const basePulse =
 			1 + Math.sin(clock.elapsedTime * 2.2) * (0.08 + progress * 0.08);
+		const hoverMultiplier = hovered ? 1.3 : 1;
+		const pulse = basePulse * hoverMultiplier;
 		ref.current.scale.setScalar(pulse);
 		(ref.current.material as THREE.MeshStandardMaterial).emissiveIntensity =
 			0.75 + progress * 0.8;
@@ -76,7 +79,11 @@ function NodeSphere({
 	});
 
 	return (
-		<mesh ref={ref} position={position}>
+		<mesh
+			ref={ref}
+			position={position}
+			onPointerOver={() => setHovered(true)}
+			onPointerOut={() => setHovered(false)}>
 			<sphereGeometry args={[0.26, 32, 32]} />
 			<meshStandardMaterial
 				color={color}
@@ -93,7 +100,7 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 	const refs = useRef<Array<THREE.Mesh | null>>([]);
 	const particles = useMemo<ParticleConfig[]>(
 		() =>
-			Array.from({ length: 14 }, (_, index) => ({
+			Array.from({ length: 20 }, (_, index) => ({
 				path: particleRoutes[index % particleRoutes.length],
 				offset: index * 0.07,
 				speed: 0.22 + (index % 4) * 0.05,
@@ -146,6 +153,61 @@ function ParticleSwarm({ scroll }: { scroll: { get: () => number } }) {
 	);
 }
 
+function FloatingParticles({ scroll }: { scroll: { get: () => number } }) {
+	const pointsRef = useRef<THREE.Points>(null);
+	const particleCount = 100;
+
+	const positions = useMemo(() => {
+		const pos = new Float32Array(particleCount * 3);
+		for (let i = 0; i < particleCount; i++) {
+			pos[i * 3] = (Math.random() - 0.5) * 20;
+			pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
+			pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+		}
+		return pos;
+	}, []);
+
+	useFrame(({ clock }) => {
+		if (!pointsRef.current) return;
+		const progress = scroll.get();
+		const time = clock.elapsedTime;
+
+		const pos = pointsRef.current.geometry.attributes.position
+			.array as Float32Array;
+		for (let i = 0; i < particleCount; i++) {
+			const i3 = i * 3;
+			pos[i3] += Math.sin(time * 0.5 + i) * 0.01;
+			pos[i3 + 1] += Math.cos(time * 0.3 + i) * 0.008;
+			pos[i3 + 2] += Math.sin(time * 0.7 + i) * 0.005;
+		}
+		pointsRef.current.geometry.attributes.position.needsUpdate = true;
+
+		(pointsRef.current.material as THREE.PointsMaterial).opacity =
+			0.3 + progress * 0.4;
+	});
+
+	return (
+		<points ref={pointsRef}>
+			<bufferGeometry>
+				<bufferAttribute
+					attach="attributes-position"
+					count={particleCount}
+					array={positions}
+					itemSize={3}
+					args={[positions, 3]}
+				/>
+			</bufferGeometry>
+			<pointsMaterial
+				size={0.02}
+				color="#a855f7"
+				transparent
+				opacity={0.4}
+				sizeAttenuation
+			/>
+		</points>
+	);
+}
+
 function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 	const positions = useMemo(
 		() => nodeDefinitions.map((node) => new THREE.Vector3(...node.position)),
@@ -156,7 +218,8 @@ function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 		const progress = scroll.get();
 		const zoom = THREE.MathUtils.lerp(8.5, 5.2, progress);
 		const y = THREE.MathUtils.lerp(0.2, -0.16, progress);
-		camera.position.lerp(new THREE.Vector3(0, y, zoom), 0.08);
+		const x = THREE.MathUtils.lerp(0, 0.5, progress);
+		camera.position.lerp(new THREE.Vector3(x, y, zoom), 0.08);
 		camera.lookAt(0, 0, 0);
 	});
 
@@ -164,6 +227,12 @@ function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 		<>
 			<PerspectiveCamera makeDefault position={[0, 0, 8.5]} fov={32} />
 			<ambientLight intensity={0.45} color="#c7d2fe" />
+			<directionalLight
+				position={[5, 5, 5]}
+				intensity={0.8}
+				color="#ffffff"
+				castShadow
+			/>
 			<pointLight position={[4, 4, 5]} intensity={1.6} color="#7c3aed" />
 			<pointLight position={[-4, -3, -2]} intensity={0.8} color="#22d3ee" />
 
@@ -200,6 +269,7 @@ function MCPScene({ scroll }: { scroll: { get: () => number } }) {
 			})}
 
 			<ParticleSwarm scroll={scroll} />
+			<FloatingParticles scroll={scroll} />
 		</>
 	);
 }

@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Manoj Mukherjee | AI Systems Architect",
+	title: "Manoj Mukherjee | AI Systems Architect & CTO",
 	description:
-		"AI Architect and systems designer building MCP, RAG, and agentic platforms that unify enterprise intelligence.",
+		"AI Systems Architect designing MCP platforms, RAG systems, and multi-agent orchestration. Transforming enterprise intelligence through unified operational platforms. Available for CTO and leadership roles.",
 	openGraph: {
-		title: "Manoj Mukherjee | AI Systems Architect",
+		title: "Manoj Mukherjee | AI Systems Architect & CTO",
 		description:
-			"AI Architect and systems designer building MCP, RAG, and agentic platforms that unify enterprise intelligence.",
+			"AI Systems Architect designing MCP platforms, RAG systems, and multi-agent orchestration. Transforming enterprise intelligence through unified operational platforms.",
 		type: "website",
 		url: "https://www.manojmukherjee.co.in",
 		images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 				url: "https://www.manojmukherjee.co.in/og-image.png",
 				width: 1200,
 				height: 630,
-				alt: "Manoj Mukherjee | AI Systems Architect",
+				alt: "Manoj Mukherjee | AI Systems Architect & CTO",
 			},
 		],
 	},
