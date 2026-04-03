@@ -11,7 +11,7 @@ export default function CTA() {
 					Ready to Build Intelligence
 				</p>
 				<h2 className="mt-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-					Let’s architect the next generation of
+					Let’s architect the next generation of{" "}
 					<span className="block text-cyan-400">operational intelligence</span>.
 				</h2>
 				<p className="mt-8 text-xl leading-9 text-zinc-300 sm:text-2xl max-w-4xl mx-auto">

@@ -9,7 +9,7 @@ export default function About() {
 					The Architect
 				</p>
 				<h2 className="mt-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-					From product engineering to
+					From product engineering to{" "}
 					<span className="block text-cyan-400">AI systems architecture</span>.
 				</h2>
 				<div className="mt-10 space-y-6 text-xl leading-9 text-zinc-300">

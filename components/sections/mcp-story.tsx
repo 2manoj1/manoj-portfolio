@@ -8,39 +8,35 @@ import MCPInsane from "../three/mcp-insane";
 const STAGE_COPY = [
 	{
 		title: "Fragmentation",
-		subtitle: "APIs. Data. Intelligence.",
+		subtitle: "Systems are fragmented.",
 		description:
-			"Enterprise systems start as disconnected islands. APIs talk only to themselves. Data gets lost between teams. Intelligence remains siloed and ineffective.",
-		metrics: ["APIs in isolation", "Data fragmentation", "No shared context"],
+			"APIs, data, and intelligence exist in silos. The platform cannot reason across the system, so every interaction feels disconnected.",
+		metrics: ["APIs in silos", "Data siloed", "No shared context"],
 	},
 	{
-		title: "Context Emergence",
-		subtitle: "RAG surfaces the signal.",
+		title: "Connection",
+		subtitle: "Data starts connecting.",
 		description:
-			"Retrieval-Augmented Generation creates shared context across data sources. Knowledge becomes accessible. Patterns emerge from the noise.",
+			"RAG creates the first shared layer of context. Information begins to travel between sources, and the system starts to form a common memory.",
+		metrics: ["Shared context", "Signal emergence", "Knowledge flow"],
+	},
+	{
+		title: "Activation",
+		subtitle: "Agents begin acting.",
+		description:
+			"Intelligent agents start coordinating decisions and converting context into action. The system shifts from passive data to active orchestration.",
 		metrics: [
-			"Unified data access",
-			"Context preservation",
-			"Signal extraction",
+			"Agent coordination",
+			"Automated workflows",
+			"Actionable intelligence",
 		],
 	},
 	{
-		title: "Coordination",
-		subtitle: "Agents take action.",
+		title: "Intelligence",
+		subtitle: "Systems become intelligent.",
 		description:
-			"Intelligent agents begin coordinating decisions. Logic transforms into automated workflows. Systems start thinking and acting as one.",
-		metrics: [
-			"Agent orchestration",
-			"Automated decisions",
-			"Workflow unification",
-		],
-	},
-	{
-		title: "Unified Intelligence",
-		subtitle: "MCP at scale.",
-		description:
-			"The Model Context Protocol becomes the nervous system of enterprise intelligence. Every component communicates. Every decision is informed. Scale becomes possible.",
-		metrics: ["Operational unity", "Intelligent scaling", "System coherence"],
+			"The MCP becomes the system layer. Every component shares state, decisions are informed, and the platform operates with real coherence.",
+		metrics: ["System coherence", "Operational unity", "Intelligent scale"],
 	},
 ];
 
@@ -58,7 +54,10 @@ export default function MCPStory() {
 	});
 
 	return (
-		<section id="mcp" ref={ref} className="relative h-[300vh] overflow-hidden">
+		<section
+			id="mcp"
+			ref={ref}
+			className="relative h-[350vh] overflow-hidden py-32">
 			<div className="sticky top-0 h-screen">
 				<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(129,140,248,0.10),transparent_40%)]" />
 				<MCPInsane scroll={scrollYProgress} />
