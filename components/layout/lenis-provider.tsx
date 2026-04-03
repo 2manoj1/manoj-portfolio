@@ -13,10 +13,11 @@ export default function LenisProvider({
 			duration: 1.8,
 			easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 			lerp: 0.08,
-			direction: "vertical",
-			gestureDirection: "vertical",
+			orientation: "vertical",
+			gestureOrientation: "vertical",
 			touchMultiplier: 2,
 			infinite: false,
+			autoRaf: true,
 		});
 
 		const frame = (time: number) => {
