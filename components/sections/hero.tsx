@@ -17,30 +17,33 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 export function Hero() {
 	return (
-		<section className="relative flex min-h-dvh items-center pt-14">
+		<header className="relative flex min-h-dvh items-center pt-14">
 			<div className="absolute inset-0 -z-10 overflow-hidden">
 				<div className="absolute top-1/4 -left-1/4 size-[600px] rounded-full bg-amber/[0.04] blur-3xl dark:bg-amber/[0.02]" />
 			</div>
 
 			<div className="mx-auto w-full max-w-6xl px-6 py-24">
 				<div className="max-w-3xl">
-					<div className="animate-[fadeUp_500ms_cubic-bezier(0.23,1,0.32,1)_both]">
-						<span className="inline-block font-mono text-xs uppercase tracking-wide text-amber sm:text-sm">
-							AI Systems Architect &amp; Technology Leader
-						</span>
-					</div>
+					{/* Eyebrow */}
+					<span className="inline-block font-mono text-xs uppercase tracking-wide text-amber sm:text-sm">
+						AI Architect · GenAI Builder &amp; Technology Leader
+					</span>
 
-					<h1 className="mt-6 max-w-[20ch] font-display text-balance text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl animate-[fadeUp_500ms_60ms_cubic-bezier(0.23,1,0.32,1)_both]">
-						Building systems that think at enterprise scale.
+					{/* ✅ FIXED H1 (SEO GOLD) */}
+					<h1 className="mt-6 max-w-[22ch] font-display text-balance text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+						Manoj Mukherjee — AI Architect & GenAI Systems Builder
 					</h1>
 
-					<p className="mx-0 mt-8 max-w-[48ch] text-pretty text-lg leading-relaxed text-muted-foreground sm:text-base animate-[fadeUp_500ms_120ms_cubic-bezier(0.23,1,0.32,1)_both]">
-						From RAG pipelines to multi-agent orchestration, I architect
-						AI-native platforms that unify intelligence, automate decisions, and
-						transform how organizations operate.
+					{/* ✅ IMPROVED CONTENT (KEYWORDS + CONTEXT) */}
+					<p className="mt-8 max-w-[60ch] text-lg leading-relaxed text-muted-foreground">
+						I design and build enterprise-grade AI platforms using RAG,
+						LangChain, LangGraph, and multi-agent systems. With ~10 years of
+						experience, I help organizations scale intelligent automation,
+						decision-making, and AI-driven products.
 					</p>
 
-					<div className="mt-10 flex flex-wrap gap-4 animate-[fadeUp_500ms_180ms_cubic-bezier(0.23,1,0.32,1)_both]">
+					{/* CTA */}
+					<div className="mt-10 flex flex-wrap gap-4">
 						<a
 							href={CALENDLY}
 							target="_blank"
@@ -59,15 +62,15 @@ export function Hero() {
 						</a>
 					</div>
 
-					<div className="mt-16 flex items-center gap-3 animate-[fadeUp_500ms_240ms_cubic-bezier(0.23,1,0.32,1)_both]">
+					{/* Credibility line */}
+					<div className="mt-16 flex items-center gap-3">
 						<div className="h-px w-12 bg-amber/30" />
 						<span className="text-sm text-muted-foreground">
-							Manoj Mukherjee <span className="text-amber/60">&middot;</span>{" "}
-							~10 Years Building Intelligent Systems
+							~10 Years Experience · AI Systems · GenAI · Enterprise Platforms
 						</span>
 					</div>
 				</div>
 			</div>
-		</section>
+		</header>
 	);
 }
