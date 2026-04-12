@@ -148,6 +148,14 @@ export default function RootLayout({
 							name: "Manoj Mukherjee",
 							url: "https://www.manojmukherjee.co.in",
 							jobTitle: "AI Systems Architect",
+							description:
+								"AI Systems Architect specializing in GenAI, RAG, and multi-agent systems",
+							image: "https://www.manojmukherjee.co.in/opengraph.webp",
+							address: {
+								"@type": "Place",
+								addressLocality: "Bangalore",
+								addressCountry: "India",
+							},
 							worksFor: {
 								"@type": "Organization",
 								name: "Publicis Sapient",
