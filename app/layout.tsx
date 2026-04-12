@@ -6,10 +6,13 @@ export const metadata: Metadata = {
 	title: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
 	description:
 		"AI Systems Architect designing agentic platforms, RAG systems, and multi-agent orchestration. ~10 years building enterprise intelligence platforms. Available for CTO and leadership roles.",
+
+	metadataBase: new URL("https://www.manojmukherjee.co.in"),
+
 	openGraph: {
 		title: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
 		description:
-			"AI Systems Architect designing agentic platforms, RAG systems, and multi-agent orchestration. ~10 years building enterprise intelligence platforms.",
+			"AI Systems Architect designing agentic platforms, RAG systems, and multi-agent orchestration.",
 		type: "website",
 		url: "https://www.manojmukherjee.co.in",
 		images: [
@@ -21,11 +24,27 @@ export const metadata: Metadata = {
 			},
 		],
 	},
+
 	twitter: {
 		card: "summary_large_image",
 		images: ["/opengraph.webp"],
 	},
-	metadataBase: new URL("https://www.manojmukherjee.co.in"),
+
+	icons: {
+		icon: [
+			{ url: "/favicon.ico" }, // fallback
+			{ url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+		],
+		apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+		other: [
+			{
+				rel: "icon",
+				url: "/android-chrome-192x192.png",
+				sizes: "192x192",
+				type: "image/png",
+			},
+		],
+	},
 };
 
 export default function RootLayout({
