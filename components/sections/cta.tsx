@@ -37,7 +37,7 @@ export default function CTA() {
 						variant="outline"
 						size="lg"
 						className="rounded-2xl border-white/20 bg-white/5 px-10 py-5 text-lg font-semibold text-white shadow-lg hover:border-white/40 hover:bg-white/10 hover:scale-105 transition-all duration-300">
-						<a href="mailto:hello@manojmukherjee.co.in" aria-label="Send email">
+						<a href="mailto:info@manojmukherjee.co.in" aria-label="Send email">
 							Send Message
 						</a>
 					</Button>
