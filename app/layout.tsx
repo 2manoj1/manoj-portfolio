@@ -1,54 +1,62 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-	title: "Manoj Mukherjee | AI Systems Architect & CTO",
+	title: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
 	description:
-		"AI Systems Architect designing MCP platforms, RAG systems, and multi-agent orchestration. Transforming enterprise intelligence through unified operational platforms. Available for CTO and leadership roles.",
+		"AI Systems Architect designing agentic platforms, RAG systems, and multi-agent orchestration. ~10 years building enterprise intelligence platforms. Available for CTO and leadership roles.",
 	openGraph: {
-		title: "Manoj Mukherjee | AI Systems Architect & CTO",
+		title: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
 		description:
-			"AI Systems Architect designing MCP platforms, RAG systems, and multi-agent orchestration. Transforming enterprise intelligence through unified operational platforms.",
+			"AI Systems Architect designing agentic platforms, RAG systems, and multi-agent orchestration. ~10 years building enterprise intelligence platforms.",
 		type: "website",
 		url: "https://www.manojmukherjee.co.in",
 		images: [
 			{
-				url: "https://www.manojmukherjee.co.in/og-image.png",
+				url: "/opengraph.webp",
 				width: 1200,
-				height: 630,
-				alt: "Manoj Mukherjee | AI Systems Architect & CTO",
+				height: 600,
+				alt: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
 			},
 		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		images: ["/opengraph.webp"],
 	},
 	metadataBase: new URL("https://www.manojmukherjee.co.in"),
 };
 
 export default function RootLayout({
 	children,
-}: {
+}: Readonly<{
 	children: React.ReactNode;
-}) {
+}>) {
 	return (
-		<html
-			lang="en"
-			className={`${geistSans.variable} ${geistMono.variable} dark`}>
-			<body className="min-h-screen bg-background text-foreground font-sans antialiased">
-				<div className="fixed inset-0 -z-10">
-					<div className="absolute left-1/2 top-[20%] h-[780px] w-[780px] -translate-x-1/2 rounded-full bg-cyan-400/15 blur-[180px]" />
-					<div className="absolute right-0 top-1/3 h-[520px] w-[520px] rounded-full bg-indigo-500/10 blur-[140px]" />
-				</div>
-				{children}
+		<html lang="en" suppressHydrationWarning className="h-full antialiased">
+			<head>
+				<link rel="preconnect" href="https://rsms.me" />
+				<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossOrigin="anonymous"
+				/>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap"
+					rel="stylesheet"
+				/>
+			</head>
+			<body className="min-h-full flex flex-col isolate">
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="dark"
+					enableSystem
+					disableTransitionOnChange>
+					{children}
+				</ThemeProvider>
 			</body>
 		</html>
 	);

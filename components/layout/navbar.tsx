@@ -1,53 +1,80 @@
-// components/layout/navbar.tsx
-import { Button } from "@/components/ui/button";
+"use client";
 
-export default function Navbar() {
-	return (
-		<header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/90 backdrop-blur-2xl">
-			<div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-				<a
-					href="#hero"
-					className="inline-flex items-center gap-4 text-sm font-semibold text-white transition-all duration-300 hover:text-cyan-300 hover:scale-105"
-					aria-label="Go to top">
-					<div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-300 shadow-lg shadow-cyan-500/20">
-						<span className="text-lg font-bold">M</span>
-					</div>
-					<div className="flex flex-col">
-						<span className="text-white">Manoj Mukherjee</span>
-						<span className="text-xs text-cyan-400/80 font-normal">
-							AI Systems Architect
-						</span>
-					</div>
-				</a>
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Logo } from "../logo";
 
-				<nav className="hidden items-center gap-10 text-sm text-zinc-400 md:flex">
-					<a
-						href="#mcp"
-						className="transition-all duration-300 hover:text-cyan-300 hover:scale-105">
-						The MCP
-					</a>
-					<a
-						href="#impact"
-						className="transition-all duration-300 hover:text-cyan-300 hover:scale-105">
-						Impact
-					</a>
-					<a
-						href="#about"
-						className="transition-all duration-300 hover:text-cyan-300 hover:scale-105">
-						About
-					</a>
-				</nav>
+const navLinks = [
+  { label: "Vision", href: "#vision" },
+  { label: "Impact", href: "#impact" },
+  { label: "Journey", href: "#journey" },
+  { label: "Writing", href: "#writing" },
+  { label: "Connect", href: "#connect" },
+];
 
-				<Button
-					asChild
-					variant="secondary"
-					size="sm"
-					className="rounded-2xl border border-white/10 bg-white/5 text-white shadow-lg hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300">
-					<a href="mailto:hello@manojmukherjee.co.in" aria-label="Email Manoj">
-						Let’s Connect
-					</a>
-				</Button>
-			</div>
-		</header>
-	);
+export function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <header className="fixed top-0 right-0 left-0 z-50 bg-background/60 backdrop-blur-md">
+      <div className="mx-auto max-w-6xl px-6">
+        <nav className="flex h-14 items-center justify-between">
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Back to top"
+            className="inline-flex cursor-pointer"
+          >
+            <Logo size="xs" />
+          </button>
+
+          <div className="hidden items-center gap-6 lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            <button
+              type="button"
+              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:text-foreground lg:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileOpen ? (
+                <X className="size-4" />
+              ) : (
+                <Menu className="size-4" />
+              )}
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      {mobileOpen && (
+        <div className="bg-background/95 backdrop-blur-md lg:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col px-6 pb-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="border-b border-border/50 py-3 text-sm text-muted-foreground last:border-0 hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
 }

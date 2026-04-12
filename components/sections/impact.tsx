@@ -1,80 +1,64 @@
-// components/sections/impact.tsx
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+"use client";
 
-export default function Impact() {
-	return (
-		<section id="impact" className="relative py-24 px-6">
-			<div className="absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),transparent_35%)]" />
-			<div className="mx-auto max-w-7xl">
-				<div className="mb-16 max-w-4xl">
-					<p className="text-sm uppercase tracking-[0.4em] text-cyan-300/90 font-semibold">
-						Systems Impact
-					</p>
-					<h2 className="mt-6 text-5xl font-semibold tracking-tight text-white sm:text-6xl md:text-7xl">
-						Architecting intelligence platforms that
-						<span className="block text-cyan-400">
-							move organizations forward
-						</span>
-						.
-					</h2>
-				</div>
+import { useScrollReveal } from "@/components/ui/scroll-reveal";
 
-				<div className="grid gap-8 lg:grid-cols-3">
-					<Card className="group bg-white/5 border-white/10 p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] hover:bg-white/10 hover:shadow-[0_0_60px_rgba(99,102,241,0.18)] hover:border-cyan-500/30">
-						<CardHeader className="pb-4">
-							<CardTitle className="text-4xl font-bold text-cyan-300 group-hover:text-cyan-200 transition-colors">
-								AI Systems
-							</CardTitle>
-							<CardDescription className="mt-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-								Architected production-grade RAG and multi-agent systems.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="pt-0">
-							<div className="text-sm text-cyan-400/80 font-medium">
-								Platform architecture
-							</div>
-						</CardContent>
-					</Card>
+const impacts = [
+  {
+    title: "AI Systems Architecture",
+    description:
+      "Architected production-grade RAG and multi-agent systems serving enterprise BFSI clients. Designed agentic frameworks spanning A2A, ACP, and MCP protocols.",
+    tag: "Platform Architecture",
+  },
+  {
+    title: "Engineering Leadership",
+    description:
+      "Led cross-functional engineering squads, mentoring architects and engineers. Fostered a culture of innovation through AI blogs, webinars, and private forums.",
+    tag: "Organizational Impact",
+  },
+  {
+    title: "Enterprise Modernization",
+    description:
+      "Enabled transition from legacy systems to scalable, AI-first architectures. Delivered GPUaaS platforms on NVIDIA Run:AI + OpenShift, reducing operational complexity.",
+    tag: "Operational Leverage",
+  },
+];
 
-					<Card className="group bg-white/5 border-white/10 p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] hover:bg-white/10 hover:shadow-[0_0_60px_rgba(99,102,241,0.18)] hover:border-blue-500/30">
-						<CardHeader className="pb-4">
-							<CardTitle className="text-4xl font-bold text-blue-300 group-hover:text-blue-200 transition-colors">
-								Automation
-							</CardTitle>
-							<CardDescription className="mt-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-								Built GPU-driven platforms reducing operational complexity.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="pt-0">
-							<div className="text-sm text-blue-400/80 font-medium">
-								Operational leverage
-							</div>
-						</CardContent>
-					</Card>
+export function Impact() {
+  const ref = useScrollReveal();
 
-					<Card className="group bg-white/5 border-white/10 p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] hover:bg-white/10 hover:shadow-[0_0_60px_rgba(99,102,241,0.18)] hover:border-indigo-500/30">
-						<CardHeader className="pb-4">
-							<CardTitle className="text-4xl font-bold text-indigo-300 group-hover:text-indigo-200 transition-colors">
-								Leadership
-							</CardTitle>
-							<CardDescription className="mt-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-								Led engineers and drove system-level thinking across teams.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="pt-0">
-							<div className="text-sm text-indigo-400/80 font-medium">
-								Organizational impact
-							</div>
-						</CardContent>
-					</Card>
-				</div>
-			</div>
-		</section>
-	);
+  return (
+    <section id="impact" className="py-24 md:py-32">
+      <div ref={ref} className="mx-auto max-w-6xl px-6">
+        <div className="reveal">
+          <span className="font-mono text-xs uppercase tracking-wide text-amber sm:text-sm">
+            Strategic Impact
+          </span>
+        </div>
+        <h2 className="mt-4 max-w-[35ch] font-display text-balance text-4xl font-normal leading-[1.1] tracking-tight text-foreground reveal md:text-5xl">
+          Architecting intelligence platforms that move organizations forward.
+        </h2>
+
+        <dl className="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {impacts.map((item, i) => (
+            <div
+              key={item.title}
+              className={`reveal ${i > 0 ? "sm:border-l sm:border-border/50 sm:pl-12" : "sm:pl-0"}`}
+            >
+              <dt className="text-sm font-medium text-foreground">
+                {item.title}
+              </dt>
+              <dd className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </dd>
+              <dd className="mt-4">
+                <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground/60">
+                  {item.tag}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
 }
