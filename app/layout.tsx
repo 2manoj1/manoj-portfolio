@@ -129,8 +129,16 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning className="h-full antialiased">
-			<head>
-				{/* ✅ Structured Data (Huge SEO Boost) */}
+			<body
+				className={`${inter.className} ${monaSans.variable} min-h-full flex flex-col isolate`}>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="dark"
+					enableSystem
+					disableTransitionOnChange>
+					{children}
+				</ThemeProvider>
+				{/* ✅ Structured Data */}
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
@@ -159,17 +167,6 @@ export default function RootLayout({
 						}),
 					}}
 				/>
-			</head>
-
-			<body
-				className={`${inter.className} ${monaSans.variable} min-h-full flex flex-col isolate`}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="dark"
-					enableSystem
-					disableTransitionOnChange>
-					{children}
-				</ThemeProvider>
 			</body>
 		</html>
 	);
