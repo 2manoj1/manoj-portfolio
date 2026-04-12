@@ -30,7 +30,7 @@ export function Hero() {
 					</span>
 
 					{/* ✅ FIXED H1 (SEO GOLD) */}
-					<h1 className="mt-6 max-w-[22ch] font-display text-balance text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+					<h1 className="mt-6 max-w-[22ch] font-display text-balance text-4xl font-normal leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
 						Manoj Mukherjee — AI Architect & GenAI Systems Builder
 					</h1>
 
