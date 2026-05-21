@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LINKEDIN, GITHUB, MEDIUM, GOOGLE_SCHOLAR } from "@/lib/links";
 import { Logo } from "@/components/logo";
+import { routes } from "@/content/site";
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -42,19 +43,33 @@ function ScholarIcon({ className }: { className?: string }) {
 }
 
 export function Footer() {
+  const footerRoutes = routes.filter((route) => route.href !== "/");
+
   return (
     <footer className="py-16">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-between">
+        <div className="grid gap-10 lg:grid-cols-[1fr_auto_auto]">
           <div>
             <Link href="/" aria-label="Homepage">
               <Logo size="sm" />
             </Link>
             <p className="mt-2 max-w-[40ch] font-normal text-sm text-muted-foreground">
-              AI Systems Architect. Building platforms that think at enterprise
-              scale.
+              AI Architect Consultant for production RAG infrastructure,
+              multi-agent systems, and AI platform engineering.
             </p>
           </div>
+
+          <nav className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" aria-label="Footer">
+            {footerRoutes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                {route.label}
+              </Link>
+            ))}
+          </nav>
 
           <div className="flex items-center gap-6">
             <a

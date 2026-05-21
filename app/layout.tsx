@@ -1,12 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Mona_Sans } from "next/font/google";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { siteConfig } from "@/content/site";
+import { personSchema, professionalServiceSchema } from "@/lib/schema";
 import "./globals.css";
 
-// ✅ Optimized font (replaces external links)
 const inter = Inter({
 	subsets: ["latin"],
 	display: "swap",
+	variable: "--font-inter",
 });
 
 const monaSans = Mona_Sans({
@@ -15,27 +19,23 @@ const monaSans = Mona_Sans({
 	variable: "--font-mona",
 });
 
-// ✅ Viewport (Next.js 16+ way)
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
 	themeColor: "#0a0a0a",
 };
 
-// ✅ Metadata (SEO + Social + PWA)
 export const metadata: Metadata = {
-	title: "Manoj Mukherjee · AI Systems Architect & Technology Leader",
-
-	description:
-		"AI Systems Architect specializing in GenAI, RAG pipelines, and multi-agent systems. 10+ years building scalable enterprise AI platforms. Open to AI Architect, Lead AI Engineer, and CTO roles.",
-
-	metadataBase: new URL("https://www.manojmukherjee.co.in"),
-
-	applicationName: "Manoj Mukherjee",
+	metadataBase: new URL(siteConfig.url),
+	title: {
+		default: siteConfig.title,
+		template: "%s | Manoj Mukherjee",
+	},
+	description: siteConfig.description,
+	applicationName: siteConfig.name,
 	category: "technology",
-	classification: "AI, Software Engineering",
+	classification: "AI, Software Engineering, AI Infrastructure",
 	referrer: "origin-when-cross-origin",
-
 	keywords: [
 		"Manoj Mukherjee",
 		"AI Systems Architect",
@@ -61,14 +61,11 @@ export const metadata: Metadata = {
 		"Manoj Mukherjee Publicis Sapient",
 		"Manoj Mukherjee GenAI",
 	],
-
-	authors: [{ name: "Manoj Mukherjee" }],
-	creator: "Manoj Mukherjee",
-
+	authors: [{ name: siteConfig.name }],
+	creator: siteConfig.name,
 	alternates: {
 		canonical: "https://www.manojmukherjee.co.in",
 	},
-
 	robots: {
 		index: true,
 		follow: true,
@@ -110,7 +107,7 @@ export const metadata: Metadata = {
 			{ url: "/favicon.ico" },
 			{ url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
 		],
-		apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+		apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
 		other: [
 			{
 				rel: "icon",
@@ -130,49 +127,23 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning className="h-full antialiased">
 			<body
-				className={`${inter.className} ${monaSans.variable} min-h-full flex flex-col isolate`}>
+				className={`${inter.className} ${monaSans.className} flex min-h-full flex-col isolate`}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="dark"
 					enableSystem
 					disableTransitionOnChange>
-					{children}
+					<Navbar />
+					<main className="flex flex-1 flex-col">{children}</main>
+					<Footer />
 				</ThemeProvider>
-				{/* ✅ Structured Data */}
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify({
-							"@context": "https://schema.org",
-							"@type": "Person",
-							name: "Manoj Mukherjee",
-							url: "https://www.manojmukherjee.co.in",
-							jobTitle: "AI Systems Architect",
-							description:
-								"AI Systems Architect specializing in GenAI, RAG, and multi-agent systems",
-							image: "https://www.manojmukherjee.co.in/opengraph.webp",
-							address: {
-								"@type": "Place",
-								addressLocality: "Bangalore",
-								addressCountry: "India",
-							},
-							worksFor: {
-								"@type": "Organization",
-								name: "Publicis Sapient",
-							},
-							sameAs: [
-								"https://www.linkedin.com/in/manoj-mukherjee",
-								"https://github.com/2manoj1",
-							],
-							knowsAbout: [
-								"Artificial Intelligence",
-								"GenAI",
-								"RAG Systems",
-								"Multi-Agent Systems",
-								"LangChain",
-								"LLM Engineering",
-							],
-						}),
+						__html: JSON.stringify([
+							personSchema(),
+							professionalServiceSchema(),
+						]),
 					}}
 				/>
 			</body>

@@ -1,0 +1,19 @@
+# <type>: <summary>
+
+Types:
+
+* feat
+* fix
+* refactor
+* docs
+* seo
+* content
+* perf
+* ui
+* chore
+
+Examples:
+feat: add engineering architecture showcase
+seo: improve metadata for AI systems pages
+content: add LangGraph orchestration article
+refactor: optimize homepage component structure
