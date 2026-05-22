@@ -145,62 +145,8 @@ export function TestimonialSlider({
 							</div>
 						))}
 					</div>
-
-					<div className="mt-8">
-						<p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-							People close to the work
-						</p>
-						<div className="mt-4 grid grid-cols-4 gap-2 lg:grid-cols-2">
-							{testimonials.map((testimonial, index) => (
-								<Button
-									key={testimonial.author}
-									type="button"
-									variant="secondary"
-									size="icon-lg"
-									aria-label={`Show recommendation from ${testimonial.author}`}
-									aria-current={activeIndex === index}
-									onClick={() => goTo(index)}
-									className={cn(
-										"aspect-square h-auto w-full rounded-lg border text-xs font-medium transition",
-										activeIndex === index
-											? "border-amber bg-amber text-amber-foreground hover:bg-amber/90"
-											: "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground",
-									)}>
-									{getInitials(testimonial.author)}
-								</Button>
-							))}
-						</div>
-					</div>
 				</aside>
-			</div>
-
-			<div className="mt-4 grid gap-2 sm:grid-cols-4">
-				{testimonials.map((testimonial, index) => (
-					<Button
-						key={`${testimonial.author}-progress`}
-						type="button"
-						variant="ghost"
-						aria-label={`Jump to recommendation ${index + 1}`}
-						onClick={() => goTo(index)}
-						className="group h-2 overflow-hidden rounded-lg bg-border p-0 hover:bg-border">
-						<span
-							className={cn(
-								"block h-full bg-amber transition-all duration-300",
-								activeIndex === index ? "w-full" : "w-0 group-hover:w-1/2",
-							)}
-						/>
-					</Button>
-				))}
 			</div>
 		</div>
 	);
-}
-
-function getInitials(name: string) {
-	return name
-		.split(" ")
-		.slice(0, 2)
-		.map((part) => part[0])
-		.join("")
-		.toUpperCase();
 }

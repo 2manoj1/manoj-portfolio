@@ -196,8 +196,8 @@ export default function Home() {
         <MotionReveal>
           <SectionHeader
             kicker="Trust"
-            title="Proof from people who have seen the work up close."
-            description="Recommendations point to the same pattern: intellectual rigor, practical execution, broad technical range, and a collaborative operating style."
+            title="People I’ve worked closely with."
+            description="Thoughts from engineers, leaders, and collaborators across production systems, architecture, and platform engineering."
           />
         </MotionReveal>
         <MotionReveal delay={0.06}>
