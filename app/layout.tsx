@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Mona_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -137,6 +138,7 @@ export default function RootLayout({
 					<main className="flex flex-1 flex-col">{children}</main>
 					<Footer />
 				</ThemeProvider>
+				<Analytics />
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
