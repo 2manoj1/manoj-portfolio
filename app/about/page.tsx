@@ -4,6 +4,8 @@ import { awards, proofMetrics, stackKeywords, testimonials } from "@/content/sit
 import { CtaBand } from "@/components/marketing/cta-band";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { GITHUB, GOOGLE_SCHOLAR, LINKEDIN, MEDIUM } from "@/lib/links";
 import { createMetadata } from "@/lib/seo";
 
@@ -33,6 +35,13 @@ const operatingPillars = [
 	},
 ] as const;
 
+const profileLinks = [
+	{ label: "LinkedIn", href: LINKEDIN },
+	{ label: "GitHub", href: GITHUB },
+	{ label: "Medium", href: MEDIUM },
+	{ label: "Scholar", href: GOOGLE_SCHOLAR },
+] as const;
+
 export default function AboutPage() {
 	return (
 		<>
@@ -41,62 +50,65 @@ export default function AboutPage() {
 				title="I’m Manoj Mukherjee, an AI systems architect."
 				description="I design and ship production AI systems for teams that need architecture depth, platform reliability, and real business execution beyond AI demos."
 			>
-				<div className="grid gap-6 border border-border p-5 md:grid-cols-[220px_minmax(0,1fr)]">
-					<div className="relative aspect-[4/5] overflow-hidden border border-border bg-secondary/20">
-						<Image
-							src="/mm.png"
-							alt="Portrait of Manoj Mukherjee"
-							fill
-							sizes="(max-width: 768px) 100vw, 220px"
-							className="object-cover"
-							priority
-						/>
-					</div>
-					<div className="flex flex-col justify-between gap-5">
-						<div>
-							<p className="font-display text-3xl text-foreground">Manoj Mukherjee</p>
-							<p className="mt-2 text-sm leading-7 text-muted-foreground">
-								AI Architect Consultant focused on multi-agent orchestration,
-								enterprise RAG systems, FastAPI AI backends, and AI platform
-								engineering for CTOs, startups, and enterprise AI teams.
-							</p>
-						</div>
-						<div className="grid gap-2 text-sm sm:grid-cols-2">
-							<a
-								href={LINKEDIN}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center justify-between border border-border px-3 py-2 text-foreground hover:bg-secondary/50">
-								LinkedIn
-								<ArrowUpRight className="size-4" />
-							</a>
-							<a
-								href={GITHUB}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center justify-between border border-border px-3 py-2 text-foreground hover:bg-secondary/50">
-								GitHub
-								<ArrowUpRight className="size-4" />
-							</a>
-							<a
-								href={MEDIUM}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center justify-between border border-border px-3 py-2 text-foreground hover:bg-secondary/50">
-								Medium
-								<ArrowUpRight className="size-4" />
-							</a>
-							<a
-								href={GOOGLE_SCHOLAR}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="inline-flex items-center justify-between border border-border px-3 py-2 text-foreground hover:bg-secondary/50">
-								Scholar
-								<ArrowUpRight className="size-4" />
-							</a>
-						</div>
-					</div>
-				</div>
+				<article aria-labelledby="about-profile-title">
+					<Card className="border-border bg-card/30 p-0 shadow-sm shadow-black/5">
+						<CardContent className="grid gap-7 p-5 md:grid-cols-[180px_minmax(0,1fr)] md:items-center md:p-6">
+							<figure className="mx-auto md:mx-0">
+								<div className="size-44 rounded-full border border-border/80 bg-secondary/30 p-1 shadow-xl shadow-black/10 ring-1 ring-amber/15 md:size-[180px]">
+									<div className="relative size-full overflow-hidden rounded-full bg-background">
+										<Image
+											src="/mm.png"
+											alt="Portrait of Manoj Mukherjee"
+											fill
+											sizes="(max-width: 768px) 176px, 180px"
+											className="rounded-full object-cover object-center"
+											priority
+										/>
+									</div>
+								</div>
+								<figcaption className="sr-only">
+									Manoj Mukherjee, AI Systems Architect
+								</figcaption>
+							</figure>
+							<section
+								aria-labelledby="about-profile-title"
+								className="flex flex-col justify-between gap-6 text-center md:text-left">
+								<header>
+									<h2
+										id="about-profile-title"
+										className="font-display text-3xl text-foreground">
+										Manoj Mukherjee
+									</h2>
+									<p className="mt-2 text-sm leading-7 text-muted-foreground">
+										AI Architect Consultant focused on multi-agent orchestration,
+										enterprise RAG systems, FastAPI AI backends, and AI platform
+										engineering for CTOs, startups, and enterprise AI teams.
+									</p>
+								</header>
+								<nav
+									aria-label="Manoj Mukherjee professional profiles"
+									className="grid gap-2 sm:grid-cols-2">
+									{profileLinks.map((link) => (
+										<Button
+											key={link.label}
+											asChild
+											variant="outline"
+											size="lg"
+											className="w-full justify-between bg-background/60 hover:border-amber/40 hover:bg-secondary/60">
+											<a
+												href={link.href}
+												target="_blank"
+												rel="noopener noreferrer">
+												{link.label}
+												<ArrowUpRight className="size-4" />
+											</a>
+										</Button>
+									))}
+								</nav>
+							</section>
+						</CardContent>
+					</Card>
+				</article>
 			</PageHero>
 			<Section>
 				<SectionHeader

@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Mona_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { siteConfig } from "@/content/site";
 import { personSchema, professionalServiceSchema } from "@/lib/schema";
 import "./globals.css";
@@ -129,15 +127,7 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning className="h-full antialiased">
 			<body
 				className={`${inter.className} ${monaSans.className} flex min-h-full flex-col isolate`}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="dark"
-					enableSystem
-					disableTransitionOnChange>
-					<Navbar />
-					<main className="flex flex-1 flex-col">{children}</main>
-					<Footer />
-				</ThemeProvider>
+				<SiteChrome>{children}</SiteChrome>
 				<Analytics />
 				<script
 					type="application/ld+json"

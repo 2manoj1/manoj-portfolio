@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
+import { blogArticles } from "@/content/blog";
 import { articles } from "@/content/site";
 import { createMetadata } from "@/lib/seo";
 
@@ -16,14 +18,43 @@ export default function BlogPage() {
 		<>
 			<PageHero
 				kicker="Writing"
-				title="Technical writing for AI infrastructure builders."
-				description="A long-term authority engine for senior engineers, AI founders, platform teams, and DevRel leaders. Current articles live on Medium while the MDX system is prepared."
+				title="AI systems writing for technical buyers."
+				description="Owned architecture briefs and Medium essays for senior engineers, AI founders, platform teams, and DevRel leaders evaluating production AI systems."
 			/>
 			<Section>
 				<SectionHeader
-					kicker="Articles"
-					title="Systems-first writing, not beginner tutorials."
-					description="The editorial lane is LangGraph orchestration, RAG reliability, pgvector, FastAPI scaling, context engineering, token budgets, AI observability, and infrastructure adoption."
+					kicker="SEO Articles"
+					title="Trending topics with enterprise architecture depth."
+					description="These articles target high-intent AI search demand without drifting into hype: LangGraph v1, MCP security, GenAI observability, context engineering, and FastAPI AI backends."
+				/>
+				<div className="mt-14 grid gap-3 lg:grid-cols-2">
+					{blogArticles.map((article) => (
+						<Link
+							key={article.slug}
+							href={`/blog/${article.slug}`}
+							className="group border border-border bg-card/25 p-6 transition-colors hover:border-amber/50">
+							<p className="font-mono text-xs uppercase tracking-wide text-muted-foreground/60">
+								{article.topic} / {article.date}
+							</p>
+							<h2 className="mt-4 max-w-[28ch] text-2xl font-medium leading-tight text-foreground group-hover:text-amber">
+								{article.title}
+							</h2>
+							<p className="mt-5 text-sm leading-7 text-muted-foreground">
+								{article.summary}
+							</p>
+							<div className="mt-8 flex items-center gap-2 text-sm text-amber">
+								Read architecture brief
+								<ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+							</div>
+						</Link>
+					))}
+				</div>
+			</Section>
+			<Section className="border-y border-border">
+				<SectionHeader
+					kicker="Medium Archive"
+					title="Distribution essays and technical experiments."
+					description="Medium remains useful for reach and discovery. The owned blog now carries the canonical SEO pages, while Medium can syndicate and amplify these ideas."
 				/>
 				<div className="mt-14 divide-y divide-border">
 					{articles.map((article) => (
@@ -49,15 +80,15 @@ export default function BlogPage() {
 					))}
 				</div>
 			</Section>
-			<Section className="border-y border-border">
+			<Section>
 				<SectionHeader
 					kicker="Roadmap"
 					title="Next: production-grade MDX."
-					description="The next iteration should add MDX, syntax highlighting, reading time, tag filtering, RSS, related articles, table of contents, and dynamic metadata for owned SEO growth."
+					description="The next editorial upgrade should add MDX, syntax highlighting, tag filtering, RSS, related articles, table of contents, and richer architecture diagrams."
 				/>
 				<div className="mt-10 flex items-center gap-2 text-sm text-muted-foreground">
 					<ArrowRight className="size-4 text-amber" />
-					<span>Prioritize owned articles after the service and engineering pages are indexed.</span>
+					<span>Use these owned pages as the canonical URLs, then syndicate excerpts to LinkedIn and Medium.</span>
 				</div>
 			</Section>
 			<CtaBand title="Need technical content that sounds like an engineer wrote it?" />

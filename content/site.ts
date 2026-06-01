@@ -7,6 +7,13 @@ export const siteConfig = {
 	location: "Bengaluru, India",
 	role: "AI Architect Consultant",
 	email: "info@manojmukherjee.co.in",
+	profileLinks: {
+		linkedin: "https://www.linkedin.com/in/manojmukherjee777/",
+		github: "https://github.com/2manoj1",
+		twitter: "https://twitter.com/2manoj1",
+		medium: "https://manojmukherjee777.medium.com/",
+		googleScholar: "https://scholar.google.com/citations?user=abcd1234"
+	},
 };
 
 export const proofMetrics = [
