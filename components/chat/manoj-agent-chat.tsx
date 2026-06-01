@@ -559,7 +559,7 @@ export function AstraChatSurface({
 							}}
 							placeholder="Ask Astra anything..."
 							rows={1}
-							className="h-12 min-w-0 flex-1 resize-none overflow-y-auto rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-white/32 focus:border-amber/40 focus:ring-3 focus:ring-amber/10"
+							className="min-h-12 min-w-0 flex-1 resize-none overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-sm leading-normal text-white caret-white outline-none transition placeholder:text-white/32 focus:border-amber/40 focus:ring-2 focus:ring-amber/10"
 						/>
 						<Button
 							type="submit"
