@@ -9,7 +9,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
 	title: "AI Engineering Writing | Manoj Mukherjee",
 	description:
-		"Technical writing on LangGraph, multi-agent systems, RAG infrastructure, local AI workflows, AI observability, and AI platform engineering.",
+		"Deep technical writing on LangGraph architecture, production multi-agent systems, enterprise RAG, AI observability, and platform engineering patterns.",
 	path: "/blog",
 });
 
@@ -18,14 +18,14 @@ export default function BlogPage() {
 		<>
 			<PageHero
 				kicker="Writing"
-				title="AI systems writing for technical buyers."
-				description="Owned architecture briefs and Medium essays for senior engineers, AI founders, platform teams, and DevRel leaders evaluating production AI systems."
+				title="Systems thinking applied to AI infrastructure."
+				description="Architecture-first writing on production challenges. How real teams build durable agents, secure workflows, observable systems, and reliable AI infrastructure that doesn't break under load."
 			/>
 			<Section>
 				<SectionHeader
-					kicker="SEO Articles"
-					title="Trending topics with enterprise architecture depth."
-					description="These articles target high-intent AI search demand without drifting into hype: LangGraph v1, MCP security, GenAI observability, context engineering, and FastAPI AI backends."
+					kicker="Featured Research"
+					title="Architecture problems I've actually solved."
+					description="These aren't tutorials. They're systems breakdowns of real challenges: stateful agent execution, tool governance, observability at scale, and production reliability patterns that matter when things fail at 3 AM."
 				/>
 				<div className="mt-14 grid gap-3 lg:grid-cols-2">
 					{blogArticles.map((article) => (
@@ -34,7 +34,7 @@ export default function BlogPage() {
 							href={`/blog/${article.slug}`}
 							className="group border border-border bg-card/25 p-6 transition-colors hover:border-amber/50">
 							<p className="font-mono text-xs uppercase tracking-wide text-muted-foreground/60">
-								{article.topic} / {article.date}
+								{article.topic} · {article.date} · {article.readingTime}
 							</p>
 							<h2 className="mt-4 max-w-[28ch] text-2xl font-medium leading-tight text-foreground group-hover:text-amber">
 								{article.title}
@@ -43,7 +43,7 @@ export default function BlogPage() {
 								{article.summary}
 							</p>
 							<div className="mt-8 flex items-center gap-2 text-sm text-amber">
-								Read architecture brief
+								Read the full breakdown
 								<ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
 							</div>
 						</Link>
@@ -52,9 +52,9 @@ export default function BlogPage() {
 			</Section>
 			<Section className="border-y border-border">
 				<SectionHeader
-					kicker="Medium Archive"
-					title="Distribution essays and technical experiments."
-					description="Medium remains useful for reach and discovery. The owned blog now carries the canonical SEO pages, while Medium can syndicate and amplify these ideas."
+					kicker="Medium & Distribution"
+					title="Where ideas amplify."
+					description="Medium remains the fastest way to reach engineers at scale. I publish canonical research here first, then use other platforms to extend reach. RSS syndication and cross-posting to LinkedIn happen automatically."
 				/>
 				<div className="mt-14 divide-y divide-border">
 					{articles.map((article) => (
@@ -82,16 +82,16 @@ export default function BlogPage() {
 			</Section>
 			<Section>
 				<SectionHeader
-					kicker="Roadmap"
-					title="Next: production-grade MDX."
-					description="I am expanding this publication to support native MDX articles, syntax-highlighted code playgrounds, RSS syndication, tag filters, and interactive system flowcharts."
+					kicker="What's Next"
+					title="Building a living architecture journal."
+					description="MDX support for live code examples, interactive diagrams, searchable tag filters, and RSS feeds. The goal is to make this a reference resource—not just another blog."
 				/>
 				<div className="mt-10 flex items-center gap-2 text-sm text-muted-foreground">
 					<ArrowRight className="size-4 text-amber" />
-					<span>I publish my deep dives here first to build an owned technical archive, then syndicate summaries to LinkedIn and Medium.</span>
+					<span>I build in public here, learn through writing, and maintain a searchable archive of what actually works in production systems.</span>
 				</div>
 			</Section>
-			<CtaBand title="Need technical content that sounds like an engineer wrote it?" />
+			<CtaBand title="Building systems that matter? Let's talk." />
 		</>
 	);
 }

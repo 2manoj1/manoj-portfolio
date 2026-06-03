@@ -74,22 +74,26 @@ export default async function BlogArticlePage({ params }: PageProps) {
 	return (
 		<>
 			<PageHero
-				kicker={`${article.topic} / ${article.date}`}
+				kicker={`${article.topic} · ${article.date}`}
 				title={article.title}
 				description={article.seoDescription}>
-				<Link
-					href="/blog"
-					className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-amber">
-					<ArrowLeft className="size-4" />
-					Back to writing
-				</Link>
+				<div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+					<Link
+						href="/blog"
+						className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-amber">
+						<ArrowLeft className="size-4" />
+						Back to all writing
+					</Link>
+					<span className="hidden sm:block text-muted-foreground text-sm">·</span>
+					<span className="text-sm text-muted-foreground font-mono">{article.readingTime}</span>
+				</div>
 			</PageHero>
 			<Section>
 				<div className="grid gap-12 lg:grid-cols-[0.72fr_0.28fr]">
 					<article className="min-w-0">
 						<div className="border-y border-border py-8">
 							<p className="font-mono text-xs uppercase tracking-wide text-amber">
-								Core thesis / {article.readingTime}
+								Why this matters
 							</p>
 							<p className="mt-4 text-2xl leading-10 text-foreground">
 								{article.heroTakeaway}
@@ -179,7 +183,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
 					</aside>
 				</div>
 			</Section>
-			<CtaBand title="Need an architect for production AI systems?" />
+			<CtaBand title="Building production AI systems? Let's work together." />
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
