@@ -11,8 +11,10 @@ export function Section({
 	className?: string;
 }) {
 	return (
-		<section id={id} className={cn("py-24 md:py-32", className)}>
-			<div className="mx-auto max-w-6xl px-6">{children}</div>
+		<section id={id} className={cn("min-w-0 py-24 md:py-32", className)}>
+			<div className="mx-auto w-[calc(100vw-2rem)] min-w-0 max-w-6xl sm:w-[calc(100vw-3rem)]">
+				{children}
+			</div>
 		</section>
 	);
 }
@@ -29,17 +31,17 @@ export function SectionHeader({
 	className?: string;
 }) {
 	return (
-		<div className={cn("grid gap-6 lg:grid-cols-[0.9fr_1.1fr]", className)}>
-			<div>
+		<div className={cn("grid min-w-0 gap-6 lg:grid-cols-[0.9fr_1.1fr]", className)}>
+			<div className="min-w-0">
 				<p className="font-mono text-xs uppercase tracking-wide text-amber">
 					{kicker}
 				</p>
-				<h2 className="mt-4 max-w-[18ch] font-display text-balance text-4xl font-normal leading-[1.05] text-foreground md:text-5xl">
+				<h2 className="mt-4 max-w-full font-display text-balance text-3xl font-normal leading-[1.08] text-foreground sm:max-w-[18ch] sm:text-4xl md:text-5xl md:leading-[1.05]">
 					{title}
 				</h2>
 			</div>
 			{description ? (
-				<p className="max-w-[68ch] self-end text-pretty text-base leading-8 text-muted-foreground">
+				<p className="min-w-0 max-w-[68ch] break-words self-end text-pretty text-base leading-8 text-muted-foreground">
 					{description}
 				</p>
 			) : null}

@@ -40,7 +40,7 @@ type TabData = {
 const labSystems: Record<string, TabData> = {
   langgraph: {
     title: "AI Home Lab (Apple Silicon)",
-    subtitle: "A 100% self-hosted, zero-open-port local AI platform running end-to-end multi-agent workloads on a MacBook M1 Pro (32GB).",
+    subtitle: "Private Apple Silicon lab: agents, local models, gateway, and vector stores.",
     nodes: [
       {
         id: "cloudflare",
@@ -50,8 +50,8 @@ const labSystems: Record<string, TabData> = {
         input: "Public DNS request / HTTPS request",
         output: "Routed traffic to local daemon (zero open ports)",
         metrics: "WAF + custom firewall rules enforced",
-        description: "Manages encrypted tunnel connections to the local lab stack, protecting local network interfaces from direct public exposure.",
-        failureMode: "Tunnel connection drop. Addressed by systemd agent daemon auto-restart configuration.",
+        description: "Encrypted tunnel ingress with no exposed local ports.",
+        failureMode: "Tunnel drop. Auto-restart restores the daemon.",
       },
       {
         id: "fastapi-gate",
@@ -61,8 +61,8 @@ const labSystems: Record<string, TabData> = {
         input: "JSON request payloads (OpenAI compatible)",
         output: "Routed execution command to Agent Layer",
         metrics: "Authentication & validation in <2ms",
-        description: "Accepts agent requests, runs schema validations using Pydantic, and tracks client analytics logging.",
-        failureMode: "Gateway request queue blockage. Avoided by asynchronous async/await endpoint execution.",
+        description: "Validates agent requests and routes OpenAI-compatible payloads.",
+        failureMode: "Queue pressure. Async endpoints keep routing responsive.",
       },
       {
         id: "langgraphjs",
@@ -72,8 +72,8 @@ const labSystems: Record<string, TabData> = {
         input: "Grounded system prompts & tool definitions",
         output: "Evaluated plan tasks / tool arguments",
         metrics: "Thread checkpointing in local SQLite",
-        description: "Models multi-agent state machines, controlling execution loops, state updates, memory nodes, and human approval gates.",
-        failureMode: "Graph loop recursion limits exceeded. Prevented by strict max_iterations = 5 constraints.",
+        description: "Controls agent state, tools, memory, and approval gates.",
+        failureMode: "Runaway loop. Iteration limits stop recursion.",
       },
       {
         id: "ollama-mlx",
@@ -83,8 +83,8 @@ const labSystems: Record<string, TabData> = {
         input: "Structured prompt tokens",
         output: "JSON response text / output stream",
         metrics: "Llama 3.2, Qwen 3 SLM inference",
-        description: "Orchestrates hardware-accelerated local inference using Apple Silicon unified memory pipelines.",
-        failureMode: "Model context window exhaustion. Prevented by contextual memory sliding overlaps.",
+        description: "Runs local inference over Apple unified memory.",
+        failureMode: "Context overflow. Sliding memory windows reduce pressure.",
       },
       {
         id: "data-stores",
@@ -94,8 +94,8 @@ const labSystems: Record<string, TabData> = {
         input: "Metadata write, vector query, cached tasks",
         output: "Cosine distance matches, retrieved state",
         metrics: "Qdrant vector search latency: 4ms",
-        description: "Handles user sessions in PostgreSQL, queues and caches in Redis, and stores semantic embeddings in Qdrant.",
-        failureMode: "Vector database indexing lag. Addressed by asynchronous chunking queue pipelines.",
+        description: "Stores metadata, cache, queues, and vectors locally.",
+        failureMode: "Index lag. Async chunking keeps ingestion moving.",
       }
     ],
     connections: [
@@ -112,7 +112,7 @@ const labSystems: Record<string, TabData> = {
   },
   rag: {
     title: "Agentic RAG Grounding Flow",
-    subtitle: "High-recall retrieval pipeline that context-layers live search data and local documents for grounded model reasoning.",
+    subtitle: "Retrieval, source routing, context assembly, and grounded answers.",
     nodes: [
       {
         id: "query",
@@ -122,8 +122,8 @@ const labSystems: Record<string, TabData> = {
         input: "Natural language query",
         output: "Structured intent tokens",
         metrics: "Pre-processing latency: <1ms",
-        description: "Initial prompt parsing and intent classifier routing to determine if retrieval is required.",
-        failureMode: "Vague query intent. Handled by a query reformulation pass using Qwen-3B.",
+        description: "Parses intent and decides whether retrieval is needed.",
+        failureMode: "Vague intent. Query reformulation clarifies scope.",
       },
       {
         id: "agent-router",
@@ -133,8 +133,8 @@ const labSystems: Record<string, TabData> = {
         input: "Reformulated search prompt",
         output: "Target source coordinates",
         metrics: "State checkpointing enabled",
-        description: "Evaluates which vector DB index or third-party web search tool contains the relevant grounding contexts.",
-        failureMode: "Incomplete database coordinates. Resolved by automatic fallback search across web APIs.",
+        description: "Selects vector, web, repository, or profile sources.",
+        failureMode: "Missing source. Fallback search broadens retrieval.",
       },
       {
         id: "sources",
@@ -144,8 +144,8 @@ const labSystems: Record<string, TabData> = {
         input: "Query text parameters",
         output: "Raw retrieved sections",
         metrics: "Qdrant + GitHub + Web search",
-        description: "Queries Qdrant (local vectors), GitHub (source repositories), Medium/LinkedIn feeds, and live search engines.",
-        failureMode: "Rate limits on external feeds. Handled by cache layer checks and fail-soft timeouts.",
+        description: "Fetches source context from local and external indexes.",
+        failureMode: "Rate limits. Cache checks and soft timeouts reduce failure.",
       },
       {
         id: "assembly",
@@ -155,8 +155,8 @@ const labSystems: Record<string, TabData> = {
         input: "Raw context array",
         output: "Layered, token-compressed prompt",
         metrics: "45% token size reduction",
-        description: "Assembles retrieved text sections, removes duplication, and formats context structures inside the prompt template.",
-        failureMode: "Context window saturation. Mitigated by cross-encoder rerank filtering.",
+        description: "Dedupes, ranks, and compresses retrieved context.",
+        failureMode: "Context saturation. Reranking cuts weak passages.",
       },
       {
         id: "reasoning",
@@ -166,8 +166,8 @@ const labSystems: Record<string, TabData> = {
         input: "Layered context prompt",
         output: "Grounded answer text",
         metrics: "Local SLM execution",
-        description: "Generates final answer locally, strictly enforcing negative grounding constraints (i.e. 'say I don't know if context lacks data').",
-        failureMode: "Model hallucination. Verified and caught by self-correction prompt evaluators.",
+        description: "Generates an answer with grounding constraints.",
+        failureMode: "Hallucination. Evaluators check unsupported claims.",
       }
     ],
     connections: [
@@ -184,7 +184,7 @@ const labSystems: Record<string, TabData> = {
   },
   fastapi: {
     title: "OpenAI-Compatible AI Gateway",
-    subtitle: "A high-performance API router proxy offering smart model fallbacks, rate limiting, and unified logging.",
+    subtitle: "One API contract for local models, cloud fallbacks, and tools.",
     nodes: [
       {
         id: "clients",
@@ -194,8 +194,8 @@ const labSystems: Record<string, TabData> = {
         input: "Next.js UI, Chatbot, scripts",
         output: "HTTPS API request",
         metrics: "Client session tracing",
-        description: "Exposes OpenAI-compatible endpoints to client applications, enabling drop-in integration.",
-        failureMode: "Client connection drops. Handled by connection pooling and keep-alive setups.",
+        description: "Exposes one endpoint for apps, agents, and scripts.",
+        failureMode: "Connection drop. Pooling and keep-alive reduce churn.",
       },
       {
         id: "api-router",
@@ -205,8 +205,8 @@ const labSystems: Record<string, TabData> = {
         input: "Client requests & authorization",
         output: "Validated JSON schemas",
         metrics: "Auth validation: <1ms",
-        description: "Runs request parameter validation, authorization check, and counts client rate limits.",
-        failureMode: "Malformed input schema. Pydantic middleware returns immediate 422 validation errors.",
+        description: "Validates schema, auth, limits, and request shape.",
+        failureMode: "Bad schema. Pydantic rejects early.",
       },
       {
         id: "model-router",
@@ -216,8 +216,8 @@ const labSystems: Record<string, TabData> = {
         input: "Target model schema request",
         output: "Routed request / Fallback destination",
         metrics: "Load balancing enabled",
-        description: "Coordinates request routing, load-balancing traffic across local models and fallback cloud endpoints.",
-        failureMode: "Model provider rate limit or timeout. Routed immediately to alternative active providers.",
+        description: "Routes requests across local and cloud model lanes.",
+        failureMode: "Provider timeout. Fallback lane takes over.",
       },
       {
         id: "local-slm",
@@ -227,8 +227,8 @@ const labSystems: Record<string, TabData> = {
         input: "Routed prompt",
         output: "Streamed tokens",
         metrics: "Ollama/MLX inference",
-        description: "Executes model tasks locally, preserving data privacy and zero cost for operational requests.",
-        failureMode: "Local hardware overload. Addressed by routing requests to external cloud fallbacks.",
+        description: "Runs low-risk workloads on local inference.",
+        failureMode: "Hardware pressure. Cloud fallback absorbs load.",
       },
       {
         id: "cloud-llm",
@@ -238,8 +238,8 @@ const labSystems: Record<string, TabData> = {
         input: "Prompts / fallback triggers",
         output: "Response JSON payload",
         metrics: "OpenAI, Anthropic, Gemini, OpenRouter",
-        description: "Proxies to external models (Claude, GPT, Gemini) when larger reasoning capabilities are requested.",
-        failureMode: "External API outage. Automatic fallback to local running instances.",
+        description: "Uses cloud models for deeper reasoning paths.",
+        failureMode: "API outage. Local models keep a reduced path alive.",
       }
     ],
     connections: [
@@ -264,21 +264,23 @@ export function LabDashboard() {
   const selectedNode = system.nodes.find(n => n.id === selectedNodeId) || system.nodes[0];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_minmax(20rem,0.48fr)]">
+    <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.48fr)] lg:gap-8">
       {/* Interactive System Flow Panel */}
-      <div className="flex flex-col rounded-xl border border-border bg-card/10 p-6 shadow-sm">
+      <div className="flex min-w-0 flex-col rounded-lg border border-border bg-card/10 p-4 shadow-sm md:p-6">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-5">
-          <div className="flex gap-2">
+          <div role="tablist" aria-label="Architecture flow presets" className="grid w-full grid-cols-1 gap-2 sm:w-auto sm:grid-cols-3">
             {(Object.keys(labSystems) as Array<"langgraph" | "rag" | "fastapi">).map((tab) => (
               <button
                 key={tab}
+                role="tab"
                 type="button"
+                aria-selected={activeTab === tab}
                 onClick={() => {
                   setActiveTab(tab);
                   setSelectedNodeId(labSystems[tab].nodes[0].id);
                 }}
                 className={cn(
-                  "rounded-lg px-4 py-2 text-xs font-mono font-medium transition-colors",
+                  "min-h-11 rounded-md px-3 py-2 text-left font-mono text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-center",
                   activeTab === tab 
                     ? "bg-amber text-amber-foreground" 
                     : "bg-secondary/40 text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
@@ -290,45 +292,46 @@ export function LabDashboard() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground/80">
+          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-75" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 motion-reduce:animate-none" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
-            System Live & Mock-Traced
+            Trace ready
           </div>
         </div>
 
-        <div className="py-6">
+        <div className="min-w-0 py-6">
           <h3 className="text-xl font-medium text-foreground">{system.title}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">{system.subtitle}</p>
+          <p className="mt-2 break-words text-sm leading-6 text-muted-foreground">{system.subtitle}</p>
         </div>
 
         {/* Visual Flow Diagram */}
-        <div className="my-8 flex flex-col items-center justify-center gap-6 rounded-lg border border-dashed border-border/70 bg-secondary/15 py-12 px-4 md:flex-row md:flex-wrap md:gap-4 lg:flex-nowrap">
+        <div className="my-6 flex min-w-0 flex-col items-center justify-center gap-5 rounded-lg border border-dashed border-border/70 bg-secondary/15 px-3 py-8 md:my-8 md:flex-row md:flex-wrap md:gap-4 md:px-4 md:py-12 lg:flex-nowrap">
           {system.nodes.map((node, index) => {
             const NodeIcon = node.icon;
             const isSelected = node.id === selectedNodeId;
             return (
-              <div key={node.id} className="flex items-center gap-3 md:gap-2">
+              <div key={node.id} className="flex min-w-0 items-center gap-3 md:gap-2">
                 <button
                   type="button"
                   onClick={() => setSelectedNodeId(node.id)}
+                  aria-label={`Inspect ${node.label}`}
                   className={cn(
-                    "flex size-20 flex-col items-center justify-center rounded-xl border p-2 text-center transition-all duration-300",
+                    "flex size-16 flex-col items-center justify-center rounded-lg border p-2 text-center transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:size-20",
                     isSelected
-                      ? "border-amber/80 bg-amber/8 ring-2 ring-amber/20 scale-105 shadow-md shadow-amber/5"
+                      ? "scale-105 border-amber/80 bg-amber/8 ring-2 ring-amber/20 shadow-md shadow-amber/5"
                       : "border-border bg-card/60 hover:border-muted-foreground/40 hover:bg-card"
                   )}
                 >
                   <NodeIcon className={cn("size-5", isSelected ? "text-amber" : "text-muted-foreground")} />
-                  <span className={cn("mt-2 truncate w-full text-[10px] font-medium tracking-tight", isSelected ? "text-foreground font-semibold" : "text-muted-foreground")}>
+                  <span className={cn("mt-2 w-full truncate text-[11px] font-medium tracking-tight", isSelected ? "text-foreground font-semibold" : "text-muted-foreground")}>
                     {node.label.split(" ")[0]}
                   </span>
-                  <span className="text-[8px] opacity-60 font-mono scale-90">0{index + 1}</span>
+                  <span className="font-mono text-[11px] text-muted-foreground">0{index + 1}</span>
                 </button>
                 {index < system.nodes.length - 1 && (
-                  <ArrowRight className="size-4 text-muted-foreground/35 rotate-90 md:rotate-0 shrink-0" />
+                  <ArrowRight className="size-4 shrink-0 rotate-90 text-muted-foreground md:rotate-0" />
                 )}
               </div>
             );
@@ -337,13 +340,13 @@ export function LabDashboard() {
 
         {/* Metrics Overview footer */}
         <div className="mt-auto border-t border-border/75 pt-5">
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground/75 mb-3">Empirical Evaluation Metrics</p>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <p className="mb-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">Evaluation Metrics</p>
+          <div className="grid gap-3 sm:grid-cols-3">
             {system.evaluation.map((evalItem) => (
-              <div key={evalItem.metric} className="rounded-lg border border-border/50 bg-secondary/20 p-3">
-                <span className="font-mono text-[10px] text-muted-foreground/80">{evalItem.metric}</span>
+              <div key={evalItem.metric} className="min-h-28 min-w-0 rounded-lg border border-border/50 bg-secondary/20 p-3">
+                <span className="font-mono text-[11px] text-muted-foreground">{evalItem.metric}</span>
                 <p className="mt-1 text-base font-semibold text-foreground">{evalItem.value}</p>
-                <p className="mt-1 text-[10px] text-muted-foreground/70 leading-normal">{evalItem.description}</p>
+                <p className="mt-1 line-clamp-2 break-words text-xs leading-5 text-muted-foreground">{evalItem.description}</p>
               </div>
             ))}
           </div>
@@ -351,7 +354,7 @@ export function LabDashboard() {
       </div>
 
       {/* Node Inspector Panel */}
-      <div className="flex flex-col rounded-xl border border-border bg-card/30 p-5 shadow-sm">
+      <div className="flex min-w-0 flex-col rounded-lg border border-border bg-card/30 p-4 shadow-sm md:p-5">
         <div className="flex items-center gap-2 border-b border-border/80 pb-4">
           <Terminal className="size-4 text-amber" />
           <span className="font-mono text-xs uppercase tracking-wider text-foreground">Node Inspector</span>
@@ -359,23 +362,23 @@ export function LabDashboard() {
 
         <div className="mt-5 flex-1 space-y-6">
           <div>
-            <span className="font-mono text-[10px] text-amber/80 uppercase tracking-widest">{selectedNode.role}</span>
+            <span className="font-mono text-[11px] uppercase tracking-widest text-amber">{selectedNode.role}</span>
             <h4 className="mt-1 text-lg font-medium text-foreground">{selectedNode.label}</h4>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">{selectedNode.description}</p>
+            <p className="mt-3 break-words text-sm leading-6 text-muted-foreground">{selectedNode.description}</p>
           </div>
 
-          <div className="space-y-4 rounded-lg border border-border/60 bg-secondary/10 p-4 font-mono text-xs leading-relaxed">
-            <div>
-              <span className="text-muted-foreground/60">&gt; INPUT SCHEMA:</span>
-              <p className="text-foreground/90 mt-1 pl-3 border-l border-border">{selectedNode.input}</p>
+          <div className="min-w-0 space-y-4 rounded-lg border border-border/60 bg-secondary/10 p-4 font-mono text-xs leading-relaxed">
+            <div className="min-w-0">
+              <span className="text-muted-foreground">&gt; INPUT</span>
+              <p className="mt-1 break-words border-l border-border pl-3 text-foreground">{selectedNode.input}</p>
             </div>
-            <div>
-              <span className="text-muted-foreground/60">&gt; OUTPUT SCHEMA:</span>
-              <p className="text-foreground/90 mt-1 pl-3 border-l border-border">{selectedNode.output}</p>
+            <div className="min-w-0">
+              <span className="text-muted-foreground">&gt; OUTPUT</span>
+              <p className="mt-1 break-words border-l border-border pl-3 text-foreground">{selectedNode.output}</p>
             </div>
-            <div>
-              <span className="text-muted-foreground/60">&gt; NODE PERFORMANCE:</span>
-              <p className="text-amber mt-1 pl-3 border-l border-border">{selectedNode.metrics}</p>
+            <div className="min-w-0">
+              <span className="text-muted-foreground">&gt; METRIC</span>
+              <p className="mt-1 break-words border-l border-border pl-3 text-amber">{selectedNode.metrics}</p>
             </div>
           </div>
 
