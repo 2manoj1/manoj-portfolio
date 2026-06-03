@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ComponentType } from "react";
 import { 
   ArrowRight, 
   Settings, 
@@ -9,8 +9,6 @@ import {
   RefreshCw, 
   Terminal, 
   Activity, 
-  Play, 
-  CheckCircle,
   AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,7 +17,7 @@ type SystemNode = {
   id: string;
   label: string;
   role: string;
-  icon: any;
+  icon: ComponentType<{ className?: string }>;
   input: string;
   output: string;
   metrics: string;

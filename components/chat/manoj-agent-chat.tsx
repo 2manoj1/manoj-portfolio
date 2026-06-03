@@ -14,7 +14,6 @@ import {
 	Minimize2,
 	PanelRightOpen,
 	ShieldCheck,
-	Sparkles,
 	StopCircle,
 	X,
 } from "lucide-react";
