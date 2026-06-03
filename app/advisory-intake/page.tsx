@@ -1,6 +1,7 @@
 import { Calendar, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
+import { AdvisoryEstimator } from "@/components/marketing/advisory-estimator";
 import { CALENDLY, EMAIL } from "@/lib/links";
 import { createMetadata } from "@/lib/seo";
 
@@ -53,6 +54,16 @@ export default function AdvisoryIntakePage() {
 					</Button>
 				</div>
 			</PageHero>
+			<Section className="border-b border-border">
+				<SectionHeader
+					kicker="Inference Budgeting"
+					title="Estimate your token costs & architecture latency."
+					description="Operations pricing is determined by prompt context size and model decisions. Adjust the parameters below to project standard costs vs. optimized local hybrid routing paths."
+				/>
+				<div className="mt-12">
+					<AdvisoryEstimator />
+				</div>
+			</Section>
 			<Section>
 				<div className="grid gap-12 lg:grid-cols-2">
 					<div>

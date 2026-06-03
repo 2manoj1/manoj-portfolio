@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { routes, services, caseStudies } from "@/content/site";
+import { services, caseStudies } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "../logo";
 

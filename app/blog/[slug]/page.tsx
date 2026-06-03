@@ -7,6 +7,16 @@ import { blogArticles, getBlogArticle } from "@/content/blog";
 import { siteConfig } from "@/content/site";
 import { createMetadata } from "@/lib/seo";
 
+interface BlogSection {
+	heading: string;
+	body: readonly string[];
+	codeBlock?: {
+		language: string;
+		filename: string;
+		code: string;
+	};
+}
+
 type PageProps = {
 	params: Promise<{ slug: string }>;
 };
@@ -86,20 +96,48 @@ export default async function BlogArticlePage({ params }: PageProps) {
 							</p>
 						</div>
 						<div className="mt-14 space-y-14">
-							{article.sections.map((section) => (
+							{(article.sections as readonly BlogSection[]).map((section) => (
 								<section key={section.heading}>
-									<h2 className="font-display text-3xl font-normal text-foreground">
+									<h2 className="font-display text-2xl md:text-3xl font-normal text-foreground">
 										{section.heading}
 									</h2>
 									<div className="mt-6 space-y-5">
-										{section.body.map((paragraph) => (
-											<p
-												key={paragraph}
-												className="text-base leading-8 text-muted-foreground">
-												{paragraph}
-											</p>
-										))}
+										{section.body.map((paragraph: string, pIdx: number) => {
+											// Parse inline markdown code highlights
+											const parts = paragraph.split(/(`[^`]+`)/g);
+											return (
+												<p
+													key={pIdx}
+													className="text-base leading-8 text-muted-foreground">
+													{parts.map((part, partIdx) => {
+														if (part.startsWith("`") && part.endsWith("`")) {
+															return (
+																<code key={partIdx} className="rounded bg-secondary/50 px-1.5 py-0.5 font-mono text-xs text-amber font-semibold border border-border/40">
+																	{part.slice(1, -1)}
+																</code>
+															);
+														}
+														return part;
+													})}
+												</p>
+											);
+										})}
 									</div>
+
+									{/* Render Code Block if defined in schema */}
+									{section.codeBlock && (
+										<div className="mt-6 overflow-hidden rounded-lg border border-border bg-[#0d0d0d] font-mono text-[11px] leading-relaxed shadow-lg">
+											{section.codeBlock.filename && (
+												<div className="bg-zinc-950 px-4 py-2 border-b border-border/80 text-[10px] text-muted-foreground tracking-wide flex justify-between select-none">
+													<span>{section.codeBlock.filename}</span>
+													<span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
+												</div>
+											)}
+											<pre className="p-4 overflow-x-auto text-zinc-300">
+												<code>{section.codeBlock.code}</code>
+											</pre>
+										</div>
+									)}
 								</section>
 							))}
 						</div>

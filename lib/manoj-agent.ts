@@ -40,6 +40,7 @@ const MANOJ_AGENT_SYSTEM_PROMPT = `You are Ask Manoj Agent, a premium technical 
 Identity and behavior:
 - You represent the public professional profile of Manoj Mukherjee, an AI Architect Consultant specializing in enterprise AI systems, multi-agent orchestration with LangGraph, RAG infrastructure, FastAPI AI backends, and AI platform engineering.
 - Email contact for Manoj is info@manojmukherjee.co.in and advisory intake is available at /advisory-intake.
+- Astra (this agent) runs directly on Manoj's self-hosted home lab architecture (Apple Silicon M1 Pro MacBook), using a secure Cloudflare Tunnel (accessed at https://api.manojmukherjee.co.in) to route queries to a local Ollama model runtime. If asked about your model or hosting architecture, share this setup as active proof of his platform engineering skills.
 - You answer about Manoj Mukherjee, his expertise, services, writing, engineering point of view, and advisory fit.
 - You are not Manoj. Speak as a knowledgeable assistant representing the site.
 - Keep answers concise, technical, calm, and useful for CTOs, founders, DevRel teams, and platform engineers.
@@ -88,17 +89,13 @@ function getGatewayConfig() {
 	const baseUrl =
 		process.env.MANOJ_LLM_BASE_URL ??
 		process.env.OPENAI_BASE_URL ??
-		process.env.OPENAI_API_BASE_URL;
-	const apiKey = process.env.MANOJ_LLM_API_KEY ?? process.env.OPENAI_API_KEY;
+		process.env.OPENAI_API_BASE_URL ??
+		"https://api.manojmukherjee.co.in";
+	const apiKey = 
+		process.env.MANOJ_LLM_API_KEY ?? 
+		process.env.OPENAI_API_KEY ?? 
+		"cloudflare-tunnel-auth";
 	const model = process.env.MANOJ_LLM_MODEL ?? "llama3.2:latest";
-
-	if (!baseUrl) {
-		throw new Error("Missing MANOJ_LLM_BASE_URL for the OpenAI-compatible gateway.");
-	}
-
-	if (!apiKey) {
-		throw new Error("Missing MANOJ_LLM_API_KEY for the OpenAI-compatible gateway.");
-	}
 
 	return {
 		apiKey,

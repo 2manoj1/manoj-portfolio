@@ -46,6 +46,11 @@ export const blogArticles = [
 					"Model the workflow as a graph with explicit nodes for planning, retrieval, tool execution, validation, human review, and final response generation. Add a checkpointer before production rollout, define thread identifiers for business workflows, and make every side effect idempotent.",
 					"The credibility angle is simple: enterprise buyers do not want magical agents. They want systems that can explain where execution paused, why a tool was called, what state was approved, and how the workflow resumes after failure.",
 				],
+				codeBlock: {
+					language: "python",
+					filename: "agent_runtime.py",
+					code: `from langgraph.checkpoint.postgres import PostgresSaver\nfrom langgraph.prebuilt import create_react_agent\n\n# Configure persistent state checkpointer\nmemory = PostgresSaver(conn_string)\n\n# Instantiate stateful runtime with memory checkpoints\nagent_executor = create_react_agent(\n    model=local_ollama_model,\n    tools=[search_retrieval_tool],\n    checkpointer=memory\n)\n\n# Invoke thread runtime sessions dynamically\nconfig = {"configurable": {"thread_id": "session-8012"}}\nfor chunk in agent_executor.stream({"messages": [("user", "Run eval")]}, config):\n    print(chunk)`
+				}
 			},
 		],
 		references: [
@@ -110,6 +115,11 @@ export const blogArticles = [
 					"Start with an allowlisted tool registry, explicit schemas, environment isolation, identity-aware access, structured audit logs, and human confirmation for high-risk operations. Add prompt-injection tests that simulate malicious resource content and misleading tool descriptions.",
 					"The strongest positioning is practical: MCP can accelerate agent integration, but only when tool discovery, permissions, context movement, and audit trails are engineered deliberately.",
 				],
+				codeBlock: {
+					language: "json",
+					filename: "mcp_security_policy.json",
+					code: `{\n  "role": "enterprise-agent-runtime",\n  "tool_permissions": {\n    "read_only_resources": ["allow"],\n    "write_operations": ["require_approval"],\n    "administrative_actions": ["deny"]\n  },\n  "trusted_servers": [\n    "https://api.manojmukherjee.co.in/mcp"\n  ]\n}`
+				}
 			},
 		],
 		references: [

@@ -14,7 +14,6 @@ import {
 	Minimize2,
 	PanelRightOpen,
 	ShieldCheck,
-	Sparkles,
 	StopCircle,
 	X,
 } from "lucide-react";
@@ -77,23 +76,29 @@ function StatusLine({
 	isLoading: boolean;
 	status?: string;
 }) {
-	const label = isLoading
-		? status
-			? "Astra is composing"
-			: "Astra is thinking"
-		: "Powered by AI | Grounded by Manoj's context";
-
 	return (
-		<div className="flex h-5 items-center gap-2 text-xs text-white/42">
-			{isLoading ? (
-				<span className="relative flex size-3 items-center justify-center">
-					<span className="absolute size-3 rounded-full bg-amber/50 animate-ping" />
-					<span className="relative size-1.5 rounded-full bg-amber" />
+		<div className="flex h-5 items-center justify-between text-[10px] font-mono uppercase tracking-wider text-white/40 w-full select-none">
+			<div className="flex items-center gap-2">
+				{isLoading ? (
+					<span className="relative flex size-2 items-center justify-center">
+						<span className="absolute size-2 rounded-full bg-amber/55 animate-ping" />
+						<span className="relative size-1 rounded-full bg-amber" />
+					</span>
+				) : (
+					<ShieldCheck className="size-3.5 text-amber/80" />
+				)}
+				<span className="truncate">
+					{isLoading 
+						? (status ?? "Astra is routing...") 
+						: "Home Lab Active: api.manojmukherjee.co.in"}
 				</span>
-			) : (
-				<ShieldCheck className="size-3.5" />
+			</div>
+			{!isLoading && (
+				<div className="hidden sm:flex items-center gap-3 text-white/25">
+					<span>Host: Apple Silicon M1 Pro</span>
+					<span>Latency: ~1.2s</span>
+				</div>
 			)}
-			<span className="truncate">{label}</span>
 		</div>
 	);
 }

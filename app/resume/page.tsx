@@ -76,7 +76,7 @@ export default function ResumePage() {
 						</div>
 						<h2 className="text-sm font-semibold text-foreground">Interactive PDF View</h2>
 						<p className="text-[11px] text-muted-foreground mt-2.5 max-w-[32ch] leading-relaxed">
-							Mobile browsers don't always support smooth interactive PDF scrolling. For the best reading experience, open the PDF directly or download a copy.
+							Mobile browsers don&apos;t always support smooth interactive PDF scrolling. For the best reading experience, open the PDF directly or download a copy.
 						</p>
 
 						<div className="mt-8 flex flex-col gap-2.5 w-full max-w-[260px]">

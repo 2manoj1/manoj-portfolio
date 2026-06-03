@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, FileText, GraduationCap } from "lucide-react";
 import { awards, proofMetrics, stackKeywords, testimonials } from "@/content/site";
 import { CtaBand } from "@/components/marketing/cta-band";
-import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
+import { Section, SectionHeader } from "@/components/marketing/section";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
 import { CareerJourneySection } from "@/components/marketing/career-journey";
 import { Button } from "@/components/ui/button";
@@ -104,8 +104,8 @@ export default function AboutPage() {
 								<figure className="mx-auto md:mx-0 flex items-center -mt-16 md:-mt-24 z-20 relative">
 									<div className="relative w-36 h-36 md:w-48 md:h-48 overflow-hidden rounded-2xl border-4 border-background bg-secondary/30 shadow-2xl shadow-black/30">
 										<Image
-											src="/manoj_speaking.jpg"
-											alt="Manoj Mukherjee presenting at a systems conference"
+											src="/mm.png"
+											alt="Manoj Mukherjee AI Systems Architect profile photo"
 											fill
 											sizes="(max-width: 768px) 144px, 192px"
 											className="object-cover object-center scale-105"
@@ -194,7 +194,7 @@ export default function AboutPage() {
 									</div>
 									<div className="mt-1">
 										<p className="font-mono text-[9px] uppercase tracking-widest text-amber">
-											Let's Connect
+											Let&apos;s Connect
 										</p>
 										<p className="text-[10px] text-muted-foreground mt-0.5 whitespace-nowrap">
 											Scan on mobile
