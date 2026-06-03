@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 		"AI leadership",
 		"LLM Engineer",
 		"Github/2manoj1",
-		"manojmukherjee777@gmail.com",
+		"info@manojmukherjee.co.in",
 		"Manoj Mukherjee LinkedIn",
 		"Manoj Mukherjee GitHub",
 		"Manoj Mukherjee Medium",

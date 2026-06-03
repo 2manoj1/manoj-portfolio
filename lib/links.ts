@@ -4,6 +4,6 @@ const MEDIUM = "https://medium.com/@manojmukherjee777";
 const GITHUB = "https://github.com/2manoj1";
 const GOOGLE_SCHOLAR =
 	"https://scholar.google.com/citations?user=he1gsYkAAAAJ&hl=en";
-const EMAIL = "info@manojmukherjee.co.in  ";
+const EMAIL = "info@manojmukherjee.co.in";
 
 export { CALENDLY, LINKEDIN, MEDIUM, GITHUB, GOOGLE_SCHOLAR, EMAIL };

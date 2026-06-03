@@ -130,6 +130,12 @@ function createToolEventWriter(writer: UIMessageStreamWriter<UIMessage>) {
 
 		if (event.status === "started") {
 			writer.write({
+				type: "data-status",
+				data: { label: event.label },
+				transient: true,
+			});
+
+			writer.write({
 				type: "tool-input-available",
 				toolCallId,
 				toolName: event.name,
@@ -221,12 +227,11 @@ export async function POST(req: Request) {
 
 				writer.write({ type: "text-end", id: textId });
 			} catch (error) {
+				console.error("Manoj agent chat route failed", error);
 				writer.write({
 					type: "error",
 					errorText:
-						error instanceof Error
-							? error.message
-							: "The Manoj agent failed before completing the response.",
+						"Astra could not complete the grounded response. Please try again in a moment.",
 				});
 			}
 		},

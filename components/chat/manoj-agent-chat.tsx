@@ -97,15 +97,23 @@ function StatusLine({
 	);
 }
 
-function ThinkingInline({ className }: { className?: string }) {
+function ThinkingInline({
+	status,
+	className,
+}: {
+	status?: string;
+	className?: string;
+}) {
 	return (
 		<div
 			className={cn(
-				"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-sm text-white/60",
+				"inline-flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-2.5 text-sm text-white/70 shadow-sm animate-pulse",
 				className,
 			)}>
 			<Loader2 className="size-3.5 animate-spin text-amber" />
-			<span>Astra is thinking</span>
+			<span className="font-mono text-xs tracking-wide">
+				{status ?? "Astra is thinking..."}
+			</span>
 		</div>
 	);
 }
@@ -113,18 +121,21 @@ function ThinkingInline({ className }: { className?: string }) {
 function MessageParts({
 	message,
 	isStreaming,
+	status,
 	mode,
 }: {
 	message: UIMessage;
 	isStreaming: boolean;
+	status?: string;
 	mode: "widget" | "page";
 }) {
 	const textParts = message.parts.filter((part) => part.type === "text");
 	const isAssistant = message.role === "assistant";
 
-	console.log("Rendering message parts", { textParts, isStreaming });
-
 	if (isAssistant) {
+		const hasTextContent = textParts.some(
+			(part) => part.text && part.text.trim().length > 0,
+		);
 		return (
 			<div
 				className={cn(
@@ -134,7 +145,7 @@ function MessageParts({
 				<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-white/38">
 					<span>{agentName}</span>
 				</div>
-				{textParts.length ? (
+				{hasTextContent ? (
 					<div className="max-w-full space-y-3">
 						{textParts.map((part, index) => (
 							<MessageResponse
@@ -145,7 +156,7 @@ function MessageParts({
 						))}
 					</div>
 				) : isStreaming ? (
-					<ThinkingInline />
+					<ThinkingInline status={status} />
 				) : null}
 			</div>
 		);
@@ -520,14 +531,20 @@ export function AstraChatSurface({
 								<MessageParts
 									message={message}
 									isStreaming={isLoading && message === messages.at(-1)}
+									status={currentStatus}
 									mode={mode}
 								/>
 							</div>
 						))}
 						{isLoading && visibleMessages.at(-1)?.role === "user" ? (
-							<div className="flex items-start gap-3">
+							<div className="flex min-w-0 items-start gap-3">
 								<AgentAvatar className="mt-0.5 size-8" />
-								<ThinkingInline />
+								<div className="min-w-0 flex-1 text-sm leading-6 text-white/82">
+									<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-white/38">
+										<span>{agentName}</span>
+									</div>
+									<ThinkingInline status={currentStatus} />
+								</div>
 							</div>
 						) : null}
 						{error && !isLoading ? (
