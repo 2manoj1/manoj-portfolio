@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ComponentType } from "react";
+import { useState } from "react";
 import { 
   ArrowRight, 
   Settings, 
@@ -10,6 +10,7 @@ import {
   Terminal, 
   Activity, 
   Play, 
+  CheckCircle,
   AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,7 +19,7 @@ type SystemNode = {
   id: string;
   label: string;
   role: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: any;
   input: string;
   output: string;
   metrics: string;
@@ -260,56 +261,9 @@ const labSystems: Record<string, TabData> = {
 export function LabDashboard() {
   const [activeTab, setActiveTab] = useState<"langgraph" | "rag" | "fastapi">("langgraph");
   const [selectedNodeId, setSelectedNodeId] = useState<string>("cloudflare");
-  const [isTunnelOnline, setIsTunnelOnline] = useState<boolean | null>(null);
-  
-  // Simulation states
-  const [isSimulating, setIsSimulating] = useState(false);
-  const [simulationStep, setSimulationStep] = useState(0);
-
-  useEffect(() => {
-    const checkTunnel = async () => {
-      try {
-        const res = await fetch("https://api.manojmukherjee.co.in/v1/models", {
-          method: "GET",
-          mode: "cors",
-          signal: AbortSignal.timeout(1800),
-        });
-        setIsTunnelOnline(res.ok);
-      } catch {
-        // Fallback to active/online if CORS blocks or timing out, representing standby/online
-        setIsTunnelOnline(true);
-      }
-    };
-    checkTunnel();
-  }, []);
 
   const system = labSystems[activeTab];
   const selectedNode = system.nodes.find(n => n.id === selectedNodeId) || system.nodes[0];
-
-  // Simulation controls
-  function startSimulation() {
-    if (isSimulating) return;
-    setIsSimulating(true);
-    setSimulationStep(0);
-    setSelectedNodeId(system.nodes[0].id);
-  }
-
-  useEffect(() => {
-    if (!isSimulating) return;
-
-    const timer = setTimeout(() => {
-      const nextStep = simulationStep + 1;
-      if (nextStep < system.nodes.length) {
-        setSimulationStep(nextStep);
-        setSelectedNodeId(system.nodes[nextStep].id);
-      } else {
-        setIsSimulating(false);
-        setSimulationStep(0);
-      }
-    }, 1600);
-
-    return () => clearTimeout(timer);
-  }, [isSimulating, simulationStep, system.nodes]);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_minmax(20rem,0.48fr)]">
@@ -324,8 +278,6 @@ export function LabDashboard() {
                 onClick={() => {
                   setActiveTab(tab);
                   setSelectedNodeId(labSystems[tab].nodes[0].id);
-                  setIsSimulating(false);
-                  setSimulationStep(0);
                 }}
                 className={cn(
                   "rounded-lg px-4 py-2 text-xs font-mono font-medium transition-colors",
@@ -340,32 +292,12 @@ export function LabDashboard() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={startSimulation}
-              disabled={isSimulating}
-              className={cn(
-                "flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-all hover:bg-secondary/80 hover:text-foreground disabled:opacity-60",
-                isSimulating && "text-amber border-amber bg-amber/5 animate-pulse"
-              )}
-            >
-              <Play className="size-3 fill-current" />
-              {isSimulating ? `Running Step ${simulationStep + 1}...` : "Simulate Flow"}
-            </button>
-            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground/80">
-              <span className="relative flex size-2">
-                <span className={cn(
-                  "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
-                  isTunnelOnline === null ? "bg-amber-400/80" : isTunnelOnline ? "bg-emerald-400/80" : "bg-rose-400/80"
-                )} />
-                <span className={cn(
-                  "relative inline-flex size-2 rounded-full",
-                  isTunnelOnline === null ? "bg-amber-500" : isTunnelOnline ? "bg-emerald-500" : "bg-rose-500"
-                )} />
-              </span>
-              {isTunnelOnline === null ? "Connecting Lab..." : isTunnelOnline ? "Home Lab: Online" : "Home Lab: Standby"}
-            </div>
+          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground/80">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+            </span>
+            System Live & Mock-Traced
           </div>
         </div>
 
@@ -429,14 +361,7 @@ export function LabDashboard() {
 
         <div className="mt-5 flex-1 space-y-6">
           <div>
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-amber/80 uppercase tracking-widest">{selectedNode.role}</span>
-              {isSimulating && selectedNode.id === system.nodes[simulationStep].id && (
-                <span className="rounded bg-amber/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wide text-amber border border-amber/20 animate-pulse">
-                  Step {simulationStep + 1}
-                </span>
-              )}
-            </div>
+            <span className="font-mono text-[10px] text-amber/80 uppercase tracking-widest">{selectedNode.role}</span>
             <h4 className="mt-1 text-lg font-medium text-foreground">{selectedNode.label}</h4>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">{selectedNode.description}</p>
           </div>
