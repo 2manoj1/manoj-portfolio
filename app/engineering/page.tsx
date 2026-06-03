@@ -1,4 +1,5 @@
 import { SystemCard } from "@/components/marketing/cards";
+import { ArchitectureDecisionMap } from "@/components/marketing/architecture-decision-map";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
 import { engineeringSystems, stackKeywords } from "@/content/site";
@@ -23,7 +24,7 @@ export default function EngineeringPage() {
 				<SectionHeader
 					kicker="System Maps"
 					title="Architecture patterns for AI-native products."
-					description="Each pattern has different failure modes, scaling concerns, and observability needs. The common thread is explicit system design."
+					description="Each pattern I deploy features distinct tradeoffs, failure modes, and observability telemetry. The common thread is explicit, deterministic system layout."
 				/>
 				<div className="mt-14 grid gap-3 lg:grid-cols-3">
 					{engineeringSystems.map((system) => (
@@ -32,15 +33,17 @@ export default function EngineeringPage() {
 							title={system.title}
 							description={system.description}
 							flow={system.flow}
+							tradeoffs={system.tradeoffs}
 						/>
 					))}
 				</div>
+				<ArchitectureDecisionMap />
 			</Section>
 			<Section className="border-y border-border">
 				<SectionHeader
 					kicker="Stack"
 					title="Hands-on where modern AI platforms actually break."
-					description="The stack is intentionally broad because production AI is a cross-layer problem: app, API, retrieval, model runtime, deployment, observability, and developer adoption."
+					description="My stack is broad by design because I treat production AI as a cross-layer problem spanning API services, retrieval, model runtime, infrastructure deployment, and team adoption."
 				/>
 				<div className="mt-12 flex flex-wrap gap-2">
 					{stackKeywords.map((keyword) => (

@@ -403,7 +403,7 @@ ${careerLines}
 
 ## Awards
 
-${awards.map((award) => `- ${award}`).join("\n")}`;
+${awards.map((award) => `- ${award.title} (${award.issuer})`).join("\n")}`;
 	});
 }
 

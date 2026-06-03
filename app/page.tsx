@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArchitectureBlueprint } from "@/components/marketing/architecture-blueprint";
-import { ArchitectureDecisionMap } from "@/components/marketing/architecture-decision-map";
 import { ServiceCard, SystemCard } from "@/components/marketing/cards";
 import { CareerJourneySection } from "@/components/marketing/career-journey";
 import { CtaBand } from "@/components/marketing/cta-band";
@@ -13,6 +12,7 @@ import { Section, SectionHeader } from "@/components/marketing/section";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
 import {
   articles,
+  careerJourneyCompact,
   engineeringSystems,
   proofMetrics,
   services,
@@ -128,7 +128,7 @@ export default function Home() {
           />
         </MotionReveal>
         <div className="mt-14 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {services.slice(0, 6).map((service, index) => (
+          {services.slice(0, 3).map((service, index) => (
             <MotionReveal key={service.slug} delay={index * 0.03}>
               <ServiceCard
                 href={`/services/${service.slug}`}
@@ -140,6 +140,16 @@ export default function Home() {
             </MotionReveal>
           ))}
         </div>
+        <MotionReveal>
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/services">
+                View All Consulting Services
+                <ArrowRight className="size-4 ml-1" />
+              </Link>
+            </Button>
+          </div>
+        </MotionReveal>
       </Section>
 
       <Section className="border-y border-border bg-secondary/20">
@@ -162,7 +172,16 @@ export default function Home() {
             </MotionReveal>
           ))}
         </div>
-        <ArchitectureDecisionMap />
+        <MotionReveal>
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/engineering">
+                Explore Engineering Details & Decision Map
+                <ArrowRight className="size-4 ml-1" />
+              </Link>
+            </Button>
+          </div>
+        </MotionReveal>
       </Section>
 
       <CtaBand
@@ -190,7 +209,7 @@ export default function Home() {
         </MotionReveal>
       </Section>
 
-      <CareerJourneySection />
+      <CareerJourneySection items={careerJourneyCompact} showMoreButton={true} />
 
       <Section className="border-y border-border">
         <MotionReveal>
@@ -214,7 +233,7 @@ export default function Home() {
           />
         </MotionReveal>
         <div className="mt-14 divide-y divide-border">
-          {articles.map((article) => (
+          {articles.slice(0, 3).map((article) => (
             <a
               key={article.title}
               href={article.url}
@@ -234,6 +253,16 @@ export default function Home() {
             </a>
           ))}
         </div>
+        <MotionReveal>
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/blog">
+                Read All Writing
+                <ArrowRight className="size-4 ml-1" />
+              </Link>
+            </Button>
+          </div>
+        </MotionReveal>
       </Section>
 
       <CtaBand

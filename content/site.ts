@@ -8,18 +8,18 @@ export const siteConfig = {
 	role: "AI Architect Consultant",
 	email: "info@manojmukherjee.co.in",
 	profileLinks: {
-		linkedin: "https://www.linkedin.com/in/manojmukherjee777/",
+		linkedin: "https://www.linkedin.com/in/manoj-mukherjee/",
 		github: "https://github.com/2manoj1",
 		twitter: "https://twitter.com/2manoj1",
-		medium: "https://manojmukherjee777.medium.com/",
-		googleScholar: "https://scholar.google.com/citations?user=abcd1234"
+		medium: "https://medium.com/@manojmukherjee777",
+		googleScholar: "https://scholar.google.com/citations?user=he1gsYkAAAAJ&hl=en"
 	},
 };
 
 export const proofMetrics = [
-	{ value: "10+", label: "years enterprise engineering" },
+	{ value: "10+", label: "years in Systems & AI Engineering" },
+	{ value: "50+", label: "AI architectures reviewed" },
 	{ value: "AI L2", label: "Publicis Sapient AI Engineer certification" },
-	{ value: "69.7K", label: "technical impressions in 12 months" },
 	{ value: "2.8K", label: "LinkedIn technical audience" },
 ];
 
@@ -111,7 +111,7 @@ export const services = [
 		buyerPain:
 			"AI roadmap is moving faster than the architecture decisions behind it.",
 		description:
-			"Senior architecture guidance for teams moving AI products from vague ambition to production operating model.",
+			"I provide senior architecture guidance for teams moving AI products from vague ambition to a production-ready operating model.",
 		outcomes: [
 			"Clarify system boundaries, platform choices, and delivery risk",
 			"Define POC-to-production roadmap for AI-native products",
@@ -133,7 +133,7 @@ export const services = [
 		buyerPain:
 			"Agent workflows work in demos but become opaque, brittle, or hard to debug in production.",
 		description:
-			"Design agentic workflows with explicit state, routing, memory, fallbacks, and human-in-the-loop control.",
+			"I help you design agentic workflows with explicit state, deterministic routing, short/long-term memory, robust fallbacks, and human-in-the-loop validation gates.",
 		outcomes: [
 			"Model agent workflows as debuggable state machines",
 			"Reduce brittle tool-calling and hidden orchestration behavior",
@@ -155,7 +155,7 @@ export const services = [
 		buyerPain:
 			"Retrieval quality, grounding, latency, or hallucination risk is blocking trust.",
 		description:
-			"Improve retrieval quality, grounding, latency, and trust for knowledge-heavy AI systems.",
+			"I optimize retrieval quality, precision grounding, querying latency, and user trust for knowledge-heavy, vector-driven AI systems.",
 		outcomes: [
 			"Design hybrid retrieval and pgvector indexing strategy",
 			"Improve chunking, ranking, grounding, and answer quality",
@@ -177,7 +177,7 @@ export const services = [
 		buyerPain:
 			"Prototype code needs to become a maintainable AI backend and deployment path.",
 		description:
-			"Build maintainable backend infrastructure for AI products with clear APIs, async workloads, and deployment discipline.",
+			"I build maintainable backend systems for AI platforms, leveraging async FastAPI workflows, structured schemas, queue-based workers, and robust cloud/container topologies.",
 		outcomes: [
 			"Ship FastAPI AI services with production contracts",
 			"Design queues, traces, workers, model gateways, and cost controls",
@@ -199,7 +199,7 @@ export const services = [
 		buyerPain:
 			"Technical buyers need implementation-grade proof before they believe the platform story.",
 		description:
-			"Turn complex AI infrastructure into credible technical content, reference apps, and adoption assets.",
+			"I turn complex AI infrastructure products into credible reference architectures, production-grade templates, and developer adoption assets.",
 		outcomes: [
 			"Build reference architectures and demos that developers trust",
 			"Create technical writing that speaks to senior engineers",
@@ -221,7 +221,7 @@ export const services = [
 		buyerPain:
 			"The team needs senior architecture judgment before full-time AI leadership is justified.",
 		description:
-			"Add senior AI architecture judgment to your team without hiring full-time leadership before the need is proven.",
+			"I join your team as a fractional architect to bring senior solutions judgment, review infrastructure plans, and mentor builders before a full-time hire is needed.",
 		outcomes: [
 			"Review architecture and unblock technical decisions",
 			"Mentor engineers on AI-native delivery patterns",
@@ -267,15 +267,106 @@ export const engineeringSystems = [
 
 export const careerJourney = [
 	{
+		period: "2023-Present",
+		title: "Technical Lead / AI Architect",
+		company: "Publicis Sapient",
+		logos: ["/logos/publicis_sapient.webp"],
+		summary:
+			"I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption.",
+		productionSignal:
+			"I design production AI systems optimized for retrieval precision, structured agent state, observability, low latency, token costs, and engineering team adoption.",
+		stack: ["LangGraph", "Agentic RAG", "pgvector", "FastAPI", "Kubernetes", "NVIDIA Run:AI"],
+	},
+	{
+		period: "2022-2023",
+		title: "Chief Manager (SDE III)",
+		company: "Kotak Mahindra Bank",
+		logos: ["/logos/kotak_mahindra_bank_logo.webp"],
+		summary:
+			"I operated closer to core architecture and solution design, directing research and development, vendor evaluations, and high-stakes banking platform reviews for the Kotak811 digital banking platform. I led mobile application development and secured mobile integrations including UPI 2.0.",
+		productionSignal:
+			"I developed a strong judgment around regulated banking constraints, secure API design, multi-stakeholder alignment, and critical CTO-level architecture tradeoffs.",
+		stack: ["React Native", "TypeScript", "UPI 2.0", "Security", "Architecture"],
+	},
+	{
+		period: "2021-2022",
+		title: "Software Engineer III",
+		company: "A.P. Moller - Maersk",
+		logos: ["/logos/maersk_group_logo.webp"],
+		summary:
+			"I built scalable microfrontend systems using Module Federation and React/Next.js. I spearheaded early adoption of Next.js Module Federation (next-mf) and SSR, improving page load speeds by 25–30% and evolving the Anchor Design System.",
+		productionSignal:
+			"I established modular, independently deployable microfrontend strategies across distributed enterprise teams, improving code reusability.",
+		stack: ["Next.js", "Module Federation", "React", "SSR", "Design Systems"],
+	},
+	{
+		period: "2020-2021",
+		title: "Senior Software Engineer / Founding Engineer",
+		company: "Krista Software",
+		logos: ["/logos/antbrains_logo.webp"],
+		summary:
+			"I contributed as a founding member of the core engineering team for an AI-driven process automation platform. I built cross-platform mobile and web applications using the Ionic Framework and participated in core scalability reviews.",
+		productionSignal:
+			"I designed and scaled workflow automation interfaces, enabling rapid user adoption and earning the Krista Excellence GA Award.",
+		stack: ["Ionic", "Angular", "AI Automation", "Mobile", "Web Systems"],
+	},
+	{
+		period: "2019-2020",
+		title: "Software Engineer",
+		company: "Optiv Inc",
+		logos: ["/logos/optiv_inc_logo.webp"],
+		summary:
+			"I developed enterprise cybersecurity platforms and analytics dashboards using React, Redux, GraphQL, and Node.js. I optimized frontend builds, reducing bundle sizes, and managed Express.js backend services with MongoDB.",
+		productionSignal:
+			"I delivered secure analytics panels with strict SLA adherence for production issue diagnostics, CI/CD integrations, and GraphQL API design.",
+		stack: ["React", "GraphQL", "Node.js", "Express", "MongoDB", "Redux"],
+	},
+	{
+		period: "2018-2019",
+		title: "Software Engineer I",
+		company: "Hewlett Packard Enterprise",
+		logos: ["/logos/hewlett_packard_enterprise_logo.webp"],
+		summary:
+			"I built hybrid cloud service management interfaces for enterprise products including HPE OpenSphere and HPE GreenLake using React and Redux, collaborating closely with Golang-based distributed backend teams.",
+		productionSignal:
+			"I contributed to the open-source Grommet design system, improving usability, accessibility, and UI consistency across hybrid cloud services.",
+		stack: ["React", "Redux", "Grommet", "Hybrid Cloud", "Distributed Systems"],
+	},
+	{
 		period: "2016-2018",
-		title: "Product Engineering Foundations",
+		title: "Software Engineer",
 		company: "William O'Neil India",
 		logos: ["/logos/william_oneil.webp"],
 		summary:
-			"Built production web features for Panaray, a stock market research and analytics platform, while learning frontend architecture, BFF services, state management, and performance from the ground up.",
+			"I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services.",
 		productionSignal:
-			"Shipped customer-facing analytics software where reliability, market data workflows, and UI performance mattered.",
-		stack: ["React", "Redux Saga", "Node.js", "Express", "Analytics"],
+			"I established the frontend codebase and CI/CD pipelines from scratch, rendering real-time market data charts and mentoring junior engineers.",
+		stack: ["React", "Redux Saga", "Node.js", "Express", "Financial Charts"],
+	},
+] as const;
+
+export const careerJourneyCompact = [
+	{
+		period: "2023-Present",
+		title: "Technical Lead / AI Architect",
+		company: "Publicis Sapient",
+		logos: ["/logos/publicis_sapient.webp"],
+		summary:
+			"I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths.",
+		productionSignal:
+			"I design production AI systems optimized for retrieval precision, structured agent state, observability, low latency, token costs, and engineering team adoption.",
+		stack: ["LangGraph", "Agentic RAG", "pgvector", "FastAPI", "Kubernetes"],
+	},
+	{
+		period: "2022-2023",
+		title: "Chief Manager (SDE III)",
+		company: "Kotak Mahindra Bank",
+		logos: ["/logos/kotak_mahindra_bank_logo.webp"],
+		summary:
+			"I operated closer to core architecture and solution design, directing research and development, vendor evaluations, and high-stakes banking platform reviews for the Kotak811 digital banking platform.",
+		productionSignal:
+			"I developed a strong judgment around regulated banking constraints, secure API design, multi-stakeholder alignment, and critical CTO-level architecture tradeoffs.",
+		stack: ["React Native", "TypeScript", "UPI", "Security", "Architecture"],
 	},
 	{
 		period: "2018-2022",
@@ -288,32 +379,21 @@ export const careerJourney = [
 			"/logos/maersk_group_logo.webp",
 		],
 		summary:
-			"Moved from application delivery into platform thinking: hybrid cloud UIs, cybersecurity dashboards, automation products, microfrontends, SSR, and design-system contribution.",
+			"I moved from standard application delivery to platform engineering. I built hybrid cloud UIs, cybersecurity dashboards, and automation tooling while designing microfrontends, server-side rendering patterns, and sharing components across enterprise design systems.",
 		productionSignal:
-			"Worked across enterprise environments where architecture decisions affected teams, release models, maintainability, and operational confidence.",
+			"I worked across scale enterprise environments where architecture decisions directly impacted developer onboarding, release cadences, system maintainability, and operational confidence.",
 		stack: ["Next.js", "Module Federation", "GraphQL", "Microfrontends", "Cloud"],
 	},
 	{
-		period: "2022-2023",
-		title: "Architecture & Leadership Track",
-		company: "Kotak Mahindra Bank",
-		logos: ["/logos/kotak_mahindra_bank_logo.webp"],
+		period: "2016-2018",
+		title: "Software Engineer",
+		company: "William O'Neil India",
+		logos: ["/logos/william_oneil.webp"],
 		summary:
-			"Operated closer to architecture, R&D, vendor guidance, and high-stakes banking platform discussions while contributing to secure digital product delivery.",
+			"I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services from scratch.",
 		productionSignal:
-			"Built judgment around regulated product constraints, stakeholder alignment, security expectations, and CTO-level tradeoffs.",
-		stack: ["React Native", "TypeScript", "UPI", "Security", "Architecture"],
-	},
-	{
-		period: "2023-Present",
-		title: "AI Systems Architecture",
-		company: "Publicis Sapient",
-		logos: ["/logos/publicis_sapient.webp"],
-		summary:
-			"Now architecting enterprise-grade GenAI platforms using Agentic RAG, LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and cloud-native deployment paths.",
-		productionSignal:
-			"Designs AI systems around retrieval quality, agent state, evaluation, observability, latency, deployment topology, and engineering adoption.",
-		stack: ["LangGraph", "Agentic RAG", "pgvector", "FastAPI", "Kubernetes"],
+			"I shipped customer-facing financial analytics software where reliability, high-frequency market data workflows, and rendering performance were critical.",
+		stack: ["React", "Redux Saga", "Node.js", "Express", "Analytics"],
 	},
 ] as const;
 
@@ -345,6 +425,18 @@ export const architectureDecisionMap = [
 ] as const;
 
 export const caseStudies = [
+	{
+		slug: "production-grade-ai-home-lab",
+		title: "Production-Grade AI Home Lab Platform",
+		problem:
+			"Designed and built an end-to-end, 100% self-hosted local AI platform running on Apple Silicon (MacBook M1 Pro) to serve low-latency inference with zero external cloud dependencies.",
+		decisions: [
+			"Integrated LangGraphJS for stateful multi-agent orchestration and tool control loops",
+			"Configured Cloudflare Tunnels (WAF + Tunnel) for secure, zero-open-port ingress",
+			"Engineered an OpenAI-compatible FastAPI gateway proxy routing queries to local Ollama and MLX model runtimes"
+		],
+		metrics: ["LangGraphJS", "FastAPI Gateway", "Ollama/MLX", "Qdrant", "Cloudflare"],
+	},
 	{
 		slug: "enterprise-agentic-rag-platform",
 		title: "Enterprise Agentic RAG Platform",
@@ -414,13 +506,46 @@ export const articles = [
 ] as const;
 
 export const awards = [
-	"Publicis Sapient AI Engineer Level 2",
-	"Top Gun Academy - Solution Architecture",
-	"ASPIRE Speed Hackathon 2024 GenAI Semifinalist",
-	"FS West Supernova",
-	"Maersk Star Award",
-	"William O'Neil Certificate of Excellence",
-	"University 3rd Rank in BCA(H)",
+	{
+		title: "AI Engineer Level 2 Certification",
+		issuer: "Publicis Sapient",
+		logo: "/logos/publicis_sapient.webp"
+	},
+	{
+		title: "Top Gun Academy — Solution Architecture",
+		issuer: "Publicis Sapient",
+		logo: "/logos/publicis_sapient.webp"
+	},
+	{
+		title: "ASPIRE Speed Hackathon 2024 GenAI Semifinalist",
+		issuer: "Publicis Sapient",
+		logo: "/logos/publicis_sapient.webp"
+	},
+	{
+		title: "FS West Supernova Award",
+		issuer: "Publicis Sapient",
+		logo: "/logos/publicis_sapient.webp"
+	},
+	{
+		title: "Maersk Star Award",
+		issuer: "A.P. Moller - Maersk",
+		logo: "/logos/maersk_group_logo.webp"
+	},
+	{
+		title: "Krista Excellence Award",
+		issuer: "Krista Software",
+		logo: "/logos/antbrains_logo.webp"
+	},
+	{
+		title: "William O'Neil Certificate of Excellence",
+		issuer: "William O'Neil India",
+		logo: "/logos/william_oneil.webp"
+	},
+	{
+		title: "University 3rd Rank in BCA (Honours)",
+		issuer: "University of Burdwan",
+		icon: "GraduationCap"
+	}
 ];
 
 export const testimonials = [
@@ -494,10 +619,12 @@ export const routes = [
 	{ href: "/", label: "Home", priority: 1 },
 	{ href: "/services", label: "Services", priority: 0.9 },
 	{ href: "/engineering", label: "Engineering", priority: 0.9 },
+	{ href: "/architecture-lab", label: "Architecture Lab", priority: 0.8 },
 	{ href: "/case-studies", label: "Case Studies", priority: 0.8 },
 	{ href: "/blog", label: "Writing", priority: 0.7 },
 	{ href: "/open-source", label: "Open Source", priority: 0.7 },
 	{ href: "/about", label: "About", priority: 0.7 },
+	{ href: "/resume", label: "Resume", priority: 0.7 },
 	{ href: "/contact", label: "Contact", priority: 0.6 },
 	{ href: "/advisory-intake", label: "Work With Me", priority: 0.8 },
 ] as const;

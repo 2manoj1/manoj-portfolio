@@ -1,11 +1,30 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { careerJourney } from "@/content/site";
 import { MotionReveal } from "@/components/marketing/motion-reveal";
 import { Section, SectionHeader } from "@/components/marketing/section";
+import { Button } from "@/components/ui/button";
 
-export function CareerJourneySection() {
+export function CareerJourneySection({
+	className = "border-y border-border bg-secondary/20",
+	items = careerJourney,
+	showMoreButton = false,
+}: {
+	className?: string;
+	items?: readonly {
+		period: string;
+		title: string;
+		company: string;
+		logos: readonly string[];
+		summary: string;
+		productionSignal: string;
+		stack: readonly string[];
+	}[];
+	showMoreButton?: boolean;
+} = {}) {
 	return (
-		<Section className="border-y border-border bg-secondary/20">
+		<Section className={className}>
 			<MotionReveal>
 				<SectionHeader
 					kicker="Career Journey"
@@ -15,7 +34,7 @@ export function CareerJourneySection() {
 			</MotionReveal>
 
 			<div className="mt-14 border-y border-border">
-				{careerJourney.map((item, index) => (
+				{items.map((item, index) => (
 					<MotionReveal key={`${item.period}-${item.title}`} delay={index * 0.04}>
 						<article
 							className={`grid gap-6 py-8 md:grid-cols-[8rem_1fr_1.05fr] ${
@@ -73,6 +92,19 @@ export function CareerJourneySection() {
 					</MotionReveal>
 				))}
 			</div>
+
+			{showMoreButton && (
+				<MotionReveal>
+					<div className="mt-10 flex justify-center">
+						<Button asChild variant="outline" size="lg">
+							<Link href="/about">
+								View Full Career Journey
+								<ArrowRight className="size-4 ml-1" />
+							</Link>
+						</Button>
+					</div>
+				</MotionReveal>
+			)}
 		</Section>
 	);
 }

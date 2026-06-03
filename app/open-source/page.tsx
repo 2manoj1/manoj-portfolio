@@ -6,22 +6,22 @@ import { createMetadata } from "@/lib/seo";
 
 const projects = [
 	{
-		title: "LangGraph Agent Templates",
+		title: "FastAPI OpenAI Gateway Proxy",
 		description:
-			"Reusable graph patterns for planner/executor workflows, tool routing, stateful memory, and human review gates.",
-		status: "Planned",
+			"An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.",
+		status: "Active",
 	},
 	{
-		title: "FastAPI AI Backend Starter",
+		title: "LangGraphJS Orchestrator Template",
 		description:
-			"Async Python service template for model gateways, queue-backed workloads, tracing, and typed API contracts.",
-		status: "Planned",
+			"Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.",
+		status: "Active",
 	},
 	{
-		title: "RAG Reliability Kit",
+		title: "MacBook Silicon AI Home Lab Deployment",
 		description:
-			"Reference implementation for chunking, pgvector indexing, retrieval evaluation, and answer grounding checks.",
-		status: "Planned",
+			"A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.",
+		status: "Active",
 	},
 ];
 
@@ -38,13 +38,13 @@ export default function OpenSourcePage() {
 			<PageHero
 				kicker="Open Source"
 				title="Production AI examples for serious builders."
-				description="The open source strategy should reinforce authority: starter kits, templates, and reference architectures that show how AI systems are actually wired."
+				description="I publish open-source starter kits, orchestration templates, and reference architectures to share how production AI systems are actually wired under the hood."
 			/>
 			<Section>
 				<SectionHeader
-					kicker="Project Roadmap"
-					title="Build public proof around reusable AI infrastructure."
-					description="Each project should include an architecture overview, deployment strategy, screenshots, GitHub links, and technical explanations."
+					kicker="Codebases"
+					title="Reusable repositories for production AI patterns."
+					description="I design each repository with complete architecture logs, deployment files, and deep technical write-ups so teams can reuse them immediately."
 				/>
 				<div className="mt-14 grid gap-3 lg:grid-cols-3">
 					{projects.map((project) => (

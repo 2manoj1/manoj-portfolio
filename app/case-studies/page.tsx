@@ -17,17 +17,17 @@ export default function CaseStudiesPage() {
 			<PageHero
 				kicker="Case Studies"
 				title="Architecture decisions under real constraints."
-				description="Selected work themes from enterprise AI systems, platform modernization, and engineering enablement. The focus is on decisions, tradeoffs, failure handling, and delivery."
+				description="Selected highlights from my work in enterprise AI systems, platform modernization, and engineering enablement. I focus on core decisions, systems tradeoffs, failure handling, and delivery."
 			/>
 			<Section>
 				<SectionHeader
 					kicker="Selected Work"
 					title="Business problems translated into system design."
-					description="These are written as architecture narratives rather than generic portfolio items."
+					description="I write these case studies as engineering narratives detailing actual technical decisions, rather than generic portfolio summaries."
 				/>
 				<div className="mt-14 space-y-4">
 					{caseStudies.map((study, index) => (
-						<article key={study.slug} className="border border-border p-6 md:p-8">
+						<article id={study.slug} key={study.slug} className="border border-border p-6 md:p-8 scroll-mt-20">
 							<div className="grid gap-6 lg:grid-cols-[4rem_0.9fr_1.1fr]">
 								<span className="font-mono text-xs text-muted-foreground/60">
 									0{index + 1}

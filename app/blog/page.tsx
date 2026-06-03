@@ -84,11 +84,11 @@ export default function BlogPage() {
 				<SectionHeader
 					kicker="Roadmap"
 					title="Next: production-grade MDX."
-					description="The next editorial upgrade should add MDX, syntax highlighting, tag filtering, RSS, related articles, table of contents, and richer architecture diagrams."
+					description="I am expanding this publication to support native MDX articles, syntax-highlighted code playgrounds, RSS syndication, tag filters, and interactive system flowcharts."
 				/>
 				<div className="mt-10 flex items-center gap-2 text-sm text-muted-foreground">
 					<ArrowRight className="size-4 text-amber" />
-					<span>Use these owned pages as the canonical URLs, then syndicate excerpts to LinkedIn and Medium.</span>
+					<span>I publish my deep dives here first to build an owned technical archive, then syndicate summaries to LinkedIn and Medium.</span>
 				</div>
 			</Section>
 			<CtaBand title="Need technical content that sounds like an engineer wrote it?" />

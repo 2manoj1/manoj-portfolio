@@ -46,75 +46,80 @@ export function Footer() {
   const footerRoutes = routes.filter((route) => route.href !== "/");
 
   return (
-    <footer className="py-16">
+    <footer className="border-t border-border/50 py-10 bg-zinc-50/10 dark:bg-zinc-950/10">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-10 lg:grid-cols-[1fr_auto_auto]">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_auto]">
           <div>
             <Link href="/" aria-label="Homepage">
               <Logo size="sm" />
             </Link>
-            <p className="mt-2 max-w-[40ch] font-normal text-sm text-muted-foreground">
-              AI Architect Consultant for production RAG infrastructure,
-              multi-agent systems, and AI platform engineering.
+            <p className="mt-2.5 max-w-[40ch] font-normal text-xs text-muted-foreground leading-relaxed">
+              AI Systems Architect. Designing high-throughput production RAG infrastructure, 
+              orchestrating multi-agent graph workflows, and scaling AI platforms.
             </p>
           </div>
 
-          <nav className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" aria-label="Footer">
+          <nav className="grid grid-cols-2 gap-1.5 sm:gap-2" aria-label="Footer Navigation">
             {footerRoutes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {route.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5 sm:col-span-2 lg:col-span-1 lg:justify-end">
             <a
               href={LINKEDIN}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <LinkedInIcon className="size-[18px]" />
+              <LinkedInIcon className="size-[16px]" />
             </a>
             <a
               href={GITHUB}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <GitHubIcon className="size-[18px]" />
+              <GitHubIcon className="size-[16px]" />
             </a>
             <a
               href={GOOGLE_SCHOLAR}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Google Scholar"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              <ScholarIcon className="size-[18px]" />
+              <ScholarIcon className="size-[16px]" />
             </a>
             <a
               href={MEDIUM}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-normal text-sm text-muted-foreground hover:text-foreground"
+              className="font-normal text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
               Medium
             </a>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border/50 pt-6">
-          <p className="font-normal text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Manoj Mukherjee. All rights
-            reserved.
-          </p>
+        {/* Lower Row: Copyright and Stack details */}
+        <div className="mt-8 border-t border-border/50 pt-6">
+          <div className="space-y-1">
+            <p className="font-normal text-[11px] text-muted-foreground">
+              &copy; {new Date().getFullYear()} Manoj Mukherjee. All rights reserved.
+            </p>
+            <p className="font-normal text-[9px] text-muted-foreground/60 leading-normal max-w-[60ch]">
+              Engineered with extreme precision. Optimizing token efficiency, retrieval quality, and system latency budgets.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
