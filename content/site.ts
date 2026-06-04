@@ -663,7 +663,7 @@ export const routes = [
 	{ href: "/engineering", label: "Engineering", priority: 0.9 },
 	{ href: "/architecture-lab", label: "Architecture Lab", priority: 0.8 },
 	{ href: "/case-studies", label: "Case Studies", priority: 0.8 },
-	{ href: "/blog", label: "Writing", priority: 0.7 },
+	{ href: "/blog", label: "Blog", priority: 0.7 },
 	{ href: "/open-source", label: "Open Source", priority: 0.7 },
 	{ href: "/about", label: "About", priority: 0.7 },
 	{ href: "/resume", label: "Resume", priority: 0.7 },

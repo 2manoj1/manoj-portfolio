@@ -40,7 +40,7 @@ export default function OpenSourcePage() {
 				title="Production AI examples for serious builders."
 				description="I publish open-source starter kits, orchestration templates, and reference architectures to share how production AI systems are actually wired under the hood."
 			/>
-			<Section>
+			<Section className="pt-4 md:pt-6">
 				<SectionHeader
 					kicker="Codebases"
 					title="Reusable repositories for production AI patterns."

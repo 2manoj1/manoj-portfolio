@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/engineering", label: "Engineering" },
   { href: "/architecture-lab", label: "Architecture Lab" },
   { href: "/case-studies", label: "Case Studies" },
-  { href: "/blog", label: "Writing" },
+  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
 ];
 

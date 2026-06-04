@@ -54,7 +54,7 @@ export default function AdvisoryIntakePage() {
 					</Button>
 				</div>
 			</PageHero>
-			<Section className="border-b border-border">
+			<Section className="border-b border-border pt-4 md:pt-6">
 				<SectionHeader
 					kicker="Inference Budgeting"
 					title="Estimate your token costs & architecture latency."

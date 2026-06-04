@@ -124,11 +124,11 @@ const researchThreads = [
 	{
 		id: "LAB-05",
 		status: "Planned",
-		title: "Native MDX Editorial Engine",
+		title: "Native Editorial Engine",
 		focus:
 			"First-party architecture notes with diagrams, code walkthroughs, and file-aware references.",
 		nextDetail:
-			"MDX model, Mermaid rendering, code highlighting, SEO, and newsletter capture.",
+			"Structured blog model, Mermaid rendering, code highlighting, SEO, and newsletter capture.",
 	},
 ] as const;
 

@@ -56,7 +56,7 @@ export default function ServicesPage() {
 			/>
 
 			{/* Interactive Scope Constructor Section */}
-			<Section className="bg-card/5">
+			<Section className="bg-card/5 pt-4 md:pt-6">
 				<SectionHeader
 					kicker="Architect's Systems Sandbox"
 					title="Simulate cost, latency, and system execution."

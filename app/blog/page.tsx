@@ -6,9 +6,9 @@ import { createMetadata } from "@/lib/seo";
 import { BlogHubDashboard } from "@/components/marketing/blog-hub-dashboard";
 
 export const metadata = createMetadata({
-	title: "AI Engineering Writing | Manoj Mukherjee",
+	title: "AI Engineering Blog | Manoj Mukherjee",
 	description:
-		"Deep technical writing on LangGraph architecture, production multi-agent systems, enterprise RAG, AI observability, and platform engineering patterns.",
+		"Deep technical blog posts on LangGraph architecture, production multi-agent systems, enterprise RAG, AI observability, and platform engineering patterns.",
 	path: "/blog",
 });
 
@@ -16,11 +16,11 @@ export default function BlogPage() {
 	return (
 		<>
 			<PageHero
-				kicker="Writing"
+				kicker="Blog"
 				title="Systems thinking applied to AI infrastructure."
-				description="Architecture-first writing on production challenges. How real teams build durable agents, secure workflows, observable systems, and reliable AI infrastructure that doesn't break under load."
+				description="Architecture-first blog posts on production challenges. How real teams build durable agents, secure workflows, observable systems, and reliable AI infrastructure that doesn't break under load."
 			/>
-			<Section>
+			<Section className="pt-4 md:pt-6">
 				<BlogHubDashboard blogArticles={blogArticles} mediumArticles={articles} />
 			</Section>
 			<CtaBand title="Building systems that matter? Let's talk." />

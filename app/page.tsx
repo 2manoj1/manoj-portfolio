@@ -220,9 +220,9 @@ export default function Home() {
       <Section>
         <MotionReveal>
           <SectionHeader
-            kicker="Writing"
+            kicker="Blog"
             title="Technical content for senior builders."
-            description="Writing focuses on AI infrastructure, local agentic workflows, LangGraph systems, and practical implementation choices."
+            description="The blog focuses on AI infrastructure, local agentic workflows, LangGraph systems, and practical implementation choices."
           />
         </MotionReveal>
         <div className="mt-14 divide-y divide-border">
@@ -250,7 +250,7 @@ export default function Home() {
           <div className="mt-10 flex justify-center">
             <Button asChild variant="outline" size="lg">
               <Link href="/blog">
-                Read All Writing
+                Read All Blog Posts
                 <ArrowRight className="size-4 ml-1" />
               </Link>
             </Button>

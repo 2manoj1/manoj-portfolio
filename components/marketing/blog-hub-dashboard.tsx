@@ -55,7 +55,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [consoleMsg, setConsoleMsg] = useState<string>("system ready // awaiting execution query");
 
-  // Filter local MDX posts
+  // Filter local blog posts
   const filteredLocalArticles = useMemo(() => {
     return blogArticles.filter(art => {
       const matchSearch = 
@@ -198,11 +198,11 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
       {/* Main Listing Layout */}
       <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] items-start">
         
-        {/* Left Column: Local MDX featured posts */}
+        {/* Left Column: Local blog featured posts */}
         <div className="space-y-8">
           <div>
             <h3 className="font-mono text-[10px] font-bold text-amber uppercase tracking-widest">{"// DEEP ARCHITECTURE JOURNAL"}</h3>
-            <h2 className="text-xl font-bold text-foreground mt-1">Featured Systems Breakthroughs (MDX Specs)</h2>
+            <h2 className="text-xl font-bold text-foreground mt-1">Featured Systems Breakthroughs</h2>
             <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
               Durable specification sheets detailing Manoj&apos;s actual production pipelines. Built with real telemetry metrics, code files, and verification evaluations.
             </p>
@@ -210,7 +210,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
 
           {filteredLocalArticles.length === 0 ? (
             <div className="border border-zinc-900 bg-zinc-950/20 p-8 rounded-lg text-center font-mono text-xs text-zinc-600 italic">
-              No matching MDX articles found in system registry.
+              No matching blog articles found in system registry.
             </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">

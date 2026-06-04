@@ -62,7 +62,7 @@ export function PageHero({
 }) {
 	return (
 		<header className="border-b border-border pt-14">
-			<div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+			<div className="mx-auto max-w-6xl px-6 pt-16 pb-6 md:pt-20 md:pb-8">
 				<p className="font-mono text-xs uppercase tracking-wide text-amber">
 					{kicker}
 				</p>

@@ -44,7 +44,7 @@ export default function ContactPage() {
 					</Button>
 				</div>
 			</PageHero>
-			<Section>
+			<Section className="pt-4 md:pt-6">
 				<SectionHeader
 					kicker="Routing"
 					title="For serious AI work, use the advisory intake."

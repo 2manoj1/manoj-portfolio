@@ -73,14 +73,14 @@ export default async function BlogArticlePage({ params }: PageProps) {
 						href="/blog"
 						className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-amber">
 						<ArrowLeft className="size-4" />
-						Back to all writing
+						Back to Blog
 					</Link>
 					<span className="hidden sm:block text-muted-foreground text-sm">·</span>
 					<span className="text-sm text-muted-foreground font-mono">{article.readingTime}</span>
 				</div>
 			</PageHero>
 
-			<Section>
+			<Section className="pt-4 md:pt-6">
 				<BlogArticleReader article={article} />
 			</Section>
 

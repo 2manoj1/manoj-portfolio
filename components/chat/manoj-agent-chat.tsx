@@ -12,10 +12,10 @@ import {
 	Loader2,
 	MessageSquareText,
 	Minimize2,
+	Minus,
 	PanelRightOpen,
 	ShieldCheck,
 	StopCircle,
-	X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -373,9 +373,9 @@ function HeaderControls({
 						variant="ghost"
 						size="icon-sm"
 						className="size-9 rounded-full bg-white/[0.055] text-white/62 hover:bg-white/[0.1] hover:text-white"
-						aria-label="Close chat"
+						aria-label="Minimize chat"
 						onClick={onClose}>
-						<X className="size-4" />
+						<Minus className="size-4" />
 					</Button>
 				</>
 			)}
@@ -606,6 +606,22 @@ export function AstraChatApp() {
 export function ManojAgentChat() {
 	const [open, setOpen] = useState(false);
 	const [expanded, setExpanded] = useState(false);
+
+	useEffect(() => {
+		const event = new CustomEvent("astra-chat-state", { detail: { open, expanded } });
+		window.dispatchEvent(event);
+	}, [open, expanded]);
+
+	useEffect(() => {
+		const handleRequest = () => {
+			const event = new CustomEvent("astra-chat-state", { detail: { open, expanded } });
+			window.dispatchEvent(event);
+		};
+		window.addEventListener("astra-chat-request", handleRequest);
+		return () => {
+			window.removeEventListener("astra-chat-request", handleRequest);
+		};
+	}, [open, expanded]);
 
 	return (
 		<div
