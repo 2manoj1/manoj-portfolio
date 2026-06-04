@@ -2,6 +2,9 @@
 
 import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
+  Gauge,
+  Maximize2,
+  Minimize2,
   Pause,
   Play,
   Settings,
@@ -55,6 +58,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [isMinimized, setIsMinimized] = useState<boolean>(false);
   const [hasCompleted, setHasCompleted] = useState<boolean>(false);
   const [speechNotice, setSpeechNotice] = useState<string>("");
   
@@ -289,54 +293,198 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
         ? 100
         : ((currentIdx + (isPlaying || isPaused ? 0.35 : 0)) / paragraphs.length) * 100
       : 0;
+  const segmentLabel = `${Math.min(currentIdx + 1, paragraphs.length)}/${paragraphs.length}`;
+  const playbackStateLabel = isPlaying ? "Playing" : isPaused ? "Paused" : "Ready";
+  const playButtonLabel = isPlaying ? "Pause article audio" : "Play article audio";
+  const playButtonTitle = isPlaying ? "Pause Reading" : "Play Reading Aloud";
+  const PlayStateIcon = isPlaying ? Pause : Play;
+
+  const primaryPlayButton = (
+    <button
+      aria-label={playButtonLabel}
+      onClick={isPlaying ? handlePause : handlePlay}
+      className="flex size-11 items-center justify-center rounded-lg bg-amber text-zinc-950 shadow-[0_14px_34px_rgba(245,158,11,0.25)] transition hover:bg-amber/90 active:scale-[0.98] sm:size-10"
+      title={playButtonTitle}
+      type="button"
+    >
+      <PlayStateIcon className="size-4 fill-current" />
+    </button>
+  );
+
+  if (isMinimized) {
+    return (
+      <div
+        aria-label="Article audio mini player"
+        className="relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950/75 shadow-2xl shadow-black/30 backdrop-blur-2xl"
+        role="region"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.03)_38%,rgba(245,158,11,0.06))]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/20" />
+
+        <div className="relative z-10 flex items-center gap-3 px-3 py-2.5">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-amber shadow-inner">
+            <Volume2 className="size-4" />
+          </div>
+
+          <div className="flex shrink-0 items-center gap-1.5 sm:hidden">
+            <button
+              aria-label={playButtonLabel}
+              onClick={isPlaying ? handlePause : handlePlay}
+              className="flex size-9 items-center justify-center rounded-lg bg-amber text-zinc-950 shadow-[0_14px_34px_rgba(245,158,11,0.25)] transition hover:bg-amber/90 active:scale-[0.98]"
+              title={playButtonTitle}
+              type="button"
+            >
+              <PlayStateIcon className="size-4 fill-current" />
+            </button>
+
+            <button
+              aria-label="Expand audio player"
+              onClick={() => setIsMinimized(false)}
+              className="flex size-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-300 transition hover:text-amber"
+              title="Expand Player"
+              type="button"
+            >
+              <Maximize2 className="size-3.5" />
+            </button>
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <div className="flex min-w-0 items-center gap-2">
+              <p className="truncate text-sm font-semibold tracking-tight text-zinc-100">
+                {title}
+              </p>
+              <span
+                aria-live="polite"
+                className="hidden shrink-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-wide text-amber/70 sm:flex"
+              >
+                <span className={`size-1.5 rounded-full ${isPlaying ? "bg-emerald-400 animate-pulse" : "bg-zinc-600"}`} />
+                {playbackStateLabel}
+              </span>
+            </div>
+            <p className="mt-0.5 font-mono text-[10px] text-muted-foreground">
+              {segmentLabel}{" // "}{rate}x
+            </p>
+          </div>
+
+          <div className="hidden shrink-0 items-center gap-1.5 sm:flex">
+            <button
+              aria-label="Previous audio segment"
+              onClick={() => jumpToParagraph(currentIdxRef.current - 1)}
+              disabled={currentIdx <= 0}
+              className="flex size-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-400 transition hover:text-zinc-100 disabled:opacity-30"
+              title="Previous Segment"
+              type="button"
+            >
+              <SkipBack className="size-3.5" />
+            </button>
+
+            {primaryPlayButton}
+
+            <button
+              aria-label="Next audio segment"
+              onClick={() => jumpToParagraph(currentIdxRef.current + 1)}
+              disabled={currentIdx >= paragraphs.length - 1}
+              className="flex size-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-400 transition hover:text-zinc-100 disabled:opacity-30"
+              title="Next Segment"
+              type="button"
+            >
+              <SkipForward className="size-3.5" />
+            </button>
+
+            <button
+              aria-label="Expand audio player"
+              onClick={() => setIsMinimized(false)}
+              className="flex size-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-300 transition hover:text-amber"
+              title="Expand Player"
+              type="button"
+            >
+              <Maximize2 className="size-3.5" />
+            </button>
+          </div>
+        </div>
+
+        <div
+          aria-label="Audio reading progress"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={Math.round(progressPercent)}
+          className="relative h-1 w-full bg-white/[0.06]"
+          role="progressbar"
+        >
+          <div
+            className="h-full bg-amber transition-all duration-300"
+            style={{ width: `${progressPercent || (isPlaying ? 5 : 0)}%` }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       aria-label="Article audio reader"
-      className="relative w-full overflow-hidden rounded-lg border border-border bg-zinc-950/85 p-3 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-4"
+      className="relative w-full overflow-hidden rounded-lg border border-white/10 bg-zinc-950/70 p-3 shadow-2xl shadow-black/40 backdrop-blur-2xl sm:p-4"
       role="region"
     >
-      
-      {/* Decorative scanning line grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.025)_42%,rgba(245,158,11,0.08))]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />
+      <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
 
       <div className="flex flex-col gap-3 relative z-10">
         
         {/* Title bar / Header */}
-        <div className="flex items-center justify-between gap-3 border-b border-zinc-900 pb-2">
-          <div className="flex items-center gap-2">
-            <Volume2 className="size-4 shrink-0 text-amber animate-pulse" />
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
-              Article Audio Mode
-              <span className="sm:hidden">
-                {" // "}
-                {Math.min(currentIdx + 1, paragraphs.length)}/{paragraphs.length}
-              </span>
-            </span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="relative flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-white/[0.06] text-amber shadow-inner sm:size-12">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent_38%)]" />
+              <Volume2 className="relative size-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="font-mono text-[9px] uppercase tracking-wider text-amber/70">
+                Now Listening
+              </p>
+              <h4 className="mt-1 truncate text-sm font-semibold tracking-tight text-zinc-100 sm:text-base">
+                {title}
+              </h4>
+            </div>
           </div>
-          <span
-            aria-live="polite"
-            className="flex shrink-0 items-center gap-1.5 font-mono text-[9px] text-amber/60"
-          >
-            <span className={`size-1.5 rounded-full ${isPlaying ? 'bg-emerald-500 animate-ping' : 'bg-zinc-700'}`} />
-            {isPlaying ? "TRANSMITTING" : isPaused ? "PAUSED" : "STANDBY"}
-          </span>
+          <div className="flex shrink-0 items-center gap-1.5">
+            <span
+              aria-live="polite"
+              className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[9px] uppercase tracking-wide text-amber/70 sm:flex"
+            >
+              <span className={`size-1.5 rounded-full ${isPlaying ? "bg-emerald-400 animate-pulse" : "bg-zinc-600"}`} />
+              {playbackStateLabel}
+            </span>
+            <button
+              aria-label="Minimize audio player"
+              onClick={() => {
+                setIsSettingsOpen(false);
+                setIsMinimized(true);
+              }}
+              className="flex size-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-300 transition hover:text-amber"
+              title="Minimize Player"
+              type="button"
+            >
+              <Minimize2 className="size-3.5" />
+            </button>
+          </div>
         </div>
 
         {/* Info panel */}
-        <div className="hidden items-center justify-between gap-4 sm:flex">
-          <div className="min-w-0">
-            <h4 className="max-w-[70vw] truncate font-mono text-[11px] font-bold text-zinc-200 lg:max-w-[280px]">
-              {title}
-            </h4>
-            <p className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">
-              Segment {Math.min(currentIdx + 1, paragraphs.length)} of {paragraphs.length}{" // "}Rate: {rate}x
-            </p>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] text-zinc-300">
+              Segment {segmentLabel}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] text-zinc-300">
+              <Gauge className="size-3 text-amber" />
+              {rate}x
+            </span>
           </div>
 
           {/* Sound waves graphic */}
-          <div className="flex items-end gap-0.5 h-6 shrink-0 pr-1">
+          <div className="hidden h-6 shrink-0 items-end gap-0.5 pr-1 sm:flex">
             {[...Array(6)].map((_, i) => {
               const activeHeights = ["h-3", "h-5", "h-2", "h-6", "h-4", "h-3"];
               return (
@@ -362,11 +510,11 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
           aria-valuemax={100}
           aria-valuemin={0}
           aria-valuenow={Math.round(progressPercent)}
-          className="relative h-1.5 w-full overflow-hidden rounded bg-zinc-900"
+          className="relative h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]"
           role="progressbar"
         >
           <div 
-            className="h-full bg-amber transition-all duration-300"
+            className="h-full rounded-full bg-amber shadow-[0_0_18px_rgba(245,158,11,0.35)] transition-all duration-300"
             style={{ width: `${progressPercent || (isPlaying ? 5 : 0)}%` }}
           />
         </div>
@@ -374,33 +522,13 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
         {/* Controls layer */}
         <div className="flex items-center justify-between gap-3 pt-1">
           <div className="flex items-center gap-2">
-            {isPlaying ? (
-              <button
-                aria-label="Pause article audio"
-                onClick={handlePause}
-                className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-300 transition-colors hover:border-amber/30 hover:text-amber sm:size-8"
-                title="Pause Reading"
-                type="button"
-              >
-                <Pause className="size-3.5 fill-current" />
-              </button>
-            ) : (
-              <button
-                aria-label="Play article audio"
-                onClick={handlePlay}
-                className="flex size-9 items-center justify-center rounded-md bg-amber text-zinc-950 transition-colors hover:bg-amber/90 sm:size-8"
-                title="Play Reading Aloud"
-                type="button"
-              >
-                <Play className="size-3.5 fill-current" />
-              </button>
-            )}
+            {primaryPlayButton}
 
             <button
               aria-label="Previous audio segment"
               onClick={() => jumpToParagraph(currentIdxRef.current - 1)}
               disabled={currentIdx <= 0}
-              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
+              className="flex size-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-400 transition hover:bg-white/[0.07] hover:text-zinc-100 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-10"
               title="Previous Segment"
               type="button"
             >
@@ -411,7 +539,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               aria-label="Next audio segment"
               onClick={() => jumpToParagraph(currentIdxRef.current + 1)}
               disabled={currentIdx >= paragraphs.length - 1}
-              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
+              className="flex size-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-400 transition hover:bg-white/[0.07] hover:text-zinc-100 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-10"
               title="Next Segment"
               type="button"
             >
@@ -422,7 +550,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               aria-label="Stop article audio"
               onClick={handleStop}
               disabled={!isPlaying && !isPaused}
-              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
+              className="hidden size-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-400 transition hover:bg-white/[0.07] hover:text-zinc-100 disabled:opacity-30 disabled:hover:text-zinc-400 sm:flex sm:size-10"
               title="Stop Reading"
               type="button"
             >
@@ -436,10 +564,10 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               aria-label="Open voice settings"
               aria-expanded={isSettingsOpen}
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className={`flex size-9 items-center justify-center rounded-md border transition-colors sm:size-8 ${
+              className={`flex size-9 items-center justify-center rounded-lg border transition sm:size-10 ${
                 isSettingsOpen 
-                  ? 'border-amber/40 bg-zinc-900 text-amber' 
-                  : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-zinc-200'
+                  ? 'border-amber/40 bg-white/[0.08] text-amber'
+                  : 'border-white/10 bg-white/[0.04] text-zinc-400 hover:bg-white/[0.07] hover:text-zinc-100'
               }`}
               title="Voice Settings"
               type="button"
@@ -451,7 +579,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
 
         {/* Dynamic settings expander */}
         {isSettingsOpen && (
-          <div className="mt-2 border-t border-zinc-900 pt-3.5 space-y-3 animate-fadeIn">
+          <div className="mt-2 space-y-3 rounded-lg border border-white/10 bg-black/20 p-3 animate-fadeIn">
             {/* Speed slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-[9px] font-mono uppercase text-zinc-400">
@@ -473,7 +601,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                     speakParagraph(currentIdxRef.current, { cancelCurrent: true });
                   }
                 }}
-                className="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-amber"
+                className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-white/[0.08] accent-amber"
               />
             </div>
 
@@ -498,7 +626,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                       setTimeout(() => speakParagraph(currentIdxRef.current, { cancelCurrent: true }), 50);
                     }
                   }}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded px-2 py-1 font-mono text-[9px] text-zinc-300 focus:outline-none focus:border-amber/40"
+                  className="w-full rounded border border-white/10 bg-zinc-950/80 px-2 py-1.5 font-mono text-[10px] text-zinc-300 focus:border-amber/40 focus:outline-none"
                 >
                   {voices.map(v => (
                     <option key={v.name} value={v.name}>

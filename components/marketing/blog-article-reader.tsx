@@ -243,7 +243,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
       <div className="min-w-0 space-y-8">
         
         {/* Audiobook controller section */}
-        <div className="sticky top-14 z-30 lg:top-20">
+        <div className="sticky top-14 z-[70] lg:top-20">
           <div className="pointer-events-none absolute -inset-0.5 rounded-lg bg-gradient-to-r from-amber/25 to-zinc-500/10 opacity-50 blur-sm" />
           <BlogAudioBook 
             paragraphs={flatParagraphs} 

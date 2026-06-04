@@ -348,7 +348,7 @@ export function TechStackGrid() {
   return (
     <div className="mt-12 space-y-10">
       {/* Navigation tabs */}
-      <div className="flex flex-wrap gap-1.5 border-b border-border/60 pb-4">
+      <div className="flex overflow-x-auto pb-4 gap-1.5 border-b border-border/60 flex-nowrap whitespace-nowrap no-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0 scroll-smooth">
         <button
           onClick={() => setActiveTab("all")}
           className={`rounded-md px-3.5 py-1.5 font-mono text-[10px] font-medium uppercase tracking-wider transition-all duration-200 ${

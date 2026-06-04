@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect, memo } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { 
   Code2, 
   Terminal, 
@@ -16,7 +18,8 @@ import {
   Cpu, 
   Activity,
   Maximize2,
-  Minimize2
+  Minimize2,
+  Calendar
 } from "lucide-react";
 import { Streamdown } from "streamdown";
 import { code } from "@streamdown/code";
@@ -800,305 +803,364 @@ export function SystemsConsole() {
       role="region"
       aria-label="Interactive AI Systems Console"
     >
-      {/* OS Chrome Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 bg-zinc-900/60 px-4 py-2.5">
-        {/* Traffic Lights & Filename */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5 group/lights" role="group" aria-label="Window controls">
-            <button
-              onClick={() => isFullscreen && setIsFullscreen(false)}
-              className={cn(
-                "size-2.5 rounded-full bg-rose-500/90 transition-all focus:outline-none flex items-center justify-center text-[7px] text-rose-950 font-bold select-none",
-                isFullscreen ? "cursor-pointer hover:bg-rose-600" : "cursor-default opacity-50"
-              )}
-              aria-label="Close window (exit fullscreen)"
-              disabled={!isFullscreen}
-            >
-              <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-1px]">×</span>
-            </button>
-            <button
-              onClick={() => isFullscreen && setIsFullscreen(false)}
-              className={cn(
-                "size-2.5 rounded-full bg-amber/90 transition-all focus:outline-none flex items-center justify-center text-[7px] text-amber-950 font-bold select-none",
-                isFullscreen ? "cursor-pointer hover:bg-amber-600" : "cursor-default opacity-50"
-              )}
-              aria-label="Minimize window (exit fullscreen)"
-              disabled={!isFullscreen}
-            >
-              <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-2px]">−</span>
-            </button>
+      {/* Desktop Mode (Hidden on Mobile) */}
+      <div className="hidden md:flex flex-col flex-1 min-h-0">
+        {/* OS Chrome Header */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 bg-zinc-900/60 px-4 py-2.5">
+          {/* Traffic Lights & Filename */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 group/lights" role="group" aria-label="Window controls">
+              <button
+                onClick={() => isFullscreen && setIsFullscreen(false)}
+                className={cn(
+                  "size-2.5 rounded-full bg-rose-500/90 transition-all focus:outline-none flex items-center justify-center text-[7px] text-rose-950 font-bold select-none",
+                  isFullscreen ? "cursor-pointer hover:bg-rose-600" : "cursor-default opacity-50"
+                )}
+                aria-label="Close window (exit fullscreen)"
+                disabled={!isFullscreen}
+              >
+                <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-1px]">×</span>
+              </button>
+              <button
+                onClick={() => isFullscreen && setIsFullscreen(false)}
+                className={cn(
+                  "size-2.5 rounded-full bg-amber/90 transition-all focus:outline-none flex items-center justify-center text-[7px] text-amber-950 font-bold select-none",
+                  isFullscreen ? "cursor-pointer hover:bg-amber-600" : "cursor-default opacity-50"
+                )}
+                aria-label="Minimize window (exit fullscreen)"
+                disabled={!isFullscreen}
+              >
+                <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-2px]">−</span>
+              </button>
+              <button
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                className="size-2.5 rounded-full bg-emerald-500/90 hover:bg-emerald-600 transition-all cursor-pointer focus:outline-none flex items-center justify-center text-[5px] text-emerald-950 font-extrabold select-none"
+                aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+              >
+                <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-1px]">+</span>
+              </button>
+            </div>
+            <span className="text-[10px] tracking-wide text-zinc-500 font-bold">
+              {activeTab === "topology" && "system_design_topology.canvas"}
+              {activeTab === "code" && "enterprise_orchestrator.py"}
+              {activeTab === "telemetry" && "opentelemetry_observability.dashboard"}
+            </span>
+          </div>
+
+          {/* Tab Selectors & Actions */}
+          <div className="flex items-center gap-2">
+            {/* Tab buttons */}
+            <div className="flex items-center gap-1 bg-zinc-950/60 p-0.5 rounded-md border border-border/40" role="tablist">
+              <button
+                role="tab"
+                aria-selected={activeTab === "topology"}
+                onClick={() => setActiveTab("topology")}
+                className={cn(
+                  "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
+                  activeTab === "topology"
+                    ? "bg-zinc-800 text-amber font-semibold"
+                    : "text-zinc-400 hover:text-zinc-200"
+                )}
+              >
+                <Network className="size-3" />
+                Topology
+              </button>
+              <button
+                role="tab"
+                aria-selected={activeTab === "code"}
+                onClick={() => setActiveTab("code")}
+                className={cn(
+                  "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
+                  activeTab === "code"
+                    ? "bg-zinc-800 text-amber font-semibold"
+                    : "text-zinc-400 hover:text-zinc-200"
+                )}
+              >
+                <Code2 className="size-3" />
+                Code
+              </button>
+              <button
+                role="tab"
+                aria-selected={activeTab === "telemetry"}
+                onClick={() => setActiveTab("telemetry")}
+                className={cn(
+                  "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
+                  activeTab === "telemetry"
+                    ? "bg-zinc-800 text-amber font-semibold"
+                    : "text-zinc-400 hover:text-zinc-200"
+                )}
+              >
+                <Terminal className="size-3" />
+                Observability
+              </button>
+            </div>
+
+            {/* Fullscreen Toggle */}
             <button
               onClick={() => setIsFullscreen(!isFullscreen)}
-              className="size-2.5 rounded-full bg-emerald-500/90 hover:bg-emerald-600 transition-all cursor-pointer focus:outline-none flex items-center justify-center text-[5px] text-emerald-950 font-extrabold select-none"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-medium tracking-wide uppercase text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 rounded-md border border-border/40 transition-colors cursor-pointer"
               aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
             >
-              <span className="opacity-0 group-hover/lights:opacity-100 transition-opacity leading-none mt-[-1px]">+</span>
+              {isFullscreen ? <Minimize2 className="size-3" /> : <Maximize2 className="size-3" />}
+              {isFullscreen ? "Exit" : "Fullscreen"}
             </button>
           </div>
-          <span className="text-[10px] tracking-wide text-zinc-500 font-bold">
-            {activeTab === "topology" && "system_design_topology.canvas"}
-            {activeTab === "code" && "enterprise_orchestrator.py"}
-            {activeTab === "telemetry" && "opentelemetry_observability.dashboard"}
-          </span>
         </div>
 
-        {/* Tab Selectors & Actions */}
-        <div className="flex items-center gap-2">
-          {/* Tab buttons */}
-          <div className="flex items-center gap-1 bg-zinc-950/60 p-0.5 rounded-md border border-border/40" role="tablist">
-            <button
-              role="tab"
-              aria-selected={activeTab === "topology"}
-              onClick={() => setActiveTab("topology")}
-              className={cn(
-                "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
-                activeTab === "topology"
-                  ? "bg-zinc-800 text-amber font-semibold"
-                  : "text-zinc-400 hover:text-zinc-200"
-              )}
-            >
-              <Network className="size-3" />
-              Topology
-            </button>
-            <button
-              role="tab"
-              aria-selected={activeTab === "code"}
-              onClick={() => setActiveTab("code")}
-              className={cn(
-                "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
-                activeTab === "code"
-                  ? "bg-zinc-800 text-amber font-semibold"
-                  : "text-zinc-400 hover:text-zinc-200"
-              )}
-            >
-              <Code2 className="size-3" />
-              Code
-            </button>
-            <button
-              role="tab"
-              aria-selected={activeTab === "telemetry"}
-              onClick={() => setActiveTab("telemetry")}
-              className={cn(
-                "flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium tracking-wide uppercase transition-colors rounded-sm cursor-pointer",
-                activeTab === "telemetry"
-                  ? "bg-zinc-800 text-amber font-semibold"
-                  : "text-zinc-400 hover:text-zinc-200"
-              )}
-            >
-              <Terminal className="size-3" />
-              Observability
-            </button>
-          </div>
+        {/* Console Display Screen */}
+        <div className={cn(
+          "relative overflow-hidden p-5 text-zinc-300 flex flex-col",
+          isFullscreen ? "flex-1 min-h-0 h-[calc(100vh-80px)]" : "h-[430px]"
+        )}>
+          
+          {/* TAB 1: Live Interactive Topology Diagram with React Flow */}
+          {activeTab === "topology" && (
+            <div className="h-full flex flex-col justify-between flex-1 min-h-0">
+              {/* React Flow Container */}
+              <div className="flex-1 w-full min-h-0 border border-border/40 rounded bg-zinc-950/30 overflow-hidden relative">
+                <ReactFlowProvider>
+                  <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    nodeTypes={nodeTypes}
+                    className="architecture-flow"
+                    proOptions={{ hideAttribution: true }}
+                    {...flowProps}
+                  >
+                    <Background variant={BackgroundVariant.Dots} gap={12} size={1} color="#333" />
+                    <Controls showInteractive={false} position="bottom-right" className="!bg-zinc-900 !border-border/60 !m-2" />
+                  </ReactFlow>
+                  <FlowResizer isFullscreen={isFullscreen} isMobile={isMobile} activeTab={activeTab} />
+                </ReactFlowProvider>
+              </div>
 
-          {/* Fullscreen Toggle */}
-          <button
-            onClick={() => setIsFullscreen(!isFullscreen)}
-            className="flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-medium tracking-wide uppercase text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 rounded-md border border-border/40 transition-colors cursor-pointer"
-            aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-          >
-            {isFullscreen ? <Minimize2 className="size-3" /> : <Maximize2 className="size-3" />}
-            {isFullscreen ? "Exit" : "Fullscreen"}
-          </button>
+              {/* Description note */}
+              <div className="flex items-center justify-between border-t border-border/40 mt-3 pt-3 text-[10px] text-zinc-500 font-sans shrink-0">
+                <span className="flex items-center gap-1">
+                  <span className="relative flex size-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber/70 opacity-75" />
+                    <span className="relative inline-flex size-1.5 rounded-full bg-amber" />
+                  </span>
+                  Active loop simulation step: {step}/6 {isMobile && "(mobile stack)"}
+                </span>
+                <span className="font-mono text-[9px] uppercase text-amber">System Topology</span>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: Dynamic Highlight Code block */}
+          {activeTab === "code" && (
+            <div className="h-full flex flex-col justify-between flex-1 min-h-0">
+              {/* Streamdown syntax highlighted code block */}
+              <div className={cn(
+                "overflow-auto streamdown-code-clean [&_[data-streamdown='code-block']]:border-0 [&_[data-streamdown='code-block']]:bg-transparent [&_[data-streamdown='code-block']]:p-0 [&_[data-streamdown='code-block']]:m-0 [&_[data-streamdown='code-block-body']]:border-0 [&_[data-streamdown='code-block-body']]:bg-transparent [&_[data-streamdown='code-block-body']]:p-0 [&_[data-streamdown='code-block-header']]:hidden",
+                isFullscreen ? "max-h-[calc(100vh-180px)] flex-1" : "max-h-[350px] flex-1"
+              )}>
+                <Streamdown 
+                  plugins={{ code }} 
+                  shikiTheme={["dracula", "dracula"]}
+                  controls={false}
+                >
+                  {LANGGRAPH_HERO_CODE}
+                </Streamdown>
+              </div>
+
+              {/* Description note */}
+              <div className="border-t border-border/40 pt-3 text-[10px] text-zinc-500 font-sans flex justify-between items-center shrink-0">
+                <span>Stateful cyclic routing logic using Python StateGraph nodes.</span>
+                <span className="font-mono text-[9px] uppercase text-amber">Shiki Highlighting</span>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: AI Observability (Grafana / OpenTelemetry style Dashboard) */}
+          {activeTab === "telemetry" && (
+            <div className="h-full flex flex-col justify-between flex-1 min-h-0">
+              <div className="flex-1 flex flex-col gap-4 overflow-auto min-h-0">
+                
+                {/* Telemetry Metrics Grid */}
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 shrink-0">
+                  
+                  {/* Metric 1 */}
+                  <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
+                    <div className="flex items-center gap-1.5 text-zinc-500">
+                      <Gauge className="size-3 text-amber" />
+                      <span className="text-[9px] uppercase tracking-wide">Avg Latency</span>
+                    </div>
+                    <div className="mt-1.5 text-base font-bold text-zinc-100">184ms</div>
+                    <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
+                      <div className="bg-amber h-full w-[65%]" />
+                    </div>
+                  </div>
+
+                  {/* Metric 2 */}
+                  <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
+                    <div className="flex items-center gap-1.5 text-zinc-500">
+                      <Layers className="size-3 text-amber" />
+                      <span className="text-[9px] uppercase tracking-wide">Cache Ratio</span>
+                    </div>
+                    <div className="mt-1.5 text-base font-bold text-zinc-100">94.2%</div>
+                    <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
+                      <div className="bg-emerald-500 h-full w-[94.2%]" />
+                    </div>
+                  </div>
+
+                  {/* Metric 3 */}
+                  <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
+                    <div className="flex items-center gap-1.5 text-zinc-500">
+                      <Coins className="size-3 text-amber" />
+                      <span className="text-[9px] uppercase tracking-wide">Optimizations</span>
+                    </div>
+                    <div className="mt-1.5 text-base font-bold text-zinc-100">4.2x Cost Red</div>
+                    <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
+                      <div className="bg-cyan-500 h-full w-[80%]" />
+                    </div>
+                  </div>
+
+                  {/* Metric 4 */}
+                  <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
+                    <div className="flex items-center gap-1.5 text-zinc-500">
+                      <ShieldCheck className="size-3 text-amber" />
+                      <span className="text-[9px] uppercase tracking-wide">Guardrails</span>
+                    </div>
+                    <div className="mt-1.5 text-base font-bold text-zinc-100">0.98 Ground</div>
+                    <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
+                      <div className="bg-emerald-500 h-full w-[98%]" />
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* System Trace Table */}
+                <div className="flex-1 border border-border/40 rounded bg-zinc-950/30 overflow-auto min-h-0">
+                  <table className="w-full text-left border-collapse min-w-[400px]">
+                    <thead>
+                      <tr className="border-b border-border/50 bg-zinc-900/40 text-zinc-500 font-mono text-[9px]">
+                        <th className="p-2">Timestamp</th>
+                        <th className="p-2">Trace ID</th>
+                        <th className="p-2">Component</th>
+                        <th className="p-2">Execution Trace Details</th>
+                        <th className="p-2">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {STABLE_TRACES.map((item, index) => {
+                        const isCurrent = step === index;
+                        return (
+                          <tr 
+                            key={index} 
+                            className={cn(
+                              "border-b border-border/30 transition-all duration-300 text-[9px]",
+                              isCurrent ? "bg-amber/5 text-zinc-100" : "hover:bg-zinc-900/20 text-zinc-400"
+                            )}
+                          >
+                            <td className="p-2 flex items-center gap-1.5 font-mono">
+                              {isCurrent ? (
+                                <span className="relative flex size-1.5">
+                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber/70 opacity-75" />
+                                  <span className="relative inline-flex size-1.5 rounded-full bg-amber" />
+                                </span>
+                              ) : (
+                                <span className="size-1.5 rounded-full bg-zinc-700" />
+                              )}
+                              {item.time}
+                            </td>
+                            <td className={cn("p-2 font-mono", isCurrent ? "text-amber font-semibold" : "text-zinc-500")}>
+                              {item.trace}
+                            </td>
+                            <td className={cn("p-2 font-mono", isCurrent ? "text-zinc-100 font-semibold" : "text-zinc-400")}>
+                              {item.component}
+                            </td>
+                            <td className="p-2">{item.event}</td>
+                            <td className="p-2">
+                              <span className={cn(
+                                "px-1 py-0.5 rounded border font-bold text-[8px]",
+                                isCurrent 
+                                  ? "bg-amber/10 border-amber/30 text-amber"
+                                  : "bg-emerald-950/40 border-emerald-900/40 text-emerald-400"
+                              )}>
+                                {isCurrent ? "ACTIVE" : item.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+              {/* Simulated Live telemetry marker */}
+              <div className="flex items-center justify-between border-t border-border/40 pt-3 text-[10px] text-zinc-500 font-sans shrink-0">
+                <span className="flex items-center gap-1.5">
+                  <span className="relative flex size-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  Active telemetry session synced via OpenTelemetry backend.
+                </span>
+                <span className="font-mono text-[9px] uppercase text-amber">OTEL Trace API</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Console Display Screen */}
-      <div className={cn(
-        "relative overflow-hidden p-5 text-zinc-300 flex flex-col",
-        isFullscreen ? "flex-1 min-h-0 h-[calc(100vh-80px)]" : "h-[430px]"
-      )}>
-        
-        {/* TAB 1: Live Interactive Topology Diagram with React Flow */}
-        {activeTab === "topology" && (
-          <div className="h-full flex flex-col justify-between flex-1 min-h-0">
-            {/* React Flow Container */}
-            <div className="flex-1 w-full min-h-0 border border-border/40 rounded bg-zinc-950/30 overflow-hidden relative">
-              <ReactFlowProvider>
-                <ReactFlow
-                  nodes={nodes}
-                  edges={edges}
-                  nodeTypes={nodeTypes}
-                  className="architecture-flow"
-                  proOptions={{ hideAttribution: true }}
-                  {...flowProps}
-                >
-                  <Background variant={BackgroundVariant.Dots} gap={12} size={1} color="#333" />
-                  <Controls showInteractive={false} position="bottom-right" className="!bg-zinc-900 !border-border/60 !m-2" />
-                </ReactFlow>
-                <FlowResizer isFullscreen={isFullscreen} isMobile={isMobile} activeTab={activeTab} />
-              </ReactFlowProvider>
+      {/* Mobile Mode (Hidden on Desktop) */}
+      <div className="flex md:hidden flex-col">
+        {/* OS Chrome Header */}
+        <div className="flex items-center justify-between gap-4 border-b border-border/80 bg-zinc-900/60 px-4 py-2.5">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5" role="group" aria-label="Window controls">
+              <span className="size-2 rounded-full bg-rose-500/50" />
+              <span className="size-2 rounded-full bg-amber/50" />
+              <span className="size-2 rounded-full bg-emerald-500/50" />
             </div>
+            <span className="text-[10px] tracking-wide text-zinc-500 font-bold">
+              systems_console.sh
+            </span>
+          </div>
+          <span className="text-[9px] uppercase text-amber tracking-widest font-bold">LOCKED</span>
+        </div>
 
-            {/* Description note */}
-            <div className="flex items-center justify-between border-t border-border/40 mt-3 pt-3 text-[10px] text-zinc-500 font-sans shrink-0">
-              <span className="flex items-center gap-1">
-                <span className="relative flex size-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber/70 opacity-75" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-amber" />
-                </span>
-                Active loop simulation step: {step}/6 {isMobile && "(mobile stack)"}
-              </span>
-              <span className="font-mono text-[9px] uppercase text-amber">System Topology</span>
+        {/* Console display message */}
+        <div className="flex flex-col justify-between p-5 h-[320px] text-zinc-400 font-mono text-[10px] sm:text-[11px] leading-relaxed bg-zinc-950/90 text-left">
+          <div className="space-y-4">
+            <div className="flex items-center gap-1.5 text-zinc-500">
+              <span className="size-1.5 rounded-full bg-amber animate-pulse" />
+              <span>terminal_session_01</span>
+            </div>
+            
+            <div className="space-y-2">
+              <p className="text-zinc-500">$ ./init_systems_console.sh</p>
+              <p className="text-amber/95 font-semibold">[WARN] Screen width limits exceeded.</p>
+              <p className="text-zinc-400 leading-normal text-[10px] sm:text-[11px]">
+                The interactive LangGraph orchestrator map and telemetry trace dashboard require a minimum viewport of 768px for readable diagram rendering.
+              </p>
+              <p className="text-zinc-500 font-light text-[9px] sm:text-[10px]">
+                [!] Please visit this platform on a desktop device for the full interactive experience.
+              </p>
             </div>
           </div>
-        )}
 
-        {/* TAB 2: Dynamic Highlight Code block */}
-        {activeTab === "code" && (
-          <div className="h-full flex flex-col justify-between flex-1 min-h-0">
-            {/* Streamdown syntax highlighted code block */}
-            <div className={cn(
-              "overflow-auto streamdown-code-clean [&_[data-streamdown='code-block']]:border-0 [&_[data-streamdown='code-block']]:bg-transparent [&_[data-streamdown='code-block']]:p-0 [&_[data-streamdown='code-block']]:m-0 [&_[data-streamdown='code-block-body']]:border-0 [&_[data-streamdown='code-block-body']]:bg-transparent [&_[data-streamdown='code-block-body']]:p-0 [&_[data-streamdown='code-block-header']]:hidden",
-              isFullscreen ? "max-h-[calc(100vh-180px)] flex-1" : "max-h-[350px] flex-1"
-            )}>
-              <Streamdown 
-                plugins={{ code }} 
-                shikiTheme={["dracula", "dracula"]}
-                controls={false}
-              >
-                {LANGGRAPH_HERO_CODE}
-              </Streamdown>
-            </div>
-
-            {/* Description note */}
-            <div className="border-t border-border/40 pt-3 text-[10px] text-zinc-500 font-sans flex justify-between items-center shrink-0">
-              <span>Stateful cyclic routing logic using Python StateGraph nodes.</span>
-              <span className="font-mono text-[9px] uppercase text-amber">Shiki Highlighting</span>
+          <div className="space-y-3 pt-4 border-t border-border/30">
+            <p className="text-zinc-500 text-[10px] uppercase tracking-wider">Quick links:</p>
+            <div className="flex flex-col gap-2">
+              <Button asChild size="sm" className="h-8 w-full bg-amber text-amber-foreground hover:bg-amber/90 text-xs font-semibold">
+                <Link href="/advisory-intake">
+                  <Calendar className="size-3 mr-1" />
+                  Start Advisory Intake
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="sm" className="h-8 w-full text-xs text-zinc-300 border-zinc-800 hover:bg-zinc-900 font-semibold">
+                <Link href="/engineering">
+                  View Decision Map
+                </Link>
+              </Button>
             </div>
           </div>
-        )}
-
-        {/* TAB 3: AI Observability (Grafana / OpenTelemetry style Dashboard) */}
-        {activeTab === "telemetry" && (
-          <div className="h-full flex flex-col justify-between flex-1 min-h-0">
-            <div className="flex-1 flex flex-col gap-4 overflow-auto min-h-0">
-              
-              {/* Telemetry Metrics Grid */}
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 shrink-0">
-                
-                {/* Metric 1 */}
-                <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
-                  <div className="flex items-center gap-1.5 text-zinc-500">
-                    <Gauge className="size-3 text-amber" />
-                    <span className="text-[9px] uppercase tracking-wide">Avg Latency</span>
-                  </div>
-                  <div className="mt-1.5 text-base font-bold text-zinc-100">184ms</div>
-                  <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
-                    <div className="bg-amber h-full w-[65%]" />
-                  </div>
-                </div>
-
-                {/* Metric 2 */}
-                <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
-                  <div className="flex items-center gap-1.5 text-zinc-500">
-                    <Layers className="size-3 text-amber" />
-                    <span className="text-[9px] uppercase tracking-wide">Cache Ratio</span>
-                  </div>
-                  <div className="mt-1.5 text-base font-bold text-zinc-100">94.2%</div>
-                  <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
-                    <div className="bg-emerald-500 h-full w-[94.2%]" />
-                  </div>
-                </div>
-
-                {/* Metric 3 */}
-                <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
-                  <div className="flex items-center gap-1.5 text-zinc-500">
-                    <Coins className="size-3 text-amber" />
-                    <span className="text-[9px] uppercase tracking-wide">Optimizations</span>
-                  </div>
-                  <div className="mt-1.5 text-base font-bold text-zinc-100">4.2x Cost Red</div>
-                  <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
-                    <div className="bg-cyan-500 h-full w-[80%]" />
-                  </div>
-                </div>
-
-                {/* Metric 4 */}
-                <div className="border border-border/50 bg-zinc-950/40 p-3 rounded text-left">
-                  <div className="flex items-center gap-1.5 text-zinc-500">
-                    <ShieldCheck className="size-3 text-amber" />
-                    <span className="text-[9px] uppercase tracking-wide">Guardrails</span>
-                  </div>
-                  <div className="mt-1.5 text-base font-bold text-zinc-100">0.98 Ground</div>
-                  <div className="mt-1 w-full bg-zinc-800 h-1 rounded overflow-hidden">
-                    <div className="bg-emerald-500 h-full w-[98%]" />
-                  </div>
-                </div>
-
-              </div>
-
-              {/* System Trace Table */}
-              <div className="flex-1 border border-border/40 rounded bg-zinc-950/30 overflow-auto min-h-0">
-                <table className="w-full text-left border-collapse min-w-[400px]">
-                  <thead>
-                    <tr className="border-b border-border/50 bg-zinc-900/40 text-zinc-500 font-mono text-[9px]">
-                      <th className="p-2">Timestamp</th>
-                      <th className="p-2">Trace ID</th>
-                      <th className="p-2">Component</th>
-                      <th className="p-2">Execution Trace Details</th>
-                      <th className="p-2">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {STABLE_TRACES.map((item, index) => {
-                      const isCurrent = step === index;
-                      return (
-                        <tr 
-                          key={index} 
-                          className={cn(
-                            "border-b border-border/30 transition-all duration-300 text-[9px]",
-                            isCurrent ? "bg-amber/5 text-zinc-100" : "hover:bg-zinc-900/20 text-zinc-400"
-                          )}
-                        >
-                          <td className="p-2 flex items-center gap-1.5 font-mono">
-                            {isCurrent ? (
-                              <span className="relative flex size-1.5">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber/70 opacity-75" />
-                                <span className="relative inline-flex size-1.5 rounded-full bg-amber" />
-                              </span>
-                            ) : (
-                              <span className="size-1.5 rounded-full bg-zinc-700" />
-                            )}
-                            {item.time}
-                          </td>
-                          <td className={cn("p-2 font-mono", isCurrent ? "text-amber font-semibold" : "text-zinc-500")}>
-                            {item.trace}
-                          </td>
-                          <td className={cn("p-2 font-mono", isCurrent ? "text-zinc-100 font-semibold" : "text-zinc-400")}>
-                            {item.component}
-                          </td>
-                          <td className="p-2">{item.event}</td>
-                          <td className="p-2">
-                            <span className={cn(
-                              "px-1 py-0.5 rounded border font-bold text-[8px]",
-                              isCurrent 
-                                ? "bg-amber/10 border-amber/30 text-amber"
-                                : "bg-emerald-950/40 border-emerald-900/40 text-emerald-400"
-                            )}>
-                              {isCurrent ? "ACTIVE" : item.status}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-
-            {/* Simulated Live telemetry marker */}
-            <div className="flex items-center justify-between border-t border-border/40 pt-3 text-[10px] text-zinc-500 font-sans shrink-0">
-              <span className="flex items-center gap-1.5">
-                <span className="relative flex size-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-                </span>
-                Active telemetry session synced via OpenTelemetry backend.
-              </span>
-              <span className="font-mono text-[9px] uppercase text-amber">OTEL Trace API</span>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
