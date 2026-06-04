@@ -1421,6 +1421,98 @@
       ]
     },
     {
+      "id": "minisearch",
+      "type": "tool",
+      "title": "MiniSearch",
+      "summary": "MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+      "tags": [
+        "data",
+        "adopt"
+      ],
+      "keywords": [
+        "MiniSearch",
+        "Data",
+        "Adopt"
+      ],
+      "aliases": [
+        "MiniSearch"
+      ],
+      "importance": 8,
+      "related": [
+        "astra-knowledge-graph-engine"
+      ]
+    },
+    {
+      "id": "adr-minisearch",
+      "type": "adr",
+      "title": "ADR: MiniSearch Integration",
+      "summary": "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+      "tags": [
+        "adr",
+        "minisearch"
+      ],
+      "keywords": [
+        "adr",
+        "MiniSearch",
+        "decision",
+        "tradeoff"
+      ],
+      "aliases": [
+        "adr-minisearch",
+        "decision-minisearch"
+      ],
+      "importance": 7,
+      "related": [
+        "minisearch"
+      ]
+    },
+    {
+      "id": "graphology",
+      "type": "tool",
+      "title": "Graphology",
+      "summary": "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+      "tags": [
+        "data",
+        "adopt"
+      ],
+      "keywords": [
+        "Graphology",
+        "Data",
+        "Adopt"
+      ],
+      "aliases": [
+        "Graphology"
+      ],
+      "importance": 8,
+      "related": [
+        "astra-knowledge-graph-engine"
+      ]
+    },
+    {
+      "id": "adr-graphology",
+      "type": "adr",
+      "title": "ADR: Graphology Integration",
+      "summary": "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+      "tags": [
+        "adr",
+        "graphology"
+      ],
+      "keywords": [
+        "adr",
+        "Graphology",
+        "decision",
+        "tradeoff"
+      ],
+      "aliases": [
+        "adr-graphology",
+        "decision-graphology"
+      ],
+      "importance": 7,
+      "related": [
+        "graphology"
+      ]
+    },
+    {
       "id": "nextjs",
       "type": "tool",
       "title": "Next.js",
@@ -1799,6 +1891,8 @@
       ],
       "importance": 10,
       "related": [
+        "minisearch",
+        "graphology",
         "nextjs"
       ]
     },
@@ -3587,6 +3681,54 @@
         "High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics."
       ]
     },
+    "minisearch": {
+      "id": "minisearch",
+      "summary_50": "MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+      "summary_100": "MiniSearch (Data - Adopt (In-Memory Search)): MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+      "summary_250": "MiniSearch is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (In-Memory Search). Insight: MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.. ADR Context - Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats.. Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.. Tradeoff: Increases bundle size slightly for immediate, serverless-safe in-memory querying.",
+      "facts": [
+        "MiniSearch is classified in the Adopt ring for Data.",
+        "MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+        "ADR Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats.",
+        "ADR Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+        "ADR Tradeoff: Increases bundle size slightly for immediate, serverless-safe in-memory querying."
+      ]
+    },
+    "adr-minisearch": {
+      "id": "adr-minisearch",
+      "summary_50": "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+      "summary_100": "ADR for MiniSearch. Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats. Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+      "summary_250": "ADR for MiniSearch. Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats. Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated. Tradeoff: Increases bundle size slightly for immediate, serverless-safe in-memory querying.",
+      "facts": [
+        "Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats.",
+        "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+        "Increases bundle size slightly for immediate, serverless-safe in-memory querying."
+      ]
+    },
+    "graphology": {
+      "id": "graphology",
+      "summary_50": "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+      "summary_100": "Graphology (Data - Adopt (In-Memory Graph)): Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+      "summary_250": "Graphology is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (In-Memory Graph). Insight: Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.. ADR Context - Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.. Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution.",
+      "facts": [
+        "Graphology is classified in the Adopt ring for Data.",
+        "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+        "ADR Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.",
+        "ADR Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+        "ADR Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution."
+      ]
+    },
+    "adr-graphology": {
+      "id": "adr-graphology",
+      "summary_50": "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+      "summary_100": "ADR for Graphology. Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+      "summary_250": "ADR for Graphology. Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals. Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution.",
+      "facts": [
+        "External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.",
+        "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+        "Limited to memory capacity of the hosting container, but guarantees < 1ms search execution."
+      ]
+    },
     "nextjs": {
       "id": "nextjs",
       "summary_50": "Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.",
@@ -3729,7 +3871,7 @@
         "Component FastAPI gateway: Python 3.14, uv, OpenAI-compatible routes (Exposes /v1/chat/completions, /v1/models, /v1/responses, /api/v1/agent/direct-message, and admin key routes.)",
         "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)",
         "Component Python LangGraph: StateGraph astream with custom SSE chunks (DirectMessageAgentService compiles a Python StateGraph and streams custom chunks from the internal OpenAI service.)",
-        "Component Ollama client: AsyncOpenAI wrapper over local Ollama /v1 (The gateway forwards compatible payloads to Ollama, defaulting to qwen3.5:9b when a model is not supplied.)",
+        "Component Ollama client: AsyncOpenAI wrapper over local Ollama /v1 (The gateway forwards compatible payloads to Ollama, defaulting to llama3.2 when a model is not supplied.)",
         "Component Private data plane: PostgreSQL 17, Redis 8, Qdrant clients (PostgreSQL is used for key records and usage logs; Redis and Qdrant are wired for future cache and RAG paths.)"
       ]
     },

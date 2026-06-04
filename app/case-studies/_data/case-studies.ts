@@ -208,7 +208,7 @@ export const caseStudies = [
         label: "Ollama client",
         description: "AsyncOpenAI wrapper over local Ollama /v1",
         detail:
-          "The gateway forwards compatible payloads to Ollama, defaulting to qwen3.5:9b when a model is not supplied.",
+          "The gateway forwards compatible payloads to Ollama, defaulting to llama3.2 when a model is not supplied.",
         icon: Cpu,
       },
       {
@@ -238,7 +238,7 @@ export const caseStudies = [
       "FASTAPI: X-API-Key or bearer token validated against PostgreSQL key hash.",
       "LANGGRAPH_PY: DirectMessageAgentService StateGraph compiled with node llm.",
       "STREAM: graph.astream(..., stream_mode='custom') emits SSE-compatible chunks.",
-      "OLLAMA: AsyncOpenAI client streams local model output from qwen3.5:9b.",
+      "OLLAMA: AsyncOpenAI client streams local model output from llama3.2.",
       "USAGE: endpoint and model usage recorded in PostgreSQL usage_logs.",
     ],
     adr: {

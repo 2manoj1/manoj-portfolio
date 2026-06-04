@@ -1420,6 +1420,98 @@
     ]
   },
   {
+    "id": "minisearch",
+    "type": "tool",
+    "title": "MiniSearch",
+    "summary": "MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+    "tags": [
+      "data",
+      "adopt"
+    ],
+    "keywords": [
+      "MiniSearch",
+      "Data",
+      "Adopt"
+    ],
+    "aliases": [
+      "MiniSearch"
+    ],
+    "importance": 8,
+    "related": [
+      "astra-knowledge-graph-engine"
+    ]
+  },
+  {
+    "id": "adr-minisearch",
+    "type": "adr",
+    "title": "ADR: MiniSearch Integration",
+    "summary": "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+    "tags": [
+      "adr",
+      "minisearch"
+    ],
+    "keywords": [
+      "adr",
+      "MiniSearch",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-minisearch",
+      "decision-minisearch"
+    ],
+    "importance": 7,
+    "related": [
+      "minisearch"
+    ]
+  },
+  {
+    "id": "graphology",
+    "type": "tool",
+    "title": "Graphology",
+    "summary": "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+    "tags": [
+      "data",
+      "adopt"
+    ],
+    "keywords": [
+      "Graphology",
+      "Data",
+      "Adopt"
+    ],
+    "aliases": [
+      "Graphology"
+    ],
+    "importance": 8,
+    "related": [
+      "astra-knowledge-graph-engine"
+    ]
+  },
+  {
+    "id": "adr-graphology",
+    "type": "adr",
+    "title": "ADR: Graphology Integration",
+    "summary": "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+    "tags": [
+      "adr",
+      "graphology"
+    ],
+    "keywords": [
+      "adr",
+      "Graphology",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-graphology",
+      "decision-graphology"
+    ],
+    "importance": 7,
+    "related": [
+      "graphology"
+    ]
+  },
+  {
     "id": "nextjs",
     "type": "tool",
     "title": "Next.js",
@@ -1798,6 +1890,8 @@
     ],
     "importance": 10,
     "related": [
+      "minisearch",
+      "graphology",
       "nextjs"
     ]
   },

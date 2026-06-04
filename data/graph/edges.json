@@ -125,6 +125,16 @@
     "relation": "references"
   },
   {
+    "source": "adr-minisearch",
+    "target": "minisearch",
+    "relation": "references"
+  },
+  {
+    "source": "adr-graphology",
+    "target": "graphology",
+    "relation": "references"
+  },
+  {
     "source": "adr-nextjs",
     "target": "nextjs",
     "relation": "references"
@@ -412,6 +422,16 @@
   {
     "source": "ai-architecture-enablement",
     "target": "mcp",
+    "relation": "uses"
+  },
+  {
+    "source": "astra-knowledge-graph-engine",
+    "target": "minisearch",
+    "relation": "uses"
+  },
+  {
+    "source": "astra-knowledge-graph-engine",
+    "target": "graphology",
     "relation": "uses"
   },
   {

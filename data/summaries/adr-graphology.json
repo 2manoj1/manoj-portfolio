@@ -1,0 +1,11 @@
+{
+  "id": "adr-graphology",
+  "summary_50": "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+  "summary_100": "ADR for Graphology. Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+  "summary_250": "ADR for Graphology. Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals. Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution.",
+  "facts": [
+    "External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.",
+    "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+    "Limited to memory capacity of the hosting container, but guarantees < 1ms search execution."
+  ]
+}

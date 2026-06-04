@@ -93,7 +93,7 @@ const labSystems: Record<string, TabData> = {
         icon: Settings,
         input: "Structured prompt tokens",
         output: "JSON response text / output stream",
-        metrics: "qwen3.5:9b default model",
+        metrics: "llama3.2 default model",
         description: "Serves local model traffic through Ollama's OpenAI-compatible API.",
         failureMode: "Context overflow. Sliding memory windows reduce pressure.",
       },

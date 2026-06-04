@@ -1,0 +1,13 @@
+{
+  "id": "graphology",
+  "summary_50": "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+  "summary_100": "Graphology (Data - Adopt (In-Memory Graph)): Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+  "summary_250": "Graphology is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (In-Memory Graph). Insight: Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.. ADR Context - Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.. Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.. Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution.",
+  "facts": [
+    "Graphology is classified in the Adopt ring for Data.",
+    "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+    "ADR Problem: External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.",
+    "ADR Decision: Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+    "ADR Tradeoff: Limited to memory capacity of the hosting container, but guarantees < 1ms search execution."
+  ]
+}

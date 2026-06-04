@@ -1,0 +1,11 @@
+{
+  "id": "adr-minisearch",
+  "summary_50": "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+  "summary_100": "ADR for MiniSearch. Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats. Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+  "summary_250": "ADR for MiniSearch. Problem: Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats. Decision: Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated. Tradeoff: Increases bundle size slightly for immediate, serverless-safe in-memory querying.",
+  "facts": [
+    "Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats.",
+    "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+    "Increases bundle size slightly for immediate, serverless-safe in-memory querying."
+  ]
+}
