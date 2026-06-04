@@ -9,7 +9,6 @@ import {
   Activity, 
   BookOpen, 
   Share2, 
-  ChevronRight, 
   ShieldCheck, 
   Heart
 } from "lucide-react";
@@ -80,7 +79,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
       };
       const className = typeClassMap[type] || '';
       return (
-        <div className={`p-4 rounded-md my-2 ${className}`}>
+        <div key={`paragraph-${globalIdx}`} className={`p-4 rounded-md my-2 ${className}`}>
           <strong className="block uppercase text-xs mb-1">{type}</strong>
           <p className="text-sm leading-6">{content}</p>
         </div>
@@ -91,7 +90,10 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
     if (paragraph.startsWith('>')) {
       const quote = paragraph.replace(/^>\s?/, '');
       return (
-        <blockquote className="border-l-4 border-amber-500 pl-4 italic text-muted-foreground my-4">
+        <blockquote
+          key={`paragraph-${globalIdx}`}
+          className="border-l-4 border-amber-500 pl-4 italic text-muted-foreground my-4"
+        >
           {quote}
         </blockquote>
       );
@@ -101,6 +103,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
     const parts = paragraph.split(/(`[^`]+`)/g);
     return (
       <p
+        key={`paragraph-${globalIdx}`}
         className={`text-base leading-8 text-muted-foreground transition-all duration-300 p-2 rounded ${
           isActive
             ? 'border-l-2 border-amber bg-amber/5 pl-4 text-zinc-100 shadow-[0_0_15px_rgba(245,158,11,0.03)]'
@@ -115,14 +118,14 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
           if (part.startsWith('`') && part.endsWith('`')) {
             return (
               <code
-                key={partIdx}
+                key={`${globalIdx}-code-${partIdx}`}
                 className="rounded bg-secondary/50 px-1.5 py-0.5 font-mono text-xs text-amber font-semibold border border-border/40"
               >
                 {part.slice(1, -1)}
               </code>
             );
           }
-          return part;
+          return <React.Fragment key={`${globalIdx}-text-${partIdx}`}>{part}</React.Fragment>;
         })}
       </p>
     );
@@ -135,7 +138,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
     const indices: number[][] = [];
     const sectionStarts: number[] = [];
 
-    article.sections.forEach((section, sIdx) => {
+    article.sections.forEach((section) => {
       sectionStarts.push(count);
       const sectionIndicesList: number[] = [];
       section.body.forEach(() => {
@@ -261,7 +264,11 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                   {section.body.map((paragraph, pIdx) => {
                     const globalIdx = sectionIndices[sIdx][pIdx];
                     const isActive = activeParagraphIndex === globalIdx;
-                    return renderParagraph(paragraph, isActive, globalIdx);
+                    return (
+                      <React.Fragment key={`section-${sIdx}-paragraph-${globalIdx}`}>
+                        {renderParagraph(paragraph, isActive, globalIdx)}
+                      </React.Fragment>
+                    );
                   })}
                 </div>
 
@@ -399,7 +406,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                         isActive ? "text-amber font-bold" : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
-                      0{idx + 1} // {section.heading}
+                      0{idx + 1}{" // "}{section.heading}
                     </button>
                   );
                 })}

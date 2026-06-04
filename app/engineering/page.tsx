@@ -1,4 +1,3 @@
-import { SystemCard } from "@/components/marketing/cards";
 import { SystemTopologyInspector } from "@/components/marketing/system-topology-inspector";
 import { ArchitectureDecisionMap } from "@/components/marketing/architecture-decision-map";
 import { EngineeringJourney } from "@/components/marketing/engineering-journey";
@@ -7,7 +6,6 @@ import { EngineeringPublications } from "@/components/marketing/engineering-publ
 import { TechRadar } from "@/components/marketing/tech-radar";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { Section, SectionHeader } from "@/components/marketing/section";
-import { engineeringSystems } from "@/content/site";
 import { createMetadata } from "@/lib/seo";
 import {
 	BrainCircuit,

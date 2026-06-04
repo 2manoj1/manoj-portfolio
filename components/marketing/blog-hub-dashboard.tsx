@@ -3,14 +3,11 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { 
-  ArrowRight, 
   ExternalLink, 
   Search, 
   Terminal, 
   Filter, 
   Activity, 
-  Database, 
-  Sliders, 
   Rss,
   ChevronRight
 } from "lucide-react";
@@ -154,7 +151,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
           {/* HUD Trace Readout */}
           <div className="bg-zinc-950/80 border border-zinc-900 rounded p-4 font-mono text-[9px] leading-relaxed text-zinc-400 space-y-1.5">
             <div>
-              <span className="text-zinc-600">// TRACE SUMMARY</span>
+              <span className="text-zinc-600">{"// TRACE SUMMARY"}</span>
             </div>
             <div className="flex justify-between">
               <span>ACTIVE SCHEMA:</span>
@@ -204,10 +201,10 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
         {/* Left Column: Local MDX featured posts */}
         <div className="space-y-8">
           <div>
-            <h3 className="font-mono text-[10px] font-bold text-amber uppercase tracking-widest">// DEEP ARCHITECTURE JOURNAL</h3>
+            <h3 className="font-mono text-[10px] font-bold text-amber uppercase tracking-widest">{"// DEEP ARCHITECTURE JOURNAL"}</h3>
             <h2 className="text-xl font-bold text-foreground mt-1">Featured Systems Breakthroughs (MDX Specs)</h2>
             <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-              Durable specification sheets detailing Manoj's actual production pipelines. Built with real telemetry metrics, code files, and verification evaluations.
+              Durable specification sheets detailing Manoj&apos;s actual production pipelines. Built with real telemetry metrics, code files, and verification evaluations.
             </p>
           </div>
 
@@ -253,7 +250,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
         {/* Right Column: Medium feed & LinkedIn Embeds */}
         <div className="space-y-8">
           <div>
-            <h3 className="font-mono text-[10px] font-bold text-amber uppercase tracking-widest">// DISTRIBUTION CHANNELS</h3>
+            <h3 className="font-mono text-[10px] font-bold text-amber uppercase tracking-widest">{"// DISTRIBUTION CHANNELS"}</h3>
             <h2 className="text-xl font-bold text-foreground mt-1">Medium & LinkedIn Synthesis</h2>
             <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
               Manoj publishes general architecture guidelines and supercomputing reports to Medium, and aggregates stateful agent breakdowns to LinkedIn.
@@ -263,7 +260,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
           {/* Medium distribution feed list */}
           <div className="border border-border bg-zinc-950/20 p-5 rounded-lg space-y-4">
             <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 border-b border-zinc-900 pb-2">
-              <Rss className="size-3 text-amber animate-pulse" /> Medium Feed Distribution // Live Syndication
+              <Rss className="size-3 text-amber animate-pulse" /> {"Medium Feed Distribution // Live Syndication"}
             </span>
 
             {filteredMediumArticles.length === 0 ? (
@@ -309,7 +306,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
             </div>
 
             <h4 className="text-[11px] font-mono font-bold text-zinc-200 uppercase tracking-wide">
-              Manoj's LinkedIn Engineering Thread Hub
+              Manoj&apos;s LinkedIn Engineering Thread Hub
             </h4>
             
             <p className="text-[10px] leading-relaxed text-muted-foreground">

@@ -36,6 +36,7 @@ import type {
   TopologyNode,
 } from "../_data/case-studies";
 import { getLayoutedElements, NODE_WIDTH } from "../_lib/elk-layout";
+import type { SimMode } from "./SimulationDeck";
 
 const FIT_VIEW_DURATION = 420;
 const INLINE_FIT_PADDING = 0.08;
@@ -51,6 +52,7 @@ type ArchitectureNodeData = {
   icon: TopologyNode["icon"];
   isActive: boolean;
   isTraced: boolean;
+  simMode?: SimMode;
 };
 
 type ZoneNodeData = {
@@ -63,6 +65,8 @@ type TelemetryEdgeData = {
   label: string;
   isActive: boolean;
   isTraced: boolean;
+  simMode?: SimMode;
+  simLabel?: string;
 };
 
 type ArchitectureFlowNode =
@@ -70,8 +74,6 @@ type ArchitectureFlowNode =
   | Node<ZoneNodeData, "zone">;
 
 type ArchitectureFlowEdge = Edge<TelemetryEdgeData, "telemetry">;
-
-import type { SimMode } from "./SimulationDeck";
 
 const SIMULATION_CONFIGS = {
   "production-grade-ai-home-lab": {
@@ -228,7 +230,7 @@ function ZoneBoundaryNode({ data }: NodeProps) {
 }
 
 function ArchitectureNodeCard({ data, selected }: NodeProps) {
-  const node = data as any;
+  const node = data as ArchitectureNodeData;
   const Icon = node.icon;
   
   const simMode = node.simMode;
@@ -313,7 +315,7 @@ function TelemetryEdge({
   data,
   selected,
 }: EdgeProps) {
-  const edgeData = data as any;
+  const edgeData = data as TelemetryEdgeData | undefined;
   const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX,
     sourceY,

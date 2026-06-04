@@ -1,11 +1,32 @@
+import type { CSSProperties } from "react";
+
 export const NODE_WIDTH = 280;
 export const NODE_HEIGHT = 175;
 
-export async function getLayoutedElements(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  nodes: any[],
+type LayoutableNode = {
+  id: string;
+  type?: string;
+  parentId?: string;
+  position: {
+    x: number;
+    y: number;
+  };
+  data?: unknown;
+  style?: CSSProperties;
+};
+
+function getNodeZoneId(node: LayoutableNode) {
+  if (!node.data || typeof node.data !== "object" || !("zoneId" in node.data)) {
+    return null;
+  }
+
+  return typeof node.data.zoneId === "string" ? node.data.zoneId : null;
+}
+
+export async function getLayoutedElements<TNode extends LayoutableNode>(
+  nodes: TNode[],
   direction: "RIGHT" | "DOWN",
-) {
+): Promise<TNode[]> {
   const isRight = direction === "RIGHT";
   const nodeW = isRight ? 280 : 255;
   const nodeH = 175;
@@ -20,7 +41,7 @@ export async function getLayoutedElements(
   const archNodes = nodes.filter((n) => n.type === "architecture");
 
   // 2. Map zones to their respective architecture nodes
-  const zoneMap = new Map<string, any[]>();
+  const zoneMap = new Map<string, TNode[]>();
   for (const zone of zoneNodes) {
     zoneMap.set(zone.id, []);
   }
@@ -31,7 +52,7 @@ export async function getLayoutedElements(
       zoneMap.get(parentId)!.push(node);
     } else {
       // Fallback: match by data.zoneId
-      const zoneId = node.data?.zoneId;
+      const zoneId = getNodeZoneId(node);
       const key = zoneId ? `zone-${zoneId}` : null;
       if (key && zoneMap.has(key)) {
         zoneMap.get(key)!.push(node);
@@ -89,7 +110,7 @@ export async function getLayoutedElements(
             width: nodeW,
             height: nodeH,
           },
-        };
+        } as TNode;
       }
     });
   }

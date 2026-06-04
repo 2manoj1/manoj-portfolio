@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { Play, Pause, Square, Volume2, Settings, AudioLines } from "lucide-react";
+import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Pause, Play, Settings, Square, Volume2 } from "lucide-react";
 
 interface BlogAudioBookProps {
   paragraphs: string[];
@@ -9,8 +9,19 @@ interface BlogAudioBookProps {
   onParagraphChange?: (index: number | null) => void;
 }
 
+const subscribeToSpeechSupport = () => () => {};
+
+const getSpeechSupportSnapshot = () =>
+  typeof window !== "undefined" && "speechSynthesis" in window;
+
+const getServerSpeechSupportSnapshot = () => false;
+
 export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudioBookProps) {
-  const [supported, setSupported] = useState<boolean>(false);
+  const supported = useSyncExternalStore(
+    subscribeToSpeechSupport,
+    getSpeechSupportSnapshot,
+    getServerSpeechSupportSnapshot,
+  );
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
   const [rate, setRate] = useState<number>(1);
@@ -23,28 +34,30 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
 
   // Check support and load voices
   useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      setSupported(true);
-      
-      const loadVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices();
-        // Filter english voices by default
-        const engVoices = availableVoices.filter(v => v.lang.startsWith("en"));
-        setVoices(engVoices.length > 0 ? engVoices : availableVoices);
-        
-        // Select a default voice
-        if (engVoices.length > 0) {
-          const defaultVoice = engVoices.find(v => v.name.includes("Google") || v.name.includes("Natural")) || engVoices[0];
-          setSelectedVoice(defaultVoice.name);
-        }
-      };
+    if (!supported) return;
 
-      loadVoices();
-      if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
+    const synth = window.speechSynthesis;
+    const loadVoices = () => {
+      const availableVoices = synth.getVoices();
+      // Filter english voices by default
+      const engVoices = availableVoices.filter(v => v.lang.startsWith("en"));
+      setVoices(engVoices.length > 0 ? engVoices : availableVoices);
+
+      // Select a default voice
+      if (engVoices.length > 0) {
+        const defaultVoice = engVoices.find(v => v.name.includes("Google") || v.name.includes("Natural")) || engVoices[0];
+        setSelectedVoice(current => current || defaultVoice.name);
       }
-    }
-  }, []);
+    };
+
+    const timer = window.setTimeout(loadVoices, 0);
+    synth.addEventListener("voiceschanged", loadVoices);
+
+    return () => {
+      window.clearTimeout(timer);
+      synth.removeEventListener("voiceschanged", loadVoices);
+    };
+  }, [supported]);
 
   // Stop speech on unmount
   useEffect(() => {
@@ -157,7 +170,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
           <div className="flex items-center gap-2">
             <Volume2 className="size-4 text-amber animate-pulse" />
             <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
-              Synthesized Audio Spec Deck // Active
+              {"Synthesized Audio Spec Deck // Active"}
             </span>
           </div>
           <span className="font-mono text-[9px] text-amber/60 flex items-center gap-1.5">
@@ -173,7 +186,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               {title}
             </h4>
             <p className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">
-              Paragraph {currentIdx + 1} of {paragraphs.length} // Rate: {rate}x
+              Paragraph {currentIdx + 1} of {paragraphs.length}{" // "}Rate: {rate}x
             </p>
           </div>
 

@@ -10,23 +10,16 @@ import {
   AwsLogo,
   GooglecloudLogo,
   NvidiaLogo,
-  OpentelemetryLogo,
   LangchainLogo,
-  OllamaLogo,
-  PythonLogo,
   NodeLogo,
   ReactLogo,
   DockerLogo,
   GithubactionsLogo,
-  JenkinsLogo,
   TailwindcssLogo,
   ReduxLogo,
-  GraphqlLogo,
   MongodbLogo,
   AnthropicLogo,
   OpenaiLogo,
-  DeepseekLogo,
-  TypescriptLogo,
   DenoLogo,
   BunLogo,
   ExpressLogo,
@@ -71,18 +64,6 @@ function McpLogo({ className }: { className?: string }) {
     <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
       <rect x="4" y="6" width="16" height="12" rx="2" />
       <path d="M9 12h2M13 12h2M8 16h8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function AgenticRagLogo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <path d="M4 6v6c0 2 8 2 8 2s8 0 8-2V6" />
-      <path d="M4 6c0 2 8 2 8 2s8 0 8-2" />
-      <path d="M4 12c0 2 8 2 8 2s8 0 8-2" />
-      <circle cx="16" cy="16" r="3" />
-      <path d="M18.5 18.5L21 21" />
     </svg>
   );
 }

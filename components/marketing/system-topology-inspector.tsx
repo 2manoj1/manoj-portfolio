@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Cpu, Activity, ShieldAlert, FileCode, CheckCircle2 } from "lucide-react";
+import { Activity, ArrowRight, Cpu, FileCode, ShieldAlert } from "lucide-react";
 
 interface StepDetail {
   spec: string;
@@ -315,7 +315,7 @@ export function SystemTopologyInspector() {
             /* Pipeline execution flow visualizer */
             <div className="mt-8">
               <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60 mb-3.5">
-                // Execution Pipeline (Click to inspect)
+                {"// Execution Pipeline (Click to inspect)"}
               </p>
               
               {/* Linked steps buttons layout */}
@@ -401,7 +401,7 @@ export function SystemTopologyInspector() {
             <div className="mt-8 space-y-6">
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60 mb-1.5">
-                  // Architectural Tradeoffs & System Constraints
+                  {"// Architectural Tradeoffs & System Constraints"}
                 </p>
                 <p className="text-xs text-muted-foreground/80 max-w-xl">
                   Adjusting state contracts directly changes verification capabilities, caching ratios, and operational latency budgets.

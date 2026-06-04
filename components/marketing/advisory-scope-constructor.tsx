@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import { 
-  HelpCircle, 
   ChevronRight, 
   CheckCircle2, 
   Clipboard, 
@@ -11,12 +9,10 @@ import {
   Calculator, 
   Sliders, 
   Activity, 
-  Mail, 
   Calendar,
   ArrowUpRight,
   Terminal,
   Play,
-  RotateCcw,
   Sparkle,
   Copy,
   Check
@@ -235,15 +231,18 @@ export function AdvisoryScopeConstructor() {
   useEffect(() => {
     if (!isSimulating) return;
     const scenarioData = telemetryScenarios[selectedScenario];
-    if (logIndex < scenarioData.logs.length) {
-      const timer = setTimeout(() => {
-        setDisplayedLogs(prev => [...prev, scenarioData.logs[logIndex]]);
-        setLogIndex(prev => prev + 1);
-      }, logIndex === 0 ? 150 : Math.random() * 150 + 80);
-      return () => clearTimeout(timer);
-    } else {
-      setIsSimulating(false);
-    }
+    if (logIndex >= scenarioData.logs.length) return;
+
+    const timer = setTimeout(() => {
+      const nextLogIndex = logIndex + 1;
+      setDisplayedLogs(prev => [...prev, scenarioData.logs[logIndex]]);
+      setLogIndex(nextLogIndex);
+      if (nextLogIndex >= scenarioData.logs.length) {
+        setIsSimulating(false);
+      }
+    }, logIndex === 0 ? 150 : Math.random() * 150 + 80);
+
+    return () => clearTimeout(timer);
   }, [isSimulating, logIndex, selectedScenario]);
 
   const handleStartSimulation = () => {
@@ -479,7 +478,7 @@ Let's schedule a brief conversation.`);
             <div className="space-y-5">
               
               <div>
-                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">// ARCHITECTURE ROUTING OUTPUT</span>
+                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// ARCHITECTURE ROUTING OUTPUT"}</span>
                 <h3 className="text-base font-bold text-foreground mt-1">
                   {bottleneck.recommendation}
                 </h3>
@@ -540,7 +539,7 @@ Let's schedule a brief conversation.`);
                 {/* Copy LinkedIn template helper */}
                 <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
                   <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
-                    "{linkedInNote}"
+                    {`"${linkedInNote}"`}
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
@@ -721,7 +720,7 @@ Let's schedule a brief conversation.`);
             <div className="space-y-6">
               
               <div>
-                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">// MODEL OUTPUT PERFORMANCE MATRIX</span>
+                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// MODEL OUTPUT PERFORMANCE MATRIX"}</span>
                 <h3 className="text-sm font-bold text-zinc-200 mt-1">
                   Architecture Efficiency Analysis
                 </h3>
@@ -800,7 +799,7 @@ Let's schedule a brief conversation.`);
                 {/* Copy LinkedIn template helper */}
                 <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
                   <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
-                    "{linkedInNote}"
+                    {`"${linkedInNote}"`}
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
@@ -858,7 +857,7 @@ Let's schedule a brief conversation.`);
           {/* Left Side: Controls & Selector */}
           <div className="space-y-6">
             <div>
-              <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">// SYSTEM TELEMETRY CONTROL PANEL</span>
+              <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// SYSTEM TELEMETRY CONTROL PANEL"}</span>
               <h3 className="text-base font-bold text-foreground mt-1">
                 Select Runtime Trace Target
               </h3>
@@ -964,7 +963,7 @@ Let's schedule a brief conversation.`);
                 {displayedLogs.length === 0 ? (
                   <div className="text-zinc-600 italic flex flex-col items-center justify-center h-full gap-2">
                     <Terminal className="size-8 text-zinc-800" />
-                    <span>Awaiting signal. Click 'RUN TELEMETRY SIMULATION' to stream trace.</span>
+                    <span>Awaiting signal. Click &apos;RUN TELEMETRY SIMULATION&apos; to stream trace.</span>
                   </div>
                 ) : (
                   displayedLogs.map((log, index) => {
@@ -996,7 +995,7 @@ Let's schedule a brief conversation.`);
             <div className="mt-8 pt-4 border-t border-border/60 space-y-3">
               <div className="p-3 bg-amber/5 border border-amber/25 rounded-lg">
                 <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber uppercase font-semibold">
-                  <Sparkle className="size-3 animate-spin-slow" /> Let's Build This Telemetry
+                  <Sparkle className="size-3 animate-spin-slow" /> Let&apos;s Build This Telemetry
                 </div>
                 <p className="text-[11px] text-muted-foreground/80 mt-1 leading-relaxed">
                   Submit below to automatically compile this telemetry analysis and load your local mail composer to email Manoj. Or connect via LinkedIn.
@@ -1005,7 +1004,7 @@ Let's schedule a brief conversation.`);
                 {/* Copy LinkedIn template helper */}
                 <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
                   <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
-                    "Hi Manoj, I tried your Telemetry Sandbox..."
+                    &quot;Hi Manoj, I tried your Telemetry Sandbox...&quot;
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
