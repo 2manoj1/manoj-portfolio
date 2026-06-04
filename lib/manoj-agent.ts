@@ -188,7 +188,38 @@ export function getDirectGroundedAnswer(question: string) {
 		);
 	}
 
-	return answerParts.length ? answerParts.join("\n\n") : null;
+	if (
+		hasIntent(normalized, [
+			/\b(sitemap|site map|sitemaps)\b/,
+			/\b(navigation|nav)\b/,
+			/\b(page|pages|route|routes)\b/
+		]) ||
+		(hasIntent(normalized, [/\b(link|links)\b/]) &&
+			hasIntent(normalized, [/\b(all|site|website|map|every|page|portfolio)\b/]))
+	) {
+		answerParts.push(
+			`Here is the directory of all main pages and sections available on Manoj's systems architecture platform:
+
+- [Home](/) — Overview of Manoj's AI architect consulting services, career summary, stack, and active client proof.
+- [Services](/services) — Core consulting offers (AI Architecture Advisory, LangGraph Systems, RAG Infrastructure, AI Platform Engineering, DevRel Engineering, and Fractional AI Architect retainers).
+- [Engineering](/engineering) — Stack details, Technology Radar, Architectural Decision Records (ADRs), and production systems blueprints.
+- [Architecture Lab](/architecture-lab) — Active local systems research threads, Ollama/vLLM playgrounds, and telemetry logs.
+- [Case Studies](/case-studies) — Interactive production topology flow diagrams, log outputs, and telemetry simulations.
+- [Blog](/blog) — Deep technical articles on LangGraph, MCP security, and GenAI observability.
+- [Open Source](/open-source) — Open source repositories, tool configurations, and reusable scripts.
+- [About](/about) — Bio, professional timeline, and Manoj's engineering operating philosophy.
+- [Resume](/resume) — Interactive full resume, qualifications, and employment history.
+- [Contact](/contact) — Inquiry contact channels and direct email link.
+- [Advisory Intake](/advisory-intake) — Structured intake form for scheduling system architecture reviews.`
+		);
+	}
+
+	if (answerParts.length) {
+		const baseAnswer = answerParts.join("\n\n");
+		return `${baseAnswer}\n\n<suggestions>["Services fit?", "Graph RAG details?"]</suggestions>`;
+	}
+
+	return null;
 }
 
 type GithubUser = {
