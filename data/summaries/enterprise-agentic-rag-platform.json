@@ -18,6 +18,7 @@
     "Component FastAPI parser: Layout-aware filing extraction (Normalizes long filings into structured chunks with section metadata and document provenance.)",
     "Component Query planner: LangGraph retrieval routing (Expands and routes user intent across metadata filters, semantic search, and grounded answer paths.)",
     "Component Postgres pgvector: HNSW vectors plus transactional metadata (Keeps candidate retrieval and business metadata in one database boundary for simpler governance.)",
-    "Component Grounding eval: Safety and relevance gate (Checks answer support against retrieved evidence before the workflow releases a response.)"
+    "Component Grounding eval: Safety and relevance gate (Checks answer support against retrieved evidence before the workflow releases a response.)",
+    "Component Trace ledger: Run IDs, decision logs, and audit hooks (Captures the path from query to retrieved evidence to final response for auditability.)"
   ]
 }

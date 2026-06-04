@@ -75,7 +75,7 @@ const stackGroups = [
 	},
 	{
 		title: "Retrieval",
-		items: ["pgvector", "PostgreSQL", "MongoDB", "Hybrid Search", "Pinecone"],
+		items: ["pgvector", "PostgreSQL", "MongoDB", "MiniSearch", "Graphology", "Hybrid Search", "Pinecone"],
 	},
 	{
 		title: "AI Backend",

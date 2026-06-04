@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Updating the Graph RAG Index
+
+This website uses a static, local Git-based Graph RAG engine. Whenever you update site content (such as blog posts, case studies, services, or the technology radar), you must rebuild the pre-serialized knowledge graph nodes, edges, and search trie indices:
+
+```bash
+# Recompile the search index, entity graph maps, and summaries
+npx -y tsx scripts/build-knowledge-graph.ts
+```
+
+This updates the following files:
+* `data/search-index.json` (MiniSearch trie data)
+* `data/manifest.json` (Knowledge graph master ledger)
+* `data/graph/nodes.json` & `data/graph/edges.json` (Visual schema topologies)
+* `data/summaries/*.json` (Individual entity summary decks)
+
+Commit the resulting JSON updates to Git to deploy them.
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -1,0 +1,22 @@
+{
+  "id": "astra-knowledge-graph-engine",
+  "summary_50": "Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.",
+  "summary_100": "Astra Knowledge Graph Engine in Git-controlled static JSON + in-memory MiniSearch: Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines. Narration: To address this, I built a local, file-based Graph RAG engine that works entirely inside Git. It pre-compiles and serializes the document knowledge graph and MiniSearch trie indexes during the Next.js build phase. At runtime, the data is eagerly deserialized and queries are cached in a warm Map in serverless nodes, serving grounded results in sub-millisecond ranges.",
+  "summary_250": "Astra Knowledge Graph Engine (Status: PRODUCTION, Ingress: Next.js API Routes). Problem: Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.. Narration: To address this, I built a local, file-based Graph RAG engine that works entirely inside Git. It pre-compiles and serializes the document knowledge graph and MiniSearch trie indexes during the Next.js build phase. At runtime, the data is eagerly deserialized and queries are cached in a warm Map in serverless nodes, serving grounded results in sub-millisecond ranges.. Key systems: Manifest Index: data/manifest.json static ledger; MiniSearch trie: Eager index deserializer; Graph topology: Eager undirected graphology instance; FIFO Cache: Warm Map memory cache; Grounded prompt: Token-compressed context prompt",
+  "facts": [
+    "Status: PRODUCTION in environment Git-controlled static JSON + in-memory MiniSearch",
+    "Ingress pathway: Next.js API Routes",
+    "Public Surface: Next.js /api/retrieve (Exposes retrieved context payload structure.)",
+    "Trie Search: MiniSearch (Pre-compiled static trie loads at boot time.)",
+    "Retrieval Speed: < 0.5ms (Served directly from warm container RAM.)",
+    "Token Savings: 80-90% (Drastically compressed context prompts.)",
+    "Zone Static Build Phase: Crawler extracts nodes/edges and serializes the search trie index.",
+    "Zone Serverless Node Memory: Eager MiniSearch & Graphology instantiations with warm query cache map.",
+    "Zone Astra Chat UI: Retrieves context via gatherResearchMarkdown to ground LLM completions.",
+    "Component Manifest Index: data/manifest.json static ledger (Stores pre-compiled entity nodes, relationship links, and word weights.)",
+    "Component MiniSearch trie: Eager index deserializer (Loads the serialized search index trie at module import time, bypassing runtime compilation.)",
+    "Component Graph topology: Eager undirected graphology instance (Instantiated at spin-up to traverse documentation relationships with zero cold-start lags.)",
+    "Component FIFO Cache: Warm Map memory cache (Caches up to 100 queries in container memory to serve duplicate questions in 0.1ms.)",
+    "Component Grounded prompt: Token-compressed context prompt (Combines compressed graph traversal content to reduce prompt tokens by 85%.)"
+  ]
+}

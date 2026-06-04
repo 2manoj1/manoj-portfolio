@@ -1441,6 +1441,7 @@
       "related": [
         "opentelemetry-genai-observability-agent-workflows",
         "production-grade-ai-home-lab",
+        "astra-knowledge-graph-engine",
         "service-ai-platform-engineering",
         "doc-brand-context",
         "doc-engineering-footprint",
@@ -1775,6 +1776,30 @@
       "importance": 10,
       "related": [
         "mcp"
+      ]
+    },
+    {
+      "id": "astra-knowledge-graph-engine",
+      "type": "case_study",
+      "title": "Astra Knowledge Graph Engine",
+      "summary": "Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.",
+      "tags": [
+        "case study",
+        "git-controlled static json + in-memory minisearch",
+        "production"
+      ],
+      "keywords": [
+        "Astra Knowledge Graph Engine",
+        "Astra Graph RAG",
+        "Next.js API Routes"
+      ],
+      "aliases": [
+        "Astra Knowledge Graph Engine",
+        "Astra Graph RAG"
+      ],
+      "importance": 10,
+      "related": [
+        "nextjs"
       ]
     },
     {
@@ -2815,6 +2840,7 @@
     "gcp kubernetes (gke)",
     "openshift / run:ai",
     "enterprise hub",
+    "git-controlled static json + in-memory minisearch",
     "ai architect consultant",
     "ai architecture advisory",
     "ai platform strategy",
@@ -3701,7 +3727,10 @@
         "Component TS agent layer: LangChain/deepagents tooling with gateway baseURL (Uses MANOJ_LLM_BASE_URL and MANOJ_LLM_API_KEY to call the OpenAI-compatible gateway contract.)",
         "Component Cloudflare Tunnel: api.manojmukherjee.co.in to local gateway (Public HTTPS traffic reaches the private gateway without opening inbound ports on the Mac.)",
         "Component FastAPI gateway: Python 3.14, uv, OpenAI-compatible routes (Exposes /v1/chat/completions, /v1/models, /v1/responses, /api/v1/agent/direct-message, and admin key routes.)",
-        "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)"
+        "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)",
+        "Component Python LangGraph: StateGraph astream with custom SSE chunks (DirectMessageAgentService compiles a Python StateGraph and streams custom chunks from the internal OpenAI service.)",
+        "Component Ollama client: AsyncOpenAI wrapper over local Ollama /v1 (The gateway forwards compatible payloads to Ollama, defaulting to qwen3.5:9b when a model is not supplied.)",
+        "Component Private data plane: PostgreSQL 17, Redis 8, Qdrant clients (PostgreSQL is used for key records and usage logs; Redis and Qdrant are wired for future cache and RAG paths.)"
       ]
     },
     "enterprise-agentic-rag-platform": {
@@ -3724,7 +3753,8 @@
         "Component FastAPI parser: Layout-aware filing extraction (Normalizes long filings into structured chunks with section metadata and document provenance.)",
         "Component Query planner: LangGraph retrieval routing (Expands and routes user intent across metadata filters, semantic search, and grounded answer paths.)",
         "Component Postgres pgvector: HNSW vectors plus transactional metadata (Keeps candidate retrieval and business metadata in one database boundary for simpler governance.)",
-        "Component Grounding eval: Safety and relevance gate (Checks answer support against retrieved evidence before the workflow releases a response.)"
+        "Component Grounding eval: Safety and relevance gate (Checks answer support against retrieved evidence before the workflow releases a response.)",
+        "Component Trace ledger: Run IDs, decision logs, and audit hooks (Captures the path from query to retrieved evidence to final response for auditability.)"
       ]
     },
     "gpu-ai-platform-modernization": {
@@ -3771,6 +3801,28 @@
         "Component Database tool: PostgreSQL server wrapper (Encapsulates database access behind typed operations instead of direct model access.)",
         "Component External APIs: Third-party sandbox client (Limits outbound API calls to approved capabilities with explicit request schemas.)",
         "Component Agent core: Schema-validated tool reasoning (Receives controlled tool outputs and composes responses without owning raw credentials.)"
+      ]
+    },
+    "astra-knowledge-graph-engine": {
+      "id": "astra-knowledge-graph-engine",
+      "summary_50": "Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.",
+      "summary_100": "Astra Knowledge Graph Engine in Git-controlled static JSON + in-memory MiniSearch: Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines. Narration: To address this, I built a local, file-based Graph RAG engine that works entirely inside Git. It pre-compiles and serializes the document knowledge graph and MiniSearch trie indexes during the Next.js build phase. At runtime, the data is eagerly deserialized and queries are cached in a warm Map in serverless nodes, serving grounded results in sub-millisecond ranges.",
+      "summary_250": "Astra Knowledge Graph Engine (Status: PRODUCTION, Ingress: Next.js API Routes). Problem: Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.. Narration: To address this, I built a local, file-based Graph RAG engine that works entirely inside Git. It pre-compiles and serializes the document knowledge graph and MiniSearch trie indexes during the Next.js build phase. At runtime, the data is eagerly deserialized and queries are cached in a warm Map in serverless nodes, serving grounded results in sub-millisecond ranges.. Key systems: Manifest Index: data/manifest.json static ledger; MiniSearch trie: Eager index deserializer; Graph topology: Eager undirected graphology instance; FIFO Cache: Warm Map memory cache; Grounded prompt: Token-compressed context prompt",
+      "facts": [
+        "Status: PRODUCTION in environment Git-controlled static JSON + in-memory MiniSearch",
+        "Ingress pathway: Next.js API Routes",
+        "Public Surface: Next.js /api/retrieve (Exposes retrieved context payload structure.)",
+        "Trie Search: MiniSearch (Pre-compiled static trie loads at boot time.)",
+        "Retrieval Speed: < 0.5ms (Served directly from warm container RAM.)",
+        "Token Savings: 80-90% (Drastically compressed context prompts.)",
+        "Zone Static Build Phase: Crawler extracts nodes/edges and serializes the search trie index.",
+        "Zone Serverless Node Memory: Eager MiniSearch & Graphology instantiations with warm query cache map.",
+        "Zone Astra Chat UI: Retrieves context via gatherResearchMarkdown to ground LLM completions.",
+        "Component Manifest Index: data/manifest.json static ledger (Stores pre-compiled entity nodes, relationship links, and word weights.)",
+        "Component MiniSearch trie: Eager index deserializer (Loads the serialized search index trie at module import time, bypassing runtime compilation.)",
+        "Component Graph topology: Eager undirected graphology instance (Instantiated at spin-up to traverse documentation relationships with zero cold-start lags.)",
+        "Component FIFO Cache: Warm Map memory cache (Caches up to 100 queries in container memory to serve duplicate questions in 0.1ms.)",
+        "Component Grounded prompt: Token-compressed context prompt (Combines compressed graph traversal content to reduce prompt tokens by 85%.)"
       ]
     },
     "service-ai-architecture-advisory": {

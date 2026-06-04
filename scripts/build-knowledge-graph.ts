@@ -223,7 +223,7 @@ function run() {
       summary_50: s50,
       summary_100: s100,
       summary_250: s250,
-      facts: facts.slice(0, 15)
+      facts: facts.slice(0, 30)
     };
 
     // Add edges for detailed connections

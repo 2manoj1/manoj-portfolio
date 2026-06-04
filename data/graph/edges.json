@@ -415,6 +415,11 @@
     "relation": "uses"
   },
   {
+    "source": "astra-knowledge-graph-engine",
+    "target": "nextjs",
+    "relation": "uses"
+  },
+  {
     "source": "service-ai-architecture-advisory",
     "target": "service-ai-platform-engineering",
     "relation": "related_to"

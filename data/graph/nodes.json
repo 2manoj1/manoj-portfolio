@@ -1440,6 +1440,7 @@
     "related": [
       "opentelemetry-genai-observability-agent-workflows",
       "production-grade-ai-home-lab",
+      "astra-knowledge-graph-engine",
       "service-ai-platform-engineering",
       "doc-brand-context",
       "doc-engineering-footprint",
@@ -1774,6 +1775,30 @@
     "importance": 10,
     "related": [
       "mcp"
+    ]
+  },
+  {
+    "id": "astra-knowledge-graph-engine",
+    "type": "case_study",
+    "title": "Astra Knowledge Graph Engine",
+    "summary": "Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.",
+    "tags": [
+      "case study",
+      "git-controlled static json + in-memory minisearch",
+      "production"
+    ],
+    "keywords": [
+      "Astra Knowledge Graph Engine",
+      "Astra Graph RAG",
+      "Next.js API Routes"
+    ],
+    "aliases": [
+      "Astra Knowledge Graph Engine",
+      "Astra Graph RAG"
+    ],
+    "importance": 10,
+    "related": [
+      "nextjs"
     ]
   },
   {

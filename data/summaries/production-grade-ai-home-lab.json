@@ -18,6 +18,9 @@
     "Component TS agent layer: LangChain/deepagents tooling with gateway baseURL (Uses MANOJ_LLM_BASE_URL and MANOJ_LLM_API_KEY to call the OpenAI-compatible gateway contract.)",
     "Component Cloudflare Tunnel: api.manojmukherjee.co.in to local gateway (Public HTTPS traffic reaches the private gateway without opening inbound ports on the Mac.)",
     "Component FastAPI gateway: Python 3.14, uv, OpenAI-compatible routes (Exposes /v1/chat/completions, /v1/models, /v1/responses, /api/v1/agent/direct-message, and admin key routes.)",
-    "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)"
+    "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)",
+    "Component Python LangGraph: StateGraph astream with custom SSE chunks (DirectMessageAgentService compiles a Python StateGraph and streams custom chunks from the internal OpenAI service.)",
+    "Component Ollama client: AsyncOpenAI wrapper over local Ollama /v1 (The gateway forwards compatible payloads to Ollama, defaulting to qwen3.5:9b when a model is not supplied.)",
+    "Component Private data plane: PostgreSQL 17, Redis 8, Qdrant clients (PostgreSQL is used for key records and usage logs; Redis and Qdrant are wired for future cache and RAG paths.)"
   ]
 }

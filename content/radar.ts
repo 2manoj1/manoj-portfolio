@@ -449,6 +449,36 @@ export const radarItems: RadarItem[] = [
 		verdict: "Trial (Dedicated Vector)",
 		insight: "High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics."
 	},
+	{
+		id: "minisearch",
+		name: "MiniSearch",
+		quadrant: "Data",
+		ring: "Adopt",
+		radius: 38,
+		angle: 225,
+		verdict: "Adopt (In-Memory Search)",
+		insight: "MiniSearch provides build-time trie serialization and eager serverless deserialization for sub-millisecond keyword lookup.",
+		adr: {
+			problem: "Runtime keyword searching or cold-start database queries introduce latency overheads for user-facing chats.",
+			decision: "Pre-compile documents into a MiniSearch index at build-time and load the serialized JSON eager-instantiated.",
+			tradeoff: "Increases bundle size slightly for immediate, serverless-safe in-memory querying."
+		}
+	},
+	{
+		id: "graphology",
+		name: "Graphology",
+		quadrant: "Data",
+		ring: "Adopt",
+		radius: 34,
+		angle: 260,
+		verdict: "Adopt (In-Memory Graph)",
+		insight: "Graphology serves as the backend graph structure for document relationship traversal in Manoj's static Graph RAG engine.",
+		adr: {
+			problem: "External graph databases (like Neo4j) are expensive and add cold-start overhead for small-scale document corpuses.",
+			decision: "Instantiate Graphology graphs from static JSON files at serverless boot time to allow instant path traversals.",
+			tradeoff: "Limited to memory capacity of the hosting container, but guarantees < 1ms search execution."
+		}
+	},
 
 	// Quadrant 4: Platform & Frontend (270 - 360 degrees)
 	{

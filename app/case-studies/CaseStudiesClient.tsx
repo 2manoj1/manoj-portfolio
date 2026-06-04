@@ -63,6 +63,11 @@ const SIMULATION_DETAILS = {
     LATENCY: "Handshake negotiation queue overhead. High latency in tool registration database server.",
     FAILURE: "External APIs blocked by gateway rule. Access Denied (403). Safe error thrown in agent execution context.",
   },
+  "astra-knowledge-graph-engine": {
+    HEALTHY: "Graph index fully warm in container memory. Queries matching cached keys return instantly in 0.1ms.",
+    LATENCY: "High concurrency queries causing trie search contention. Search latencies increase to 42ms.",
+    FAILURE: "Index file deserialization error. Falling back to simple keyword matching on direct page data.",
+  },
 };
 
 function BlueprintSelector({

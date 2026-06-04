@@ -473,6 +473,18 @@ export const caseStudies = [
 		],
 		metrics: ["AI Engineer L2", "Top Gun Academy", "GenAI", "mentorship"],
 	},
+	{
+		slug: "astra-knowledge-graph-engine",
+		title: "Astra Knowledge Graph Engine",
+		problem:
+			"Enterprise RAG applications require heavy external database infrastructure (Pinecone/pgvector) and high token budgets, introducing complexity and cost for serverless portfolios.",
+		decisions: [
+			"Compiled document relationships and entity summaries into a Git-versioned knowledge graph at build time",
+			"Pre-serialized the MiniSearch search index to eliminate runtime parsing and indexing latency",
+			"Built a warm-memory FIFO query cache and eager Graphology instantiation that answers queries in under 1ms"
+		],
+		metrics: ["MiniSearch", "Graphology", "RAG", "In-Memory Cache", "Serverless"],
+	},
 ] as const;
 
 export const articles = [

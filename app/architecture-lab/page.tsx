@@ -96,12 +96,12 @@ const researchThreads = [
 	},
 	{
 		id: "LAB-02",
-		status: "Measuring",
-		title: "Agentic RAG Grounding",
+		status: "Production",
+		title: "Astra Graph RAG Engine",
 		focus:
-			"Source routing, context assembly, reranking, local reasoning, and grounded answer checks.",
+			"Static graph parsing, eager MiniSearch trie deserialization, warm Map query caching, and token-minimized context assembly.",
 		nextDetail:
-			"Eval cases for weak grounding, source gaps, and freshness.",
+			"Offline crawling, relationship mapping, and eager in-memory retrieval scaling.",
 	},
 	{
 		id: "LAB-03",
