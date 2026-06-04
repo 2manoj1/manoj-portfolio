@@ -98,7 +98,7 @@ const stackGroups = [
 
 function EngineeringIntro() {
 	return (
-		<header className="border-b border-border">
+		<header className="border-b border-border pt-14 bg-background/5">
 			<div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
 				<div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
 					<div>

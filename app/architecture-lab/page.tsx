@@ -173,8 +173,8 @@ const resourceTypes = [
 
 function LabHero() {
 	return (
-		<header className="min-w-0 overflow-x-clip border-b border-border">
-			<div className="mx-auto w-[calc(100vw-2rem)] min-w-0 max-w-6xl py-16 sm:w-[calc(100vw-3rem)] md:py-20">
+		<header className="min-w-0 overflow-x-clip border-b border-border pt-14 bg-background/5">
+			<div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
 				<div className="grid min-w-0 gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
 					<div className="min-w-0">
 						<p className="font-mono text-xs uppercase tracking-wide text-amber">

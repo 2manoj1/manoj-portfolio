@@ -12,7 +12,7 @@ export function Section({
 }) {
 	return (
 		<section id={id} className={cn("min-w-0 py-24 md:py-32", className)}>
-			<div className="mx-auto w-[calc(100vw-2rem)] min-w-0 max-w-6xl sm:w-[calc(100vw-3rem)]">
+			<div className="mx-auto max-w-6xl px-6 min-w-0">
 				{children}
 			</div>
 		</section>
