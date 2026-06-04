@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArchitectureBlueprint } from "@/components/marketing/architecture-blueprint";
+import { SystemsConsole } from "@/components/marketing/systems-console";
 import { ServiceCard, SystemCard } from "@/components/marketing/cards";
 import { CareerJourneySection } from "@/components/marketing/career-journey";
 import { CtaBand } from "@/components/marketing/cta-band";
@@ -89,7 +89,7 @@ export default function Home() {
           </div>
 
           <MotionReveal delay={0.1}>
-            <ArchitectureBlueprint />
+            <SystemsConsole />
           </MotionReveal>
 
           <MotionReveal

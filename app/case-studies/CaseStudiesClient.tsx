@@ -345,7 +345,7 @@ function StudyInspector({
                 className="size-1.5 rounded-full bg-amber"
                 aria-hidden="true"
               />
-              Interactive React Flow topology
+              Interactive Topology
             </span>
             <p className="max-w-[52ch] break-words text-xs leading-5 text-zinc-500">
               Runtime zones, gateway contracts, data-plane edges, and telemetry
