@@ -617,14 +617,14 @@ export function AstraChatSurface({
 			<footer className="shrink-0 border-t border-white/10 bg-black/32 px-3 py-3 sm:px-4">
 				<div className={cn("mx-auto w-full", isPage ? "max-w-3xl" : "max-w-full")}>
 					{!showWelcome && suggestions.length > 0 && !isLoading && (
-						<div className="mb-3 flex gap-2 overflow-x-auto whitespace-nowrap pb-1 no-scrollbar animate-in fade-in slide-in-from-bottom-2 duration-300">
+						<div className="mb-3 flex max-w-full flex-col gap-2 overflow-hidden pb-1 animate-in fade-in slide-in-from-bottom-2 duration-300 sm:flex-row sm:flex-wrap sm:items-start sm:overflow-visible">
 							{suggestions.map((suggestion) => (
 								<button
 									key={suggestion}
 									type="button"
 									title={suggestion}
 									onClick={() => void sendPrompt(suggestion)}
-									className="inline-block shrink-0 rounded-full border border-white/10 bg-white/[0.045] px-3 py-1.5 font-mono text-[10px] tracking-wide text-white/62 transition hover:border-amber/30 hover:bg-white/[0.08] hover:text-white max-w-[200px] truncate"
+									className="min-w-0 max-w-full overflow-hidden whitespace-normal break-words rounded-2xl border border-white/10 bg-white/[0.045] px-3.5 py-2 text-left font-mono text-[11px] leading-5 tracking-wide text-white/68 transition hover:border-amber/30 hover:bg-white/[0.08] hover:text-white sm:w-auto sm:max-w-[240px] sm:shrink-0 sm:truncate sm:rounded-full sm:px-3 sm:py-1.5 sm:text-center sm:text-[10px] sm:leading-4"
 								>
 									{suggestion}
 								</button>
