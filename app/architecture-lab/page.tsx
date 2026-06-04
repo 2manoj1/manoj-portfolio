@@ -61,7 +61,7 @@ const blueprintLayers = [
 	{
 		title: "Agent Runtime",
 		description:
-			"LangGraphJS orchestration for agent state, tool calls, MCP-style extensions, and approval paths.",
+			"Python LangGraph orchestration inside the FastAPI gateway; Astra remains the JS/TS website-side agent surface.",
 		icon: GitBranch,
 	},
 	{
@@ -90,7 +90,7 @@ const researchThreads = [
 		status: "Publishing",
 		title: "AI Home Lab Blueprint",
 		focus:
-			"Private AI platform on MacBook M1 Pro with Cloudflare, FastAPI, LangGraphJS, Ollama, MLX, PostgreSQL, Redis, and Qdrant.",
+			"Private AI platform on MacBook M1 Pro with Vercel-hosted Astra, Cloudflare Tunnel, FastAPI, Python LangGraph, Ollama, PostgreSQL, Redis, and Qdrant.",
 		nextDetail:
 			"Topology notes, constraints, and failure-mode checks.",
 	},
