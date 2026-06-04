@@ -40,74 +40,86 @@ type TabData = {
 const labSystems: Record<string, TabData> = {
   langgraph: {
     title: "AI Home Lab (Apple Silicon)",
-    subtitle: "Private Apple Silicon lab: agents, local models, gateway, and vector stores.",
+    subtitle: "Vercel-hosted Astra calls a private Python FastAPI gateway through Cloudflare Tunnel.",
     nodes: [
+      {
+        id: "astra",
+        label: "Astra Website",
+        role: "Vercel Surface",
+        icon: Terminal,
+        input: "Visitor chat request from manojmukherjee.co.in",
+        output: "OpenAI-compatible request from the Next.js API route",
+        metrics: "JS/TS website-side agent tooling",
+        description: "Runs the public chat surface and API route in the Vercel-hosted Next.js site.",
+        failureMode: "Gateway unavailable. The UI returns a bounded fallback state.",
+      },
       {
         id: "cloudflare",
         label: "Cloudflare Tunnel",
-        role: "Secure Ingress Layer",
+        role: "Secure Edge Layer",
         icon: Activity,
-        input: "Public DNS request / HTTPS request",
-        output: "Routed traffic to local daemon (zero open ports)",
+        input: "HTTPS request for the gateway hostname",
+        output: "Routed traffic to local daemon without opening inbound ports",
         metrics: "WAF + custom firewall rules enforced",
-        description: "Encrypted tunnel ingress with no exposed local ports.",
+        description: "Encrypted tunnel ingress from the public API hostname into the private Mac server.",
         failureMode: "Tunnel drop. Auto-restart restores the daemon.",
       },
       {
         id: "fastapi-gate",
         label: "FastAPI Gateway",
-        role: "API Routing Proxy",
+        role: "Python API Gateway",
         icon: Terminal,
-        input: "JSON request payloads (OpenAI compatible)",
-        output: "Routed execution command to Agent Layer",
-        metrics: "Authentication & validation in <2ms",
-        description: "Validates agent requests and routes OpenAI-compatible payloads.",
-        failureMode: "Queue pressure. Async endpoints keep routing responsive.",
+        input: "OpenAI-compatible payloads with X-API-Key or bearer auth",
+        output: "Validated request routed to Python orchestration or Ollama",
+        metrics: "Python 3.14, uv, FastAPI",
+        description: "Owns auth, OpenAI-compatible /v1 routes, admin keys, usage logs, and service clients.",
+        failureMode: "Bad schema or auth. FastAPI and Pydantic reject early.",
       },
       {
-        id: "langgraphjs",
-        label: "LangGraphJS Orchestrator",
+        id: "python-langgraph",
+        label: "Python LangGraph",
         role: "Stateful Agent Engine",
         icon: Cpu,
-        input: "Grounded system prompts & tool definitions",
-        output: "Evaluated plan tasks / tool arguments",
-        metrics: "Thread checkpointing in local SQLite",
-        description: "Controls agent state, tools, memory, and approval gates.",
-        failureMode: "Runaway loop. Iteration limits stop recursion.",
+        input: "Direct message request and authenticated context",
+        output: "Custom SSE chunks from graph.astream",
+        metrics: "StateGraph + stream_mode=custom",
+        description: "Compiles the private gateway agent graph and streams chunks from the internal LLM service.",
+        failureMode: "Provider pressure. Streaming boundaries keep partial progress observable.",
       },
       {
         id: "ollama-mlx",
-        label: "Ollama + MLX",
+        label: "Ollama",
         role: "Local Inference Layer",
         icon: Settings,
         input: "Structured prompt tokens",
         output: "JSON response text / output stream",
-        metrics: "Llama 3.2, Qwen 3 SLM inference",
-        description: "Runs local inference over Apple unified memory.",
+        metrics: "qwen3.5:9b default model",
+        description: "Serves local model traffic through Ollama's OpenAI-compatible API.",
         failureMode: "Context overflow. Sliding memory windows reduce pressure.",
       },
       {
         id: "data-stores",
-        label: "pg/Redis/Qdrant",
+        label: "PG/Redis/Qdrant",
         role: "Data & Storage Layer",
         icon: Database,
-        input: "Metadata write, vector query, cached tasks",
-        output: "Cosine distance matches, retrieved state",
-        metrics: "Qdrant vector search latency: 4ms",
-        description: "Stores metadata, cache, queues, and vectors locally.",
-        failureMode: "Index lag. Async chunking keeps ingestion moving.",
+        input: "API key records, usage logs, cache and future RAG clients",
+        output: "Authenticated context and local persistence signals",
+        metrics: "PostgreSQL 17, Redis 8, Qdrant",
+        description: "PostgreSQL is active for keys and usage; Redis and Qdrant are prepared for later cache/RAG paths.",
+        failureMode: "Database outage. Auth and usage logging fail closed.",
       }
     ],
     connections: [
+      { from: "astra", to: "cloudflare" },
       { from: "cloudflare", to: "fastapi-gate" },
-      { from: "fastapi-gate", to: "langgraphjs" },
-      { from: "langgraphjs", to: "ollama-mlx" },
-      { from: "ollama-mlx", to: "data-stores" }
+      { from: "fastapi-gate", to: "python-langgraph" },
+      { from: "python-langgraph", to: "ollama-mlx" },
+      { from: "fastapi-gate", to: "data-stores" }
     ],
     evaluation: [
-      { metric: "Self-Hosting Cost", value: "$0 / month", description: "All inference, databases, and platform layers run fully on local hardware." },
-      { metric: "Unified Memory", value: "32GB RAM", description: "Enables co-location of local models and transactional databases." },
-      { metric: "Security Surface", value: "Zero ports open", description: "Incoming traffic strictly flows through secure, egress-only Cloudflare tunnels." }
+      { metric: "Runtime Split", value: "TS + Python", description: "Astra stays in Next.js while gateway orchestration runs in Python." },
+      { metric: "Gateway Port", value: "8000", description: "Private FastAPI server is reached through the Cloudflare tunnel." },
+      { metric: "Security Surface", value: "Zero open ports", description: "Incoming traffic strictly flows through secure, egress-only Cloudflare tunnels." }
     ]
   },
   rag: {
@@ -258,7 +270,7 @@ const labSystems: Record<string, TabData> = {
 
 export function LabDashboard() {
   const [activeTab, setActiveTab] = useState<"langgraph" | "rag" | "fastapi">("langgraph");
-  const [selectedNodeId, setSelectedNodeId] = useState<string>("cloudflare");
+  const [selectedNodeId, setSelectedNodeId] = useState<string>("astra");
 
   const system = labSystems[activeTab];
   const selectedNode = system.nodes.find(n => n.id === selectedNodeId) || system.nodes[0];
