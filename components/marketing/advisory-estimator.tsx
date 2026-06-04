@@ -13,6 +13,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EMAIL } from "@/lib/links";
 
 type ModelId = "gpt-4o" | "claude-sonnet" | "llama-70b";
 
@@ -103,7 +104,25 @@ export function AdvisoryEstimator() {
 		};
 	}, [cacheHitRate, compactionRate, dailyQueries, modelId, outputTokens, retrievalTokens]);
 
-	const intakeHref = `/advisory-intake?dailyQueries=${dailyQueries}&retrievalTokens=${retrievalTokens}&outputTokens=${outputTokens}&model=${modelId}&baseline=${Math.round(projection.baselineCost)}&optimized=${Math.round(projection.optimizedCost)}`;
+	const emailSubject = encodeURIComponent("AI Audit Estimator Review Request");
+	const emailBody = encodeURIComponent(`Hi Manoj,
+
+I ran your AI Audit Estimator with the following system configuration:
+- Daily Active Agent Queries: ${dailyQueries.toLocaleString()} queries
+- Retrieved Context Size: ${retrievalTokens.toLocaleString()} tokens/query
+- Average Output Length: ${outputTokens.toLocaleString()} tokens
+- Primary Model: ${modelOptions[modelId].label}
+- Semantic Cache Hit Rate: ${cacheHitRate}%
+- Context Compaction: ${compactionRate}%
+
+Calculated Metrics:
+- Monthly Token Budget: ${(projection.monthlyTokenBudget / 1_000_000).toFixed(1)}M tokens
+- Estimated Baseline Cost: ${currencyFormatter.format(projection.baselineCost)}/mo
+- Estimated Optimized Cost: ${currencyFormatter.format(projection.optimizedCost)}/mo
+- Projected Monthly Savings: ${currencyFormatter.format(projection.savings)}/mo
+
+I would like to request an architecture review to discuss implementing these cache and context compaction policies.`);
+
 	const maxCost = Math.max(projection.baselineCost, projection.optimizedCost, 1);
 	const baselineWidth = Math.max(8, (projection.baselineCost / maxCost) * 100);
 	const optimizedWidth = Math.max(8, (projection.optimizedCost / maxCost) * 100);
@@ -264,12 +283,12 @@ export function AdvisoryEstimator() {
 						</p>
 					</div>
 
-					<Link
-						href={intakeHref}
-						className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-amber px-4 text-sm font-medium text-amber-foreground transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-						Request Architecture Review
+					<a
+						href={`mailto:${EMAIL}?subject=${emailSubject}&body=${emailBody}`}
+						className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-amber px-4 text-sm font-medium text-zinc-950 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+						Request Architecture Review via Email
 						<ArrowRight className="size-4" />
-					</Link>
+					</a>
 				</div>
 			</div>
 		</div>

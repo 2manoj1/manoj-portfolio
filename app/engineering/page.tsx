@@ -1,4 +1,5 @@
 import { SystemCard } from "@/components/marketing/cards";
+import { SystemTopologyInspector } from "@/components/marketing/system-topology-inspector";
 import { ArchitectureDecisionMap } from "@/components/marketing/architecture-decision-map";
 import { EngineeringJourney } from "@/components/marketing/engineering-journey";
 import { EngineeringPhilosophy } from "@/components/marketing/engineering-philosophy";
@@ -226,17 +227,7 @@ export default function EngineeringPage() {
 					title="Where the radar turns into deployable systems."
 					description="These are the recurring patterns I come back to when an AI product has to leave a notebook and become a service that developers can own, debug, and improve."
 				/>
-				<div className="mt-14 grid gap-3 lg:grid-cols-3">
-					{engineeringSystems.map((system) => (
-						<SystemCard
-							key={system.slug}
-							title={system.title}
-							description={system.description}
-							flow={system.flow}
-							tradeoffs={system.tradeoffs}
-						/>
-					))}
-				</div>
+				<SystemTopologyInspector />
 			</Section>
 
 			<Section className="border-t border-border bg-background">

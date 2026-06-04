@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SystemsConsole } from "@/components/marketing/systems-console";
+import { TechStackGrid } from "@/components/marketing/tech-stack-grid";
 import { ServiceCard, SystemCard } from "@/components/marketing/cards";
 import { CareerJourneySection } from "@/components/marketing/career-journey";
 import { CtaBand } from "@/components/marketing/cta-band";
@@ -16,7 +17,6 @@ import {
   engineeringSystems,
   proofMetrics,
   services,
-  stackKeywords,
   testimonials,
 } from "@/content/site";
 import { GITHUB } from "@/lib/links";
@@ -131,7 +131,7 @@ export default function Home() {
           {services.slice(0, 3).map((service, index) => (
             <MotionReveal key={service.slug} delay={index * 0.03}>
               <ServiceCard
-                href={`/services/${service.slug}`}
+                href="/advisory-intake"
                 title={service.title}
                 description={service.description}
                 buyerPain={service.buyerPain}
@@ -197,15 +197,8 @@ export default function Home() {
             description="Hands-on across the ecosystem needed to move from POC to production: orchestration, retrieval, backend services, deployment, and developer education."
           />
         </MotionReveal>
-        <MotionReveal className="mt-12 flex flex-wrap gap-2">
-          {stackKeywords.map((keyword) => (
-            <span
-              key={keyword}
-              className="rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground"
-            >
-              {keyword}
-            </span>
-          ))}
+        <MotionReveal>
+          <TechStackGrid />
         </MotionReveal>
       </Section>
 
