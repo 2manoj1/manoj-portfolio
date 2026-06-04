@@ -1,0 +1,10 @@
+{
+  "id": "qdrant",
+  "summary_50": "High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics.",
+  "summary_100": "Qdrant (Data - Trial (Dedicated Vector)): High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics.",
+  "summary_250": "Qdrant is in the Trial ring under the Data quadrant. Manoj's verdict: Trial (Dedicated Vector). Insight: High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics.. ",
+  "facts": [
+    "Qdrant is classified in the Trial ring for Data.",
+    "High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics."
+  ]
+}

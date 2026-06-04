@@ -1,0 +1,932 @@
+[
+  {
+    "source": "adr-langgraph",
+    "target": "langgraph",
+    "relation": "references"
+  },
+  {
+    "source": "adr-langchain",
+    "target": "langchain",
+    "relation": "references"
+  },
+  {
+    "source": "adr-google-adk",
+    "target": "google-adk",
+    "relation": "references"
+  },
+  {
+    "source": "adr-mcp",
+    "target": "mcp",
+    "relation": "references"
+  },
+  {
+    "source": "adr-n8n",
+    "target": "n8n",
+    "relation": "references"
+  },
+  {
+    "source": "adr-langsmith",
+    "target": "langsmith",
+    "relation": "references"
+  },
+  {
+    "source": "adr-pydantic-ai",
+    "target": "pydantic-ai",
+    "relation": "references"
+  },
+  {
+    "source": "adr-mcp-app",
+    "target": "mcp-app",
+    "relation": "references"
+  },
+  {
+    "source": "adr-webmcp",
+    "target": "webmcp",
+    "relation": "references"
+  },
+  {
+    "source": "adr-acp-ucp",
+    "target": "acp-ucp",
+    "relation": "references"
+  },
+  {
+    "source": "adr-mlflow",
+    "target": "mlflow",
+    "relation": "references"
+  },
+  {
+    "source": "adr-claude-sonnet",
+    "target": "claude-sonnet",
+    "relation": "references"
+  },
+  {
+    "source": "adr-gpt-4o",
+    "target": "gpt-4o",
+    "relation": "references"
+  },
+  {
+    "source": "adr-llama3-2",
+    "target": "llama3-2",
+    "relation": "references"
+  },
+  {
+    "source": "adr-gemini-models",
+    "target": "gemini-models",
+    "relation": "references"
+  },
+  {
+    "source": "adr-qwen-models",
+    "target": "qwen-models",
+    "relation": "references"
+  },
+  {
+    "source": "adr-vertex-ai-models",
+    "target": "vertex-ai-models",
+    "relation": "references"
+  },
+  {
+    "source": "adr-aws-bedrock-models",
+    "target": "aws-bedrock-models",
+    "relation": "references"
+  },
+  {
+    "source": "adr-ollama-vllm",
+    "target": "ollama-vllm",
+    "relation": "references"
+  },
+  {
+    "source": "adr-deepseek-r1",
+    "target": "deepseek-r1",
+    "relation": "references"
+  },
+  {
+    "source": "adr-deepseek-v3",
+    "target": "deepseek-v3",
+    "relation": "references"
+  },
+  {
+    "source": "adr-gemini-nano",
+    "target": "gemini-nano",
+    "relation": "references"
+  },
+  {
+    "source": "adr-pgvector",
+    "target": "pgvector",
+    "relation": "references"
+  },
+  {
+    "source": "adr-fastapi",
+    "target": "fastapi",
+    "relation": "references"
+  },
+  {
+    "source": "adr-mongodb",
+    "target": "mongodb",
+    "relation": "references"
+  },
+  {
+    "source": "adr-nextjs",
+    "target": "nextjs",
+    "relation": "references"
+  },
+  {
+    "source": "adr-module-federation",
+    "target": "module-federation",
+    "relation": "references"
+  },
+  {
+    "source": "adr-kubernetes",
+    "target": "kubernetes",
+    "relation": "references"
+  },
+  {
+    "source": "adr-openshift",
+    "target": "openshift",
+    "relation": "references"
+  },
+  {
+    "source": "adr-nvidia-runai",
+    "target": "nvidia-runai",
+    "relation": "references"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "fastapi",
+    "relation": "uses"
+  },
+  {
+    "source": "enterprise-agentic-rag-platform",
+    "target": "pgvector",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "langgraph",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "pgvector",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "fastapi",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "kubernetes",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "nvidia-runai",
+    "relation": "uses"
+  },
+  {
+    "source": "career-ap-moller-maersk",
+    "target": "nextjs",
+    "relation": "uses"
+  },
+  {
+    "source": "career-ap-moller-maersk",
+    "target": "module-federation",
+    "relation": "uses"
+  },
+  {
+    "source": "career-optiv-inc",
+    "target": "mongodb",
+    "relation": "uses"
+  },
+  {
+    "source": "pattern-rag-reliability",
+    "target": "pgvector",
+    "relation": "uses"
+  },
+  {
+    "source": "fastapi-openai-gateway-proxy",
+    "target": "fastapi",
+    "relation": "built_with"
+  },
+  {
+    "source": "fastapi-openai-gateway-proxy",
+    "target": "ollama-vllm",
+    "relation": "built_with"
+  },
+  {
+    "source": "langgraphjs-orchestrator-template",
+    "target": "langgraph",
+    "relation": "built_with"
+  },
+  {
+    "source": "macbook-silicon-ai-home-lab-deployment",
+    "target": "qdrant",
+    "relation": "built_with"
+  },
+  {
+    "source": "langgraph-v1-durable-agent-architecture",
+    "target": "langgraph",
+    "relation": "references"
+  },
+  {
+    "source": "langgraph-v1-durable-agent-architecture",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "mcp-security-architecture-enterprise-ai",
+    "target": "mcp",
+    "relation": "references"
+  },
+  {
+    "source": "opentelemetry-genai-observability-agent-workflows",
+    "target": "langgraph",
+    "relation": "references"
+  },
+  {
+    "source": "opentelemetry-genai-observability-agent-workflows",
+    "target": "fastapi",
+    "relation": "references"
+  },
+  {
+    "source": "opentelemetry-genai-observability-agent-workflows",
+    "target": "nextjs",
+    "relation": "references"
+  },
+  {
+    "source": "context-engineering-enterprise-rag-systems",
+    "target": "service-rag-infrastructure-consulting",
+    "relation": "related_to"
+  },
+  {
+    "source": "context-engineering-enterprise-rag-systems",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "fastapi-ai-backends-background-reasoning-workflows",
+    "target": "fastapi",
+    "relation": "references"
+  },
+  {
+    "source": "fastapi-ai-backends-background-reasoning-workflows",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "fastapi-ai-backends-background-reasoning-workflows",
+    "target": "pattern-fastapi-ai-backends",
+    "relation": "related_to"
+  },
+  {
+    "source": "langgraph",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "n8n",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "adr-n8n",
+    "target": "langgraph",
+    "relation": "depends_on"
+  },
+  {
+    "source": "langsmith",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "mcp-app",
+    "target": "mcp",
+    "relation": "related_to"
+  },
+  {
+    "source": "adr-mcp-app",
+    "target": "mcp",
+    "relation": "depends_on"
+  },
+  {
+    "source": "adr-mcp-app",
+    "target": "adr-mcp",
+    "relation": "related_to"
+  },
+  {
+    "source": "webmcp",
+    "target": "mcp",
+    "relation": "related_to"
+  },
+  {
+    "source": "autogen",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "fastapi",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "kubernetes",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "kubernetes",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "adr-kubernetes",
+    "target": "fastapi",
+    "relation": "depends_on"
+  },
+  {
+    "source": "openshift",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "adr-openshift",
+    "target": "kubernetes",
+    "relation": "depends_on"
+  },
+  {
+    "source": "nvidia-runai",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "langgraph",
+    "relation": "uses"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "langchain",
+    "relation": "uses"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "qdrant",
+    "relation": "uses"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "nextjs",
+    "relation": "uses"
+  },
+  {
+    "source": "production-grade-ai-home-lab",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "enterprise-agentic-rag-platform",
+    "target": "langgraph",
+    "relation": "uses"
+  },
+  {
+    "source": "enterprise-agentic-rag-platform",
+    "target": "fastapi",
+    "relation": "uses"
+  },
+  {
+    "source": "enterprise-agentic-rag-platform",
+    "target": "kubernetes",
+    "relation": "uses"
+  },
+  {
+    "source": "gpu-ai-platform-modernization",
+    "target": "kubernetes",
+    "relation": "uses"
+  },
+  {
+    "source": "gpu-ai-platform-modernization",
+    "target": "openshift",
+    "relation": "uses"
+  },
+  {
+    "source": "ai-architecture-enablement",
+    "target": "mcp",
+    "relation": "uses"
+  },
+  {
+    "source": "service-ai-architecture-advisory",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-architecture-advisory",
+    "target": "doc-roadmap",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-langgraph-consultant",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-langgraph-consultant",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-rag-infrastructure-consulting",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-rag-infrastructure-consulting",
+    "target": "pattern-rag-reliability",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-platform-engineering",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-platform-engineering",
+    "target": "nextjs",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-platform-engineering",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-platform-engineering",
+    "target": "openshift",
+    "relation": "related_to"
+  },
+  {
+    "source": "service-ai-platform-engineering",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "openshift",
+    "relation": "uses"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-publicis-sapient",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-ap-moller-maersk",
+    "target": "doc-design-system",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-optiv-inc",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-hewlett-packard-enterprise",
+    "target": "doc-design-system",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-hewlett-packard-enterprise",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "career-william-oneil-india",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "pattern-fastapi-ai-backends",
+    "target": "fastapi",
+    "relation": "implements"
+  },
+  {
+    "source": "pattern-fastapi-ai-backends",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-architecture-principles",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "opentelemetry-genai-observability-agent-workflows",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "context-engineering-enterprise-rag-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-blog-topics",
+    "target": "doc-content-strategy",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "context-engineering-enterprise-rag-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "langchain",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "google-adk",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "mcp",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "acp-ucp",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "vertex-ai-models",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "aws-bedrock-models",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "mongodb",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "nextjs",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "module-federation",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "openshift",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "nvidia-runai",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "service-ai-architecture-advisory",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "service-rag-infrastructure-consulting",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-brand-context",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-case-studies",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-case-studies",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-case-studies",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-case-studies",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-case-studies",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-content-strategy",
+    "target": "doc-case-studies",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-cta-strategy",
+    "target": "doc-case-studies",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-cta-strategy",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-devrel-positioning",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-devrel-positioning",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-devrel-positioning",
+    "target": "service-devrel-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "nextjs",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "module-federation",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "doc-case-studies",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-engineering-footprint",
+    "target": "doc-design-system",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-medium-articles",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-medium-articles",
+    "target": "langchain",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-medium-articles",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "nextjs",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "doc-devrel-positioning",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-open-source-strategy",
+    "target": "doc-engineering-footprint",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-roadmap",
+    "target": "doc-case-studies",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-roadmap",
+    "target": "doc-cta-strategy",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-roadmap",
+    "target": "doc-services",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "langgraph-v1-durable-agent-architecture",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "opentelemetry-genai-observability-agent-workflows",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "service-langgraph-consultant",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "service-rag-infrastructure-consulting",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "service-ai-platform-engineering",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-seo-strategy",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "opentelemetry-genai-observability-agent-workflows",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "google-adk",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "mcp",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "mongodb",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "service-ai-architecture-advisory",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "service-rag-infrastructure-consulting",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-services",
+    "target": "pattern-multi-agent-systems",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "opentelemetry-genai-observability-agent-workflows",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "langgraph",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "pgvector",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "fastapi",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "kubernetes",
+    "relation": "related_to"
+  },
+  {
+    "source": "doc-social-content",
+    "target": "doc-content-strategy",
+    "relation": "related_to"
+  }
+]

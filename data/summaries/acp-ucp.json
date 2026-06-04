@@ -1,0 +1,13 @@
+{
+  "id": "acp-ucp",
+  "summary_50": "Agent/Unified Context Protocol patterns. Manoj tests these standard metadata schemas for passing context securely between model layers.",
+  "summary_100": "ACP / UCP Patterns (Orchestration - Trial (Context Standard)): Agent/Unified Context Protocol patterns. Manoj tests these standard metadata schemas for passing context securely between model layers.",
+  "summary_250": "ACP / UCP Patterns is in the Trial ring under the Orchestration quadrant. Manoj's verdict: Trial (Context Standard). Insight: Agent/Unified Context Protocol patterns. Manoj tests these standard metadata schemas for passing context securely between model layers.. ADR Context - Problem: Custom-coding context parsing formats across disjoint multi-agent frameworks causes translation bottlenecks.. Decision: Deploy ACP/UCP payload mappings to unify long-term memory parameters.. Tradeoff: Adds serialization overhead to agent network communication steps.",
+  "facts": [
+    "ACP / UCP Patterns is classified in the Trial ring for Orchestration.",
+    "Agent/Unified Context Protocol patterns. Manoj tests these standard metadata schemas for passing context securely between model layers.",
+    "ADR Problem: Custom-coding context parsing formats across disjoint multi-agent frameworks causes translation bottlenecks.",
+    "ADR Decision: Deploy ACP/UCP payload mappings to unify long-term memory parameters.",
+    "ADR Tradeoff: Adds serialization overhead to agent network communication steps."
+  ]
+}

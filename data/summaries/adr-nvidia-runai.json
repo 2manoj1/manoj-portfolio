@@ -1,0 +1,11 @@
+{
+  "id": "adr-nvidia-runai",
+  "summary_50": "Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.",
+  "summary_100": "ADR for NVIDIA Run:AI. Problem: Static GPU assignment causes hardware idle time across distributed AI engineering teams. Decision: Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.",
+  "summary_250": "ADR for NVIDIA Run:AI. Problem: Static GPU assignment causes hardware idle time across distributed AI engineering teams. Decision: Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules. Tradeoff: Requires hosting specialized cluster controller nodes.",
+  "facts": [
+    "Static GPU assignment causes hardware idle time across distributed AI engineering teams.",
+    "Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.",
+    "Requires hosting specialized cluster controller nodes."
+  ]
+}

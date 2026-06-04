@@ -1,0 +1,14 @@
+{
+  "id": "service-ai-architecture-advisory",
+  "summary_50": "I provide senior architecture guidance for teams moving AI products from vague ambition to a production-ready operating model.",
+  "summary_100": "Service: AI Architecture Advisory addressing \"AI roadmap is moving faster than the architecture decisions behind it.\". I provide senior architecture guidance for teams moving AI products from vague ambition to a production-ready operating model.",
+  "summary_250": "Service: AI Architecture Advisory. Buyer Pain: AI roadmap is moving faster than the architecture decisions behind it.. Description: I provide senior architecture guidance for teams moving AI products from vague ambition to a production-ready operating model.. Target Audience: CTOs, founders, engineering leaders, and AI platform teams.. Depth of engagement: Architecture audits, technical decision records, vendor evaluation, roadmap sequencing, and leadership alignment.. Key outcomes: Clarify system boundaries, platform choices, and delivery risk; Define POC-to-production roadmap for AI-native products; Review reliability, governance, evaluation, and deployment strategy",
+  "facts": [
+    "Buyer Pain: AI roadmap is moving faster than the architecture decisions behind it.",
+    "Ideal Client: CTOs, founders, engineering leaders, and AI platform teams.",
+    "Consulting Depth: Architecture audits, technical decision records, vendor evaluation, roadmap sequencing, and leadership alignment.",
+    "Service Outcome: Clarify system boundaries, platform choices, and delivery risk",
+    "Service Outcome: Define POC-to-production roadmap for AI-native products",
+    "Service Outcome: Review reliability, governance, evaluation, and deployment strategy"
+  ]
+}

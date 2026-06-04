@@ -1,0 +1,13 @@
+{
+  "id": "fastapi",
+  "summary_50": "Async Python web server. The backbone of Manoj's gateway services, enforcing input/output schemas in milliseconds via Pydantic.",
+  "summary_100": "FastAPI (Data - Adopt (Async Gateway)): Async Python web server. The backbone of Manoj's gateway services, enforcing input/output schemas in milliseconds via Pydantic.",
+  "summary_250": "FastAPI is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (Async Gateway). Insight: Async Python web server. The backbone of Manoj's gateway services, enforcing input/output schemas in milliseconds via Pydantic.. ADR Context - Problem: Unvalidated request payloads trigger runtime script failures deep inside agent orchestration nodes.. Decision: Expose all backend interfaces using FastAPI with strict Pydantic model contracts.. Tradeoff: Requires documenting typed schemas for all incoming client data.",
+  "facts": [
+    "FastAPI is classified in the Adopt ring for Data.",
+    "Async Python web server. The backbone of Manoj's gateway services, enforcing input/output schemas in milliseconds via Pydantic.",
+    "ADR Problem: Unvalidated request payloads trigger runtime script failures deep inside agent orchestration nodes.",
+    "ADR Decision: Expose all backend interfaces using FastAPI with strict Pydantic model contracts.",
+    "ADR Tradeoff: Requires documenting typed schemas for all incoming client data."
+  ]
+}

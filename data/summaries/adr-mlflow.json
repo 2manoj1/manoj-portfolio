@@ -1,0 +1,11 @@
+{
+  "id": "adr-mlflow",
+  "summary_50": "Deploy MLflow container instances to record experiment metrics and track prompting versions.",
+  "summary_100": "ADR for MLflow. Problem: Tracking custom model runs and prompt iteration metrics offline lacks version-controlled registries. Decision: Deploy MLflow container instances to record experiment metrics and track prompting versions.",
+  "summary_250": "ADR for MLflow. Problem: Tracking custom model runs and prompt iteration metrics offline lacks version-controlled registries. Decision: Deploy MLflow container instances to record experiment metrics and track prompting versions. Tradeoff: Requires hosting dedicated MLflow tracking servers and SQL database backends.",
+  "facts": [
+    "Tracking custom model runs and prompt iteration metrics offline lacks version-controlled registries.",
+    "Deploy MLflow container instances to record experiment metrics and track prompting versions.",
+    "Requires hosting dedicated MLflow tracking servers and SQL database backends."
+  ]
+}

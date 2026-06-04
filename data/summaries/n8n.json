@@ -1,0 +1,13 @@
+{
+  "id": "n8n",
+  "summary_50": "Workflow automation tool. Manoj deploys n8n to choreograph simple webhook-based node automations, saving LangGraph for complex state logic.",
+  "summary_100": "n8n Workflows (Orchestration - Adopt (Low-Code Automation)): Workflow automation tool. Manoj deploys n8n to choreograph simple webhook-based node automations, saving LangGraph for complex state logic.",
+  "summary_250": "n8n Workflows is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Low-Code Automation). Insight: Workflow automation tool. Manoj deploys n8n to choreograph simple webhook-based node automations, saving LangGraph for complex state logic.. ADR Context - Problem: Writing raw Python script loops for simple API notification webhooks burns valuable developer cycles.. Decision: Orchestrate basic event-driven pipelines using n8n container clusters.. Tradeoff: Limits state inspection depth compared to pure-code LangGraph nodes.",
+  "facts": [
+    "n8n Workflows is classified in the Adopt ring for Orchestration.",
+    "Workflow automation tool. Manoj deploys n8n to choreograph simple webhook-based node automations, saving LangGraph for complex state logic.",
+    "ADR Problem: Writing raw Python script loops for simple API notification webhooks burns valuable developer cycles.",
+    "ADR Decision: Orchestrate basic event-driven pipelines using n8n container clusters.",
+    "ADR Tradeoff: Limits state inspection depth compared to pure-code LangGraph nodes."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "adr-aws-bedrock-models",
+  "summary_50": "Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.",
+  "summary_100": "ADR for AWS Bedrock. Problem: Clients running core infrastructure inside AWS VPCs reject external routing of prompt vectors. Decision: Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.",
+  "summary_250": "ADR for AWS Bedrock. Problem: Clients running core infrastructure inside AWS VPCs reject external routing of prompt vectors. Decision: Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts. Tradeoff: Subject to region availability of specific model weights (e.g. Claude).",
+  "facts": [
+    "Clients running core infrastructure inside AWS VPCs reject external routing of prompt vectors.",
+    "Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.",
+    "Subject to region availability of specific model weights (e.g. Claude)."
+  ]
+}

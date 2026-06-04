@@ -1,0 +1,13 @@
+{
+  "id": "langgraph",
+  "summary_50": "Manoj's primary choice for building stateful multi-agent systems. The checkpointer persistence pattern is vital for banking and business workflows.",
+  "summary_100": "LangGraph (Orchestration - Adopt (Production-Ready)): Manoj's primary choice for building stateful multi-agent systems. The checkpointer persistence pattern is vital for banking and business workflows.",
+  "summary_250": "LangGraph is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Production-Ready). Insight: Manoj's primary choice for building stateful multi-agent systems. The checkpointer persistence pattern is vital for banking and business workflows.. ADR Context - Problem: Single-prompt loops fail on multi-step reasoning, resulting in brittle tool executions.. Decision: Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.. Tradeoff: Requires explicit state modeling in exchange for predictable, resumable execution paths.",
+  "facts": [
+    "LangGraph is classified in the Adopt ring for Orchestration.",
+    "Manoj's primary choice for building stateful multi-agent systems. The checkpointer persistence pattern is vital for banking and business workflows.",
+    "ADR Problem: Single-prompt loops fail on multi-step reasoning, resulting in brittle tool executions.",
+    "ADR Decision: Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.",
+    "ADR Tradeoff: Requires explicit state modeling in exchange for predictable, resumable execution paths."
+  ]
+}

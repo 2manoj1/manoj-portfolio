@@ -1,0 +1,13 @@
+{
+  "id": "google-adk",
+  "summary_50": "Google Antigravity SDK. Manoj utilizes its agentic state boundaries and collaborative memory pipelines for multi-agent setups.",
+  "summary_100": "Google ADK (Orchestration - Adopt (Enterprise Agentic)): Google Antigravity SDK. Manoj utilizes its agentic state boundaries and collaborative memory pipelines for multi-agent setups.",
+  "summary_250": "Google ADK is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Enterprise Agentic). Insight: Google Antigravity SDK. Manoj utilizes its agentic state boundaries and collaborative memory pipelines for multi-agent setups.. ADR Context - Problem: Scaling agent collaboration across independent runtime blocks creates communication boundaries.. Decision: Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.. Tradeoff: Ties agent logic to the Google AGY SDK ecosystem guidelines.",
+  "facts": [
+    "Google ADK is classified in the Adopt ring for Orchestration.",
+    "Google Antigravity SDK. Manoj utilizes its agentic state boundaries and collaborative memory pipelines for multi-agent setups.",
+    "ADR Problem: Scaling agent collaboration across independent runtime blocks creates communication boundaries.",
+    "ADR Decision: Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.",
+    "ADR Tradeoff: Ties agent logic to the Google AGY SDK ecosystem guidelines."
+  ]
+}

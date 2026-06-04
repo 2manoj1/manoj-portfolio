@@ -1,0 +1,11 @@
+{
+  "id": "adr-module-federation",
+  "summary_50": "Orchestrate federated frontend runtimes using Webpack Module Federation specs.",
+  "summary_100": "ADR for Module Federation. Problem: Monolithic frontend builds slow down CI/CD testing runs and block independent team deployments. Decision: Orchestrate federated frontend runtimes using Webpack Module Federation specs.",
+  "summary_250": "ADR for Module Federation. Problem: Monolithic frontend builds slow down CI/CD testing runs and block independent team deployments. Decision: Orchestrate federated frontend runtimes using Webpack Module Federation specs. Tradeoff: Requires establishing strict API contract boundaries between independent shells.",
+  "facts": [
+    "Monolithic frontend builds slow down CI/CD testing runs and block independent team deployments.",
+    "Orchestrate federated frontend runtimes using Webpack Module Federation specs.",
+    "Requires establishing strict API contract boundaries between independent shells."
+  ]
+}

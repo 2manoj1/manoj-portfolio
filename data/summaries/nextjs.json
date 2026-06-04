@@ -1,0 +1,13 @@
+{
+  "id": "nextjs",
+  "summary_50": "Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.",
+  "summary_100": "Next.js (Platform - Adopt (App Router)): Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.",
+  "summary_250": "Next.js is in the Adopt ring under the Platform quadrant. Manoj's verdict: Adopt (App Router). Insight: Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.. ADR Context - Problem: Legacy client-rendered SPAs display slow Initial Page Loads and weak SEO indexing.. Decision: Standardize all technical authority pages on the Next.js App Router with Server Components.. Tradeoff: Requires managing server/client rendering boundaries.",
+  "facts": [
+    "Next.js is classified in the Adopt ring for Platform.",
+    "Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.",
+    "ADR Problem: Legacy client-rendered SPAs display slow Initial Page Loads and weak SEO indexing.",
+    "ADR Decision: Standardize all technical authority pages on the Next.js App Router with Server Components.",
+    "ADR Tradeoff: Requires managing server/client rendering boundaries."
+  ]
+}

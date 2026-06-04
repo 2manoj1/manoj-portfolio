@@ -1,0 +1,13 @@
+{
+  "id": "kubernetes",
+  "summary_50": "Robust container management. Deployed to manage FastAPI services, queue workers, and databases in enterprise clouds.",
+  "summary_100": "Kubernetes (Platform - Adopt (Container Ops)): Robust container management. Deployed to manage FastAPI services, queue workers, and databases in enterprise clouds.",
+  "summary_250": "Kubernetes is in the Adopt ring under the Platform quadrant. Manoj's verdict: Adopt (Container Ops). Insight: Robust container management. Deployed to manage FastAPI services, queue workers, and databases in enterprise clouds.. ADR Context - Problem: Scaling isolated FastAPI agent containers manually under load spikes triggers downtime risks.. Decision: Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).. Tradeoff: High configuration complexity (YAML layers) and container networking overhead.",
+  "facts": [
+    "Kubernetes is classified in the Adopt ring for Platform.",
+    "Robust container management. Deployed to manage FastAPI services, queue workers, and databases in enterprise clouds.",
+    "ADR Problem: Scaling isolated FastAPI agent containers manually under load spikes triggers downtime risks.",
+    "ADR Decision: Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).",
+    "ADR Tradeoff: High configuration complexity (YAML layers) and container networking overhead."
+  ]
+}

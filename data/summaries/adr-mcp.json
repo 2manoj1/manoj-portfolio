@@ -1,0 +1,11 @@
+{
+  "id": "adr-mcp",
+  "summary_50": "Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.",
+  "summary_100": "ADR for MCP Schemas. Problem: Custom-coding API tool specs for each new model runner creates integration boundaries. Decision: Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.",
+  "summary_250": "ADR for MCP Schemas. Problem: Custom-coding API tool specs for each new model runner creates integration boundaries. Decision: Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs. Tradeoff: Requires running distinct MCP server runtimes next to vector layers.",
+  "facts": [
+    "Custom-coding API tool specs for each new model runner creates integration boundaries.",
+    "Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.",
+    "Requires running distinct MCP server runtimes next to vector layers."
+  ]
+}

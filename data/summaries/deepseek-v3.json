@@ -1,0 +1,13 @@
+{
+  "id": "deepseek-v3",
+  "summary_50": "Used in production. Manoj routes secondary classifier routing operations to DeepSeek MoE nodes to reduce operational costs.",
+  "summary_100": "DeepSeek-V3 (Models - Adopt (Low-Cost MoE)): Used in production. Manoj routes secondary classifier routing operations to DeepSeek MoE nodes to reduce operational costs.",
+  "summary_250": "DeepSeek-V3 is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Low-Cost MoE). Insight: Used in production. Manoj routes secondary classifier routing operations to DeepSeek MoE nodes to reduce operational costs.. ADR Context - Problem: High-throughput classification runs balloon operational API costs on premium models.. Decision: Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.. Tradeoff: Requires managing custom API routers and handling occasional server load-shedding.",
+  "facts": [
+    "DeepSeek-V3 is classified in the Adopt ring for Models.",
+    "Used in production. Manoj routes secondary classifier routing operations to DeepSeek MoE nodes to reduce operational costs.",
+    "ADR Problem: High-throughput classification runs balloon operational API costs on premium models.",
+    "ADR Decision: Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.",
+    "ADR Tradeoff: Requires managing custom API routers and handling occasional server load-shedding."
+  ]
+}

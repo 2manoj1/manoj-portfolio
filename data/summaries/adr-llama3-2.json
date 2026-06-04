@@ -1,0 +1,11 @@
+{
+  "id": "adr-llama3-2",
+  "summary_50": "Host local Llama 3.2 instances on edge hardware to resolve small classification passes.",
+  "summary_100": "ADR for Llama 3.2. Problem: Routing minor token checks (e.g. spam check, routing) to paid cloud LLMs generates high operational costs. Decision: Host local Llama 3.2 instances on edge hardware to resolve small classification passes.",
+  "summary_250": "ADR for Llama 3.2. Problem: Routing minor token checks (e.g. spam check, routing) to paid cloud LLMs generates high operational costs. Decision: Host local Llama 3.2 instances on edge hardware to resolve small classification passes. Tradeoff: Requires maintaining local hardware availability and model configurations.",
+  "facts": [
+    "Routing minor token checks (e.g. spam check, routing) to paid cloud LLMs generates high operational costs.",
+    "Host local Llama 3.2 instances on edge hardware to resolve small classification passes.",
+    "Requires maintaining local hardware availability and model configurations."
+  ]
+}

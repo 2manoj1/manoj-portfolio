@@ -1,0 +1,18 @@
+{
+  "id": "doc-social-content",
+  "summary_50": "> Canonical social content strategy. LinkedIn GitHub Medium X/Twitter (optional) Topics: architecture orchestration scaling reliability deployment Topics: LangGraph FastAPI pgvector Kubernetes AI AI observability Use: Mermaid.js infra topology orchestration flows retrieval pipelines Topics: production failures scaling tradeoffs optimization observability deployment lessons Content should feel: thoughtful technical calm architectural systems oriented...",
+  "summary_100": "> Canonical social content strategy. LinkedIn GitHub Medium X/Twitter (optional) Topics: architecture orchestration scaling reliability deployment Topics: LangGraph FastAPI pgvector Kubernetes AI AI observability Use: Mermaid.js infra topology orchestration flows retrieval pipelines Topics: production failures scaling tradeoffs optimization observability deployment lessons Content should feel: thoughtful technical calm architectural systems oriented Avoid: hype controversy bait shallow tutorials “top AI tools” content Establish authority around: enterprise AI systems orchestration AI infrastructure production AI engineering AI native platforms Engineering Project ↓ Architecture Diagram ↓ LinkedIn Breakdown ↓ Website Article ↓ GitHub Showcase ↓ Inbound Opportunity",
+  "summary_250": "> Canonical social content strategy. LinkedIn GitHub Medium X/Twitter (optional) Topics: architecture orchestration scaling reliability deployment Topics: LangGraph FastAPI pgvector Kubernetes AI AI observability Use: Mermaid.js infra topology orchestration flows retrieval pipelines Topics: production failures scaling tradeoffs optimization observability deployment lessons Content should feel: thoughtful technical calm architectural systems oriented Avoid: hype controversy bait shallow tutorials “top AI tools” content Establish authority around: enterprise AI systems orchestration AI infrastructure production AI engineering AI native platforms Engineering Project ↓ Architecture Diagram ↓ LinkedIn Breakdown ↓ Website Article ↓ GitHub Showcase ↓ Inbound Opportunity",
+  "facts": [
+    "X/Twitter (optional)",
+    "architecture",
+    "orchestration",
+    "reliability",
+    "Kubernetes AI",
+    "AI observability",
+    "infra topology",
+    "orchestration flows",
+    "retrieval pipelines",
+    "production failures"
+  ]
+}

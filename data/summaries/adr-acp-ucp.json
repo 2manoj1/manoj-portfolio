@@ -1,0 +1,11 @@
+{
+  "id": "adr-acp-ucp",
+  "summary_50": "Deploy ACP/UCP payload mappings to unify long-term memory parameters.",
+  "summary_100": "ADR for ACP / UCP Patterns. Problem: Custom-coding context parsing formats across disjoint multi-agent frameworks causes translation bottlenecks. Decision: Deploy ACP/UCP payload mappings to unify long-term memory parameters.",
+  "summary_250": "ADR for ACP / UCP Patterns. Problem: Custom-coding context parsing formats across disjoint multi-agent frameworks causes translation bottlenecks. Decision: Deploy ACP/UCP payload mappings to unify long-term memory parameters. Tradeoff: Adds serialization overhead to agent network communication steps.",
+  "facts": [
+    "Custom-coding context parsing formats across disjoint multi-agent frameworks causes translation bottlenecks.",
+    "Deploy ACP/UCP payload mappings to unify long-term memory parameters.",
+    "Adds serialization overhead to agent network communication steps."
+  ]
+}

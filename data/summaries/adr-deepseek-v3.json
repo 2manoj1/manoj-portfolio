@@ -1,0 +1,11 @@
+{
+  "id": "adr-deepseek-v3",
+  "summary_50": "Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.",
+  "summary_100": "ADR for DeepSeek-V3. Problem: High-throughput classification runs balloon operational API costs on premium models. Decision: Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.",
+  "summary_250": "ADR for DeepSeek-V3. Problem: High-throughput classification runs balloon operational API costs on premium models. Decision: Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing. Tradeoff: Requires managing custom API routers and handling occasional server load-shedding.",
+  "facts": [
+    "High-throughput classification runs balloon operational API costs on premium models.",
+    "Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.",
+    "Requires managing custom API routers and handling occasional server load-shedding."
+  ]
+}

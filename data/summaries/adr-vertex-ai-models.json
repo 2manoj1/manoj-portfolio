@@ -1,0 +1,11 @@
+{
+  "id": "adr-vertex-ai-models",
+  "summary_50": "Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.",
+  "summary_100": "ADR for GCP Vertex AI. Problem: Managing raw public API endpoints for corporate applications violates enterprise compliance policies. Decision: Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.",
+  "summary_250": "ADR for GCP Vertex AI. Problem: Managing raw public API endpoints for corporate applications violates enterprise compliance policies. Decision: Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls. Tradeoff: Locks system orchestration to Google Cloud API endpoints and compute limits.",
+  "facts": [
+    "Managing raw public API endpoints for corporate applications violates enterprise compliance policies.",
+    "Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.",
+    "Locks system orchestration to Google Cloud API endpoints and compute limits."
+  ]
+}

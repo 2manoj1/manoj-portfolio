@@ -1,0 +1,11 @@
+{
+  "id": "adr-pgvector",
+  "summary_50": "Standardize on pgvector inside the existing PostgreSQL container schema.",
+  "summary_100": "ADR for pgvector. Problem: Synchronizing state modifications between separate relational DBs and vector databases creates consistency lags. Decision: Standardize on pgvector inside the existing PostgreSQL container schema.",
+  "summary_250": "ADR for pgvector. Problem: Synchronizing state modifications between separate relational DBs and vector databases creates consistency lags. Decision: Standardize on pgvector inside the existing PostgreSQL container schema. Tradeoff: Higher database server memory footprint (RAM) requirements.",
+  "facts": [
+    "Synchronizing state modifications between separate relational DBs and vector databases creates consistency lags.",
+    "Standardize on pgvector inside the existing PostgreSQL container schema.",
+    "Higher database server memory footprint (RAM) requirements."
+  ]
+}

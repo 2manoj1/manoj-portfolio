@@ -1,0 +1,23 @@
+{
+  "id": "gpu-ai-platform-modernization",
+  "summary_50": "I worked on containerized inference platform patterns where static GPU allocation created developer bottlenecks and production workloads needed predictable serving capacity.",
+  "summary_100": "GPU Platform Modernization in OpenShift / Run:AI: I worked on containerized inference platform patterns where static GPU allocation created developer bottlenecks and production workloads needed predictable serving capacity. Narration: The platform design separates ingress, scheduling, GPU slicing, model serving, and observability. Run:AI manages allocation policy, vLLM handles high-throughput serving, and OpenTelemetry keeps the inference path visible.",
+  "summary_250": "GPU Platform Modernization (Status: ACTIVE, Ingress: Kube Ingress Controller). Problem: I worked on containerized inference platform patterns where static GPU allocation created developer bottlenecks and production workloads needed predictable serving capacity.. Narration: The platform design separates ingress, scheduling, GPU slicing, model serving, and observability. Run:AI manages allocation policy, vLLM handles high-throughput serving, and OpenTelemetry keeps the inference path visible.. Key systems: Kube ingress: OpenShift route controller; Run:AI policy: Fractional GPU and priority scheduling; GPU slices: Elastic VRAM allocation boundaries; vLLM serving: PagedAttention runtime pods; OTel pipeline: Prometheus metrics and trace spans",
+  "facts": [
+    "Status: ACTIVE in environment OpenShift / Run:AI",
+    "Ingress pathway: Kube Ingress Controller",
+    "Scheduler: Run:AI (Policy-based fractional GPU allocation and priorities.)",
+    "Serving: vLLM (PagedAttention-style inference serving boundary.)",
+    "Cluster: OpenShift (Enterprise Kubernetes runtime for AI workloads.)",
+    "Signals: OTel (Tracing and metrics exported for platform visibility.)",
+    "Zone Cluster Edge: ...",
+    "Zone Run:AI Scheduler: ...",
+    "Zone Model Serving Pool: ...",
+    "Zone Platform Observability: ...",
+    "Component Kube ingress: OpenShift route controller (Keeps API access and routing policy outside the serving pool.)",
+    "Component Run:AI policy: Fractional GPU and priority scheduling (Allocates GPU slices to workloads based on team quota, priority, and serving class.)",
+    "Component GPU slices: Elastic VRAM allocation boundaries (Separates experimentation capacity from high-priority production inference.)",
+    "Component vLLM serving: PagedAttention runtime pods (Serves model traffic through a scalable deployment with cache-aware scheduling.)",
+    "Component OTel pipeline: Prometheus metrics and trace spans (Provides saturation, queue, latency, and GPU utilization signals to platform teams.)"
+  ]
+}

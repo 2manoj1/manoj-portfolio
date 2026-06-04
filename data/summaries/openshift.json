@@ -1,0 +1,13 @@
+{
+  "id": "openshift",
+  "summary_50": "Red Hat enterprise platform. Manoj hosts secure AI workloads with strict network firewall isolation.",
+  "summary_100": "OpenShift (Platform - Adopt (Enterprise K8s)): Red Hat enterprise platform. Manoj hosts secure AI workloads with strict network firewall isolation.",
+  "summary_250": "OpenShift is in the Adopt ring under the Platform quadrant. Manoj's verdict: Adopt (Enterprise K8s). Insight: Red Hat enterprise platform. Manoj hosts secure AI workloads with strict network firewall isolation.. ADR Context - Problem: Standard Kubernetes builds lack built-in security auditing and secure out-of-the-box registry pipelines.. Decision: Deploy critical workloads inside Red Hat OpenShift Container Platform.. Tradeoff: Higher license costs and locked dependencies to Red Hat ecosystem tools.",
+  "facts": [
+    "OpenShift is classified in the Adopt ring for Platform.",
+    "Red Hat enterprise platform. Manoj hosts secure AI workloads with strict network firewall isolation.",
+    "ADR Problem: Standard Kubernetes builds lack built-in security auditing and secure out-of-the-box registry pipelines.",
+    "ADR Decision: Deploy critical workloads inside Red Hat OpenShift Container Platform.",
+    "ADR Tradeoff: Higher license costs and locked dependencies to Red Hat ecosystem tools."
+  ]
+}

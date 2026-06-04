@@ -1,0 +1,13 @@
+{
+  "id": "nvidia-runai",
+  "summary_50": "GPU resource orchestrator. Manages GPU virtualization slices to maximize training/inference compute speeds across teams.",
+  "summary_100": "NVIDIA Run:AI (Platform - Adopt (GPU Orchestration)): GPU resource orchestrator. Manages GPU virtualization slices to maximize training/inference compute speeds across teams.",
+  "summary_250": "NVIDIA Run:AI is in the Adopt ring under the Platform quadrant. Manoj's verdict: Adopt (GPU Orchestration). Insight: GPU resource orchestrator. Manages GPU virtualization slices to maximize training/inference compute speeds across teams.. ADR Context - Problem: Static GPU assignment causes hardware idle time across distributed AI engineering teams.. Decision: Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.. Tradeoff: Requires hosting specialized cluster controller nodes.",
+  "facts": [
+    "NVIDIA Run:AI is classified in the Adopt ring for Platform.",
+    "GPU resource orchestrator. Manages GPU virtualization slices to maximize training/inference compute speeds across teams.",
+    "ADR Problem: Static GPU assignment causes hardware idle time across distributed AI engineering teams.",
+    "ADR Decision: Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.",
+    "ADR Tradeoff: Requires hosting specialized cluster controller nodes."
+  ]
+}

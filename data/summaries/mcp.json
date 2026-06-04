@@ -1,0 +1,13 @@
+{
+  "id": "mcp",
+  "summary_50": "Model Context Protocol. Standardizes server-client tool execution. Deployed inside secure gateways to manage allowlisted system utilities.",
+  "summary_100": "MCP Schemas (Orchestration - Adopt (Tool Protocol)): Model Context Protocol. Standardizes server-client tool execution. Deployed inside secure gateways to manage allowlisted system utilities.",
+  "summary_250": "MCP Schemas is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Tool Protocol). Insight: Model Context Protocol. Standardizes server-client tool execution. Deployed inside secure gateways to manage allowlisted system utilities.. ADR Context - Problem: Custom-coding API tool specs for each new model runner creates integration boundaries.. Decision: Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.. Tradeoff: Requires running distinct MCP server runtimes next to vector layers.",
+  "facts": [
+    "MCP Schemas is classified in the Adopt ring for Orchestration.",
+    "Model Context Protocol. Standardizes server-client tool execution. Deployed inside secure gateways to manage allowlisted system utilities.",
+    "ADR Problem: Custom-coding API tool specs for each new model runner creates integration boundaries.",
+    "ADR Decision: Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.",
+    "ADR Tradeoff: Requires running distinct MCP server runtimes next to vector layers."
+  ]
+}

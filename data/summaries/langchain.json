@@ -1,0 +1,13 @@
+{
+  "id": "langchain",
+  "summary_50": "Strong integration tooling for prompt routing, document loading, and embedding extraction utility functions.",
+  "summary_100": "LangChain (Orchestration - Adopt (Utility Standard)): Strong integration tooling for prompt routing, document loading, and embedding extraction utility functions.",
+  "summary_250": "LangChain is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Utility Standard). Insight: Strong integration tooling for prompt routing, document loading, and embedding extraction utility functions.. ADR Context - Problem: Building custom document parsers, chunking runners, and API wrappers slows development velocity.. Decision: Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.. Tradeoff: Adds package dependency weight for faster initial POC velocity.",
+  "facts": [
+    "LangChain is classified in the Adopt ring for Orchestration.",
+    "Strong integration tooling for prompt routing, document loading, and embedding extraction utility functions.",
+    "ADR Problem: Building custom document parsers, chunking runners, and API wrappers slows development velocity.",
+    "ADR Decision: Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.",
+    "ADR Tradeoff: Adds package dependency weight for faster initial POC velocity."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "adr-mongodb",
+  "summary_50": "Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.",
+  "summary_100": "ADR for MongoDB. Problem: Polymorphic document models require frequent schema migrations and alterations in relational structures. Decision: Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.",
+  "summary_250": "ADR for MongoDB. Problem: Polymorphic document models require frequent schema migrations and alterations in relational structures. Decision: Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets. Tradeoff: Does not support native ACID multi-table joins as cleanly as PostgreSQL.",
+  "facts": [
+    "Polymorphic document models require frequent schema migrations and alterations in relational structures.",
+    "Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.",
+    "Does not support native ACID multi-table joins as cleanly as PostgreSQL."
+  ]
+}

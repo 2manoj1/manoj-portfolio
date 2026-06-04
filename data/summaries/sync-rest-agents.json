@@ -1,0 +1,10 @@
+{
+  "id": "sync-rest-agents",
+  "summary_50": "Synchronous HTTP timeouts occur under multi-step LLM reasoning. Replaced with async worker queues (Celery/Redis) and polling endpoints.",
+  "summary_100": "Sync REST Agents (Orchestration - Hold): Synchronous HTTP timeouts occur under multi-step LLM reasoning. Replaced with async worker queues (Celery/Redis) and polling endpoints.",
+  "summary_250": "Sync REST Agents is in the Hold ring under the Orchestration quadrant. Manoj's verdict: Hold. Insight: Synchronous HTTP timeouts occur under multi-step LLM reasoning. Replaced with async worker queues (Celery/Redis) and polling endpoints.. ",
+  "facts": [
+    "Sync REST Agents is classified in the Hold ring for Orchestration.",
+    "Synchronous HTTP timeouts occur under multi-step LLM reasoning. Replaced with async worker queues (Celery/Redis) and polling endpoints."
+  ]
+}

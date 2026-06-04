@@ -1,0 +1,11 @@
+{
+  "id": "adr-google-adk",
+  "summary_50": "Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.",
+  "summary_100": "ADR for Google ADK. Problem: Scaling agent collaboration across independent runtime blocks creates communication boundaries. Decision: Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.",
+  "summary_250": "ADR for Google ADK. Problem: Scaling agent collaboration across independent runtime blocks creates communication boundaries. Decision: Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries. Tradeoff: Ties agent logic to the Google AGY SDK ecosystem guidelines.",
+  "facts": [
+    "Scaling agent collaboration across independent runtime blocks creates communication boundaries.",
+    "Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.",
+    "Ties agent logic to the Google AGY SDK ecosystem guidelines."
+  ]
+}

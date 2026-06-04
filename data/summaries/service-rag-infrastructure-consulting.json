@@ -1,0 +1,14 @@
+{
+  "id": "service-rag-infrastructure-consulting",
+  "summary_50": "I optimize retrieval quality, precision grounding, querying latency, and user trust for knowledge-heavy, vector-driven AI systems.",
+  "summary_100": "Service: RAG Infrastructure Consulting addressing \"Retrieval quality, grounding, latency, or hallucination risk is blocking trust.\". I optimize retrieval quality, precision grounding, querying latency, and user trust for knowledge-heavy, vector-driven AI systems.",
+  "summary_250": "Service: RAG Infrastructure Consulting. Buyer Pain: Retrieval quality, grounding, latency, or hallucination risk is blocking trust.. Description: I optimize retrieval quality, precision grounding, querying latency, and user trust for knowledge-heavy, vector-driven AI systems.. Target Audience: Teams whose AI product depends on domain knowledge and retrieval quality.. Depth of engagement: pgvector, hybrid search, metadata filters, contextual retrieval, long-term memory, reranking, and retrieval evaluation.. Key outcomes: Design hybrid retrieval and pgvector indexing strategy; Improve chunking, ranking, grounding, and answer quality; Create evaluation datasets and regression loops for RAG",
+  "facts": [
+    "Buyer Pain: Retrieval quality, grounding, latency, or hallucination risk is blocking trust.",
+    "Ideal Client: Teams whose AI product depends on domain knowledge and retrieval quality.",
+    "Consulting Depth: pgvector, hybrid search, metadata filters, contextual retrieval, long-term memory, reranking, and retrieval evaluation.",
+    "Service Outcome: Design hybrid retrieval and pgvector indexing strategy",
+    "Service Outcome: Improve chunking, ranking, grounding, and answer quality",
+    "Service Outcome: Create evaluation datasets and regression loops for RAG"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "module-federation",
+  "summary_50": "Distributed frontend standard. Manoj routes microfrontends independently to decrease initial page weight and load times by 30%.",
+  "summary_100": "Module Federation (Platform - Adopt (Microfrontends)): Distributed frontend standard. Manoj routes microfrontends independently to decrease initial page weight and load times by 30%.",
+  "summary_250": "Module Federation is in the Adopt ring under the Platform quadrant. Manoj's verdict: Adopt (Microfrontends). Insight: Distributed frontend standard. Manoj routes microfrontends independently to decrease initial page weight and load times by 30%.. ADR Context - Problem: Monolithic frontend builds slow down CI/CD testing runs and block independent team deployments.. Decision: Orchestrate federated frontend runtimes using Webpack Module Federation specs.. Tradeoff: Requires establishing strict API contract boundaries between independent shells.",
+  "facts": [
+    "Module Federation is classified in the Adopt ring for Platform.",
+    "Distributed frontend standard. Manoj routes microfrontends independently to decrease initial page weight and load times by 30%.",
+    "ADR Problem: Monolithic frontend builds slow down CI/CD testing runs and block independent team deployments.",
+    "ADR Decision: Orchestrate federated frontend runtimes using Webpack Module Federation specs.",
+    "ADR Tradeoff: Requires establishing strict API contract boundaries between independent shells."
+  ]
+}

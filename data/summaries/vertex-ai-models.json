@@ -1,0 +1,13 @@
+{
+  "id": "vertex-ai-models",
+  "summary_50": "Manoj hosts secure Gemini API pipelines, fine-tuned models, and enterprise routing hubs inside Google Cloud security boundaries.",
+  "summary_100": "GCP Vertex AI (Models - Adopt (Enterprise Hub)): Manoj hosts secure Gemini API pipelines, fine-tuned models, and enterprise routing hubs inside Google Cloud security boundaries.",
+  "summary_250": "GCP Vertex AI is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Enterprise Hub). Insight: Manoj hosts secure Gemini API pipelines, fine-tuned models, and enterprise routing hubs inside Google Cloud security boundaries.. ADR Context - Problem: Managing raw public API endpoints for corporate applications violates enterprise compliance policies.. Decision: Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.. Tradeoff: Locks system orchestration to Google Cloud API endpoints and compute limits.",
+  "facts": [
+    "GCP Vertex AI is classified in the Adopt ring for Models.",
+    "Manoj hosts secure Gemini API pipelines, fine-tuned models, and enterprise routing hubs inside Google Cloud security boundaries.",
+    "ADR Problem: Managing raw public API endpoints for corporate applications violates enterprise compliance policies.",
+    "ADR Decision: Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.",
+    "ADR Tradeoff: Locks system orchestration to Google Cloud API endpoints and compute limits."
+  ]
+}

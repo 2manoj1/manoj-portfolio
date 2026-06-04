@@ -1,0 +1,23 @@
+{
+  "id": "ai-architecture-enablement",
+  "summary_50": "I designed enablement patterns for teams adopting model-context tooling, where proprietary databases and calculators needed to be callable by agents without collapsing security and ownership boundaries.",
+  "summary_100": "AI Architecture Enablement in Enterprise Hub: I designed enablement patterns for teams adopting model-context tooling, where proprietary databases and calculators needed to be callable by agents without collapsing security and ownership boundaries. Narration: The architecture makes tools explicit: MCP hosts broker protocol traffic, tool servers isolate database/API capabilities, and schema validation protects the agent core from ungoverned execution.",
+  "summary_250": "AI Architecture Enablement (Status: DEPLOYED, Ingress: Corporate Gateway). Problem: I designed enablement patterns for teams adopting model-context tooling, where proprietary databases and calculators needed to be callable by agents without collapsing security and ownership boundaries.. Narration: The architecture makes tools explicit: MCP hosts broker protocol traffic, tool servers isolate database/API capabilities, and schema validation protects the agent core from ungoverned execution.. Key systems: Admin UI: Enterprise developer hub; MCP host: JSON-RPC protocol client; Database tool: PostgreSQL server wrapper; External APIs: Third-party sandbox client; Agent core: Schema-validated tool reasoning",
+  "facts": [
+    "Status: DEPLOYED in environment Enterprise Hub",
+    "Ingress pathway: Corporate Gateway",
+    "Protocol: MCP (Tool contracts exposed through a model-context boundary.)",
+    "Security: Sandbox (Tool execution separated from the agent reasoning core.)",
+    "Governance: Schemas (Inputs and outputs validated before model use.)",
+    "Adoption: Playbooks (Reusable patterns for enterprise engineering teams.)",
+    "Zone Developer Portal: ...",
+    "Zone MCP Host Boundary: ...",
+    "Zone Secure Tool Subnets: ...",
+    "Zone Agent Runtime: ...",
+    "Component Admin UI: Enterprise developer hub (Surfaces approved tools, access docs, and examples for engineering teams.)",
+    "Component MCP host: JSON-RPC protocol client (Loads tool schemas, brokers calls, and keeps protocol details outside the agent prompt.)",
+    "Component Database tool: PostgreSQL server wrapper (Encapsulates database access behind typed operations instead of direct model access.)",
+    "Component External APIs: Third-party sandbox client (Limits outbound API calls to approved capabilities with explicit request schemas.)",
+    "Component Agent core: Schema-validated tool reasoning (Receives controlled tool outputs and composes responses without owning raw credentials.)"
+  ]
+}

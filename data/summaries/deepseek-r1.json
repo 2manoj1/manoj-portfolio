@@ -1,0 +1,13 @@
+{
+  "id": "deepseek-r1",
+  "summary_50": "Manoj integrates DeepSeek-R1 in production to output reasoning tokens, validating steps before final tool selections.",
+  "summary_100": "DeepSeek-R1 (Models - Adopt (Reasoner)): Manoj integrates DeepSeek-R1 in production to output reasoning tokens, validating steps before final tool selections.",
+  "summary_250": "DeepSeek-R1 is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Reasoner). Insight: Manoj integrates DeepSeek-R1 in production to output reasoning tokens, validating steps before final tool selections.. ADR Context - Problem: Complex algorithmic validations and code synthesis queries fail on standard semantic models.. Decision: Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.. Tradeoff: High reasoning token latency counts require asynchronous queue handling.",
+  "facts": [
+    "DeepSeek-R1 is classified in the Adopt ring for Models.",
+    "Manoj integrates DeepSeek-R1 in production to output reasoning tokens, validating steps before final tool selections.",
+    "ADR Problem: Complex algorithmic validations and code synthesis queries fail on standard semantic models.",
+    "ADR Decision: Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.",
+    "ADR Tradeoff: High reasoning token latency counts require asynchronous queue handling."
+  ]
+}

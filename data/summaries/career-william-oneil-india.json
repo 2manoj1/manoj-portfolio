@@ -1,0 +1,17 @@
+{
+  "id": "career-william-oneil-india",
+  "summary_50": "I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services.",
+  "summary_100": "Software Engineer at William O'Neil India (2016-2018): I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services. Stack: React, Redux Saga, Node.js, Express, Financial Charts",
+  "summary_250": "Software Engineer at William O'Neil India during 2016-2018. Summary of experience: I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services.. Key production signal: I established the frontend codebase and CI/CD pipelines from scratch, rendering real-time market data charts and mentoring junior engineers.. Stack keywords: React, Redux Saga, Node.js, Express, Financial Charts",
+  "facts": [
+    "Company: William O'Neil India (2016-2018)",
+    "Role: Software Engineer",
+    "Production Signal: I established the frontend codebase and CI/CD pipelines from scratch, rendering real-time market data charts and mentoring junior engineers.",
+    "Technology stack component: React",
+    "Technology stack component: Redux Saga",
+    "Technology stack component: Node.js",
+    "Technology stack component: Express",
+    "Technology stack component: Financial Charts",
+    "I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services."
+  ]
+}

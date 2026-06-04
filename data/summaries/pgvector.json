@@ -1,0 +1,13 @@
+{
+  "id": "pgvector",
+  "summary_50": "Vector index inside PostgreSQL. Manoj standardizes on pgvector to avoid double-writing data across isolated document and vector stores.",
+  "summary_100": "pgvector (Data - Adopt (Relational Vector)): Vector index inside PostgreSQL. Manoj standardizes on pgvector to avoid double-writing data across isolated document and vector stores.",
+  "summary_250": "pgvector is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (Relational Vector). Insight: Vector index inside PostgreSQL. Manoj standardizes on pgvector to avoid double-writing data across isolated document and vector stores.. ADR Context - Problem: Synchronizing state modifications between separate relational DBs and vector databases creates consistency lags.. Decision: Standardize on pgvector inside the existing PostgreSQL container schema.. Tradeoff: Higher database server memory footprint (RAM) requirements.",
+  "facts": [
+    "pgvector is classified in the Adopt ring for Data.",
+    "Vector index inside PostgreSQL. Manoj standardizes on pgvector to avoid double-writing data across isolated document and vector stores.",
+    "ADR Problem: Synchronizing state modifications between separate relational DBs and vector databases creates consistency lags.",
+    "ADR Decision: Standardize on pgvector inside the existing PostgreSQL container schema.",
+    "ADR Tradeoff: Higher database server memory footprint (RAM) requirements."
+  ]
+}

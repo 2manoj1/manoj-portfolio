@@ -1,0 +1,13 @@
+{
+  "id": "ollama-vllm",
+  "summary_50": "Serving engines in production. Manoj routes queries to edge hardware and self-hosted GPU nodes without public API fees.",
+  "summary_100": "Ollama / vLLM (Models - Adopt (Local Serving)): Serving engines in production. Manoj routes queries to edge hardware and self-hosted GPU nodes without public API fees.",
+  "summary_250": "Ollama / vLLM is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Local Serving). Insight: Serving engines in production. Manoj routes queries to edge hardware and self-hosted GPU nodes without public API fees.. ADR Context - Problem: Deploying raw GGUF or SafeTensors files requires writing custom concurrency and queuing scripts.. Decision: Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.. Tradeoff: Requires active monitoring of GPU server node parameters and concurrency loads.",
+  "facts": [
+    "Ollama / vLLM is classified in the Adopt ring for Models.",
+    "Serving engines in production. Manoj routes queries to edge hardware and self-hosted GPU nodes without public API fees.",
+    "ADR Problem: Deploying raw GGUF or SafeTensors files requires writing custom concurrency and queuing scripts.",
+    "ADR Decision: Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.",
+    "ADR Tradeoff: Requires active monitoring of GPU server node parameters and concurrency loads."
+  ]
+}

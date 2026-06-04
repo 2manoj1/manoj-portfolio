@@ -1,0 +1,18 @@
+{
+  "id": "career-publicis-sapient",
+  "summary_50": "I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption.",
+  "summary_100": "Technical Lead / AI Architect at Publicis Sapient (2023-Present): I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption. Stack: LangGraph, Agentic RAG, pgvector, FastAPI, Kubernetes, NVIDIA Run:AI",
+  "summary_250": "Technical Lead / AI Architect at Publicis Sapient during 2023-Present. Summary of experience: I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption.. Key production signal: I design production AI systems optimized for retrieval precision, structured agent state, observability, low latency, token costs, and engineering team adoption.. Stack keywords: LangGraph, Agentic RAG, pgvector, FastAPI, Kubernetes, NVIDIA Run:AI",
+  "facts": [
+    "Company: Publicis Sapient (2023-Present)",
+    "Role: Technical Lead / AI Architect",
+    "Production Signal: I design production AI systems optimized for retrieval precision, structured agent state, observability, low latency, token costs, and engineering team adoption.",
+    "Technology stack component: LangGraph",
+    "Technology stack component: Agentic RAG",
+    "Technology stack component: pgvector",
+    "Technology stack component: FastAPI",
+    "Technology stack component: Kubernetes",
+    "Technology stack component: NVIDIA Run:AI",
+    "I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption."
+  ]
+}

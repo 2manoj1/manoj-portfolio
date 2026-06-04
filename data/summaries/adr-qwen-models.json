@@ -1,0 +1,11 @@
+{
+  "id": "adr-qwen-models",
+  "summary_50": "Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.",
+  "summary_100": "ADR for Qwen 2.5 Coder. Problem: Sending sensitive corporate source code to external public APIs violates data compliance rules. Decision: Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.",
+  "summary_250": "ADR for Qwen 2.5 Coder. Problem: Sending sensitive corporate source code to external public APIs violates data compliance rules. Decision: Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking. Tradeoff: Binds performance to local GPU cluster availability and VRAM memory limits.",
+  "facts": [
+    "Sending sensitive corporate source code to external public APIs violates data compliance rules.",
+    "Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.",
+    "Binds performance to local GPU cluster availability and VRAM memory limits."
+  ]
+}

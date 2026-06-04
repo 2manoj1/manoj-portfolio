@@ -1,0 +1,11 @@
+{
+  "id": "adr-n8n",
+  "summary_50": "Orchestrate basic event-driven pipelines using n8n container clusters.",
+  "summary_100": "ADR for n8n Workflows. Problem: Writing raw Python script loops for simple API notification webhooks burns valuable developer cycles. Decision: Orchestrate basic event-driven pipelines using n8n container clusters.",
+  "summary_250": "ADR for n8n Workflows. Problem: Writing raw Python script loops for simple API notification webhooks burns valuable developer cycles. Decision: Orchestrate basic event-driven pipelines using n8n container clusters. Tradeoff: Limits state inspection depth compared to pure-code LangGraph nodes.",
+  "facts": [
+    "Writing raw Python script loops for simple API notification webhooks burns valuable developer cycles.",
+    "Orchestrate basic event-driven pipelines using n8n container clusters.",
+    "Limits state inspection depth compared to pure-code LangGraph nodes."
+  ]
+}

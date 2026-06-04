@@ -1,0 +1,13 @@
+{
+  "id": "gemini-nano",
+  "summary_50": "Chrome Built-in AI. Manoj tests Gemini Nano edge nodes inside extensions to summarize client text natively without network costs.",
+  "summary_100": "Gemini Nano (Models - Trial (Chrome AI)): Chrome Built-in AI. Manoj tests Gemini Nano edge nodes inside extensions to summarize client text natively without network costs.",
+  "summary_250": "Gemini Nano is in the Trial ring under the Models quadrant. Manoj's verdict: Trial (Chrome AI). Insight: Chrome Built-in AI. Manoj tests Gemini Nano edge nodes inside extensions to summarize client text natively without network costs.. ADR Context - Problem: Running light NLP checks (summarizing, grammar checks) over the network causes latency lags and security audits.. Decision: Route basic text manipulation requests directly to Chrome's built-in window.ai API.. Tradeoff: API specs remain experimental and subject to Google Chrome browser updates.",
+  "facts": [
+    "Gemini Nano is classified in the Trial ring for Models.",
+    "Chrome Built-in AI. Manoj tests Gemini Nano edge nodes inside extensions to summarize client text natively without network costs.",
+    "ADR Problem: Running light NLP checks (summarizing, grammar checks) over the network causes latency lags and security audits.",
+    "ADR Decision: Route basic text manipulation requests directly to Chrome's built-in window.ai API.",
+    "ADR Tradeoff: API specs remain experimental and subject to Google Chrome browser updates."
+  ]
+}

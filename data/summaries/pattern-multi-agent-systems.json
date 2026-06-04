@@ -1,0 +1,14 @@
+{
+  "id": "pattern-multi-agent-systems",
+  "summary_50": "LangGraph-based workflows with explicit state, tool routing, memory, fallbacks, and evaluation.",
+  "summary_100": "System Pattern: Multi-Agent Systems. Flow path: Intent -> Planner -> Agent State -> Tools -> Human Gate -> Trace. Tradeoffs: state visibility, tool safety, retry behavior, human control",
+  "summary_250": "System Pattern: Multi-Agent Systems. Description: LangGraph-based workflows with explicit state, tool routing, memory, fallbacks, and evaluation.. Pipeline flow structure: Intent -> Planner -> Agent State -> Tools -> Human Gate -> Trace. Tradeoffs involved: state visibility, tool safety, retry behavior, human control",
+  "facts": [
+    "Description: LangGraph-based workflows with explicit state, tool routing, memory, fallbacks, and evaluation.",
+    "Pipeline stages: Intent -> Planner -> Agent State -> Tools -> Human Gate -> Trace",
+    "Tradeoff focus constraint: state visibility",
+    "Tradeoff focus constraint: tool safety",
+    "Tradeoff focus constraint: retry behavior",
+    "Tradeoff focus constraint: human control"
+  ]
+}

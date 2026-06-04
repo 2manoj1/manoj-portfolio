@@ -1,0 +1,11 @@
+{
+  "id": "adr-mcp-app",
+  "summary_50": "Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.",
+  "summary_100": "ADR for MCPApp (POC). Problem: Scaling independent MCP server instances requires complex custom routing configuration. Decision: Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.",
+  "summary_250": "ADR for MCPApp (POC). Problem: Scaling independent MCP server instances requires complex custom routing configuration. Decision: Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer. Tradeoff: Binds execution paths to a specialized community runner.",
+  "facts": [
+    "Scaling independent MCP server instances requires complex custom routing configuration.",
+    "Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.",
+    "Binds execution paths to a specialized community runner."
+  ]
+}

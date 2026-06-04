@@ -1,0 +1,13 @@
+{
+  "id": "webmcp",
+  "summary_50": "Browser-native MCP model integrations. Tested for routing client context schemas natively from Chrome scripts.",
+  "summary_100": "WebMCP (Beta) (Orchestration - Trial (Beta Extension)): Browser-native MCP model integrations. Tested for routing client context schemas natively from Chrome scripts.",
+  "summary_250": "WebMCP (Beta) is in the Trial ring under the Orchestration quadrant. Manoj's verdict: Trial (Beta Extension). Insight: Browser-native MCP model integrations. Tested for routing client context schemas natively from Chrome scripts.. ADR Context - Problem: Client browser applications cannot fetch local workspace resources directly due to security sandboxes.. Decision: Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.. Tradeoff: Ties extension logic to early-stage experimental browser specifications.",
+  "facts": [
+    "WebMCP (Beta) is classified in the Trial ring for Orchestration.",
+    "Browser-native MCP model integrations. Tested for routing client context schemas natively from Chrome scripts.",
+    "ADR Problem: Client browser applications cannot fetch local workspace resources directly due to security sandboxes.",
+    "ADR Decision: Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.",
+    "ADR Tradeoff: Ties extension logic to early-stage experimental browser specifications."
+  ]
+}

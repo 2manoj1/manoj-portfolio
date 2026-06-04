@@ -1,0 +1,13 @@
+{
+  "id": "gpt-4o",
+  "summary_50": "Excellent multimodal capabilities. Manoj serves it as a redundant smart-routing backup provider for structured API loops.",
+  "summary_100": "GPT-4o (Models - Adopt (Multimodal Prod)): Excellent multimodal capabilities. Manoj serves it as a redundant smart-routing backup provider for structured API loops.",
+  "summary_250": "GPT-4o is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Multimodal Prod). Insight: Excellent multimodal capabilities. Manoj serves it as a redundant smart-routing backup provider for structured API loops.. ADR Context - Problem: Commercial API single-point-of-failure risk (outages or throttling limits).. Decision: Integrate GPT-4o as a redundant smart-routing backup provider for Claude.. Tradeoff: Requires maintaining dual system instructions and prompt templates.",
+  "facts": [
+    "GPT-4o is classified in the Adopt ring for Models.",
+    "Excellent multimodal capabilities. Manoj serves it as a redundant smart-routing backup provider for structured API loops.",
+    "ADR Problem: Commercial API single-point-of-failure risk (outages or throttling limits).",
+    "ADR Decision: Integrate GPT-4o as a redundant smart-routing backup provider for Claude.",
+    "ADR Tradeoff: Requires maintaining dual system instructions and prompt templates."
+  ]
+}

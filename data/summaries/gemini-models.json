@@ -1,0 +1,13 @@
+{
+  "id": "gemini-models",
+  "summary_50": "Gemini models are Manoj's standard for ultra-low latency structured reasoning, long-context ingestion (up to 2M tokens), and multi-modal audio inputs.",
+  "summary_100": "Google Gemini 2.0 (Models - Adopt (Context Scale)): Gemini models are Manoj's standard for ultra-low latency structured reasoning, long-context ingestion (up to 2M tokens), and multi-modal audio inputs.",
+  "summary_250": "Google Gemini 2.0 is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Context Scale). Insight: Gemini models are Manoj's standard for ultra-low latency structured reasoning, long-context ingestion (up to 2M tokens), and multi-modal audio inputs.. ADR Context - Problem: Analyzing huge documents (e.g. 500-page corporate files) exceeds traditional 128k context limits, forcing complex chunking steps.. Decision: Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.. Tradeoff: Ties long-context parsing pipelines to Google Vertex AI API availability.",
+  "facts": [
+    "Google Gemini 2.0 is classified in the Adopt ring for Models.",
+    "Gemini models are Manoj's standard for ultra-low latency structured reasoning, long-context ingestion (up to 2M tokens), and multi-modal audio inputs.",
+    "ADR Problem: Analyzing huge documents (e.g. 500-page corporate files) exceeds traditional 128k context limits, forcing complex chunking steps.",
+    "ADR Decision: Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.",
+    "ADR Tradeoff: Ties long-context parsing pipelines to Google Vertex AI API availability."
+  ]
+}

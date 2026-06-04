@@ -1,0 +1,11 @@
+{
+  "id": "adr-langsmith",
+  "summary_50": "Standardize on LangSmith for structured agent trace aggregation and execution graph logging.",
+  "summary_100": "ADR for LangSmith. Problem: Observing multi-agent tool execution paths and prompt latency bottlenecks in production is impossible without central trace logging. Decision: Standardize on LangSmith for structured agent trace aggregation and execution graph logging.",
+  "summary_250": "ADR for LangSmith. Problem: Observing multi-agent tool execution paths and prompt latency bottlenecks in production is impossible without central trace logging. Decision: Standardize on LangSmith for structured agent trace aggregation and execution graph logging. Tradeoff: Increases operational costs due to trace ingestion fees, but reduces debug time by 80%.",
+  "facts": [
+    "Observing multi-agent tool execution paths and prompt latency bottlenecks in production is impossible without central trace logging.",
+    "Standardize on LangSmith for structured agent trace aggregation and execution graph logging.",
+    "Increases operational costs due to trace ingestion fees, but reduces debug time by 80%."
+  ]
+}

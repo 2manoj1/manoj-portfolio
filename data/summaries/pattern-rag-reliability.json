@@ -1,0 +1,14 @@
+{
+  "id": "pattern-rag-reliability",
+  "summary_50": "Retrieval pipelines designed for grounding quality, latency budgets, observability, and regression testing.",
+  "summary_100": "System Pattern: RAG Reliability. Flow path: Corpus -> Chunking -> pgvector -> Hybrid Search -> Rerank -> Evals. Tradeoffs: chunking, ranking, grounding, latency",
+  "summary_250": "System Pattern: RAG Reliability. Description: Retrieval pipelines designed for grounding quality, latency budgets, observability, and regression testing.. Pipeline flow structure: Corpus -> Chunking -> pgvector -> Hybrid Search -> Rerank -> Evals. Tradeoffs involved: chunking, ranking, grounding, latency",
+  "facts": [
+    "Description: Retrieval pipelines designed for grounding quality, latency budgets, observability, and regression testing.",
+    "Pipeline stages: Corpus -> Chunking -> pgvector -> Hybrid Search -> Rerank -> Evals",
+    "Tradeoff focus constraint: chunking",
+    "Tradeoff focus constraint: ranking",
+    "Tradeoff focus constraint: grounding",
+    "Tradeoff focus constraint: latency"
+  ]
+}

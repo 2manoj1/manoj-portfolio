@@ -1,0 +1,18 @@
+{
+  "id": "doc-architecture-principles",
+  "summary_50": "> Canonical engineering and system design principles for the Manoj Portfolio platform. This platform should feel engineered, not decorated. The experience should communicate: systems thinking architecture depth production readiness technical precision engineering maturity The UI should resemble: engineering infrastructure AI platform systems architecture dashboards developer tooling ecosystems NOT: marketing heavy...",
+  "summary_100": "> Canonical engineering and system design principles for the Manoj Portfolio platform. This platform should feel engineered, not decorated. The experience should communicate: systems thinking architecture depth production readiness technical precision engineering maturity The UI should resemble: engineering infrastructure AI platform systems architecture dashboards developer tooling ecosystems NOT: marketing heavy SaaS clones generic startup templates flashy AI landing pages Always: prefer React Server Components minimize client components leverage streaming where appropriate preserve App Router conventions use metadata APIs correctly use server actions where useful Avoid: unnecessary hydration large client bundles excessive useEffect usage prop drilling complexity monolithic components Components should...",
+  "summary_250": "> Canonical engineering and system design principles for the Manoj Portfolio platform. This platform should feel engineered, not decorated. The experience should communicate: systems thinking architecture depth production readiness technical precision engineering maturity The UI should resemble: engineering infrastructure AI platform systems architecture dashboards developer tooling ecosystems NOT: marketing heavy SaaS clones generic startup templates flashy AI landing pages Always: prefer React Server Components minimize client components leverage streaming where appropriate preserve App Router conventions use metadata APIs correctly use server actions where useful Avoid: unnecessary hydration large client bundles excessive useEffect usage prop drilling complexity monolithic components Components should be: composable reusable isolated semantic scalable Preferred characteristics: low coupling clear props predictable behavior accessibility first responsive by default Avoid: giant JSX files duplicated patterns inline complexity fragile abstractions The interface should communicate: calm intelligence engineering focus technical trust architectural precision Use: whitespace typography hierarchy subtle animation grid layouts terminal aesthetics system inspired visuals Avoid: excessive gradients random colors noisy shadows over animation “AI neon” aesthetics Optimize for: Core Web Vitals low hydration cost fast navigation SEO accessibility static optimization where possible Always: lazy load heavy components optimize images minimize JavaScript preserve semantic HTML Every technical section should answer: 1. What business problem existed? 2. Why was this architecture chosen? 3. What tradeoffs were considered? 4. How was scalability handled? 5. What reliability concerns existed? 6. How was observability implemented? 7. What performance optimizations mattered? Avoid: vague engineering claims generic buzzwords architecture without context Blog content should feel like: engineering...",
+  "facts": [
+    "systems thinking",
+    "architecture depth",
+    "production readiness",
+    "technical precision",
+    "engineering maturity",
+    "engineering infrastructure",
+    "AI platform systems",
+    "architecture dashboards",
+    "developer tooling ecosystems",
+    "marketing-heavy SaaS clones"
+  ]
+}

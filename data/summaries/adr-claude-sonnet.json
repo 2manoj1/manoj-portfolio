@@ -1,0 +1,11 @@
+{
+  "id": "adr-claude-sonnet",
+  "summary_50": "Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.",
+  "summary_100": "ADR for Claude 3.5 Sonnet. Problem: Standard LLMs output malformed JSON responses that break parsing steps. Decision: Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.",
+  "summary_250": "ADR for Claude 3.5 Sonnet. Problem: Standard LLMs output malformed JSON responses that break parsing steps. Decision: Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection. Tradeoff: Higher API token expense compared to lightweight models.",
+  "facts": [
+    "Standard LLMs output malformed JSON responses that break parsing steps.",
+    "Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.",
+    "Higher API token expense compared to lightweight models."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "adr-fastapi",
+  "summary_50": "Expose all backend interfaces using FastAPI with strict Pydantic model contracts.",
+  "summary_100": "ADR for FastAPI. Problem: Unvalidated request payloads trigger runtime script failures deep inside agent orchestration nodes. Decision: Expose all backend interfaces using FastAPI with strict Pydantic model contracts.",
+  "summary_250": "ADR for FastAPI. Problem: Unvalidated request payloads trigger runtime script failures deep inside agent orchestration nodes. Decision: Expose all backend interfaces using FastAPI with strict Pydantic model contracts. Tradeoff: Requires documenting typed schemas for all incoming client data.",
+  "facts": [
+    "Unvalidated request payloads trigger runtime script failures deep inside agent orchestration nodes.",
+    "Expose all backend interfaces using FastAPI with strict Pydantic model contracts.",
+    "Requires documenting typed schemas for all incoming client data."
+  ]
+}

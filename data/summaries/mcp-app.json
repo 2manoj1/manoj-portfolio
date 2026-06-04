@@ -1,0 +1,13 @@
+{
+  "id": "mcp-app",
+  "summary_50": "Model Context Protocol application runner. Manoj designs POCs to orchestrate multiple MCP servers from a single config file.",
+  "summary_100": "MCPApp (POC) (Orchestration - Trial (Active POC)): Model Context Protocol application runner. Manoj designs POCs to orchestrate multiple MCP servers from a single config file.",
+  "summary_250": "MCPApp (POC) is in the Trial ring under the Orchestration quadrant. Manoj's verdict: Trial (Active POC). Insight: Model Context Protocol application runner. Manoj designs POCs to orchestrate multiple MCP servers from a single config file.. ADR Context - Problem: Scaling independent MCP server instances requires complex custom routing configuration.. Decision: Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.. Tradeoff: Binds execution paths to a specialized community runner.",
+  "facts": [
+    "MCPApp (POC) is classified in the Trial ring for Orchestration.",
+    "Model Context Protocol application runner. Manoj designs POCs to orchestrate multiple MCP servers from a single config file.",
+    "ADR Problem: Scaling independent MCP server instances requires complex custom routing configuration.",
+    "ADR Decision: Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.",
+    "ADR Tradeoff: Binds execution paths to a specialized community runner."
+  ]
+}

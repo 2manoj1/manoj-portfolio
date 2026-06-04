@@ -1,0 +1,11 @@
+{
+  "id": "adr-gemini-models",
+  "summary_50": "Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.",
+  "summary_100": "ADR for Google Gemini 2.0. Problem: Analyzing huge documents (e.g. 500-page corporate files) exceeds traditional 128k context limits, forcing complex chunking steps. Decision: Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.",
+  "summary_250": "ADR for Google Gemini 2.0. Problem: Analyzing huge documents (e.g. 500-page corporate files) exceeds traditional 128k context limits, forcing complex chunking steps. Decision: Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss. Tradeoff: Ties long-context parsing pipelines to Google Vertex AI API availability.",
+  "facts": [
+    "Analyzing huge documents (e.g. 500-page corporate files) exceeds traditional 128k context limits, forcing complex chunking steps.",
+    "Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.",
+    "Ties long-context parsing pipelines to Google Vertex AI API availability."
+  ]
+}

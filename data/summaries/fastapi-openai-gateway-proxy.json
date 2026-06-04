@@ -1,0 +1,12 @@
+{
+  "id": "fastapi-openai-gateway-proxy",
+  "summary_50": "An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.",
+  "summary_100": "Open Source Project: FastAPI OpenAI Gateway Proxy (Status: Active). An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.",
+  "summary_250": "Open Source Project: FastAPI OpenAI Gateway Proxy. Description: An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.. Status: Active. Key technologies incorporated: fastapi, ollama-vllm",
+  "facts": [
+    "Project name: FastAPI OpenAI Gateway Proxy",
+    "Description: An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.",
+    "Status: Active",
+    "Associated tools: fastapi, ollama-vllm"
+  ]
+}

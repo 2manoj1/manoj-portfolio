@@ -1,0 +1,11 @@
+{
+  "id": "adr-kubernetes",
+  "summary_50": "Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).",
+  "summary_100": "ADR for Kubernetes. Problem: Scaling isolated FastAPI agent containers manually under load spikes triggers downtime risks. Decision: Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).",
+  "summary_250": "ADR for Kubernetes. Problem: Scaling isolated FastAPI agent containers manually under load spikes triggers downtime risks. Decision: Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA). Tradeoff: High configuration complexity (YAML layers) and container networking overhead.",
+  "facts": [
+    "Scaling isolated FastAPI agent containers manually under load spikes triggers downtime risks.",
+    "Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).",
+    "High configuration complexity (YAML layers) and container networking overhead."
+  ]
+}

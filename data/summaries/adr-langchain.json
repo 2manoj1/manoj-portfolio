@@ -1,0 +1,11 @@
+{
+  "id": "adr-langchain",
+  "summary_50": "Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.",
+  "summary_100": "ADR for LangChain. Problem: Building custom document parsers, chunking runners, and API wrappers slows development velocity. Decision: Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.",
+  "summary_250": "ADR for LangChain. Problem: Building custom document parsers, chunking runners, and API wrappers slows development velocity. Decision: Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding. Tradeoff: Adds package dependency weight for faster initial POC velocity.",
+  "facts": [
+    "Building custom document parsers, chunking runners, and API wrappers slows development velocity.",
+    "Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.",
+    "Adds package dependency weight for faster initial POC velocity."
+  ]
+}

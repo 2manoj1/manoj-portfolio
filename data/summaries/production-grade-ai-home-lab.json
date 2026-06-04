@@ -1,0 +1,23 @@
+{
+  "id": "production-grade-ai-home-lab",
+  "summary_50": "I built a local OpenAI-compatible AI gateway that runs on my personal macOS server and is reached from my deployed Next.js website through a Cloudflare Tunnel. The website-side Astra experience is JavaScript/TypeScript, while the gateway orchestration layer is Python 3.14 with uv, FastAPI, LangChain/LangGraph, and Ollama.",
+  "summary_100": "AI Home Lab Platform in Vercel Hobby + personal macOS server: I built a local OpenAI-compatible AI gateway that runs on my personal macOS server and is reached from my deployed Next.js website through a Cloudflare Tunnel. The website-side Astra experience is JavaScript/TypeScript, while the gateway orchestration layer is Python 3.14 with uv, FastAPI, LangChain/LangGraph, and Ollama. Narration: The important boundary is runtime separation: Vercel handles the public Next.js surface and grounded Astra workflow, Cloudflare owns secure ingress, and the private macOS subnet runs FastAPI, Python LangGraph streaming, Ollama, PostgreSQL-backed key usage, plus Redis and Qdrant clients prepared for caching...",
+  "summary_250": "AI Home Lab Platform (Status: DEPLOYED, Ingress: Cloudflare Tunnel). Problem: I built a local OpenAI-compatible AI gateway that runs on my personal macOS server and is reached from my deployed Next.js website through a Cloudflare Tunnel. The website-side Astra experience is JavaScript/TypeScript, while the gateway orchestration layer is Python 3.14 with uv, FastAPI, LangChain/LangGraph, and Ollama.. Narration: The important boundary is runtime separation: Vercel handles the public Next.js surface and grounded Astra workflow, Cloudflare owns secure ingress, and the private macOS subnet runs FastAPI, Python LangGraph streaming, Ollama, PostgreSQL-backed key usage, plus Redis and Qdrant clients prepared for caching and RAG expansion.. Key systems: Astra chat surface: Next.js UI and /api/chat route in JS/TS; TS agent layer: LangChain/deepagents tooling with gateway baseURL; Cloudflare Tunnel: api.manojmukherjee.co.in to local gateway; FastAPI gateway: Python 3.14, uv, OpenAI-compatible routes; Auth and usage: SHA-256 API keys with PostgreSQL usage logs; Python LangGraph: StateGraph astream with custom SSE chunks; Ollama client: AsyncOpenAI wrapper over local Ollama /v1; Private data plane: PostgreSQL 17, Redis 8, Qdrant clients",
+  "facts": [
+    "Status: DEPLOYED in environment Vercel Hobby + personal macOS server",
+    "Ingress pathway: Cloudflare Tunnel",
+    "Public surface: Next.js (Astra chat and website routes run from the Vercel deployment.)",
+    "Gateway runtime: Python 3.14 (FastAPI service managed with uv and typed Python services.)",
+    "Model contract: OpenAI /v1 (Chat, completions, embeddings, responses, image, and model routes.)",
+    "Private stores: PG/Redis/Qdrant (PostgreSQL is live for keys and usage; Redis/Qdrant are staged.)",
+    "Zone Vercel Hobby Serverless: Public website, Astra UI, and Next.js API route boundary.",
+    "Zone Cloudflare Secure Edge: DNS, tunnel ingress, WAF rules, and zero-open-port routing.",
+    "Zone Personal macOS Server: FastAPI gateway on 127.0.0.1:8000 with Python orchestration.",
+    "Zone Private Local Services: Ollama, PostgreSQL 17, Redis 8, and Qdrant stay off the public internet.",
+    "Component Astra chat surface: Next.js UI and /api/chat route in JS/TS (Website-side agent experience runs in the Manoj site deployment and prepares OpenAI-compatible requests.)",
+    "Component TS agent layer: LangChain/deepagents tooling with gateway baseURL (Uses MANOJ_LLM_BASE_URL and MANOJ_LLM_API_KEY to call the OpenAI-compatible gateway contract.)",
+    "Component Cloudflare Tunnel: api.manojmukherjee.co.in to local gateway (Public HTTPS traffic reaches the private gateway without opening inbound ports on the Mac.)",
+    "Component FastAPI gateway: Python 3.14, uv, OpenAI-compatible routes (Exposes /v1/chat/completions, /v1/models, /v1/responses, /api/v1/agent/direct-message, and admin key routes.)",
+    "Component Auth and usage: SHA-256 API keys with PostgreSQL usage logs (Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.)"
+  ]
+}

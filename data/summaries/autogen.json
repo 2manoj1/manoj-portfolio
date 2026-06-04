@@ -1,0 +1,10 @@
+{
+  "id": "autogen",
+  "summary_50": "Analyzing AutoGen's conversational multi-agent loops to compare its event-driven dispatching with LangGraph's state charts.",
+  "summary_100": "Microsoft AutoGen (Orchestration - Assess): Analyzing AutoGen's conversational multi-agent loops to compare its event-driven dispatching with LangGraph's state charts.",
+  "summary_250": "Microsoft AutoGen is in the Assess ring under the Orchestration quadrant. Manoj's verdict: Assess. Insight: Analyzing AutoGen's conversational multi-agent loops to compare its event-driven dispatching with LangGraph's state charts.. ",
+  "facts": [
+    "Microsoft AutoGen is classified in the Assess ring for Orchestration.",
+    "Analyzing AutoGen's conversational multi-agent loops to compare its event-driven dispatching with LangGraph's state charts."
+  ]
+}

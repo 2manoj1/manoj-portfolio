@@ -1,0 +1,14 @@
+{
+  "id": "service-ai-platform-engineering",
+  "summary_50": "I build maintainable backend systems for AI platforms, leveraging async FastAPI workflows, structured schemas, queue-based workers, and robust cloud/container topologies.",
+  "summary_100": "Service: AI Platform Engineering addressing \"Prototype code needs to become a maintainable AI backend and deployment path.\". I build maintainable backend systems for AI platforms, leveraging async FastAPI workflows, structured schemas, queue-based workers, and robust cloud/container topologies.",
+  "summary_250": "Service: AI Platform Engineering. Buyer Pain: Prototype code needs to become a maintainable AI backend and deployment path.. Description: I build maintainable backend systems for AI platforms, leveraging async FastAPI workflows, structured schemas, queue-based workers, and robust cloud/container topologies.. Target Audience: Startups and enterprise teams scaling AI from demo to platform.. Depth of engagement: FastAPI, async Python, Next.js, Docker, Kubernetes, OpenShift, Vertex AI, AWS/GCP, vLLM, and Ollama.. Key outcomes: Ship FastAPI AI services with production contracts; Design queues, traces, workers, model gateways, and cost controls; Deploy workloads across cloud, container, and enterprise environments",
+  "facts": [
+    "Buyer Pain: Prototype code needs to become a maintainable AI backend and deployment path.",
+    "Ideal Client: Startups and enterprise teams scaling AI from demo to platform.",
+    "Consulting Depth: FastAPI, async Python, Next.js, Docker, Kubernetes, OpenShift, Vertex AI, AWS/GCP, vLLM, and Ollama.",
+    "Service Outcome: Ship FastAPI AI services with production contracts",
+    "Service Outcome: Design queues, traces, workers, model gateways, and cost controls",
+    "Service Outcome: Deploy workloads across cloud, container, and enterprise environments"
+  ]
+}

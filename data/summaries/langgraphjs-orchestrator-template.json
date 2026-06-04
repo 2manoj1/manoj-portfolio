@@ -1,0 +1,12 @@
+{
+  "id": "langgraphjs-orchestrator-template",
+  "summary_50": "Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.",
+  "summary_100": "Open Source Project: LangGraphJS Orchestrator Template (Status: Active). Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.",
+  "summary_250": "Open Source Project: LangGraphJS Orchestrator Template. Description: Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.. Status: Active. Key technologies incorporated: langgraph, sqlite",
+  "facts": [
+    "Project name: LangGraphJS Orchestrator Template",
+    "Description: Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.",
+    "Status: Active",
+    "Associated tools: langgraph, sqlite"
+  ]
+}

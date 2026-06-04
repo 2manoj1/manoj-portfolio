@@ -1,0 +1,11 @@
+{
+  "id": "adr-pydantic-ai",
+  "summary_50": "Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.",
+  "summary_100": "ADR for Pydantic AI (POC). Problem: Managing unstructured, non-typed prompts inside LLM tool calling loops leads to runtime validation failures. Decision: Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.",
+  "summary_250": "ADR for Pydantic AI (POC). Problem: Managing unstructured, non-typed prompts inside LLM tool calling loops leads to runtime validation failures. Decision: Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents. Tradeoff: Early stage framework featuring possible API design updates.",
+  "facts": [
+    "Managing unstructured, non-typed prompts inside LLM tool calling loops leads to runtime validation failures.",
+    "Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.",
+    "Early stage framework featuring possible API design updates."
+  ]
+}

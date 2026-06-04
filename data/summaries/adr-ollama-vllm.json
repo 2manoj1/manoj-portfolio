@@ -1,0 +1,11 @@
+{
+  "id": "adr-ollama-vllm",
+  "summary_50": "Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.",
+  "summary_100": "ADR for Ollama / vLLM. Problem: Deploying raw GGUF or SafeTensors files requires writing custom concurrency and queuing scripts. Decision: Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.",
+  "summary_250": "ADR for Ollama / vLLM. Problem: Deploying raw GGUF or SafeTensors files requires writing custom concurrency and queuing scripts. Decision: Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes. Tradeoff: Requires active monitoring of GPU server node parameters and concurrency loads.",
+  "facts": [
+    "Deploying raw GGUF or SafeTensors files requires writing custom concurrency and queuing scripts.",
+    "Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.",
+    "Requires active monitoring of GPU server node parameters and concurrency loads."
+  ]
+}

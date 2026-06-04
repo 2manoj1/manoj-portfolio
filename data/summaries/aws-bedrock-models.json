@@ -1,0 +1,13 @@
+{
+  "id": "aws-bedrock-models",
+  "summary_50": "Manoj deploys Bedrock agent endpoints for secure, client-isolated model runs within AWS enterprise networking zones.",
+  "summary_100": "AWS Bedrock (Models - Adopt (AWS Ecosystem)): Manoj deploys Bedrock agent endpoints for secure, client-isolated model runs within AWS enterprise networking zones.",
+  "summary_250": "AWS Bedrock is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (AWS Ecosystem). Insight: Manoj deploys Bedrock agent endpoints for secure, client-isolated model runs within AWS enterprise networking zones.. ADR Context - Problem: Clients running core infrastructure inside AWS VPCs reject external routing of prompt vectors.. Decision: Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.. Tradeoff: Subject to region availability of specific model weights (e.g. Claude).",
+  "facts": [
+    "AWS Bedrock is classified in the Adopt ring for Models.",
+    "Manoj deploys Bedrock agent endpoints for secure, client-isolated model runs within AWS enterprise networking zones.",
+    "ADR Problem: Clients running core infrastructure inside AWS VPCs reject external routing of prompt vectors.",
+    "ADR Decision: Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.",
+    "ADR Tradeoff: Subject to region availability of specific model weights (e.g. Claude)."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "macbook-silicon-ai-home-lab-deployment",
+  "summary_50": "A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.",
+  "summary_100": "Open Source Project: MacBook Silicon AI Home Lab Deployment (Status: Active). A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.",
+  "summary_250": "Open Source Project: MacBook Silicon AI Home Lab Deployment. Description: A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.. Status: Active. Key technologies incorporated: cloudflare, redis, qdrant, podman",
+  "facts": [
+    "Project name: MacBook Silicon AI Home Lab Deployment",
+    "Description: A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.",
+    "Status: Active",
+    "Associated tools: cloudflare, redis, qdrant, podman"
+  ]
+}

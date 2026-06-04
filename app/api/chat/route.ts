@@ -1,4 +1,5 @@
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { NextRequest, NextResponse } from "next/server";
 import {
 	createUIMessageStream,
 	createUIMessageStreamResponse,
@@ -10,6 +11,7 @@ import {
 	extractMessageText,
 	streamManojFastAgent,
 } from "@/lib/manoj-agent";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -153,7 +155,20 @@ function createToolEventWriter(writer: UIMessageStreamWriter<UIMessage>) {
 	};
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+	const rateLimit = checkRateLimit(req);
+	if (!rateLimit.allowed) {
+		return NextResponse.json(
+			{ error: "Too many requests. Please slow down." },
+			{
+				status: 429,
+				headers: {
+					"Retry-After": rateLimit.retryAfter?.toString() || "60",
+				},
+			},
+		);
+	}
+
 	let body: unknown;
 
 	try {

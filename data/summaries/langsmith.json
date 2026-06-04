@@ -1,0 +1,13 @@
+{
+  "id": "langsmith",
+  "summary_50": "Manoj standardizes on LangSmith for agent trace visualization and regression test suites. Critical for debugging complex multi-agent LangGraph loops.",
+  "summary_100": "LangSmith (Orchestration - Adopt (Tracing & Eval)): Manoj standardizes on LangSmith for agent trace visualization and regression test suites. Critical for debugging complex multi-agent LangGraph loops.",
+  "summary_250": "LangSmith is in the Adopt ring under the Orchestration quadrant. Manoj's verdict: Adopt (Tracing & Eval). Insight: Manoj standardizes on LangSmith for agent trace visualization and regression test suites. Critical for debugging complex multi-agent LangGraph loops.. ADR Context - Problem: Observing multi-agent tool execution paths and prompt latency bottlenecks in production is impossible without central trace logging.. Decision: Standardize on LangSmith for structured agent trace aggregation and execution graph logging.. Tradeoff: Increases operational costs due to trace ingestion fees, but reduces debug time by 80%.",
+  "facts": [
+    "LangSmith is classified in the Adopt ring for Orchestration.",
+    "Manoj standardizes on LangSmith for agent trace visualization and regression test suites. Critical for debugging complex multi-agent LangGraph loops.",
+    "ADR Problem: Observing multi-agent tool execution paths and prompt latency bottlenecks in production is impossible without central trace logging.",
+    "ADR Decision: Standardize on LangSmith for structured agent trace aggregation and execution graph logging.",
+    "ADR Tradeoff: Increases operational costs due to trace ingestion fees, but reduces debug time by 80%."
+  ]
+}

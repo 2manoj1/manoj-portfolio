@@ -1,0 +1,11 @@
+{
+  "id": "adr-nextjs",
+  "summary_50": "Standardize all technical authority pages on the Next.js App Router with Server Components.",
+  "summary_100": "ADR for Next.js. Problem: Legacy client-rendered SPAs display slow Initial Page Loads and weak SEO indexing. Decision: Standardize all technical authority pages on the Next.js App Router with Server Components.",
+  "summary_250": "ADR for Next.js. Problem: Legacy client-rendered SPAs display slow Initial Page Loads and weak SEO indexing. Decision: Standardize all technical authority pages on the Next.js App Router with Server Components. Tradeoff: Requires managing server/client rendering boundaries.",
+  "facts": [
+    "Legacy client-rendered SPAs display slow Initial Page Loads and weak SEO indexing.",
+    "Standardize all technical authority pages on the Next.js App Router with Server Components.",
+    "Requires managing server/client rendering boundaries."
+  ]
+}

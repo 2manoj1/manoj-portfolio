@@ -1,0 +1,2767 @@
+[
+  {
+    "id": "langgraph-v1-durable-agent-architecture",
+    "type": "blog",
+    "title": "Durable Agent Architecture with LangGraph v1",
+    "summary": "Production agents crash. When they do, you need checkpoints. This is how real teams build resumable workflows that survive restarts, approval delays, and API failures without replaying unsafe work.",
+    "tags": [
+      "langgraph v1",
+      "langgraph architecture",
+      "durable agents",
+      "multi-agent systems",
+      "ai reliability engineering"
+    ],
+    "keywords": [
+      "LangGraph v1",
+      "LangGraph architecture",
+      "durable agents",
+      "multi-agent systems",
+      "AI reliability engineering"
+    ],
+    "aliases": [
+      "Durable Agent Architecture with LangGraph v1",
+      "LangGraph architecture"
+    ],
+    "importance": 9,
+    "related": [
+      "langgraph",
+      "pattern-multi-agent-systems",
+      "doc-seo-strategy"
+    ]
+  },
+  {
+    "id": "mcp-security-architecture-enterprise-ai",
+    "type": "blog",
+    "title": "MCP Security Architecture & Enterprise Guardrails",
+    "summary": "MCP is elegant for tool integration, but it concentrates risk. Here's how to architect tool permissions, isolation boundaries, governance policies, and audit logs before you wire enterprise systems into agents.",
+    "tags": [
+      "model context protocol",
+      "mcp security",
+      "enterprise ai architecture",
+      "ai tool governance",
+      "agent security"
+    ],
+    "keywords": [
+      "Model Context Protocol",
+      "MCP security",
+      "enterprise AI architecture",
+      "AI tool governance",
+      "agent security"
+    ],
+    "aliases": [
+      "MCP Security Architecture & Enterprise Guardrails",
+      "MCP security"
+    ],
+    "importance": 9,
+    "related": [
+      "mcp"
+    ]
+  },
+  {
+    "id": "opentelemetry-genai-observability-agent-workflows",
+    "type": "blog",
+    "title": "GenAI Observability with OpenTelemetry Traces",
+    "summary": "Token counts lie. Agent failures are loud but opaque. This is how production teams use OpenTelemetry semantic conventions to trace multi-agent workflows, isolate failures, and debug without guessing.",
+    "tags": [
+      "ai observability",
+      "opentelemetry genai",
+      "llm tracing",
+      "agent observability",
+      "ai reliability"
+    ],
+    "keywords": [
+      "AI observability",
+      "OpenTelemetry GenAI",
+      "LLM tracing",
+      "agent observability",
+      "AI reliability"
+    ],
+    "aliases": [
+      "GenAI Observability with OpenTelemetry Traces",
+      "AI observability"
+    ],
+    "importance": 9,
+    "related": [
+      "langgraph",
+      "fastapi",
+      "nextjs",
+      "doc-blog-topics",
+      "doc-seo-strategy",
+      "doc-services",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "context-engineering-enterprise-rag-systems",
+    "type": "blog",
+    "title": "Context Engineering for Enterprise RAG",
+    "summary": "Longer context windows changed RAG architectures completely. Here's how production teams layer system instructions, memory, evidence, and governance to build retrieval systems that actually work.",
+    "tags": [
+      "context engineering",
+      "enterprise rag",
+      "rag infrastructure",
+      "hybrid retrieval",
+      "ai platform engineering"
+    ],
+    "keywords": [
+      "context engineering",
+      "enterprise RAG",
+      "RAG infrastructure",
+      "hybrid retrieval",
+      "AI platform engineering"
+    ],
+    "aliases": [
+      "Context Engineering for Enterprise RAG",
+      "Context engineering"
+    ],
+    "importance": 9,
+    "related": [
+      "service-rag-infrastructure-consulting",
+      "service-ai-platform-engineering",
+      "doc-blog-topics",
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "fastapi-ai-backends-background-reasoning-workflows",
+    "type": "blog",
+    "title": "FastAPI AI Backends for Background Reasoning",
+    "summary": "Reasoning models need backend architecture. Your API shouldn't hold an HTTP connection hostage while the model thinks. Here's how to do async reasoning right.",
+    "tags": [
+      "fastapi ai backend",
+      "background ai workflows",
+      "ai platform engineering",
+      "long-running agents",
+      "production ai systems"
+    ],
+    "keywords": [
+      "FastAPI AI backend",
+      "background AI workflows",
+      "AI platform engineering",
+      "long-running agents",
+      "production AI systems"
+    ],
+    "aliases": [
+      "FastAPI AI Backends for Background Reasoning",
+      "FastAPI AI backends"
+    ],
+    "importance": 9,
+    "related": [
+      "fastapi",
+      "service-ai-platform-engineering",
+      "pattern-fastapi-ai-backends"
+    ]
+  },
+  {
+    "id": "langgraph",
+    "type": "tool",
+    "title": "LangGraph",
+    "summary": "Manoj's primary choice for building stateful multi-agent systems. The checkpointer persistence pattern is vital for banking and business workflows.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "LangGraph",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "LangGraph"
+    ],
+    "importance": 8,
+    "related": [
+      "langgraph-v1-durable-agent-architecture",
+      "opentelemetry-genai-observability-agent-workflows",
+      "pattern-multi-agent-systems",
+      "n8n",
+      "adr-n8n",
+      "langsmith",
+      "autogen",
+      "production-grade-ai-home-lab",
+      "enterprise-agentic-rag-platform",
+      "service-langgraph-consultant",
+      "doc-blog-topics",
+      "doc-brand-context",
+      "doc-case-studies",
+      "doc-devrel-positioning",
+      "doc-engineering-footprint",
+      "doc-medium-articles",
+      "doc-open-source-strategy",
+      "doc-seo-strategy",
+      "doc-services",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "adr-langgraph",
+    "type": "adr",
+    "title": "ADR: LangGraph Integration",
+    "summary": "Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.",
+    "tags": [
+      "adr",
+      "langgraph"
+    ],
+    "keywords": [
+      "adr",
+      "LangGraph",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-langgraph",
+      "decision-langgraph"
+    ],
+    "importance": 7,
+    "related": [
+      "langgraph"
+    ]
+  },
+  {
+    "id": "langchain",
+    "type": "tool",
+    "title": "LangChain",
+    "summary": "Strong integration tooling for prompt routing, document loading, and embedding extraction utility functions.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "LangChain",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "LangChain"
+    ],
+    "importance": 8,
+    "related": [
+      "production-grade-ai-home-lab",
+      "doc-brand-context",
+      "doc-medium-articles"
+    ]
+  },
+  {
+    "id": "adr-langchain",
+    "type": "adr",
+    "title": "ADR: LangChain Integration",
+    "summary": "Standardize on LangChain's integration ecosystem to orchestrate basic retrieval scaffolding.",
+    "tags": [
+      "adr",
+      "langchain"
+    ],
+    "keywords": [
+      "adr",
+      "LangChain",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-langchain",
+      "decision-langchain"
+    ],
+    "importance": 7,
+    "related": [
+      "langchain"
+    ]
+  },
+  {
+    "id": "google-adk",
+    "type": "tool",
+    "title": "Google ADK",
+    "summary": "Google Antigravity SDK. Manoj utilizes its agentic state boundaries and collaborative memory pipelines for multi-agent setups.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "Google ADK",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "Google ADK"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "adr-google-adk",
+    "type": "adr",
+    "title": "ADR: Google ADK Integration",
+    "summary": "Standardize on Google Antigravity SDK to manage state-sharing nodes and agent execution boundaries.",
+    "tags": [
+      "adr",
+      "google-adk"
+    ],
+    "keywords": [
+      "adr",
+      "Google ADK",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-google-adk",
+      "decision-google-adk"
+    ],
+    "importance": 7,
+    "related": [
+      "google-adk"
+    ]
+  },
+  {
+    "id": "mcp",
+    "type": "tool",
+    "title": "MCP Schemas",
+    "summary": "Model Context Protocol. Standardizes server-client tool execution. Deployed inside secure gateways to manage allowlisted system utilities.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "MCP Schemas",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "MCP Schemas"
+    ],
+    "importance": 8,
+    "related": [
+      "mcp-security-architecture-enterprise-ai",
+      "mcp-app",
+      "adr-mcp-app",
+      "webmcp",
+      "ai-architecture-enablement",
+      "doc-brand-context",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "adr-mcp",
+    "type": "adr",
+    "title": "ADR: MCP Schemas Integration",
+    "summary": "Utilize Anthropic's Model Context Protocol (MCP) to standardize tool inputs and outputs.",
+    "tags": [
+      "adr",
+      "mcp"
+    ],
+    "keywords": [
+      "adr",
+      "MCP Schemas",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-mcp",
+      "decision-mcp"
+    ],
+    "importance": 7,
+    "related": [
+      "mcp",
+      "adr-mcp-app"
+    ]
+  },
+  {
+    "id": "n8n",
+    "type": "tool",
+    "title": "n8n Workflows",
+    "summary": "Workflow automation tool. Manoj deploys n8n to choreograph simple webhook-based node automations, saving LangGraph for complex state logic.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "n8n Workflows",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "n8n Workflows"
+    ],
+    "importance": 8,
+    "related": [
+      "langgraph"
+    ]
+  },
+  {
+    "id": "adr-n8n",
+    "type": "adr",
+    "title": "ADR: n8n Workflows Integration",
+    "summary": "Orchestrate basic event-driven pipelines using n8n container clusters.",
+    "tags": [
+      "adr",
+      "n8n"
+    ],
+    "keywords": [
+      "adr",
+      "n8n Workflows",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-n8n",
+      "decision-n8n"
+    ],
+    "importance": 7,
+    "related": [
+      "n8n",
+      "langgraph"
+    ]
+  },
+  {
+    "id": "langsmith",
+    "type": "tool",
+    "title": "LangSmith",
+    "summary": "Manoj standardizes on LangSmith for agent trace visualization and regression test suites. Critical for debugging complex multi-agent LangGraph loops.",
+    "tags": [
+      "orchestration",
+      "adopt"
+    ],
+    "keywords": [
+      "LangSmith",
+      "Orchestration",
+      "Adopt"
+    ],
+    "aliases": [
+      "LangSmith"
+    ],
+    "importance": 8,
+    "related": [
+      "langgraph"
+    ]
+  },
+  {
+    "id": "adr-langsmith",
+    "type": "adr",
+    "title": "ADR: LangSmith Integration",
+    "summary": "Standardize on LangSmith for structured agent trace aggregation and execution graph logging.",
+    "tags": [
+      "adr",
+      "langsmith"
+    ],
+    "keywords": [
+      "adr",
+      "LangSmith",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-langsmith",
+      "decision-langsmith"
+    ],
+    "importance": 7,
+    "related": [
+      "langsmith"
+    ]
+  },
+  {
+    "id": "pydantic-ai",
+    "type": "tool",
+    "title": "Pydantic AI (POC)",
+    "summary": "Agent framework from Pydantic. Manoj runs active lab tests on typed prompt construction and dependency injection configurations.",
+    "tags": [
+      "orchestration",
+      "trial"
+    ],
+    "keywords": [
+      "Pydantic AI (POC)",
+      "Orchestration",
+      "Trial"
+    ],
+    "aliases": [
+      "Pydantic AI (POC)"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-pydantic-ai",
+    "type": "adr",
+    "title": "ADR: Pydantic AI (POC) Integration",
+    "summary": "Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.",
+    "tags": [
+      "adr",
+      "pydantic-ai"
+    ],
+    "keywords": [
+      "adr",
+      "Pydantic AI (POC)",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-pydantic-ai",
+      "decision-pydantic-ai"
+    ],
+    "importance": 7,
+    "related": [
+      "pydantic-ai"
+    ]
+  },
+  {
+    "id": "mcp-app",
+    "type": "tool",
+    "title": "MCPApp (POC)",
+    "summary": "Model Context Protocol application runner. Manoj designs POCs to orchestrate multiple MCP servers from a single config file.",
+    "tags": [
+      "orchestration",
+      "trial"
+    ],
+    "keywords": [
+      "MCPApp (POC)",
+      "Orchestration",
+      "Trial"
+    ],
+    "aliases": [
+      "MCPApp (POC)"
+    ],
+    "importance": 8,
+    "related": [
+      "mcp"
+    ]
+  },
+  {
+    "id": "adr-mcp-app",
+    "type": "adr",
+    "title": "ADR: MCPApp (POC) Integration",
+    "summary": "Run MCPApp to package, spin up, and route local MCP daemons through one unified config layer.",
+    "tags": [
+      "adr",
+      "mcp-app"
+    ],
+    "keywords": [
+      "adr",
+      "MCPApp (POC)",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-mcp-app",
+      "decision-mcp-app"
+    ],
+    "importance": 7,
+    "related": [
+      "mcp-app",
+      "mcp",
+      "adr-mcp"
+    ]
+  },
+  {
+    "id": "webmcp",
+    "type": "tool",
+    "title": "WebMCP (Beta)",
+    "summary": "Browser-native MCP model integrations. Tested for routing client context schemas natively from Chrome scripts.",
+    "tags": [
+      "orchestration",
+      "trial"
+    ],
+    "keywords": [
+      "WebMCP (Beta)",
+      "Orchestration",
+      "Trial"
+    ],
+    "aliases": [
+      "WebMCP (Beta)"
+    ],
+    "importance": 8,
+    "related": [
+      "mcp"
+    ]
+  },
+  {
+    "id": "adr-webmcp",
+    "type": "adr",
+    "title": "ADR: WebMCP (Beta) Integration",
+    "summary": "Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.",
+    "tags": [
+      "adr",
+      "webmcp"
+    ],
+    "keywords": [
+      "adr",
+      "WebMCP (Beta)",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-webmcp",
+      "decision-webmcp"
+    ],
+    "importance": 7,
+    "related": [
+      "webmcp"
+    ]
+  },
+  {
+    "id": "acp-ucp",
+    "type": "tool",
+    "title": "ACP / UCP Patterns",
+    "summary": "Agent/Unified Context Protocol patterns. Manoj tests these standard metadata schemas for passing context securely between model layers.",
+    "tags": [
+      "orchestration",
+      "trial"
+    ],
+    "keywords": [
+      "ACP / UCP Patterns",
+      "Orchestration",
+      "Trial"
+    ],
+    "aliases": [
+      "ACP / UCP Patterns"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "adr-acp-ucp",
+    "type": "adr",
+    "title": "ADR: ACP / UCP Patterns Integration",
+    "summary": "Deploy ACP/UCP payload mappings to unify long-term memory parameters.",
+    "tags": [
+      "adr",
+      "acp-ucp"
+    ],
+    "keywords": [
+      "adr",
+      "ACP / UCP Patterns",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-acp-ucp",
+      "decision-acp-ucp"
+    ],
+    "importance": 7,
+    "related": [
+      "acp-ucp"
+    ]
+  },
+  {
+    "id": "mlflow",
+    "type": "tool",
+    "title": "MLflow",
+    "summary": "Evaluating MLflow's tracking server and prompt registry pipelines for offline model metric evaluations and regression tracking.",
+    "tags": [
+      "orchestration",
+      "trial"
+    ],
+    "keywords": [
+      "MLflow",
+      "Orchestration",
+      "Trial"
+    ],
+    "aliases": [
+      "MLflow"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-mlflow",
+    "type": "adr",
+    "title": "ADR: MLflow Integration",
+    "summary": "Deploy MLflow container instances to record experiment metrics and track prompting versions.",
+    "tags": [
+      "adr",
+      "mlflow"
+    ],
+    "keywords": [
+      "adr",
+      "MLflow",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-mlflow",
+      "decision-mlflow"
+    ],
+    "importance": 7,
+    "related": [
+      "mlflow"
+    ]
+  },
+  {
+    "id": "autogen",
+    "type": "tool",
+    "title": "Microsoft AutoGen",
+    "summary": "Analyzing AutoGen's conversational multi-agent loops to compare its event-driven dispatching with LangGraph's state charts.",
+    "tags": [
+      "orchestration",
+      "assess"
+    ],
+    "keywords": [
+      "Microsoft AutoGen",
+      "Orchestration",
+      "Assess"
+    ],
+    "aliases": [
+      "Microsoft AutoGen"
+    ],
+    "importance": 8,
+    "related": [
+      "langgraph"
+    ]
+  },
+  {
+    "id": "sync-rest-agents",
+    "type": "tool",
+    "title": "Sync REST Agents",
+    "summary": "Synchronous HTTP timeouts occur under multi-step LLM reasoning. Replaced with async worker queues (Celery/Redis) and polling endpoints.",
+    "tags": [
+      "orchestration",
+      "hold"
+    ],
+    "keywords": [
+      "Sync REST Agents",
+      "Orchestration",
+      "Hold"
+    ],
+    "aliases": [
+      "Sync REST Agents"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "claude-sonnet",
+    "type": "tool",
+    "title": "Claude 3.5 Sonnet",
+    "summary": "Manoj's primary enterprise model for complex logic, code generation, and strict JSON output compliance in production workflows.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "Claude 3.5 Sonnet",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "Claude 3.5 Sonnet"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-claude-sonnet",
+    "type": "adr",
+    "title": "ADR: Claude 3.5 Sonnet Integration",
+    "summary": "Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.",
+    "tags": [
+      "adr",
+      "claude-sonnet"
+    ],
+    "keywords": [
+      "adr",
+      "Claude 3.5 Sonnet",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-claude-sonnet",
+      "decision-claude-sonnet"
+    ],
+    "importance": 7,
+    "related": [
+      "claude-sonnet"
+    ]
+  },
+  {
+    "id": "gpt-4o",
+    "type": "tool",
+    "title": "GPT-4o",
+    "summary": "Excellent multimodal capabilities. Manoj serves it as a redundant smart-routing backup provider for structured API loops.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "GPT-4o",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "GPT-4o"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-gpt-4o",
+    "type": "adr",
+    "title": "ADR: GPT-4o Integration",
+    "summary": "Integrate GPT-4o as a redundant smart-routing backup provider for Claude.",
+    "tags": [
+      "adr",
+      "gpt-4o"
+    ],
+    "keywords": [
+      "adr",
+      "GPT-4o",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-gpt-4o",
+      "decision-gpt-4o"
+    ],
+    "importance": 7,
+    "related": [
+      "gpt-4o"
+    ]
+  },
+  {
+    "id": "llama3-2",
+    "type": "tool",
+    "title": "Llama 3.2",
+    "summary": "High-performance small language model (SLM). Manoj hosts Llama-3.2 edge runtimes for secure low-complexity classification checks.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "Llama 3.2",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "Llama 3.2"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-llama3-2",
+    "type": "adr",
+    "title": "ADR: Llama 3.2 Integration",
+    "summary": "Host local Llama 3.2 instances on edge hardware to resolve small classification passes.",
+    "tags": [
+      "adr",
+      "llama3-2"
+    ],
+    "keywords": [
+      "adr",
+      "Llama 3.2",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-llama3-2",
+      "decision-llama3-2"
+    ],
+    "importance": 7,
+    "related": [
+      "llama3-2"
+    ]
+  },
+  {
+    "id": "gemini-models",
+    "type": "tool",
+    "title": "Google Gemini 2.0",
+    "summary": "Gemini models are Manoj's standard for ultra-low latency structured reasoning, long-context ingestion (up to 2M tokens), and multi-modal audio inputs.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "Google Gemini 2.0",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "Google Gemini 2.0"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-gemini-models",
+    "type": "adr",
+    "title": "ADR: Google Gemini 2.0 Integration",
+    "summary": "Deploy Gemini Pro APIs to ingest massive context windows natively without layout chunking loss.",
+    "tags": [
+      "adr",
+      "gemini-models"
+    ],
+    "keywords": [
+      "adr",
+      "Google Gemini 2.0",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-gemini-models",
+      "decision-gemini-models"
+    ],
+    "importance": 7,
+    "related": [
+      "gemini-models"
+    ]
+  },
+  {
+    "id": "qwen-models",
+    "type": "tool",
+    "title": "Qwen 2.5 Coder",
+    "summary": "Manoj's primary choice for local coding assistance and offline tool calling. Performs on-par with proprietary code models on edge hardware.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "Qwen 2.5 Coder",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "Qwen 2.5 Coder"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-qwen-models",
+    "type": "adr",
+    "title": "ADR: Qwen 2.5 Coder Integration",
+    "summary": "Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.",
+    "tags": [
+      "adr",
+      "qwen-models"
+    ],
+    "keywords": [
+      "adr",
+      "Qwen 2.5 Coder",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-qwen-models",
+      "decision-qwen-models"
+    ],
+    "importance": 7,
+    "related": [
+      "qwen-models"
+    ]
+  },
+  {
+    "id": "vertex-ai-models",
+    "type": "tool",
+    "title": "GCP Vertex AI",
+    "summary": "Manoj hosts secure Gemini API pipelines, fine-tuned models, and enterprise routing hubs inside Google Cloud security boundaries.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "GCP Vertex AI",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "GCP Vertex AI"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "adr-vertex-ai-models",
+    "type": "adr",
+    "title": "ADR: GCP Vertex AI Integration",
+    "summary": "Deploy foundation models inside GCP Vertex AI to enforce IAM permissions and VPC firewalls.",
+    "tags": [
+      "adr",
+      "vertex-ai-models"
+    ],
+    "keywords": [
+      "adr",
+      "GCP Vertex AI",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-vertex-ai-models",
+      "decision-vertex-ai-models"
+    ],
+    "importance": 7,
+    "related": [
+      "vertex-ai-models"
+    ]
+  },
+  {
+    "id": "aws-bedrock-models",
+    "type": "tool",
+    "title": "AWS Bedrock",
+    "summary": "Manoj deploys Bedrock agent endpoints for secure, client-isolated model runs within AWS enterprise networking zones.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "AWS Bedrock",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "AWS Bedrock"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "adr-aws-bedrock-models",
+    "type": "adr",
+    "title": "ADR: AWS Bedrock Integration",
+    "summary": "Provision LLMs natively through AWS Bedrock to preserve data residency within client accounts.",
+    "tags": [
+      "adr",
+      "aws-bedrock-models"
+    ],
+    "keywords": [
+      "adr",
+      "AWS Bedrock",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-aws-bedrock-models",
+      "decision-aws-bedrock-models"
+    ],
+    "importance": 7,
+    "related": [
+      "aws-bedrock-models"
+    ]
+  },
+  {
+    "id": "ollama-vllm",
+    "type": "tool",
+    "title": "Ollama / vLLM",
+    "summary": "Serving engines in production. Manoj routes queries to edge hardware and self-hosted GPU nodes without public API fees.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "Ollama / vLLM",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "Ollama / vLLM"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-ollama-vllm",
+    "type": "adr",
+    "title": "ADR: Ollama / vLLM Integration",
+    "summary": "Standardize on Ollama for local local checks, and vLLM for high-throughput model serving nodes.",
+    "tags": [
+      "adr",
+      "ollama-vllm"
+    ],
+    "keywords": [
+      "adr",
+      "Ollama / vLLM",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-ollama-vllm",
+      "decision-ollama-vllm"
+    ],
+    "importance": 7,
+    "related": [
+      "ollama-vllm"
+    ]
+  },
+  {
+    "id": "deepseek-r1",
+    "type": "tool",
+    "title": "DeepSeek-R1",
+    "summary": "Manoj integrates DeepSeek-R1 in production to output reasoning tokens, validating steps before final tool selections.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "DeepSeek-R1",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "DeepSeek-R1"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-deepseek-r1",
+    "type": "adr",
+    "title": "ADR: DeepSeek-R1 Integration",
+    "summary": "Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.",
+    "tags": [
+      "adr",
+      "deepseek-r1"
+    ],
+    "keywords": [
+      "adr",
+      "DeepSeek-R1",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-deepseek-r1",
+      "decision-deepseek-r1"
+    ],
+    "importance": 7,
+    "related": [
+      "deepseek-r1"
+    ]
+  },
+  {
+    "id": "deepseek-v3",
+    "type": "tool",
+    "title": "DeepSeek-V3",
+    "summary": "Used in production. Manoj routes secondary classifier routing operations to DeepSeek MoE nodes to reduce operational costs.",
+    "tags": [
+      "models",
+      "adopt"
+    ],
+    "keywords": [
+      "DeepSeek-V3",
+      "Models",
+      "Adopt"
+    ],
+    "aliases": [
+      "DeepSeek-V3"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-deepseek-v3",
+    "type": "adr",
+    "title": "ADR: DeepSeek-V3 Integration",
+    "summary": "Route high-frequency parsing calls to DeepSeek-V3 endpoints due to highly competitive MoE pricing.",
+    "tags": [
+      "adr",
+      "deepseek-v3"
+    ],
+    "keywords": [
+      "adr",
+      "DeepSeek-V3",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-deepseek-v3",
+      "decision-deepseek-v3"
+    ],
+    "importance": 7,
+    "related": [
+      "deepseek-v3"
+    ]
+  },
+  {
+    "id": "gemini-nano",
+    "type": "tool",
+    "title": "Gemini Nano",
+    "summary": "Chrome Built-in AI. Manoj tests Gemini Nano edge nodes inside extensions to summarize client text natively without network costs.",
+    "tags": [
+      "models",
+      "trial"
+    ],
+    "keywords": [
+      "Gemini Nano",
+      "Models",
+      "Trial"
+    ],
+    "aliases": [
+      "Gemini Nano"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "adr-gemini-nano",
+    "type": "adr",
+    "title": "ADR: Gemini Nano Integration",
+    "summary": "Route basic text manipulation requests directly to Chrome's built-in window.ai API.",
+    "tags": [
+      "adr",
+      "gemini-nano"
+    ],
+    "keywords": [
+      "adr",
+      "Gemini Nano",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-gemini-nano",
+      "decision-gemini-nano"
+    ],
+    "importance": 7,
+    "related": [
+      "gemini-nano"
+    ]
+  },
+  {
+    "id": "kimi-models",
+    "type": "tool",
+    "title": "Moonshot Kimi v2",
+    "summary": "Moonshot AI's latest model. Reviewing its 2M+ context window retrieval needle-in-a-heap benchmark metrics for comparison with Gemini.",
+    "tags": [
+      "models",
+      "assess"
+    ],
+    "keywords": [
+      "Moonshot Kimi v2",
+      "Models",
+      "Assess"
+    ],
+    "aliases": [
+      "Moonshot Kimi v2"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "pgvector",
+    "type": "tool",
+    "title": "pgvector",
+    "summary": "Vector index inside PostgreSQL. Manoj standardizes on pgvector to avoid double-writing data across isolated document and vector stores.",
+    "tags": [
+      "data",
+      "adopt"
+    ],
+    "keywords": [
+      "pgvector",
+      "Data",
+      "Adopt"
+    ],
+    "aliases": [
+      "pgvector"
+    ],
+    "importance": 8,
+    "related": [
+      "service-rag-infrastructure-consulting",
+      "doc-blog-topics",
+      "doc-brand-context",
+      "doc-case-studies",
+      "doc-medium-articles",
+      "doc-open-source-strategy",
+      "doc-services",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "adr-pgvector",
+    "type": "adr",
+    "title": "ADR: pgvector Integration",
+    "summary": "Standardize on pgvector inside the existing PostgreSQL container schema.",
+    "tags": [
+      "adr",
+      "pgvector"
+    ],
+    "keywords": [
+      "adr",
+      "pgvector",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-pgvector",
+      "decision-pgvector"
+    ],
+    "importance": 7,
+    "related": [
+      "pgvector"
+    ]
+  },
+  {
+    "id": "fastapi",
+    "type": "tool",
+    "title": "FastAPI",
+    "summary": "Async Python web server. The backbone of Manoj's gateway services, enforcing input/output schemas in milliseconds via Pydantic.",
+    "tags": [
+      "data",
+      "adopt"
+    ],
+    "keywords": [
+      "FastAPI",
+      "Data",
+      "Adopt"
+    ],
+    "aliases": [
+      "FastAPI"
+    ],
+    "importance": 8,
+    "related": [
+      "opentelemetry-genai-observability-agent-workflows",
+      "fastapi-ai-backends-background-reasoning-workflows",
+      "doc-services",
+      "kubernetes",
+      "adr-kubernetes",
+      "enterprise-agentic-rag-platform",
+      "service-ai-platform-engineering",
+      "pattern-fastapi-ai-backends",
+      "doc-blog-topics",
+      "doc-brand-context",
+      "doc-case-studies",
+      "doc-devrel-positioning",
+      "doc-engineering-footprint",
+      "doc-open-source-strategy",
+      "doc-seo-strategy",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "adr-fastapi",
+    "type": "adr",
+    "title": "ADR: FastAPI Integration",
+    "summary": "Expose all backend interfaces using FastAPI with strict Pydantic model contracts.",
+    "tags": [
+      "adr",
+      "fastapi"
+    ],
+    "keywords": [
+      "adr",
+      "FastAPI",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-fastapi",
+      "decision-fastapi"
+    ],
+    "importance": 7,
+    "related": [
+      "fastapi"
+    ]
+  },
+  {
+    "id": "mongodb",
+    "type": "tool",
+    "title": "MongoDB",
+    "summary": "Enterprise document storage. Stores structured JSON data and document metadata for large-scale retrieval applications.",
+    "tags": [
+      "data",
+      "adopt"
+    ],
+    "keywords": [
+      "MongoDB",
+      "Data",
+      "Adopt"
+    ],
+    "aliases": [
+      "MongoDB"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "adr-mongodb",
+    "type": "adr",
+    "title": "ADR: MongoDB Integration",
+    "summary": "Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.",
+    "tags": [
+      "adr",
+      "mongodb"
+    ],
+    "keywords": [
+      "adr",
+      "MongoDB",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-mongodb",
+      "decision-mongodb"
+    ],
+    "importance": 7,
+    "related": [
+      "mongodb"
+    ]
+  },
+  {
+    "id": "qdrant",
+    "type": "tool",
+    "title": "Qdrant",
+    "summary": "High-performance vector search engine. Selected when vector dimensions exceed 1536 and require sub-10ms search metrics.",
+    "tags": [
+      "data",
+      "trial"
+    ],
+    "keywords": [
+      "Qdrant",
+      "Data",
+      "Trial"
+    ],
+    "aliases": [
+      "Qdrant"
+    ],
+    "importance": 8,
+    "related": [
+      "production-grade-ai-home-lab"
+    ]
+  },
+  {
+    "id": "nextjs",
+    "type": "tool",
+    "title": "Next.js",
+    "summary": "Manoj's primary frontend framework. Next.js App Router, SSR, and dynamic streaming modules drive technical credibility.",
+    "tags": [
+      "platform",
+      "adopt"
+    ],
+    "keywords": [
+      "Next.js",
+      "Platform",
+      "Adopt"
+    ],
+    "aliases": [
+      "Next.js"
+    ],
+    "importance": 8,
+    "related": [
+      "opentelemetry-genai-observability-agent-workflows",
+      "production-grade-ai-home-lab",
+      "service-ai-platform-engineering",
+      "doc-brand-context",
+      "doc-engineering-footprint",
+      "doc-open-source-strategy"
+    ]
+  },
+  {
+    "id": "adr-nextjs",
+    "type": "adr",
+    "title": "ADR: Next.js Integration",
+    "summary": "Standardize all technical authority pages on the Next.js App Router with Server Components.",
+    "tags": [
+      "adr",
+      "nextjs"
+    ],
+    "keywords": [
+      "adr",
+      "Next.js",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-nextjs",
+      "decision-nextjs"
+    ],
+    "importance": 7,
+    "related": [
+      "nextjs"
+    ]
+  },
+  {
+    "id": "module-federation",
+    "type": "tool",
+    "title": "Module Federation",
+    "summary": "Distributed frontend standard. Manoj routes microfrontends independently to decrease initial page weight and load times by 30%.",
+    "tags": [
+      "platform",
+      "adopt"
+    ],
+    "keywords": [
+      "Module Federation",
+      "Platform",
+      "Adopt"
+    ],
+    "aliases": [
+      "Module Federation"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-brand-context",
+      "doc-engineering-footprint"
+    ]
+  },
+  {
+    "id": "adr-module-federation",
+    "type": "adr",
+    "title": "ADR: Module Federation Integration",
+    "summary": "Orchestrate federated frontend runtimes using Webpack Module Federation specs.",
+    "tags": [
+      "adr",
+      "module-federation"
+    ],
+    "keywords": [
+      "adr",
+      "Module Federation",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-module-federation",
+      "decision-module-federation"
+    ],
+    "importance": 7,
+    "related": [
+      "module-federation"
+    ]
+  },
+  {
+    "id": "kubernetes",
+    "type": "tool",
+    "title": "Kubernetes",
+    "summary": "Robust container management. Deployed to manage FastAPI services, queue workers, and databases in enterprise clouds.",
+    "tags": [
+      "platform",
+      "adopt"
+    ],
+    "keywords": [
+      "Kubernetes",
+      "Platform",
+      "Adopt"
+    ],
+    "aliases": [
+      "Kubernetes"
+    ],
+    "importance": 8,
+    "related": [
+      "fastapi",
+      "doc-services",
+      "openshift",
+      "adr-openshift",
+      "enterprise-agentic-rag-platform",
+      "gpu-ai-platform-modernization",
+      "service-ai-platform-engineering",
+      "doc-blog-topics",
+      "doc-brand-context",
+      "doc-case-studies",
+      "doc-open-source-strategy",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "adr-kubernetes",
+    "type": "adr",
+    "title": "ADR: Kubernetes Integration",
+    "summary": "Standardize container orchestration on Kubernetes with Horizontal Pod Autoscaling (HPA).",
+    "tags": [
+      "adr",
+      "kubernetes"
+    ],
+    "keywords": [
+      "adr",
+      "Kubernetes",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-kubernetes",
+      "decision-kubernetes"
+    ],
+    "importance": 7,
+    "related": [
+      "kubernetes",
+      "fastapi"
+    ]
+  },
+  {
+    "id": "openshift",
+    "type": "tool",
+    "title": "OpenShift",
+    "summary": "Red Hat enterprise platform. Manoj hosts secure AI workloads with strict network firewall isolation.",
+    "tags": [
+      "platform",
+      "adopt"
+    ],
+    "keywords": [
+      "OpenShift",
+      "Platform",
+      "Adopt"
+    ],
+    "aliases": [
+      "OpenShift"
+    ],
+    "importance": 8,
+    "related": [
+      "kubernetes",
+      "gpu-ai-platform-modernization",
+      "service-ai-platform-engineering",
+      "career-publicis-sapient",
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "adr-openshift",
+    "type": "adr",
+    "title": "ADR: OpenShift Integration",
+    "summary": "Deploy critical workloads inside Red Hat OpenShift Container Platform.",
+    "tags": [
+      "adr",
+      "openshift"
+    ],
+    "keywords": [
+      "adr",
+      "OpenShift",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-openshift",
+      "decision-openshift"
+    ],
+    "importance": 7,
+    "related": [
+      "openshift",
+      "kubernetes"
+    ]
+  },
+  {
+    "id": "nvidia-runai",
+    "type": "tool",
+    "title": "NVIDIA Run:AI",
+    "summary": "GPU resource orchestrator. Manages GPU virtualization slices to maximize training/inference compute speeds across teams.",
+    "tags": [
+      "platform",
+      "adopt"
+    ],
+    "keywords": [
+      "NVIDIA Run:AI",
+      "Platform",
+      "Adopt"
+    ],
+    "aliases": [
+      "NVIDIA Run:AI"
+    ],
+    "importance": 8,
+    "related": [
+      "service-ai-platform-engineering",
+      "doc-brand-context"
+    ]
+  },
+  {
+    "id": "adr-nvidia-runai",
+    "type": "adr",
+    "title": "ADR: NVIDIA Run:AI Integration",
+    "summary": "Orchestrate GPU partitions dynamically using NVIDIA Run:AI schedules.",
+    "tags": [
+      "adr",
+      "nvidia-runai"
+    ],
+    "keywords": [
+      "adr",
+      "NVIDIA Run:AI",
+      "decision",
+      "tradeoff"
+    ],
+    "aliases": [
+      "adr-nvidia-runai",
+      "decision-nvidia-runai"
+    ],
+    "importance": 7,
+    "related": [
+      "nvidia-runai"
+    ]
+  },
+  {
+    "id": "production-grade-ai-home-lab",
+    "type": "case_study",
+    "title": "AI Home Lab Platform",
+    "summary": "I built a local OpenAI-compatible AI gateway that runs on my personal macOS server and is reached from my deployed Next.js website through a Cloudflare Tunnel. The website-side Astra experience is JavaScript/TypeScript, while the gateway orchestration layer is Python 3.14 with uv, FastAPI, LangChain/LangGraph, and Ollama.",
+    "tags": [
+      "case study",
+      "vercel hobby + personal macos server",
+      "deployed"
+    ],
+    "keywords": [
+      "AI Home Lab Platform",
+      "Private AI Lab",
+      "Cloudflare Tunnel"
+    ],
+    "aliases": [
+      "AI Home Lab Platform",
+      "Private AI Lab"
+    ],
+    "importance": 10,
+    "related": [
+      "langgraph",
+      "langchain",
+      "qdrant",
+      "nextjs",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "enterprise-agentic-rag-platform",
+    "type": "case_study",
+    "title": "Enterprise Agentic RAG",
+    "summary": "I architected a production-grade agentic RAG pattern for financial workloads where long regulatory filings needed layout-aware parsing, hybrid retrieval, deterministic state transitions, and strict grounding checks before an answer could be trusted.",
+    "tags": [
+      "case study",
+      "gcp kubernetes (gke)",
+      "production"
+    ],
+    "keywords": [
+      "Enterprise Agentic RAG",
+      "Agentic RAG Flow",
+      "Istio Ingress Gateway"
+    ],
+    "aliases": [
+      "Enterprise Agentic RAG",
+      "Agentic RAG Flow"
+    ],
+    "importance": 10,
+    "related": [
+      "langgraph",
+      "fastapi",
+      "kubernetes"
+    ]
+  },
+  {
+    "id": "gpu-ai-platform-modernization",
+    "type": "case_study",
+    "title": "GPU Platform Modernization",
+    "summary": "I worked on containerized inference platform patterns where static GPU allocation created developer bottlenecks and production workloads needed predictable serving capacity.",
+    "tags": [
+      "case study",
+      "openshift / run:ai",
+      "active"
+    ],
+    "keywords": [
+      "GPU Platform Modernization",
+      "GPU Infrastructure",
+      "Kube Ingress Controller"
+    ],
+    "aliases": [
+      "GPU Platform Modernization",
+      "GPU Infrastructure"
+    ],
+    "importance": 10,
+    "related": [
+      "kubernetes",
+      "openshift"
+    ]
+  },
+  {
+    "id": "ai-architecture-enablement",
+    "type": "case_study",
+    "title": "AI Architecture Enablement",
+    "summary": "I designed enablement patterns for teams adopting model-context tooling, where proprietary databases and calculators needed to be callable by agents without collapsing security and ownership boundaries.",
+    "tags": [
+      "case study",
+      "enterprise hub",
+      "deployed"
+    ],
+    "keywords": [
+      "AI Architecture Enablement",
+      "Technical Advisory",
+      "Corporate Gateway"
+    ],
+    "aliases": [
+      "AI Architecture Enablement",
+      "Technical Advisory"
+    ],
+    "importance": 10,
+    "related": [
+      "mcp"
+    ]
+  },
+  {
+    "id": "service-ai-architecture-advisory",
+    "type": "service",
+    "title": "AI Architecture Advisory",
+    "summary": "I provide senior architecture guidance for teams moving AI products from vague ambition to a production-ready operating model.",
+    "tags": [
+      "ai architect consultant",
+      "ai architecture advisory",
+      "ai platform strategy"
+    ],
+    "keywords": [
+      "AI Architect Consultant",
+      "AI Architecture Advisory",
+      "AI Platform Strategy"
+    ],
+    "aliases": [
+      "AI Architecture Advisory",
+      "Architecture Advisory"
+    ],
+    "importance": 8,
+    "related": [
+      "service-ai-platform-engineering",
+      "doc-roadmap",
+      "doc-brand-context",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "service-langgraph-consultant",
+    "type": "service",
+    "title": "LangGraph Consultant",
+    "summary": "I help you design agentic workflows with explicit state, deterministic routing, short/long-term memory, robust fallbacks, and human-in-the-loop validation gates.",
+    "tags": [
+      "langgraph consultant",
+      "multi-agent systems",
+      "agentic ai engineer"
+    ],
+    "keywords": [
+      "LangGraph Consultant",
+      "Multi-Agent Systems",
+      "Agentic AI Engineer"
+    ],
+    "aliases": [
+      "LangGraph Consultant",
+      "LangGraph Systems"
+    ],
+    "importance": 8,
+    "related": [
+      "langgraph",
+      "pattern-multi-agent-systems",
+      "doc-seo-strategy"
+    ]
+  },
+  {
+    "id": "service-rag-infrastructure-consulting",
+    "type": "service",
+    "title": "RAG Infrastructure Consulting",
+    "summary": "I optimize retrieval quality, precision grounding, querying latency, and user trust for knowledge-heavy, vector-driven AI systems.",
+    "tags": [
+      "rag infrastructure",
+      "pgvector consultant",
+      "rag reliability"
+    ],
+    "keywords": [
+      "RAG Infrastructure",
+      "pgvector Consultant",
+      "RAG Reliability"
+    ],
+    "aliases": [
+      "RAG Infrastructure Consulting",
+      "RAG Infrastructure"
+    ],
+    "importance": 8,
+    "related": [
+      "context-engineering-enterprise-rag-systems",
+      "pgvector",
+      "pattern-rag-reliability",
+      "doc-brand-context",
+      "doc-seo-strategy",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "service-ai-platform-engineering",
+    "type": "service",
+    "title": "AI Platform Engineering",
+    "summary": "I build maintainable backend systems for AI platforms, leveraging async FastAPI workflows, structured schemas, queue-based workers, and robust cloud/container topologies.",
+    "tags": [
+      "fastapi ai backend",
+      "ai platform engineering",
+      "ai infrastructure consulting"
+    ],
+    "keywords": [
+      "FastAPI AI Backend",
+      "AI Platform Engineering",
+      "AI Infrastructure Consulting"
+    ],
+    "aliases": [
+      "AI Platform Engineering",
+      "AI Platform"
+    ],
+    "importance": 8,
+    "related": [
+      "context-engineering-enterprise-rag-systems",
+      "fastapi-ai-backends-background-reasoning-workflows",
+      "nvidia-runai",
+      "service-ai-architecture-advisory",
+      "fastapi",
+      "nextjs",
+      "kubernetes",
+      "openshift",
+      "doc-services",
+      "career-publicis-sapient",
+      "doc-architecture-principles",
+      "doc-brand-context",
+      "doc-seo-strategy"
+    ]
+  },
+  {
+    "id": "service-devrel-engineering",
+    "type": "service",
+    "title": "DevRel Engineering Partnerships",
+    "summary": "I turn complex AI infrastructure products into credible reference architectures, production-grade templates, and developer adoption assets.",
+    "tags": [
+      "devrel engineering",
+      "technical ghostwriting",
+      "ai infrastructure content"
+    ],
+    "keywords": [
+      "DevRel Engineering",
+      "Technical Ghostwriting",
+      "AI Infrastructure Content"
+    ],
+    "aliases": [
+      "DevRel Engineering Partnerships",
+      "DevRel Engineering"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-devrel-positioning"
+    ]
+  },
+  {
+    "id": "service-fractional-ai-architect",
+    "type": "service",
+    "title": "Fractional AI Architect",
+    "summary": "I join your team as a fractional architect to bring senior solutions judgment, review infrastructure plans, and mentor builders before a full-time hire is needed.",
+    "tags": [
+      "fractional ai architect",
+      "ai advisor",
+      "startup ai consulting"
+    ],
+    "keywords": [
+      "Fractional AI Architect",
+      "AI Advisor",
+      "Startup AI Consulting"
+    ],
+    "aliases": [
+      "Fractional AI Architect",
+      "Fractional Architect"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "career-publicis-sapient",
+    "type": "career",
+    "title": "Technical Lead / AI Architect at Publicis Sapient",
+    "summary": "I lead the architecture of enterprise-grade generative AI platforms using Agentic RAG, stateful LangGraph-style orchestration, hybrid retrieval, FastAPI microservices, and containerized deployment paths. I design and scale containerized AI platforms on OpenShift and NVIDIA Run:AI while mentoring engineers and driving enterprise AI adoption.",
+    "tags": [
+      "career",
+      "publicis sapient",
+      "langgraph",
+      "agentic rag",
+      "pgvector",
+      "fastapi",
+      "kubernetes",
+      "nvidia run:ai"
+    ],
+    "keywords": [
+      "Technical Lead / AI Architect",
+      "Publicis Sapient",
+      "LangGraph",
+      "Agentic RAG",
+      "pgvector",
+      "FastAPI",
+      "Kubernetes",
+      "NVIDIA Run:AI"
+    ],
+    "aliases": [
+      "Publicis Sapient",
+      "Technical Lead / AI Architect - Publicis Sapient"
+    ],
+    "importance": 8,
+    "related": [
+      "openshift",
+      "service-ai-platform-engineering",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "career-kotak-mahindra-bank",
+    "type": "career",
+    "title": "Chief Manager (SDE III) at Kotak Mahindra Bank",
+    "summary": "I operated closer to core architecture and solution design, directing research and development, vendor evaluations, and high-stakes banking platform reviews for the Kotak811 digital banking platform. I led mobile application development and secured mobile integrations including UPI 2.0.",
+    "tags": [
+      "career",
+      "kotak mahindra bank",
+      "react native",
+      "typescript",
+      "upi 2.0",
+      "security",
+      "architecture"
+    ],
+    "keywords": [
+      "Chief Manager (SDE III)",
+      "Kotak Mahindra Bank",
+      "React Native",
+      "TypeScript",
+      "UPI 2.0",
+      "Security",
+      "Architecture"
+    ],
+    "aliases": [
+      "Kotak Mahindra Bank",
+      "Chief Manager (SDE III) - Kotak Mahindra Bank"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "career-ap-moller-maersk",
+    "type": "career",
+    "title": "Software Engineer III at A.P. Moller - Maersk",
+    "summary": "I built scalable microfrontend systems using Module Federation and React/Next.js. I spearheaded early adoption of Next.js Module Federation (next-mf) and SSR, improving page load speeds by 25–30% and evolving the Anchor Design System.",
+    "tags": [
+      "career",
+      "a.p. moller - maersk",
+      "next.js",
+      "module federation",
+      "react",
+      "ssr",
+      "design systems"
+    ],
+    "keywords": [
+      "Software Engineer III",
+      "A.P. Moller - Maersk",
+      "Next.js",
+      "Module Federation",
+      "React",
+      "SSR",
+      "Design Systems"
+    ],
+    "aliases": [
+      "A.P. Moller - Maersk",
+      "Software Engineer III - A.P. Moller - Maersk"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-design-system"
+    ]
+  },
+  {
+    "id": "career-krista-software",
+    "type": "career",
+    "title": "Senior Software Engineer / Founding Engineer at Krista Software",
+    "summary": "I contributed as a founding member of the core engineering team for an AI-driven process automation platform. I built cross-platform mobile and web applications using the Ionic Framework and participated in core scalability reviews.",
+    "tags": [
+      "career",
+      "krista software",
+      "ionic",
+      "angular",
+      "ai automation",
+      "mobile",
+      "web systems"
+    ],
+    "keywords": [
+      "Senior Software Engineer / Founding Engineer",
+      "Krista Software",
+      "Ionic",
+      "Angular",
+      "AI Automation",
+      "Mobile",
+      "Web Systems"
+    ],
+    "aliases": [
+      "Krista Software",
+      "Senior Software Engineer / Founding Engineer - Krista Software"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "career-optiv-inc",
+    "type": "career",
+    "title": "Software Engineer at Optiv Inc",
+    "summary": "I developed enterprise cybersecurity platforms and analytics dashboards using React, Redux, GraphQL, and Node.js. I optimized frontend builds, reducing bundle sizes, and managed Express.js backend services with MongoDB.",
+    "tags": [
+      "career",
+      "optiv inc",
+      "react",
+      "graphql",
+      "node.js",
+      "express",
+      "mongodb",
+      "redux"
+    ],
+    "keywords": [
+      "Software Engineer",
+      "Optiv Inc",
+      "React",
+      "GraphQL",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Redux"
+    ],
+    "aliases": [
+      "Optiv Inc",
+      "Software Engineer - Optiv Inc"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-services"
+    ]
+  },
+  {
+    "id": "career-hewlett-packard-enterprise",
+    "type": "career",
+    "title": "Software Engineer I at Hewlett Packard Enterprise",
+    "summary": "I built hybrid cloud service management interfaces for enterprise products including HPE OpenSphere and HPE GreenLake using React and Redux, collaborating closely with Golang-based distributed backend teams.",
+    "tags": [
+      "career",
+      "hewlett packard enterprise",
+      "react",
+      "redux",
+      "grommet",
+      "hybrid cloud",
+      "distributed systems"
+    ],
+    "keywords": [
+      "Software Engineer I",
+      "Hewlett Packard Enterprise",
+      "React",
+      "Redux",
+      "Grommet",
+      "Hybrid Cloud",
+      "Distributed Systems"
+    ],
+    "aliases": [
+      "Hewlett Packard Enterprise",
+      "Software Engineer I - Hewlett Packard Enterprise"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-design-system",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "career-william-oneil-india",
+    "type": "career",
+    "title": "Software Engineer at William O'Neil India",
+    "summary": "I joined as a founding member of the India engineering team, building Panaray, a flagship financial research and stock market analytics web platform. I designed state management patterns with Redux Saga and built Node.js BFF services.",
+    "tags": [
+      "career",
+      "william o'neil india",
+      "react",
+      "redux saga",
+      "node.js",
+      "express",
+      "financial charts"
+    ],
+    "keywords": [
+      "Software Engineer",
+      "William O'Neil India",
+      "React",
+      "Redux Saga",
+      "Node.js",
+      "Express",
+      "Financial Charts"
+    ],
+    "aliases": [
+      "William O'Neil India",
+      "Software Engineer - William O'Neil India"
+    ],
+    "importance": 8,
+    "related": [
+      "doc-services"
+    ]
+  },
+  {
+    "id": "pattern-multi-agent-systems",
+    "type": "pattern",
+    "title": "Multi-Agent Systems Pattern",
+    "summary": "LangGraph-based workflows with explicit state, tool routing, memory, fallbacks, and evaluation.",
+    "tags": [
+      "architecture pattern",
+      "state visibility",
+      "tool safety",
+      "retry behavior",
+      "human control"
+    ],
+    "keywords": [
+      "Multi-Agent Systems",
+      "Intent",
+      "Planner",
+      "Agent State",
+      "Tools",
+      "Human Gate",
+      "Trace"
+    ],
+    "aliases": [
+      "Multi-Agent Systems",
+      "Multi-Agent Systems Architecture"
+    ],
+    "importance": 9,
+    "related": [
+      "langgraph-v1-durable-agent-architecture",
+      "langgraph",
+      "service-langgraph-consultant",
+      "doc-brand-context",
+      "doc-seo-strategy",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "pattern-rag-reliability",
+    "type": "pattern",
+    "title": "RAG Reliability Pattern",
+    "summary": "Retrieval pipelines designed for grounding quality, latency budgets, observability, and regression testing.",
+    "tags": [
+      "architecture pattern",
+      "chunking",
+      "ranking",
+      "grounding",
+      "latency"
+    ],
+    "keywords": [
+      "RAG Reliability",
+      "Corpus",
+      "Chunking",
+      "pgvector",
+      "Hybrid Search",
+      "Rerank",
+      "Evals"
+    ],
+    "aliases": [
+      "RAG Reliability",
+      "RAG Reliability Architecture"
+    ],
+    "importance": 9,
+    "related": [
+      "service-rag-infrastructure-consulting"
+    ]
+  },
+  {
+    "id": "pattern-fastapi-ai-backends",
+    "type": "pattern",
+    "title": "FastAPI AI Backends Pattern",
+    "summary": "Async Python services, model gateways, queues, trace IDs, and deployment paths for AI product teams.",
+    "tags": [
+      "architecture pattern",
+      "async workloads",
+      "API contracts",
+      "cost controls",
+      "deployment"
+    ],
+    "keywords": [
+      "FastAPI AI Backends",
+      "API",
+      "Queue",
+      "Workers",
+      "Model Gateway",
+      "Store",
+      "Observability"
+    ],
+    "aliases": [
+      "FastAPI AI Backends",
+      "FastAPI AI Backends Architecture"
+    ],
+    "importance": 9,
+    "related": [
+      "fastapi-ai-backends-background-reasoning-workflows",
+      "fastapi",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "fastapi-openai-gateway-proxy",
+    "type": "project",
+    "title": "FastAPI OpenAI Gateway Proxy",
+    "summary": "An OpenAI-compatible high-performance API router proxy offering request validation, rate limiting, and smart load-balanced routing to local SLMs and cloud endpoints.",
+    "tags": [
+      "open source",
+      "active"
+    ],
+    "keywords": [
+      "FastAPI OpenAI Gateway Proxy",
+      "Active"
+    ],
+    "aliases": [
+      "FastAPI OpenAI Gateway Proxy"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "langgraphjs-orchestrator-template",
+    "type": "project",
+    "title": "LangGraphJS Orchestrator Template",
+    "summary": "Stateful multi-agent workflows modeling planner/executor patterns, intent routing, memory nodes, and SQLite-backed thread checkpointing.",
+    "tags": [
+      "open source",
+      "active"
+    ],
+    "keywords": [
+      "LangGraphJS Orchestrator Template",
+      "Active"
+    ],
+    "aliases": [
+      "LangGraphJS Orchestrator Template"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "macbook-silicon-ai-home-lab-deployment",
+    "type": "project",
+    "title": "MacBook Silicon AI Home Lab Deployment",
+    "summary": "A 100% self-hosted, containerized deployment template utilizing Cloudflare tunnels, Podman, Redis, and Qdrant vector databases for local execution.",
+    "tags": [
+      "open source",
+      "active"
+    ],
+    "keywords": [
+      "MacBook Silicon AI Home Lab Deployment",
+      "Active"
+    ],
+    "aliases": [
+      "MacBook Silicon AI Home Lab Deployment"
+    ],
+    "importance": 8,
+    "related": []
+  },
+  {
+    "id": "doc-architecture-principles",
+    "type": "doc",
+    "title": "ARCHITECTURE PRINCIPLES",
+    "summary": "> Canonical engineering and system design principles for the Manoj Portfolio platform. This platform should feel engineered, not decorated. The experience should communicate: systems thinking architecture depth production readiness technical precision engineering maturity The UI should resemble: engineering infrastructure AI platform systems architecture dashboards developer tooling ecosystems NOT: marketing heavy SaaS clones generic startup templates flashy AI landing pages Always:...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "ARCHITECTURE PRINCIPLES",
+      "ARCHITECTURE_PRINCIPLES"
+    ],
+    "aliases": [
+      "ARCHITECTURE PRINCIPLES",
+      "ARCHITECTURE PRINCIPLES"
+    ],
+    "importance": 6,
+    "related": [
+      "service-ai-platform-engineering"
+    ]
+  },
+  {
+    "id": "doc-blog-topics",
+    "type": "doc",
+    "title": "BLOG TOPICS",
+    "summary": "> Canonical technical content strategy. Topics: agent orchestration state machines workflow routing memory systems distributed AI workflows async agents Topics: orchestration patterns graph based workflows failure handling retry systems checkpointing state persistence Topics: hybrid retrieval pgvector optimization contextual retrieval memory systems retrieval evaluation indexing pipelines Topics: Kubernetes AI workloads FastAPI deployment AI scalability AI observability GPU workloads cloud native AI...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "BLOG TOPICS",
+      "BLOG_TOPICS"
+    ],
+    "aliases": [
+      "BLOG TOPICS",
+      "BLOG TOPICS"
+    ],
+    "importance": 6,
+    "related": [
+      "opentelemetry-genai-observability-agent-workflows",
+      "context-engineering-enterprise-rag-systems",
+      "langgraph",
+      "pgvector",
+      "fastapi",
+      "kubernetes",
+      "doc-content-strategy"
+    ]
+  },
+  {
+    "id": "doc-brand-context",
+    "type": "doc",
+    "title": "MANOJ MUKHERJEE — BRAND CONTEXT & AUTHORITY DATASET",
+    "summary": "> Canonical strategic context for AI agents, coding agents, content systems, website generation, personal branding, technical positioning, DevRel, consulting, architecture advisory, and engineering storytelling. Manoj Mukherjee AI Architect GenAI & Agentic AI Engineer Enterprise AI Systems Engineer Multi Agent Systems Specialist AI Platform Engineer RAG Infrastructure Architect Technical Lead Engineering Leader Bengaluru, India 10+ years in enterprise engineering, frontend architecture,...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "MANOJ MUKHERJEE — BRAND CONTEXT & AUTHORITY DATASET",
+      "BRAND_CONTEXT"
+    ],
+    "aliases": [
+      "MANOJ MUKHERJEE — BRAND CONTEXT & AUTHORITY DATASET",
+      "BRAND CONTEXT"
+    ],
+    "importance": 6,
+    "related": [
+      "context-engineering-enterprise-rag-systems",
+      "langgraph",
+      "langchain",
+      "google-adk",
+      "mcp",
+      "acp-ucp",
+      "vertex-ai-models",
+      "aws-bedrock-models",
+      "pgvector",
+      "fastapi",
+      "mongodb",
+      "nextjs",
+      "module-federation",
+      "kubernetes",
+      "openshift",
+      "nvidia-runai",
+      "service-ai-architecture-advisory",
+      "service-rag-infrastructure-consulting",
+      "service-ai-platform-engineering",
+      "pattern-multi-agent-systems",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "doc-case-studies",
+    "type": "doc",
+    "title": "CASE STUDIES",
+    "summary": "> Canonical case study structure and storytelling format. Each case study should contain: 1. Business Problem 2. Architecture Goals 3. Constraints 4. System Design 5. Tradeoffs 6. Scalability 7. Reliability 8. Deployment 9. Observability 10. Lessons Learned Always include: architecture diagrams Mermaid.js flows infra topology deployment patterns engineering metrics retrieval pipelines orchestration flows Focus on: engineering decisions production complexity scaling...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "CASE STUDIES",
+      "CASE_STUDIES"
+    ],
+    "aliases": [
+      "CASE STUDIES",
+      "CASE STUDIES"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph",
+      "pgvector",
+      "fastapi",
+      "kubernetes",
+      "doc-services",
+      "doc-content-strategy",
+      "doc-cta-strategy",
+      "doc-engineering-footprint",
+      "doc-roadmap"
+    ]
+  },
+  {
+    "id": "doc-content-strategy",
+    "type": "doc",
+    "title": "CONTENT STRATEGY",
+    "summary": "> Canonical cross platform content strategy. Build long term authority in: enterprise AI systems AI infrastructure orchestration engineering platform engineering production AI architectures Purpose: authority hub SEO engine advisory conversion Purpose: thought leadership engineering storytelling architecture breakdowns Purpose: engineering proof OSS credibility architecture examples Purpose: technical writing distribution discoverability DevRel visibility 1. Architecture Essays 2. Engineering Breakdowns 3. AI Infrastructure...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "CONTENT STRATEGY",
+      "CONTENT_STRATEGY"
+    ],
+    "aliases": [
+      "CONTENT STRATEGY",
+      "CONTENT STRATEGY"
+    ],
+    "importance": 6,
+    "related": [
+      "doc-blog-topics",
+      "doc-case-studies",
+      "doc-social-content"
+    ]
+  },
+  {
+    "id": "doc-cta-strategy",
+    "type": "doc",
+    "title": "CTA STRATEGY",
+    "summary": "> Canonical conversion and advisory CTA strategy. Convert technical visitors into: consulting leads advisory opportunities DevRel partnerships technical collaborations startup architecture engagements CTAs should feel: strategic premium architectural technical NOT: sales heavy aggressive freelancer style Example: “Need help designing production grade AI systems?” Example: “Book a deep technical architecture review.” Example: “Looking for advanced technical content around AI infrastructure and...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "CTA STRATEGY",
+      "CTA_STRATEGY"
+    ],
+    "aliases": [
+      "CTA STRATEGY",
+      "CTA STRATEGY"
+    ],
+    "importance": 6,
+    "related": [
+      "doc-case-studies",
+      "doc-services",
+      "doc-roadmap"
+    ]
+  },
+  {
+    "id": "doc-design-system",
+    "type": "doc",
+    "title": "DESIGN SYSTEM",
+    "summary": "> Canonical visual and interaction system. The interface should feel: architectural premium technical intelligent editorial systems oriented The experience should communicate: engineering maturity platform thinking production readiness enterprise AI credibility Primary inspiration: Vercel Stripe OpenAI Anthropic Linear Railway Retool Preferred: clean layouts whitespace typography hierarchy subtle motion dark/light sophistication terminal inspired sections architecture visuals Avoid: excessive gradients AI neon aesthetics...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "DESIGN SYSTEM",
+      "DESIGN_SYSTEM"
+    ],
+    "aliases": [
+      "DESIGN SYSTEM",
+      "DESIGN SYSTEM"
+    ],
+    "importance": 6,
+    "related": [
+      "career-ap-moller-maersk",
+      "career-hewlett-packard-enterprise",
+      "doc-engineering-footprint"
+    ]
+  },
+  {
+    "id": "doc-devrel-positioning",
+    "type": "doc",
+    "title": "DEVREL POSITIONING",
+    "summary": "> Canonical DevRel engineering positioning. Manoj Mukherjee should be positioned as: technical DevRel partner AI infrastructure educator architecture focused technical writer production AI systems engineer AI infrastructure companies vector database companies orchestration platforms cloud AI providers developer tooling startups Preferred content: architecture tutorials production walkthroughs engineering diagrams scaling discussions orchestration examples infrastructure guides Avoid: shallow tutorials beginner only walkthroughs marketing...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "DEVREL POSITIONING",
+      "DEVREL_POSITIONING"
+    ],
+    "aliases": [
+      "DEVREL POSITIONING",
+      "DEVREL POSITIONING"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph",
+      "fastapi",
+      "service-devrel-engineering",
+      "doc-open-source-strategy"
+    ]
+  },
+  {
+    "id": "doc-engineering-footprint",
+    "type": "doc",
+    "title": "ENGINEERING FOOTPRINT",
+    "summary": "> Canonical engineering credibility and OSS footprint context. Primary GitHub: https://github.com/2manoj1 The engineering footprint demonstrates: long term engineering consistency architecture depth ecosystem participation frontend infrastructure expertise AI engineering evolution Visible areas: React ecosystem Next.js ecosystem Firebase discussions frontend tooling GraphQL systems AI engineering systems Strong history with: React.js Next.js SSR Module Federation microfrontends design systems Redux performance optimization Current engineering...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "ENGINEERING FOOTPRINT",
+      "ENGINEERING_FOOTPRINT"
+    ],
+    "aliases": [
+      "ENGINEERING FOOTPRINT",
+      "ENGINEERING FOOTPRINT"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph",
+      "fastapi",
+      "nextjs",
+      "module-federation",
+      "doc-case-studies",
+      "doc-design-system",
+      "doc-open-source-strategy"
+    ]
+  },
+  {
+    "id": "doc-medium-articles",
+    "type": "doc",
+    "title": "MEDIUM ARTICLES",
+    "summary": "> Canonical Medium article archive, technical writing history, and content authority dataset. Medium Profile: https://medium.com/@manojmukherjee777 The Medium profile demonstrates evolution from: frontend engineering architecture systems developer tooling performance engineering toward: AI systems architecture multi agent orchestration enterprise RAG AI infrastructure production AI engineering This progression reinforces: deep engineering foundations platform engineering experience architecture maturity production systems thinking LangGraph LangChain Ollama...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "MEDIUM ARTICLES",
+      "MEDIUM_ARTICLES"
+    ],
+    "aliases": [
+      "MEDIUM ARTICLES",
+      "MEDIUM ARTICLES"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph",
+      "langchain",
+      "pgvector"
+    ]
+  },
+  {
+    "id": "doc-open-source-strategy",
+    "type": "doc",
+    "title": "OPEN SOURCE STRATEGY",
+    "summary": "> Canonical open source positioning strategy. Use open source to: establish authority demonstrate engineering depth showcase architecture thinking attract consulting opportunities support DevRel positioning Stack: Next.js FastAPI LangGraph pgvector Docker Kubernetes Topics: orchestration memory systems workflow routing state persistence Topics: hybrid retrieval contextual memory indexing pipelines retrieval evaluation Repositories should: feel production grade include diagrams include architecture explanations contain clean...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "OPEN SOURCE STRATEGY",
+      "OPEN_SOURCE_STRATEGY"
+    ],
+    "aliases": [
+      "OPEN SOURCE STRATEGY",
+      "OPEN SOURCE STRATEGY"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph",
+      "pgvector",
+      "fastapi",
+      "nextjs",
+      "kubernetes",
+      "doc-devrel-positioning",
+      "doc-engineering-footprint"
+    ]
+  },
+  {
+    "id": "doc-roadmap",
+    "type": "doc",
+    "title": "ROADMAP",
+    "summary": "> Canonical website evolution roadmap. Goals: premium positioning homepage authority services positioning conversion structure Tasks: homepage redesign services page improved navigation CTA strategy typography improvements Goals: establish technical depth showcase architecture demonstrate production systems Tasks: Engineering page Case Studies Architecture Lab Mermaid diagrams AI systems showcases Goals: long term SEO DevRel authority technical writing visibility Tasks: MDX blog article templates...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "ROADMAP",
+      "ROADMAP"
+    ],
+    "aliases": [
+      "ROADMAP",
+      "ROADMAP"
+    ],
+    "importance": 6,
+    "related": [
+      "service-ai-architecture-advisory",
+      "doc-case-studies",
+      "doc-cta-strategy",
+      "doc-services"
+    ]
+  },
+  {
+    "id": "doc-seo-strategy",
+    "type": "doc",
+    "title": "SEO STRATEGY",
+    "summary": "> Canonical SEO positioning strategy. Target keywords: AI Architect Enterprise AI Systems LangGraph Consultant Multi Agent Systems RAG Infrastructure FastAPI AI Backend AI Platform Engineering AI Infrastructure Consulting Production AI Systems SEO should focus on: deep technical content architecture engineering production AI systems thinking enterprise AI modernization Avoid: generic AI content shallow tutorials AI tool roundups LangGraph architecture production RAG...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "SEO STRATEGY",
+      "SEO_STRATEGY"
+    ],
+    "aliases": [
+      "SEO STRATEGY",
+      "SEO STRATEGY"
+    ],
+    "importance": 6,
+    "related": [
+      "langgraph-v1-durable-agent-architecture",
+      "opentelemetry-genai-observability-agent-workflows",
+      "langgraph",
+      "fastapi",
+      "service-langgraph-consultant",
+      "service-rag-infrastructure-consulting",
+      "service-ai-platform-engineering",
+      "pattern-multi-agent-systems"
+    ]
+  },
+  {
+    "id": "doc-services",
+    "type": "doc",
+    "title": "SERVICES",
+    "summary": "> Canonical consulting and advisory positioning. Services should position Manoj Mukherjee as: enterprise AI systems architect AI infrastructure consultant production AI engineer multi agent systems specialist AI platform advisor Avoid: generic freelancer positioning low ticket development services hourly coding gigs Advising startups and enterprises on scalable AI native system design. AI platform architecture enterprise AI modernization orchestration systems scalable GenAI...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "SERVICES",
+      "SERVICES"
+    ],
+    "aliases": [
+      "SERVICES",
+      "SERVICES"
+    ],
+    "importance": 6,
+    "related": [
+      "fastapi",
+      "kubernetes",
+      "production-grade-ai-home-lab",
+      "service-ai-platform-engineering",
+      "career-publicis-sapient",
+      "career-optiv-inc",
+      "career-hewlett-packard-enterprise",
+      "career-william-oneil-india",
+      "pattern-fastapi-ai-backends",
+      "doc-brand-context",
+      "doc-case-studies",
+      "doc-cta-strategy",
+      "doc-roadmap",
+      "opentelemetry-genai-observability-agent-workflows",
+      "langgraph",
+      "google-adk",
+      "mcp",
+      "pgvector",
+      "mongodb",
+      "service-ai-architecture-advisory",
+      "service-rag-infrastructure-consulting",
+      "pattern-multi-agent-systems"
+    ]
+  },
+  {
+    "id": "doc-social-content",
+    "type": "doc",
+    "title": "SOCIAL CONTENT",
+    "summary": "> Canonical social content strategy. LinkedIn GitHub Medium X/Twitter (optional) Topics: architecture orchestration scaling reliability deployment Topics: LangGraph FastAPI pgvector Kubernetes AI AI observability Use: Mermaid.js infra topology orchestration flows retrieval pipelines Topics: production failures scaling tradeoffs optimization observability deployment lessons Content should feel: thoughtful technical calm architectural systems oriented Avoid: hype controversy bait shallow tutorials “top AI tools” content...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "SOCIAL CONTENT",
+      "SOCIAL_CONTENT"
+    ],
+    "aliases": [
+      "SOCIAL CONTENT",
+      "SOCIAL CONTENT"
+    ],
+    "importance": 6,
+    "related": [
+      "opentelemetry-genai-observability-agent-workflows",
+      "langgraph",
+      "pgvector",
+      "fastapi",
+      "kubernetes",
+      "doc-content-strategy"
+    ]
+  },
+  {
+    "id": "doc-website-structure",
+    "type": "doc",
+    "title": "WEBSITE STRUCTURE",
+    "summary": "> Canonical website information architecture. Purpose: authority positioning conversion Purpose: architecture proof systems credibility technical authority Purpose: production proof engineering storytelling scalability demonstrations Purpose: experiments AI workflows diagrams prototypes Purpose: advisory positioning consulting conversion Purpose: SEO DevRel authority building Purpose: GitHub visibility engineering credibility reusable systems Purpose: leadership story engineering philosophy career narrative Purpose: premium lead capture async consulting intake...",
+    "tags": [
+      "documentation",
+      "reference"
+    ],
+    "keywords": [
+      "WEBSITE STRUCTURE",
+      "WEBSITE_STRUCTURE"
+    ],
+    "aliases": [
+      "WEBSITE STRUCTURE",
+      "WEBSITE STRUCTURE"
+    ],
+    "importance": 6,
+    "related": []
+  }
+]

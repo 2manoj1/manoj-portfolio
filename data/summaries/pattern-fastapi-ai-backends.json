@@ -1,0 +1,14 @@
+{
+  "id": "pattern-fastapi-ai-backends",
+  "summary_50": "Async Python services, model gateways, queues, trace IDs, and deployment paths for AI product teams.",
+  "summary_100": "System Pattern: FastAPI AI Backends. Flow path: API -> Queue -> Workers -> Model Gateway -> Store -> Observability. Tradeoffs: async workloads, API contracts, cost controls, deployment",
+  "summary_250": "System Pattern: FastAPI AI Backends. Description: Async Python services, model gateways, queues, trace IDs, and deployment paths for AI product teams.. Pipeline flow structure: API -> Queue -> Workers -> Model Gateway -> Store -> Observability. Tradeoffs involved: async workloads, API contracts, cost controls, deployment",
+  "facts": [
+    "Description: Async Python services, model gateways, queues, trace IDs, and deployment paths for AI product teams.",
+    "Pipeline stages: API -> Queue -> Workers -> Model Gateway -> Store -> Observability",
+    "Tradeoff focus constraint: async workloads",
+    "Tradeoff focus constraint: API contracts",
+    "Tradeoff focus constraint: cost controls",
+    "Tradeoff focus constraint: deployment"
+  ]
+}

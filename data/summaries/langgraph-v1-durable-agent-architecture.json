@@ -1,0 +1,13 @@
+{
+  "id": "langgraph-v1-durable-agent-architecture",
+  "summary_50": "Production agents crash. When they do, you need checkpoints. This is how real teams build resumable workflows that survive restarts, approval delays, and API failures without replaying unsafe work.",
+  "summary_100": "Production agents crash. When they do, you need checkpoints. This is how real teams build resumable workflows that survive restarts, approval delays, and API failures without replaying unsafe work. Key takeaway: The enterprise agent is not a chat loop. It's a stateful workflow system with persistence, recovery semantics, human gates, and failure paths.",
+  "summary_250": "Production agents crash. When they do, you need checkpoints. This is how real teams build resumable workflows that survive restarts, approval delays, and API failures without replaying unsafe work. Takeaway: The enterprise agent is not a chat loop. It's a stateful workflow system with persistence, recovery semantics, human gates, and failure paths. Context: Why this matters: LangGraph v1 changes how we think about agent runtime. Teams moving from demo agents to production workflows realize the agent isn't just a prompt loop. It's an execution system that needs to survive timeouts, approval delays, retries, and platform restarts. > \"State management is the single hardest problem in distributed agent systems. If you do not checkpoint, you do not have an architecture; you have a hope.\" — Manoj Mukherjee The architecture shift is real: state management moves from conversation history to workflow state, tool outputs, approval status, failure context, and retry logic. That state has to be durable enough to resume execution without repeating dangerous work. [!IMPORTANT] Checkpointing introduces database IO overhead. Optimize connection pools and serialize only state deltas rather than the full context history. The core decision: Where does state live?: A simple chat agent stores messages. A production agent stores workflow state, tool outputs, approval status, retries, failure context, and recovery paths. The difference is dramatic when an agent needs to resume after failure. | State surface | Production concern | | --- | --- | | Conversation messages | Replay safety and memory boundaries | | Tool outputs |...",
+  "facts": [
+    "Checkpoint every business-critical state transition",
+    "Wrap non-deterministic side effects in replay-safe tasks",
+    "Use human approval gates for irreversible tool calls",
+    "Treat agent traces as production debugging artifacts",
+    "State management is the single hardest problem in distributed agent systems. If you do not checkpoint, you do not have an architecture; you have a hope.\" — Manoj Mukherjee"
+  ]
+}

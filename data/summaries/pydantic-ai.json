@@ -1,0 +1,13 @@
+{
+  "id": "pydantic-ai",
+  "summary_50": "Agent framework from Pydantic. Manoj runs active lab tests on typed prompt construction and dependency injection configurations.",
+  "summary_100": "Pydantic AI (POC) (Orchestration - Trial (Active POC)): Agent framework from Pydantic. Manoj runs active lab tests on typed prompt construction and dependency injection configurations.",
+  "summary_250": "Pydantic AI (POC) is in the Trial ring under the Orchestration quadrant. Manoj's verdict: Trial (Active POC). Insight: Agent framework from Pydantic. Manoj runs active lab tests on typed prompt construction and dependency injection configurations.. ADR Context - Problem: Managing unstructured, non-typed prompts inside LLM tool calling loops leads to runtime validation failures.. Decision: Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.. Tradeoff: Early stage framework featuring possible API design updates.",
+  "facts": [
+    "Pydantic AI (POC) is classified in the Trial ring for Orchestration.",
+    "Agent framework from Pydantic. Manoj runs active lab tests on typed prompt construction and dependency injection configurations.",
+    "ADR Problem: Managing unstructured, non-typed prompts inside LLM tool calling loops leads to runtime validation failures.",
+    "ADR Decision: Evaluate Pydantic AI for strict runtime typing and dependency injection across python agents.",
+    "ADR Tradeoff: Early stage framework featuring possible API design updates."
+  ]
+}

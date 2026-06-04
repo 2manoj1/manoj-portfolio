@@ -1,0 +1,11 @@
+{
+  "id": "adr-deepseek-r1",
+  "summary_50": "Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.",
+  "summary_100": "ADR for DeepSeek-R1. Problem: Complex algorithmic validations and code synthesis queries fail on standard semantic models. Decision: Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.",
+  "summary_250": "ADR for DeepSeek-R1. Problem: Complex algorithmic validations and code synthesis queries fail on standard semantic models. Decision: Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines. Tradeoff: High reasoning token latency counts require asynchronous queue handling.",
+  "facts": [
+    "Complex algorithmic validations and code synthesis queries fail on standard semantic models.",
+    "Deploy DeepSeek-R1 API nodes to enforce mathematical code validations in agent logic pipelines.",
+    "High reasoning token latency counts require asynchronous queue handling."
+  ]
+}

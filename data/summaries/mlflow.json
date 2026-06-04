@@ -1,0 +1,13 @@
+{
+  "id": "mlflow",
+  "summary_50": "Evaluating MLflow's tracking server and prompt registry pipelines for offline model metric evaluations and regression tracking.",
+  "summary_100": "MLflow (Orchestration - Trial (LLM Ops Registry)): Evaluating MLflow's tracking server and prompt registry pipelines for offline model metric evaluations and regression tracking.",
+  "summary_250": "MLflow is in the Trial ring under the Orchestration quadrant. Manoj's verdict: Trial (LLM Ops Registry). Insight: Evaluating MLflow's tracking server and prompt registry pipelines for offline model metric evaluations and regression tracking.. ADR Context - Problem: Tracking custom model runs and prompt iteration metrics offline lacks version-controlled registries.. Decision: Deploy MLflow container instances to record experiment metrics and track prompting versions.. Tradeoff: Requires hosting dedicated MLflow tracking servers and SQL database backends.",
+  "facts": [
+    "MLflow is classified in the Trial ring for Orchestration.",
+    "Evaluating MLflow's tracking server and prompt registry pipelines for offline model metric evaluations and regression tracking.",
+    "ADR Problem: Tracking custom model runs and prompt iteration metrics offline lacks version-controlled registries.",
+    "ADR Decision: Deploy MLflow container instances to record experiment metrics and track prompting versions.",
+    "ADR Tradeoff: Requires hosting dedicated MLflow tracking servers and SQL database backends."
+  ]
+}

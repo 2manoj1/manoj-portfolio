@@ -1,0 +1,23 @@
+{
+  "id": "enterprise-agentic-rag-platform",
+  "summary_50": "I architected a production-grade agentic RAG pattern for financial workloads where long regulatory filings needed layout-aware parsing, hybrid retrieval, deterministic state transitions, and strict grounding checks before an answer could be trusted.",
+  "summary_100": "Enterprise Agentic RAG in GCP Kubernetes (GKE): I architected a production-grade agentic RAG pattern for financial workloads where long regulatory filings needed layout-aware parsing, hybrid retrieval, deterministic state transitions, and strict grounding checks before an answer could be trusted. Narration: The core decision was to keep retrieval metadata and vector search close together in PostgreSQL with pgvector, then use a stateful LangGraph workflow to separate query planning, retrieval, evaluation, and answer synthesis. That kept the architecture inspectable under enterprise governance.",
+  "summary_250": "Enterprise Agentic RAG (Status: PRODUCTION, Ingress: Istio Ingress Gateway). Problem: I architected a production-grade agentic RAG pattern for financial workloads where long regulatory filings needed layout-aware parsing, hybrid retrieval, deterministic state transitions, and strict grounding checks before an answer could be trusted.. Narration: The core decision was to keep retrieval metadata and vector search close together in PostgreSQL with pgvector, then use a stateful LangGraph workflow to separate query planning, retrieval, evaluation, and answer synthesis. That kept the architecture inspectable under enterprise governance.. Key systems: Istio gateway: Cluster ingress and policy boundary; FastAPI parser: Layout-aware filing extraction; Query planner: LangGraph retrieval routing; Postgres pgvector: HNSW vectors plus transactional metadata; Grounding eval: Safety and relevance gate; Trace ledger: Run IDs, decision logs, and audit hooks",
+  "facts": [
+    "Status: PRODUCTION in environment GCP Kubernetes (GKE)",
+    "Ingress pathway: Istio Ingress Gateway",
+    "Retrieval: pgvector (Hybrid metadata and vector lookup in the relational boundary.)",
+    "Orchestration: LangGraph (Stateful retrieve, evaluate, and synthesize nodes.)",
+    "Runtime: GKE/Istio (Containerized service boundary with cluster ingress.)",
+    "Reliability: Eval gate (Grounding and safety checks before response finalization.)",
+    "Zone Client Edge Network: ...",
+    "Zone GKE Service Boundary: ...",
+    "Zone Retrieval Data Plane: ...",
+    "Zone Reliability Controls: ...",
+    "Component Istio gateway: Cluster ingress and policy boundary (Terminates governed traffic before requests enter the RAG service mesh.)",
+    "Component FastAPI parser: Layout-aware filing extraction (Normalizes long filings into structured chunks with section metadata and document provenance.)",
+    "Component Query planner: LangGraph retrieval routing (Expands and routes user intent across metadata filters, semantic search, and grounded answer paths.)",
+    "Component Postgres pgvector: HNSW vectors plus transactional metadata (Keeps candidate retrieval and business metadata in one database boundary for simpler governance.)",
+    "Component Grounding eval: Safety and relevance gate (Checks answer support against retrieved evidence before the workflow releases a response.)"
+  ]
+}

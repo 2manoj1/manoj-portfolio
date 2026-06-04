@@ -1,0 +1,11 @@
+{
+  "id": "adr-webmcp",
+  "summary_50": "Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.",
+  "summary_100": "ADR for WebMCP (Beta). Problem: Client browser applications cannot fetch local workspace resources directly due to security sandboxes. Decision: Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.",
+  "summary_250": "ADR for WebMCP (Beta). Problem: Client browser applications cannot fetch local workspace resources directly due to security sandboxes. Decision: Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels. Tradeoff: Ties extension logic to early-stage experimental browser specifications.",
+  "facts": [
+    "Client browser applications cannot fetch local workspace resources directly due to security sandboxes.",
+    "Integrate WebMCP protocol nodes to bridge client context arrays via allowlisted browser tunnels.",
+    "Ties extension logic to early-stage experimental browser specifications."
+  ]
+}

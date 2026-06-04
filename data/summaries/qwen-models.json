@@ -1,0 +1,13 @@
+{
+  "id": "qwen-models",
+  "summary_50": "Manoj's primary choice for local coding assistance and offline tool calling. Performs on-par with proprietary code models on edge hardware.",
+  "summary_100": "Qwen 2.5 Coder (Models - Adopt (Local Code LLM)): Manoj's primary choice for local coding assistance and offline tool calling. Performs on-par with proprietary code models on edge hardware.",
+  "summary_250": "Qwen 2.5 Coder is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Local Code LLM). Insight: Manoj's primary choice for local coding assistance and offline tool calling. Performs on-par with proprietary code models on edge hardware.. ADR Context - Problem: Sending sensitive corporate source code to external public APIs violates data compliance rules.. Decision: Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.. Tradeoff: Binds performance to local GPU cluster availability and VRAM memory limits.",
+  "facts": [
+    "Qwen 2.5 Coder is classified in the Adopt ring for Models.",
+    "Manoj's primary choice for local coding assistance and offline tool calling. Performs on-par with proprietary code models on edge hardware.",
+    "ADR Problem: Sending sensitive corporate source code to external public APIs violates data compliance rules.",
+    "ADR Decision: Orchestrate local Qwen 2.5 Coder models on unified memory hardware for secure, offline code checking.",
+    "ADR Tradeoff: Binds performance to local GPU cluster availability and VRAM memory limits."
+  ]
+}

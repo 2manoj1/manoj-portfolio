@@ -1,0 +1,14 @@
+{
+  "id": "service-langgraph-consultant",
+  "summary_50": "I help you design agentic workflows with explicit state, deterministic routing, short/long-term memory, robust fallbacks, and human-in-the-loop validation gates.",
+  "summary_100": "Service: LangGraph Consultant addressing \"Agent workflows work in demos but become opaque, brittle, or hard to debug in production.\". I help you design agentic workflows with explicit state, deterministic routing, short/long-term memory, robust fallbacks, and human-in-the-loop validation gates.",
+  "summary_250": "Service: LangGraph Consultant. Buyer Pain: Agent workflows work in demos but become opaque, brittle, or hard to debug in production.. Description: I help you design agentic workflows with explicit state, deterministic routing, short/long-term memory, robust fallbacks, and human-in-the-loop validation gates.. Target Audience: AI product teams building agent workflows beyond simple chat.. Depth of engagement: LangGraph graphs, planner/executor patterns, tool routing, checkpoints, memory, retries, and observability.. Key outcomes: Model agent workflows as debuggable state machines; Reduce brittle tool-calling and hidden orchestration behavior; Build evaluation paths for multi-agent reliability",
+  "facts": [
+    "Buyer Pain: Agent workflows work in demos but become opaque, brittle, or hard to debug in production.",
+    "Ideal Client: AI product teams building agent workflows beyond simple chat.",
+    "Consulting Depth: LangGraph graphs, planner/executor patterns, tool routing, checkpoints, memory, retries, and observability.",
+    "Service Outcome: Model agent workflows as debuggable state machines",
+    "Service Outcome: Reduce brittle tool-calling and hidden orchestration behavior",
+    "Service Outcome: Build evaluation paths for multi-agent reliability"
+  ]
+}

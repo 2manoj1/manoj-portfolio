@@ -1,0 +1,13 @@
+{
+  "id": "mongodb",
+  "summary_50": "Enterprise document storage. Stores structured JSON data and document metadata for large-scale retrieval applications.",
+  "summary_100": "MongoDB (Data - Adopt (Document Store)): Enterprise document storage. Stores structured JSON data and document metadata for large-scale retrieval applications.",
+  "summary_250": "MongoDB is in the Adopt ring under the Data quadrant. Manoj's verdict: Adopt (Document Store). Insight: Enterprise document storage. Stores structured JSON data and document metadata for large-scale retrieval applications.. ADR Context - Problem: Polymorphic document models require frequent schema migrations and alterations in relational structures.. Decision: Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.. Tradeoff: Does not support native ACID multi-table joins as cleanly as PostgreSQL.",
+  "facts": [
+    "MongoDB is classified in the Adopt ring for Data.",
+    "Enterprise document storage. Stores structured JSON data and document metadata for large-scale retrieval applications.",
+    "ADR Problem: Polymorphic document models require frequent schema migrations and alterations in relational structures.",
+    "ADR Decision: Utilize MongoDB to serve unstructured document inputs and maintain trace log metadata sheets.",
+    "ADR Tradeoff: Does not support native ACID multi-table joins as cleanly as PostgreSQL."
+  ]
+}

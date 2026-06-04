@@ -1,0 +1,11 @@
+{
+  "id": "adr-langgraph",
+  "summary_50": "Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.",
+  "summary_100": "ADR for LangGraph. Problem: Single-prompt loops fail on multi-step reasoning, resulting in brittle tool executions. Decision: Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.",
+  "summary_250": "ADR for LangGraph. Problem: Single-prompt loops fail on multi-step reasoning, resulting in brittle tool executions. Decision: Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers. Tradeoff: Requires explicit state modeling in exchange for predictable, resumable execution paths.",
+  "facts": [
+    "Single-prompt loops fail on multi-step reasoning, resulting in brittle tool executions.",
+    "Deploy LangGraph to model agent transitions as deterministic state machines with persistence layers.",
+    "Requires explicit state modeling in exchange for predictable, resumable execution paths."
+  ]
+}

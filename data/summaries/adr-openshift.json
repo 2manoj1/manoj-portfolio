@@ -1,0 +1,11 @@
+{
+  "id": "adr-openshift",
+  "summary_50": "Deploy critical workloads inside Red Hat OpenShift Container Platform.",
+  "summary_100": "ADR for OpenShift. Problem: Standard Kubernetes builds lack built-in security auditing and secure out-of-the-box registry pipelines. Decision: Deploy critical workloads inside Red Hat OpenShift Container Platform.",
+  "summary_250": "ADR for OpenShift. Problem: Standard Kubernetes builds lack built-in security auditing and secure out-of-the-box registry pipelines. Decision: Deploy critical workloads inside Red Hat OpenShift Container Platform. Tradeoff: Higher license costs and locked dependencies to Red Hat ecosystem tools.",
+  "facts": [
+    "Standard Kubernetes builds lack built-in security auditing and secure out-of-the-box registry pipelines.",
+    "Deploy critical workloads inside Red Hat OpenShift Container Platform.",
+    "Higher license costs and locked dependencies to Red Hat ecosystem tools."
+  ]
+}

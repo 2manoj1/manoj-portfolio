@@ -1,0 +1,11 @@
+{
+  "id": "adr-gpt-4o",
+  "summary_50": "Integrate GPT-4o as a redundant smart-routing backup provider for Claude.",
+  "summary_100": "ADR for GPT-4o. Problem: Commercial API single-point-of-failure risk (outages or throttling limits). Decision: Integrate GPT-4o as a redundant smart-routing backup provider for Claude.",
+  "summary_250": "ADR for GPT-4o. Problem: Commercial API single-point-of-failure risk (outages or throttling limits). Decision: Integrate GPT-4o as a redundant smart-routing backup provider for Claude. Tradeoff: Requires maintaining dual system instructions and prompt templates.",
+  "facts": [
+    "Commercial API single-point-of-failure risk (outages or throttling limits).",
+    "Integrate GPT-4o as a redundant smart-routing backup provider for Claude.",
+    "Requires maintaining dual system instructions and prompt templates."
+  ]
+}

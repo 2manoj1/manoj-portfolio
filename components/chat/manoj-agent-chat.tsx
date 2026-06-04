@@ -24,6 +24,31 @@ import { MessageResponse } from "@/components/ai-elements/message";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+function getCleanText(text: string, isStreaming: boolean): string {
+	if (isStreaming) {
+		const index = text.indexOf("<suggestions>");
+		if (index !== -1) {
+			return text.substring(0, index).trim();
+		}
+	} else {
+		return text.replace(/<suggestions>[\s\S]*?<\/suggestions>/g, "").trim();
+	}
+	return text;
+}
+
+function getExtractedSuggestions(text: string): string[] {
+	const match = text.match(/<suggestions>([\s\S]*?)<\/suggestions>/);
+	if (match) {
+		try {
+			const suggestions = JSON.parse(match[1].trim());
+			return Array.isArray(suggestions) ? suggestions.slice(0, 2) : [];
+		} catch {
+			return [];
+		}
+	}
+	return [];
+}
+
 type StatusDataPart = {
 	type: "data-status";
 	data?: {
@@ -147,13 +172,16 @@ function MessageParts({
 				</div>
 				{hasTextContent ? (
 					<div className="max-w-full space-y-3">
-						{textParts.map((part, index) => (
-							<MessageResponse
-								key={`${message.id}-text-${index}`}
-								className="break-words text-white/82">
-								{part.text}
-							</MessageResponse>
-						))}
+						{textParts.map((part, index) => {
+							const cleanText = getCleanText(part.text, isStreaming);
+							return (
+								<MessageResponse
+									key={`${message.id}-text-${index}`}
+									className="break-words text-white/82">
+									{cleanText}
+								</MessageResponse>
+							);
+						})}
 					</div>
 				) : isStreaming ? (
 					<ThinkingInline status={status} />
@@ -398,6 +426,7 @@ export function AstraChatSurface({
 	const [currentStatus, setCurrentStatus] = useState<string>();
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const bottomRef = useRef<HTMLDivElement>(null);
+	const isAtBottom = useRef(true);
 
 	const transport = useMemo(
 		() =>
@@ -434,12 +463,35 @@ export function AstraChatSurface({
 	const showWelcome =
 		visibleMessages.length === 1 && visibleMessages[0]?.id === introMessage.id;
 
-	useEffect(() => {
-		if (!scrollRef.current) {
-			return;
-		}
+	const lastAssistantMessage = useMemo(() => {
+		const assistantMsgs = messages.filter((m) => m.role === "assistant");
+		return assistantMsgs.length > 0 ? assistantMsgs[assistantMsgs.length - 1] : null;
+	}, [messages]);
 
-		bottomRef.current?.scrollIntoView({ block: "end" });
+	const suggestions = useMemo(() => {
+		if (showWelcome || isLoading) return [];
+		if (!lastAssistantMessage) return [];
+		const textParts = lastAssistantMessage.parts.filter((part) => part.type === "text");
+		const fullText = textParts.map((p) => p.text).join("");
+		return getExtractedSuggestions(fullText);
+	}, [lastAssistantMessage, showWelcome, isLoading]);
+
+	const handleScroll = () => {
+		const container = scrollRef.current;
+		if (!container) return;
+		const threshold = 120;
+		const distanceFromBottom =
+			container.scrollHeight - container.clientHeight - container.scrollTop;
+		isAtBottom.current = distanceFromBottom <= threshold;
+	};
+
+	useEffect(() => {
+		const container = scrollRef.current;
+		if (!container) return;
+
+		if (isAtBottom.current) {
+			container.scrollTop = container.scrollHeight;
+		}
 	}, [messages, status]);
 
 	async function sendPrompt(value: string) {
@@ -451,6 +503,10 @@ export function AstraChatSurface({
 
 		setInput("");
 		setCurrentStatus("Connecting to Astra");
+		isAtBottom.current = true;
+		if (scrollRef.current) {
+			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+		}
 		await sendMessage({ text: trimmed });
 	}
 
@@ -505,6 +561,7 @@ export function AstraChatSurface({
 
 			<div
 				ref={scrollRef}
+				onScroll={handleScroll}
 				className="min-h-0 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5 sm:py-5">
 				{showWelcome ? (
 					<WelcomePanel
@@ -559,6 +616,21 @@ export function AstraChatSurface({
 
 			<footer className="shrink-0 border-t border-white/10 bg-black/32 px-3 py-3 sm:px-4">
 				<div className={cn("mx-auto w-full", isPage ? "max-w-3xl" : "max-w-full")}>
+					{!showWelcome && suggestions.length > 0 && !isLoading && (
+						<div className="mb-3 flex gap-2 overflow-x-auto whitespace-nowrap pb-1 no-scrollbar animate-in fade-in slide-in-from-bottom-2 duration-300">
+							{suggestions.map((suggestion) => (
+								<button
+									key={suggestion}
+									type="button"
+									title={suggestion}
+									onClick={() => void sendPrompt(suggestion)}
+									className="inline-block shrink-0 rounded-full border border-white/10 bg-white/[0.045] px-3 py-1.5 font-mono text-[10px] tracking-wide text-white/62 transition hover:border-amber/30 hover:bg-white/[0.08] hover:text-white max-w-[200px] truncate"
+								>
+									{suggestion}
+								</button>
+							))}
+						</div>
+					)}
 					<form onSubmit={handleSubmit} className="flex h-12 items-center gap-2">
 						<label htmlFor="ask-manoj-agent-input" className="sr-only">
 							Ask Astra

@@ -1,0 +1,11 @@
+{
+  "id": "adr-gemini-nano",
+  "summary_50": "Route basic text manipulation requests directly to Chrome's built-in window.ai API.",
+  "summary_100": "ADR for Gemini Nano. Problem: Running light NLP checks (summarizing, grammar checks) over the network causes latency lags and security audits. Decision: Route basic text manipulation requests directly to Chrome's built-in window.ai API.",
+  "summary_250": "ADR for Gemini Nano. Problem: Running light NLP checks (summarizing, grammar checks) over the network causes latency lags and security audits. Decision: Route basic text manipulation requests directly to Chrome's built-in window.ai API. Tradeoff: API specs remain experimental and subject to Google Chrome browser updates.",
+  "facts": [
+    "Running light NLP checks (summarizing, grammar checks) over the network causes latency lags and security audits.",
+    "Route basic text manipulation requests directly to Chrome's built-in window.ai API.",
+    "API specs remain experimental and subject to Google Chrome browser updates."
+  ]
+}

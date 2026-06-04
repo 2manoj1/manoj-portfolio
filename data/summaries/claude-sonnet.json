@@ -1,0 +1,13 @@
+{
+  "id": "claude-sonnet",
+  "summary_50": "Manoj's primary enterprise model for complex logic, code generation, and strict JSON output compliance in production workflows.",
+  "summary_100": "Claude 3.5 Sonnet (Models - Adopt (Production-Ready)): Manoj's primary enterprise model for complex logic, code generation, and strict JSON output compliance in production workflows.",
+  "summary_250": "Claude 3.5 Sonnet is in the Adopt ring under the Models quadrant. Manoj's verdict: Adopt (Production-Ready). Insight: Manoj's primary enterprise model for complex logic, code generation, and strict JSON output compliance in production workflows.. ADR Context - Problem: Standard LLMs output malformed JSON responses that break parsing steps.. Decision: Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.. Tradeoff: Higher API token expense compared to lightweight models.",
+  "facts": [
+    "Claude 3.5 Sonnet is classified in the Adopt ring for Models.",
+    "Manoj's primary enterprise model for complex logic, code generation, and strict JSON output compliance in production workflows.",
+    "ADR Problem: Standard LLMs output malformed JSON responses that break parsing steps.",
+    "ADR Decision: Deploy Claude 3.5 Sonnet as the primary backend agent model for structured tool selection.",
+    "ADR Tradeoff: Higher API token expense compared to lightweight models."
+  ]
+}
