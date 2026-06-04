@@ -478,7 +478,7 @@ export const caseStudies = [
 export const articles = [
 	{
 		title:
-			"Desktop AI Supercomputing is Here: A Practical Look at NVIDIA DGX Spark for Startups",
+			"Desktop AI Supercomputing is Here: A Practical Look at NVIDIA DGX Spark™ for Startups",
 		date: "April 2026",
 		topic: "AI infrastructure",
 		url: "https://medium.com/@manojmukherjee777/desktop-ai-supercomputing-is-here-a-practical-look-at-nvidia-dgx-spark-for-startups-84526c573f40",
@@ -502,6 +502,48 @@ export const articles = [
 		date: "September 2024",
 		topic: "AI agents",
 		url: "https://medium.com/@manojmukherjee777/building-a-real-time-ai-agent-with-langchain-langgraph-and-open-source-llms-using-ollama-3602fc77c7c3",
+	},
+	{
+		title: "Advanced Retrieval-Augmented Generation (RAG) with LangChain, LangGraph, and AI Agents",
+		date: "October 2024",
+		topic: "RAG & Agents",
+		url: "https://medium.com/@manoj-mukherjee/advanced-retrieval-augmented-generation-rag-with-langchain-langgraph-and-ai-agents-0d7092984185",
+	},
+	{
+		title: "Advanced Agent Functionality with Ollama and LLAMA 3 in LangChain",
+		date: "July 2024",
+		topic: "AI agents",
+		url: "https://medium.com/@manoj-mukherjee/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-51c6c0628e93",
+	},
+	{
+		title: "Extracting Information from Images with OCR, Vision AI, and Language Models",
+		date: "February 2024",
+		topic: "OCR & Vision AI",
+		url: "https://medium.com/@manoj-mukherjee/extracting-information-from-images-with-ocr-vision-ai-and-language-models-a678d21c172a",
+	},
+	{
+		title: "Local Image Understanding with OpenSource LLaVA and Ollama",
+		date: "February 2024",
+		topic: "Multimodal AI",
+		url: "https://medium.com/@manoj-mukherjee/local-image-understanding-with-opensource-llava-and-ollama-84f93a901046",
+	},
+	{
+		title: "React Testing Library: Portal Modal",
+		date: "April 2023",
+		topic: "React testing",
+		url: "https://medium.com/@manojmukherjee777/react-testing-library-portal-modal-b05aaeb5dda7",
+	},
+	{
+		title: "Replay.io: A Game-Changing Tool for Web Developers",
+		date: "April 2023",
+		topic: "Developer tools",
+		url: "https://medium.com/@manoj-mukherjee/replay-io-a-game-changing-tool-for-web-developers-89d1a37c3547",
+	},
+	{
+		title: "Cypress 10 — As Frontend or JavaScript Engineer",
+		date: "July 2022",
+		topic: "Frontend testing",
+		url: "https://medium.com/@manoj-mukherjee/cypress-10-as-frontend-or-javascript-engineer-f5e6a91d1e4e",
 	},
 ] as const;
 

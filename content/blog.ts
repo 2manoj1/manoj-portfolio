@@ -1,8 +1,7 @@
 export const blogArticles = [
 	{
 		slug: "langgraph-v1-durable-agent-architecture",
-		title:
-			"LangGraph v1 and Durable Agent Architecture: Why Enterprise AI Needs Checkpoints",
+		title: "Durable Agent Architecture with LangGraph v1",
 		date: "May 2026",
 		topic: "LangGraph architecture",
 		readingTime: "7 min read",
@@ -30,7 +29,9 @@ export const blogArticles = [
 				heading: "Why this matters",
 				body: [
 					"LangGraph v1 changes how we think about agent runtime. Teams moving from demo agents to production workflows realize the agent isn't just a prompt loop. It's an execution system that needs to survive timeouts, approval delays, retries, and platform restarts.",
+					"> \"State management is the single hardest problem in distributed agent systems. If you do not checkpoint, you do not have an architecture; you have a hope.\" — Manoj Mukherjee",
 					"The architecture shift is real: state management moves from conversation history to workflow state, tool outputs, approval status, failure context, and retry logic. That state has to be durable enough to resume execution without repeating dangerous work.",
+					"[!IMPORTANT] Checkpointing introduces database IO overhead. Optimize connection pools and serialize only state deltas rather than the full context history.",
 				],
 			},
 			{
@@ -46,6 +47,11 @@ export const blogArticles = [
 					"Model the workflow as an explicit graph with nodes for planning, retrieval, tool execution, validation, human review, and response generation. Add a checkpointer before rollout, assign thread identifiers to business workflows, and make every side effect idempotent.",
 					"Enterprise buyers don't want magical agents. They want to see exactly where execution paused, why a tool was called, what got approved, and how the workflow resumes. That transparency is what builds trust.",
 				],
+				diagram: {
+					title: "Durable Lifecycle State Flow",
+					nodes: ["Client Ingress", "LangGraph Supervisor", "Tool Exec (Postgres Checkpoint)", "Human Approval Gate", "State Commit"],
+					edges: ["Ingress → Supervisor", "Supervisor → Tool (Pause)", "Tool → Gate (Approval)", "Gate → Commit"]
+				},
 				codeBlock: {
 					language: "python",
 					filename: "agent_runtime.py",
@@ -70,8 +76,7 @@ export const blogArticles = [
 	},
 	{
 		slug: "mcp-security-architecture-enterprise-ai",
-		title:
-			"MCP Security Architecture: Tool Permissions, Context Boundaries, and Enterprise Guardrails",
+		title: "MCP Security Architecture & Enterprise Guardrails",
 		date: "May 2026",
 		topic: "MCP security",
 		readingTime: "8 min read",
@@ -99,7 +104,9 @@ export const blogArticles = [
 				heading: "The opportunity and the risk",
 				body: [
 					"MCP is attractive because it standardizes how agents access tools. One protocol, multiple servers, consistent schemas. That standardization is powerful—and concentrated. A tool interface that's easy to expose is also easy to overexpose.",
+					"> \"Exposing a local terminal tool to an agent without a strict virtualization sandbox is equivalent to handing a root shell to a random caller.\" — Enterprise Security Audit Guideline",
 					"Enterprise MCP adoption depends on getting the trust boundary right. Your MCP server isn't a plugin. It's an access layer into operational systems, data stores, documents, environments, and workflows. Treat it accordingly.",
+					"[!WARNING] Do not allow administrative tools to auto-execute. Always require explicit human authorization gates for operations involving deletions, payments, or cloud infrastructure alterations.",
 				],
 			},
 			{
@@ -139,8 +146,7 @@ export const blogArticles = [
 	},
 	{
 		slug: "opentelemetry-genai-observability-agent-workflows",
-		title:
-			"OpenTelemetry GenAI Observability: Tracing Agent Workflows Beyond Token Counts",
+		title: "GenAI Observability with OpenTelemetry Traces",
 		date: "May 2026",
 		topic: "AI observability",
 		readingTime: "7 min read",
@@ -168,7 +174,9 @@ export const blogArticles = [
 				heading: "Why tracing changes everything",
 				body: [
 					"Agent failures aren't simple. A bad answer might come from retrieval drift, tool permissions, model timeout, bad handoff, or missing memory. Traditional logs don't explain that chain. Traces do.",
+					"> \"If you can't trace it, you can't improve it. Traditional application logging is blind to multi-agent reasoning chains.\" — Observability Whitepaper",
 					"When you instrument every model call, tool call, retrieval step, and decision point, you stop guessing about failures and start debugging systematically.",
+					"[!TIP] Propagate a single global trace ID from your Next.js client request down to FastAPI gateway, LangGraph supervisor nodes, and vector search operations to construct a unified view of latency budget.",
 				],
 			},
 			{
@@ -203,8 +211,7 @@ export const blogArticles = [
 	},
 	{
 		slug: "context-engineering-enterprise-rag-systems",
-		title:
-			"Context Engineering for Enterprise RAG: From Prompt Windows to Retrieval Operating Systems",
+		title: "Context Engineering for Enterprise RAG",
 		date: "May 2026",
 		topic: "Context engineering",
 		readingTime: "8 min read",
@@ -233,6 +240,7 @@ export const blogArticles = [
 				body: [
 					"Context windows grew, but the design problem didn't disappear—it got more expensive. Teams still need to choose which policies, documents, memories, tool results, and user facts deserve space. That choice scales with token cost.",
 					"Enterprise RAG systems that work treat context as a layered system: static instructions, tenant policy, user permissions, session state, retrieved evidence, tool output, and long-term memory. Each layer enters through explicit rules.",
+					"[!NOTE] Grounding validation should be executed locally using lightweight models (e.g. LLaVA or fine-tuned local models) before query rollout to save API token costs.",
 				],
 			},
 			{
@@ -267,8 +275,7 @@ export const blogArticles = [
 	},
 	{
 		slug: "fastapi-ai-backends-background-reasoning-workflows",
-		title:
-			"FastAPI AI Backends for Background Reasoning: Queues, Polling, and Resumable Workflows",
+		title: "FastAPI AI Backends for Background Reasoning",
 		date: "May 2026",
 		topic: "FastAPI AI backends",
 		readingTime: "7 min read",
@@ -297,6 +304,7 @@ export const blogArticles = [
 				body: [
 					"Reasoning models, agentic workflows, code analysis, and multi-tool research take time. Minutes, not milliseconds. That breaks the synchronous request-response model. You need backend architecture.",
 					"This connects directly with enterprise AI platform engineering: FastAPI AI backends, async Python, job queues, polling patterns, observability, and cost governance.",
+					"[!CAUTION] Long-running HTTP connections are prone to timeout drops due to edge proxy limits (like Cloudflare or AWS ALB). Always use job queues, status checking endpoints, or WebSockets.",
 				],
 			},
 			{
