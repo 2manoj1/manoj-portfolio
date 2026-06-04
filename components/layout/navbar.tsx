@@ -15,7 +15,7 @@ const navLinks = [
 	{ href: "/services", label: "Services", hasDropdown: true, type: "services" },
 	{ href: "/engineering", label: "Engineering" },
 	{ href: "/architecture-lab", label: "Architecture Lab" },
-	{ href: "/case-studies", label: "Case Studies", hasDropdown: true, type: "caseStudies" },
+	{ href: "/case-studies", label: "Case Studies" },
 	{ href: "/blog", label: "Writing" },
 	{ href: "/about", label: "About" },
 ];
