@@ -6,6 +6,10 @@ import { cjk } from "@streamdown/cjk";
 import { code } from "@streamdown/code";
 import { math } from "@streamdown/math";
 import { mermaid } from "@streamdown/mermaid";
+import {
+  BlogArchitectureFlow,
+  type BlogDiagram,
+} from "./blog-architecture-flow";
 import { BlogAudioBook } from "./blog-audio-book";
 import { 
   ArrowRight, 
@@ -22,11 +26,7 @@ import { cn } from "@/lib/utils";
 interface BlogSection {
   heading: string;
   body: readonly string[];
-  diagram?: {
-    title: string;
-    nodes: readonly string[];
-    edges?: readonly string[];
-  };
+  diagram?: BlogDiagram;
   codeBlock?: {
     language: string;
     filename: string;
@@ -92,29 +92,6 @@ function MarkdownBlock({
   );
 }
 
-function createMermaidDiagram(diagram: NonNullable<BlogSection["diagram"]>) {
-  const nodeIds = new Map<string, string>();
-  const lines = ["```mermaid", "flowchart LR"];
-
-  diagram.nodes.forEach((node, index) => {
-    const id = `N${index}`;
-    nodeIds.set(node, id);
-    lines.push(`  ${id}["${node.replace(/"/g, '\\"')}"]`);
-  });
-
-  for (let index = 0; index < diagram.nodes.length - 1; index += 1) {
-    const from = nodeIds.get(diagram.nodes[index]);
-    const to = nodeIds.get(diagram.nodes[index + 1]);
-    const edgeLabel = diagram.edges?.[index]?.replace(/"/g, '\\"');
-    if (from && to) {
-      lines.push(edgeLabel ? `  ${from} -->|"${edgeLabel}"| ${to}` : `  ${from} --> ${to}`);
-    }
-  }
-
-  lines.push("```");
-  return lines.join("\n");
-}
-
 export function BlogArticleReader({ article }: BlogArticleReaderProps) {
   const [activeParagraphIndex, setActiveParagraphIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
@@ -156,6 +133,11 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
       takeawayIdx: currentTakeawayIdx,
     };
   }, [article]);
+
+  const estimatedWordCount = useMemo(
+    () => flatParagraphs.join(" ").split(/\s+/).filter(Boolean).length,
+    [flatParagraphs],
+  );
 
   // Helper to render markdown, callouts, blockquotes, lists, tables, inline code, and links.
   const renderParagraph = (paragraph: string, isActive: boolean, globalIdx: number) => {
@@ -254,23 +236,59 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
     }
   };
 
-
-
   return (
-    <div className="grid gap-12 lg:grid-cols-[0.72fr_0.28fr] items-start">
+    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(260px,0.28fr)] lg:gap-12">
       
       {/* Left Column: Article Body & Interactive Player */}
-      <div className="space-y-8 min-w-0">
+      <div className="min-w-0 space-y-8">
         
         {/* Audiobook controller section */}
-        <div className="relative">
-          <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-amber/30 to-fuchsia-500/10 opacity-30 blur-sm pointer-events-none" />
+        <div className="sticky top-14 z-30 lg:top-20">
+          <div className="pointer-events-none absolute -inset-0.5 rounded-lg bg-gradient-to-r from-amber/25 to-zinc-500/10 opacity-50 blur-sm" />
           <BlogAudioBook 
             paragraphs={flatParagraphs} 
             title={article.title}
             onParagraphChange={(idx) => setActiveParagraphIndex(idx)}
           />
         </div>
+
+        <nav
+          aria-label="Mobile article outline"
+          className="lg:hidden"
+        >
+          <div className="flex gap-2 overflow-x-auto border-y border-border py-3">
+            <button
+              onClick={() => {
+                const el = document.querySelector("article");
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className={cn(
+                "shrink-0 rounded-md border px-3 py-2 text-left font-mono text-[10px] uppercase tracking-wide",
+                activeSectionIdx === -1
+                  ? "border-amber/50 bg-amber/10 text-amber"
+                  : "border-border bg-zinc-950/25 text-muted-foreground",
+              )}
+              type="button"
+            >
+              00 Takeaway
+            </button>
+            {article.sections.map((section, idx) => (
+              <button
+                key={section.heading}
+                onClick={() => scrollToSection(idx)}
+                className={cn(
+                  "max-w-[220px] shrink-0 truncate rounded-md border px-3 py-2 text-left font-mono text-[10px] uppercase tracking-wide",
+                  activeSectionIdx === idx
+                    ? "border-amber/50 bg-amber/10 text-amber"
+                    : "border-border bg-zinc-950/25 text-muted-foreground",
+                )}
+                type="button"
+              >
+                0{idx + 1} {section.heading}
+              </button>
+            ))}
+          </div>
+        </nav>
 
         {/* Content Article */}
         <article className="min-w-0 space-y-12">
@@ -292,7 +310,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
             <p className="font-mono text-xs uppercase tracking-wide text-amber">
               Why this matters
             </p>
-            <p className="mt-4 text-2xl leading-10 text-foreground">
+            <p className="mt-4 text-xl leading-8 text-foreground sm:text-2xl sm:leading-10">
               {article.heroTakeaway}
             </p>
           </div>
@@ -324,19 +342,10 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                 </div>
 
                 {section.diagram && (
-                  <div className="mt-7 overflow-hidden rounded-lg border border-border bg-zinc-950/45 p-4">
-                    <div className="mb-3 flex items-center justify-between gap-3 border-b border-zinc-900 pb-2">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-amber">
-                        {section.diagram.title}
-                      </span>
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
-                        Mermaid
-                      </span>
-                    </div>
-                    <MarkdownBlock className="streamdown-code-clean text-zinc-200">
-                      {createMermaidDiagram(section.diagram)}
-                    </MarkdownBlock>
-                  </div>
+                  <BlogArchitectureFlow
+                    diagram={section.diagram}
+                    active={activeSectionIdx === sIdx}
+                  />
                 )}
 
                 {/* Code Block */}
@@ -391,8 +400,8 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
       </div>
 
-      {/* Right Column: Sticky HUD HUD outline & Observatory */}
-      <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+      {/* Right Column: Sticky HUD outline & Observatory */}
+      <aside className="hidden space-y-8 lg:sticky lg:top-24 lg:block lg:self-start">
         
         {/* Interactive SVG TOC Node Graph */}
         <div className="border border-border bg-zinc-950/20 p-5 rounded-lg relative overflow-hidden">
@@ -513,34 +522,34 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
           </ul>
         </div>
 
-        {/* Dev Debugger Panel (Iron Man style) */}
+        {/* Reader signal panel */}
         <div className="border border-zinc-800 bg-zinc-950 p-4 rounded-lg font-mono text-[9px] leading-relaxed relative">
           <div className="flex items-center justify-between border-b border-zinc-900 pb-2 mb-3">
             <span className="text-zinc-500 uppercase tracking-widest flex items-center gap-1">
-              <Terminal className="size-3 text-amber" /> sys_observability.dll
+              <Terminal className="size-3 text-amber" /> reader_pipeline.sys
             </span>
             <span className="text-emerald-500 uppercase tracking-wider font-semibold">SECURE // OK</span>
           </div>
           <div className="space-y-2 text-zinc-400">
             <div className="flex justify-between border-b border-zinc-900 pb-1">
-              <span className="text-zinc-500">SEO INDEX STATUS</span>
-              <span className="text-zinc-200">GOOGLE-INDEXED</span>
+              <span className="text-zinc-500">ARTICLE STATE</span>
+              <span className="text-zinc-200">CLIENT READY</span>
             </div>
             <div className="flex justify-between border-b border-zinc-900 pb-1">
-              <span className="text-zinc-500">SCHEMA VERIFICATION</span>
-              <span className="text-zinc-200">SCHEMA.ORG: OK</span>
+              <span className="text-zinc-500">MARKDOWN PIPELINE</span>
+              <span className="text-zinc-200">STREAMDOWN</span>
             </div>
             <div className="flex justify-between border-b border-zinc-900 pb-1">
-              <span className="text-zinc-500">P95 LATENCY ESTIMATION</span>
-              <span className="text-amber">184ms</span>
+              <span className="text-zinc-500">DIAGRAM ENGINE</span>
+              <span className="text-amber">REACT FLOW</span>
             </div>
             <div className="flex justify-between border-b border-zinc-900 pb-1">
-              <span className="text-zinc-500">TOKEN WEIGHT</span>
-              <span className="text-zinc-200">{flatParagraphs.join(" ").split(" ").length * 1.3} tk</span>
+              <span className="text-zinc-500">AUDIO SEGMENTS</span>
+              <span className="text-zinc-200">{flatParagraphs.length}</span>
             </div>
             <div className="flex justify-between border-b border-zinc-900 pb-1">
-              <span className="text-zinc-500">OPTIMIZED INF COST</span>
-              <span className="text-emerald-400">$0.0034</span>
+              <span className="text-zinc-500">EST. WORDS</span>
+              <span className="text-emerald-400">{estimatedWordCount}</span>
             </div>
           </div>
           <div className="mt-3.5 text-[8px] text-zinc-600 leading-normal flex items-center gap-1 bg-zinc-900/30 p-2 border border-zinc-900/60 rounded">

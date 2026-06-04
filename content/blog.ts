@@ -38,6 +38,7 @@ export const blogArticles = [
 				heading: "The core decision: Where does state live?",
 				body: [
 					"A simple chat agent stores messages. A production agent stores workflow state, tool outputs, approval status, retries, failure context, and recovery paths. The difference is dramatic when an agent needs to resume after failure.",
+					"| State surface | Production concern |\n| --- | --- |\n| Conversation messages | Replay safety and memory boundaries |\n| Tool outputs | Idempotency and auditability |\n| Approval status | Human gate recovery after delays |\n| Failure context | Retry policy and incident triage |",
 					"Strong production architecture separates deterministic graph transitions from non-deterministic operations like LLM calls, database writes, payments, external APIs, or ticket updates. The goal isn't just recovery—it's predictable, auditable recovery.",
 				],
 			},
@@ -49,8 +50,56 @@ export const blogArticles = [
 				],
 				diagram: {
 					title: "Durable Lifecycle State Flow",
-					nodes: ["Client Ingress", "LangGraph Supervisor", "Tool Exec (Postgres Checkpoint)", "Human Approval Gate", "State Commit"],
-					edges: ["Ingress → Supervisor", "Supervisor → Tool (Pause)", "Tool → Gate (Approval)", "Gate → Commit"]
+					summary:
+						"A replay-safe agent runtime keeps deterministic graph state separate from external side effects, then resumes from checkpoints instead of repeating unsafe work.",
+					nodes: [
+						{
+							id: "ingress",
+							label: "Client Ingress",
+							role: "Request boundary",
+							detail: "Normalizes user intent, identity, tenant policy, and trace context before graph execution.",
+							layer: "Ingress",
+							kind: "client",
+						},
+						{
+							id: "supervisor",
+							label: "LangGraph Supervisor",
+							role: "State machine",
+							detail: "Routes graph nodes, persists checkpoints, and owns recovery semantics for the workflow.",
+							layer: "Runtime",
+							kind: "runtime",
+						},
+						{
+							id: "tool-exec",
+							label: "Tool Execution",
+							role: "Side-effect boundary",
+							detail: "Runs retrieval, API calls, and writes through idempotent adapters with trace metadata.",
+							layer: "Tools",
+							kind: "data",
+						},
+						{
+							id: "approval",
+							label: "Human Approval Gate",
+							role: "Control point",
+							detail: "Pauses irreversible actions until a reviewer approves, rejects, or amends execution.",
+							layer: "Governance",
+							kind: "approval",
+						},
+						{
+							id: "commit",
+							label: "State Commit",
+							role: "Durable checkpoint",
+							detail: "Stores final state deltas, audit logs, and resume pointers for the next run.",
+							layer: "Persistence",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "ingress", target: "supervisor", label: "start thread" },
+						{ source: "supervisor", target: "tool-exec", label: "execute node" },
+						{ source: "tool-exec", target: "approval", label: "pause if risky" },
+						{ source: "approval", target: "commit", label: "approved delta" },
+					],
 				},
 				codeBlock: {
 					language: "python",
@@ -122,6 +171,50 @@ export const blogArticles = [
 					"Start with an allowlisted tool registry where every tool has explicit schemas, risk classification, and approval requirements. Use environment isolation to prevent bleed between sandbox, staging, and production. Make every tool call auditable.",
 					"Add prompt-injection tests that simulate malicious resource content and misleading tool descriptions. The strongest MCP security posture assumes agents will try to misuse tools, and systems catch that before damage happens.",
 				],
+				diagram: {
+					title: "MCP Guardrail Runtime",
+					summary:
+						"Every tool call moves through classification, policy enforcement, approval, and audit logging before touching enterprise systems.",
+					nodes: [
+						{
+							id: "agent",
+							label: "Agent Runtime",
+							role: "Tool caller",
+							detail: "Requests MCP tools with user intent, session identity, and trace context.",
+							layer: "Agent",
+							kind: "runtime",
+						},
+						{
+							id: "registry",
+							label: "Tool Registry",
+							role: "Allowlist",
+							detail: "Stores schemas, owners, environments, and risk tiers for every exposed tool.",
+							layer: "Catalog",
+							kind: "data",
+						},
+						{
+							id: "policy",
+							label: "Policy Engine",
+							role: "Decision point",
+							detail: "Checks role, tenant, operation class, and approval requirements before execution.",
+							layer: "Governance",
+							kind: "approval",
+						},
+						{
+							id: "audit",
+							label: "Audit Trail",
+							role: "Evidence store",
+							detail: "Captures sanitized inputs, outputs, approvals, failures, and tool metadata.",
+							layer: "Observability",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "agent", target: "registry", label: "schema lookup" },
+						{ source: "registry", target: "policy", label: "risk tier" },
+						{ source: "policy", target: "audit", label: "decision log" },
+					],
+				},
 				codeBlock: {
 					language: "json",
 					filename: "mcp_security_policy.json",
@@ -192,6 +285,50 @@ export const blogArticles = [
 					"Instrument the FastAPI edge, async workers, graph runtime, model gateway, retrieval layer, and evaluation pipeline with consistent trace context. Use OpenTelemetry GenAI semantic conventions so telemetry isn't vendor-locked.",
 					"When a production agent underperforms, you want to see exactly which component failed, what decision was made, what context was available, and what the model saw. That visibility is what separates guessing from engineering.",
 				],
+				diagram: {
+					title: "Trace Context Propagation",
+					summary:
+						"GenAI observability works when every runtime boundary forwards the same trace context and emits typed spans.",
+					nodes: [
+						{
+							id: "client",
+							label: "Next.js Client",
+							role: "Trace origin",
+							detail: "Creates user-visible request context and displays streamed status.",
+							layer: "Client",
+							kind: "client",
+						},
+						{
+							id: "api",
+							label: "FastAPI Gateway",
+							role: "Span boundary",
+							detail: "Validates identity, starts server spans, and forwards trace headers.",
+							layer: "Gateway",
+							kind: "runtime",
+						},
+						{
+							id: "graph",
+							label: "Agent Graph",
+							role: "Workflow spans",
+							detail: "Emits spans for planning, retrieval, tools, model calls, and routing decisions.",
+							layer: "Runtime",
+							kind: "runtime",
+						},
+						{
+							id: "collector",
+							label: "OTel Collector",
+							role: "Telemetry sink",
+							detail: "Receives normalized GenAI semantic spans for debugging and regression analysis.",
+							layer: "Observability",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "client", target: "api", label: "traceparent" },
+						{ source: "api", target: "graph", label: "run context" },
+						{ source: "graph", target: "collector", label: "semantic spans" },
+					],
+				},
 			},
 		],
 		references: [
@@ -256,6 +393,50 @@ export const blogArticles = [
 					"Build a deterministic pipeline: retrieve with bm25 + semantic search, filter by metadata and access, rerank by relevance and freshness, compress if needed, attach sources, format for the model. Make every step observable and queryable.",
 					"The strategic insight is that context engineering is becoming a platform capability. Teams that master context quality will ship more reliable AI than teams that chase model swaps.",
 				],
+				diagram: {
+					title: "Layered Context Assembly",
+					summary:
+						"Reliable RAG treats context as a governed pipeline, not a single prompt string.",
+					nodes: [
+						{
+							id: "intent",
+							label: "Intent Router",
+							role: "Query planning",
+							detail: "Classifies task type, permissions, freshness needs, and retrieval strategy.",
+							layer: "Plan",
+							kind: "runtime",
+						},
+						{
+							id: "retrieval",
+							label: "Hybrid Retrieval",
+							role: "Evidence search",
+							detail: "Combines BM25, vectors, metadata filters, and access control.",
+							layer: "Retrieve",
+							kind: "data",
+						},
+						{
+							id: "rerank",
+							label: "Rerank + Compress",
+							role: "Context budget",
+							detail: "Keeps grounded evidence while reducing token cost and noise.",
+							layer: "Optimize",
+							kind: "runtime",
+						},
+						{
+							id: "answer",
+							label: "Grounded Response",
+							role: "Cited output",
+							detail: "Assembles policy, memory, evidence, and answer format into the final call.",
+							layer: "Generate",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "intent", target: "retrieval", label: "strategy" },
+						{ source: "retrieval", target: "rerank", label: "candidates" },
+						{ source: "rerank", target: "answer", label: "grounded context" },
+					],
+				},
 			},
 		],
 		references: [
@@ -320,6 +501,50 @@ export const blogArticles = [
 					"Use FastAPI for typed contracts, a queue for execution, workers for orchestration, Postgres for state, object storage for artifacts, and OpenTelemetry for traces. Expose: create job, get status, stream events, cancel, fetch result.",
 					"The production reality is that teams need backend systems that absorb model latency, provider instability, user impatience, and token budgets without losing state or creating ghost costs.",
 				],
+				diagram: {
+					title: "Async Reasoning Backend",
+					summary:
+						"Long-running AI work should move through durable jobs, workers, and status APIs instead of held HTTP requests.",
+					nodes: [
+						{
+							id: "api",
+							label: "FastAPI Edge",
+							role: "Typed contract",
+							detail: "Accepts requests, returns job IDs, and exposes status/cancel/result endpoints.",
+							layer: "API",
+							kind: "client",
+						},
+						{
+							id: "queue",
+							label: "Durable Queue",
+							role: "Backpressure",
+							detail: "Buffers reasoning work, controls concurrency, and supports retries.",
+							layer: "Queue",
+							kind: "data",
+						},
+						{
+							id: "worker",
+							label: "Agent Worker",
+							role: "Execution",
+							detail: "Runs model calls, tool chains, evaluation, and artifact generation.",
+							layer: "Runtime",
+							kind: "runtime",
+						},
+						{
+							id: "state",
+							label: "Job State Store",
+							role: "Recovery",
+							detail: "Stores progress, partial outputs, trace IDs, errors, and final artifacts.",
+							layer: "Persistence",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "api", target: "queue", label: "enqueue" },
+						{ source: "queue", target: "worker", label: "dispatch" },
+						{ source: "worker", target: "state", label: "status + result" },
+					],
+				},
 			},
 		],
 		references: [

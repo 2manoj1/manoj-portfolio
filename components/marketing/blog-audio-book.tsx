@@ -291,7 +291,11 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
       : 0;
 
   return (
-    <div className="border border-border bg-zinc-950/70 p-4 rounded-lg shadow-lg relative overflow-hidden backdrop-blur-md">
+    <div
+      aria-label="Article audio reader"
+      className="relative w-full overflow-hidden rounded-lg border border-border bg-zinc-950/85 p-3 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-4"
+      role="region"
+    >
       
       {/* Decorative scanning line grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
@@ -300,23 +304,30 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
       <div className="flex flex-col gap-3 relative z-10">
         
         {/* Title bar / Header */}
-        <div className="flex items-center justify-between border-b border-zinc-900 pb-2">
+        <div className="flex items-center justify-between gap-3 border-b border-zinc-900 pb-2">
           <div className="flex items-center gap-2">
-            <Volume2 className="size-4 text-amber animate-pulse" />
+            <Volume2 className="size-4 shrink-0 text-amber animate-pulse" />
             <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
-              {"Synthesized Audio Spec Deck // Active"}
+              Article Audio Mode
+              <span className="sm:hidden">
+                {" // "}
+                {Math.min(currentIdx + 1, paragraphs.length)}/{paragraphs.length}
+              </span>
             </span>
           </div>
-          <span className="font-mono text-[9px] text-amber/60 flex items-center gap-1.5">
+          <span
+            aria-live="polite"
+            className="flex shrink-0 items-center gap-1.5 font-mono text-[9px] text-amber/60"
+          >
             <span className={`size-1.5 rounded-full ${isPlaying ? 'bg-emerald-500 animate-ping' : 'bg-zinc-700'}`} />
             {isPlaying ? "TRANSMITTING" : isPaused ? "PAUSED" : "STANDBY"}
           </span>
         </div>
 
         {/* Info panel */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="hidden items-center justify-between gap-4 sm:flex">
           <div className="min-w-0">
-            <h4 className="text-[11px] font-mono font-bold text-zinc-200 truncate max-w-[280px]">
+            <h4 className="max-w-[70vw] truncate font-mono text-[11px] font-bold text-zinc-200 lg:max-w-[280px]">
               {title}
             </h4>
             <p className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">
@@ -346,7 +357,14 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
         </div>
 
         {/* Audio progress bar */}
-        <div className="w-full h-1 bg-zinc-900 rounded overflow-hidden relative">
+        <div
+          aria-label="Audio reading progress"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={Math.round(progressPercent)}
+          className="relative h-1.5 w-full overflow-hidden rounded bg-zinc-900"
+          role="progressbar"
+        >
           <div 
             className="h-full bg-amber transition-all duration-300"
             style={{ width: `${progressPercent || (isPlaying ? 5 : 0)}%` }}
@@ -354,12 +372,13 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
         </div>
 
         {/* Controls layer */}
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between gap-3 pt-1">
           <div className="flex items-center gap-2">
             {isPlaying ? (
               <button
+                aria-label="Pause article audio"
                 onClick={handlePause}
-                className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-amber hover:border-amber/30 transition-colors"
+                className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-300 transition-colors hover:border-amber/30 hover:text-amber sm:size-8"
                 title="Pause Reading"
                 type="button"
               >
@@ -367,8 +386,9 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               </button>
             ) : (
               <button
+                aria-label="Play article audio"
                 onClick={handlePlay}
-                className="size-7 rounded bg-amber flex items-center justify-center text-zinc-950 hover:bg-amber/90 transition-colors"
+                className="flex size-9 items-center justify-center rounded-md bg-amber text-zinc-950 transition-colors hover:bg-amber/90 sm:size-8"
                 title="Play Reading Aloud"
                 type="button"
               >
@@ -377,9 +397,10 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
             )}
 
             <button
+              aria-label="Previous audio segment"
               onClick={() => jumpToParagraph(currentIdxRef.current - 1)}
               disabled={currentIdx <= 0}
-              className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
+              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
               title="Previous Segment"
               type="button"
             >
@@ -387,9 +408,10 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
             </button>
 
             <button
+              aria-label="Next audio segment"
               onClick={() => jumpToParagraph(currentIdxRef.current + 1)}
               disabled={currentIdx >= paragraphs.length - 1}
-              className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
+              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
               title="Next Segment"
               type="button"
             >
@@ -397,9 +419,10 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
             </button>
 
             <button
+              aria-label="Stop article audio"
               onClick={handleStop}
               disabled={!isPlaying && !isPaused}
-              className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
+              className="flex size-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 sm:size-8"
               title="Stop Reading"
               type="button"
             >
@@ -410,8 +433,10 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
           {/* Speed & Settings toggles */}
           <div className="flex items-center gap-2">
             <button
+              aria-label="Open voice settings"
+              aria-expanded={isSettingsOpen}
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className={`size-7 rounded border flex items-center justify-center transition-colors ${
+              className={`flex size-9 items-center justify-center rounded-md border transition-colors sm:size-8 ${
                 isSettingsOpen 
                   ? 'border-amber/40 bg-zinc-900 text-amber' 
                   : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-zinc-200'
@@ -455,10 +480,14 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
             {/* Voice selector */}
             {voices.length > 0 && (
               <div className="space-y-1.5">
-                <label className="font-mono text-[9px] uppercase text-zinc-400 block">
+                <label
+                  className="block font-mono text-[9px] uppercase text-zinc-400"
+                  htmlFor="blog-audio-voice"
+                >
                   Select Speech Synthesizer Voice
                 </label>
                 <select
+                  id="blog-audio-voice"
                   value={selectedVoice}
                   onChange={(e) => {
                     const nextVoice = e.target.value;
