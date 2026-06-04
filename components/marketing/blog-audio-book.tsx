@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Pause, Play, Settings, Square, Volume2 } from "lucide-react";
+import {
+  Pause,
+  Play,
+  Settings,
+  SkipBack,
+  SkipForward,
+  Square,
+  Volume2,
+} from "lucide-react";
 
 interface BlogAudioBookProps {
   paragraphs: string[];
@@ -16,6 +24,24 @@ const getSpeechSupportSnapshot = () =>
 
 const getServerSpeechSupportSnapshot = () => false;
 
+function cleanSpeechText(markdown: string) {
+  return markdown
+    .replace(/```[\s\S]*?```/g, " code block omitted ")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, "$1. ")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/[_~|]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudioBookProps) {
   const supported = useSyncExternalStore(
     subscribeToSpeechSupport,
@@ -29,8 +55,39 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [hasCompleted, setHasCompleted] = useState<boolean>(false);
+  const [speechNotice, setSpeechNotice] = useState<string>("");
   
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const activeUtteranceIdRef = useRef(0);
+  const currentIdxRef = useRef(0);
+  const isPlayingRef = useRef(false);
+  const isPausedRef = useRef(false);
+  const paragraphsRef = useRef(paragraphs);
+  const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
+  const selectedVoiceRef = useRef("");
+  const rateRef = useRef(1);
+  const onParagraphChangeRef = useRef(onParagraphChange);
+
+  useEffect(() => {
+    paragraphsRef.current = paragraphs;
+  }, [paragraphs]);
+
+  useEffect(() => {
+    voicesRef.current = voices;
+  }, [voices]);
+
+  useEffect(() => {
+    selectedVoiceRef.current = selectedVoice;
+  }, [selectedVoice]);
+
+  useEffect(() => {
+    rateRef.current = rate;
+  }, [rate]);
+
+  useEffect(() => {
+    onParagraphChangeRef.current = onParagraphChange;
+  }, [onParagraphChange]);
 
   // Check support and load voices
   useEffect(() => {
@@ -46,7 +103,11 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
       // Select a default voice
       if (engVoices.length > 0) {
         const defaultVoice = engVoices.find(v => v.name.includes("Google") || v.name.includes("Natural")) || engVoices[0];
-        setSelectedVoice(current => current || defaultVoice.name);
+        setSelectedVoice(current => {
+          const nextVoice = current || defaultVoice.name;
+          selectedVoiceRef.current = nextVoice;
+          return nextVoice;
+        });
       }
     };
 
@@ -63,78 +124,149 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
+        activeUtteranceIdRef.current += 1;
         window.speechSynthesis.cancel();
       }
     };
   }, []);
 
-  const handleSpeakParagraph = (index: number) => {
+  function finishPlayback({
+    resetIndex = false,
+    completed = !resetIndex,
+  }: {
+    resetIndex?: boolean;
+    completed?: boolean;
+  } = {}) {
+    isPlayingRef.current = false;
+    isPausedRef.current = false;
+    setIsPlaying(false);
+    setIsPaused(false);
+    setHasCompleted(completed);
+    utteranceRef.current = null;
+
+    if (resetIndex) {
+      currentIdxRef.current = 0;
+      setCurrentIdx(0);
+    }
+
+    onParagraphChangeRef.current?.(null);
+  }
+
+  function cancelActiveSpeech() {
+    activeUtteranceIdRef.current += 1;
+    window.speechSynthesis.cancel();
+  }
+
+  function speakParagraph(index: number, options: { cancelCurrent?: boolean } = {}) {
     if (!supported) return;
 
-    window.speechSynthesis.cancel();
+    const shouldCancel = options.cancelCurrent ?? true;
+    if (shouldCancel) {
+      cancelActiveSpeech();
+    }
 
-    if (index >= paragraphs.length) {
-      // Finished speaking the entire article
-      setIsPlaying(false);
-      setIsPaused(false);
-      setCurrentIdx(0);
-      if (onParagraphChange) onParagraphChange(null);
+    const readableParagraphs = paragraphsRef.current;
+
+    if (index >= readableParagraphs.length) {
+      finishPlayback({ completed: true });
       return;
     }
 
-    setCurrentIdx(index);
-    if (onParagraphChange) onParagraphChange(index);
+    const rawText = cleanSpeechText(readableParagraphs[index]);
 
-    // Clean text from markdown syntax
-    const rawText = paragraphs[index]
-      .replace(/`([^`]+)`/g, "$1") // clean inline code
-      .replace(/\*\*([^*]+)\*\*/g, "$1") // clean bold
-      .replace(/\*([^*]+)\*/g, "$1"); // clean italics
+    if (!rawText) {
+      currentIdxRef.current = index;
+      setCurrentIdx(index);
+      onParagraphChangeRef.current?.(index);
+      if (isPlayingRef.current && !isPausedRef.current) {
+        window.setTimeout(() => speakParagraph(index + 1, { cancelCurrent: false }), 0);
+      }
+      return;
+    }
+
+    setSpeechNotice("");
+    setHasCompleted(false);
+    currentIdxRef.current = index;
+    setCurrentIdx(index);
+    onParagraphChangeRef.current?.(index);
 
     const utterance = new SpeechSynthesisUtterance(rawText);
+    const utteranceId = activeUtteranceIdRef.current + 1;
+    activeUtteranceIdRef.current = utteranceId;
     utteranceRef.current = utterance;
 
     // Set voice properties
-    const voiceObj = voices.find(v => v.name === selectedVoice);
+    const voiceObj = voicesRef.current.find(v => v.name === selectedVoiceRef.current);
     if (voiceObj) utterance.voice = voiceObj;
-    utterance.rate = rate;
+    utterance.rate = rateRef.current;
 
     // Handle end of speaking
     utterance.onend = () => {
-      if (isPlaying && !isPaused) {
-        handleSpeakParagraph(index + 1);
+      if (activeUtteranceIdRef.current !== utteranceId) return;
+      if (isPlayingRef.current && !isPausedRef.current) {
+        speakParagraph(index + 1, { cancelCurrent: false });
       }
     };
 
     utterance.onerror = (e) => {
-      console.error("SpeechSynthesis error:", e);
-      setIsPlaying(false);
-      setIsPaused(false);
-      if (onParagraphChange) onParagraphChange(null);
+      if (activeUtteranceIdRef.current !== utteranceId) return;
+
+      const errorName =
+        "error" in e && typeof e.error === "string" ? e.error : "unknown";
+
+      if (errorName === "canceled" || errorName === "interrupted") {
+        return;
+      }
+
+      setSpeechNotice("Speech engine stopped this segment. Try another voice or a slower rate.");
+      finishPlayback({ completed: false });
     };
 
     window.speechSynthesis.speak(utterance);
-  };
+  }
+
+  function jumpToParagraph(index: number) {
+    if (!supported || paragraphs.length === 0) return;
+
+    const nextIndex = Math.min(Math.max(index, 0), paragraphs.length - 1);
+    currentIdxRef.current = nextIndex;
+    setCurrentIdx(nextIndex);
+    setHasCompleted(false);
+    onParagraphChangeRef.current?.(nextIndex);
+
+    if (isPlayingRef.current && !isPausedRef.current) {
+      speakParagraph(nextIndex, { cancelCurrent: true });
+    }
+  }
 
   const handlePlay = () => {
     if (!supported || paragraphs.length === 0) return;
 
     if (isPaused) {
       // Resume
+      isPlayingRef.current = true;
+      isPausedRef.current = false;
       window.speechSynthesis.resume();
       setIsPlaying(true);
       setIsPaused(false);
-      if (onParagraphChange) onParagraphChange(currentIdx);
+      setSpeechNotice("");
+      onParagraphChangeRef.current?.(currentIdxRef.current);
     } else {
       // Start from current paragraph
+      const startIndex = hasCompleted ? 0 : currentIdxRef.current;
+      isPlayingRef.current = true;
+      isPausedRef.current = false;
       setIsPlaying(true);
       setIsPaused(false);
-      handleSpeakParagraph(currentIdx);
+      setSpeechNotice("");
+      speakParagraph(startIndex, { cancelCurrent: true });
     }
   };
 
   const handlePause = () => {
     if (!supported) return;
+    isPlayingRef.current = false;
+    isPausedRef.current = true;
     window.speechSynthesis.pause();
     setIsPlaying(false);
     setIsPaused(true);
@@ -142,11 +274,8 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
 
   const handleStop = () => {
     if (!supported) return;
-    window.speechSynthesis.cancel();
-    setIsPlaying(false);
-    setIsPaused(false);
-    setCurrentIdx(0);
-    if (onParagraphChange) onParagraphChange(null);
+    cancelActiveSpeech();
+    finishPlayback({ resetIndex: true });
   };
 
   if (!supported) {
@@ -154,7 +283,12 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
   }
 
   // Calculate overall reading progress
-  const progressPercent = paragraphs.length > 0 ? (currentIdx / paragraphs.length) * 100 : 0;
+  const progressPercent =
+    paragraphs.length > 0
+      ? hasCompleted
+        ? 100
+        : ((currentIdx + (isPlaying || isPaused ? 0.35 : 0)) / paragraphs.length) * 100
+      : 0;
 
   return (
     <div className="border border-border bg-zinc-950/70 p-4 rounded-lg shadow-lg relative overflow-hidden backdrop-blur-md">
@@ -186,7 +320,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               {title}
             </h4>
             <p className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">
-              Paragraph {currentIdx + 1} of {paragraphs.length}{" // "}Rate: {rate}x
+              Segment {Math.min(currentIdx + 1, paragraphs.length)} of {paragraphs.length}{" // "}Rate: {rate}x
             </p>
           </div>
 
@@ -227,6 +361,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                 onClick={handlePause}
                 className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-amber hover:border-amber/30 transition-colors"
                 title="Pause Reading"
+                type="button"
               >
                 <Pause className="size-3.5 fill-current" />
               </button>
@@ -235,16 +370,38 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                 onClick={handlePlay}
                 className="size-7 rounded bg-amber flex items-center justify-center text-zinc-950 hover:bg-amber/90 transition-colors"
                 title="Play Reading Aloud"
+                type="button"
               >
                 <Play className="size-3.5 fill-current" />
               </button>
             )}
 
             <button
+              onClick={() => jumpToParagraph(currentIdxRef.current - 1)}
+              disabled={currentIdx <= 0}
+              className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
+              title="Previous Segment"
+              type="button"
+            >
+              <SkipBack className="size-3.5" />
+            </button>
+
+            <button
+              onClick={() => jumpToParagraph(currentIdxRef.current + 1)}
+              disabled={currentIdx >= paragraphs.length - 1}
+              className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
+              title="Next Segment"
+              type="button"
+            >
+              <SkipForward className="size-3.5" />
+            </button>
+
+            <button
               onClick={handleStop}
               disabled={!isPlaying && !isPaused}
               className="size-7 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:hover:text-zinc-400 transition-colors"
               title="Stop Reading"
+              type="button"
             >
               <Square className="size-3 fill-current" />
             </button>
@@ -260,6 +417,7 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                   : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-zinc-200'
               }`}
               title="Voice Settings"
+              type="button"
             >
               <Settings className="size-3.5" />
             </button>
@@ -283,10 +441,11 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                 value={rate}
                 onChange={(e) => {
                   const newRate = Number(e.target.value);
+                  rateRef.current = newRate;
                   setRate(newRate);
-                  // Apply new rate immediately if speaking
-                  if (isPlaying) {
-                    handleSpeakParagraph(currentIdx);
+                  // Apply new rate immediately if speaking.
+                  if (isPlayingRef.current && !isPausedRef.current) {
+                    speakParagraph(currentIdxRef.current, { cancelCurrent: true });
                   }
                 }}
                 className="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-amber"
@@ -302,10 +461,12 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
                 <select
                   value={selectedVoice}
                   onChange={(e) => {
-                    setSelectedVoice(e.target.value);
-                    if (isPlaying) {
-                      // Restart current paragraph with new voice
-                      setTimeout(() => handleSpeakParagraph(currentIdx), 50);
+                    const nextVoice = e.target.value;
+                    selectedVoiceRef.current = nextVoice;
+                    setSelectedVoice(nextVoice);
+                    if (isPlayingRef.current && !isPausedRef.current) {
+                      // Restart current paragraph with the new voice.
+                      setTimeout(() => speakParagraph(currentIdxRef.current, { cancelCurrent: true }), 50);
                     }
                   }}
                   className="w-full bg-zinc-900 border border-zinc-800 rounded px-2 py-1 font-mono text-[9px] text-zinc-300 focus:outline-none focus:border-amber/40"
@@ -319,6 +480,12 @@ export function BlogAudioBook({ paragraphs, title, onParagraphChange }: BlogAudi
               </div>
             )}
           </div>
+        )}
+
+        {speechNotice && (
+          <p className="border-t border-zinc-900 pt-2 font-mono text-[9px] leading-relaxed text-amber/75">
+            {speechNotice}
+          </p>
         )}
 
       </div>

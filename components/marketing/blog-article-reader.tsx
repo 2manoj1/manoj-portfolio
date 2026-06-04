@@ -1,6 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Streamdown } from "streamdown";
+import { cjk } from "@streamdown/cjk";
+import { code } from "@streamdown/code";
+import { math } from "@streamdown/math";
+import { mermaid } from "@streamdown/mermaid";
 import { BlogAudioBook } from "./blog-audio-book";
 import { 
   ArrowRight, 
@@ -12,10 +17,16 @@ import {
   ShieldCheck, 
   Heart
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface BlogSection {
   heading: string;
   body: readonly string[];
+  diagram?: {
+    title: string;
+    nodes: readonly string[];
+    edges?: readonly string[];
+  };
   codeBlock?: {
     language: string;
     filename: string;
@@ -42,132 +53,171 @@ interface BlogArticleReaderProps {
   article: BlogArticle;
 }
 
+const streamdownPlugins = { cjk, code, math, mermaid };
+
+const markdownClassName =
+  "blog-reader-markdown text-base leading-8 text-muted-foreground " +
+  "[&_p]:my-0 [&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-100 " +
+  "[&_em]:text-zinc-300 [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
+  "[&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_li]:pl-1 " +
+  "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-zinc-300 [&_blockquote]:italic " +
+  "[&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
+  "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-border/50 [&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:py-0.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber";
+
+const alertClassMap: Record<string, string> = {
+  NOTE: "border-sky-500/45 bg-sky-950/20 text-sky-100",
+  TIP: "border-emerald-500/45 bg-emerald-950/20 text-emerald-100",
+  IMPORTANT: "border-amber/55 bg-amber/10 text-amber",
+  WARNING: "border-orange-500/45 bg-orange-950/20 text-orange-100",
+  CAUTION: "border-rose-500/45 bg-rose-950/20 text-rose-100",
+};
+
+function MarkdownBlock({
+  children,
+  className,
+}: {
+  children: string;
+  className?: string;
+}) {
+  return (
+    <Streamdown
+      mode="static"
+      className={cn(markdownClassName, className)}
+      plugins={streamdownPlugins}
+      shikiTheme={["dracula", "dracula"]}
+      controls={{ code: { download: false } }}
+    >
+      {children}
+    </Streamdown>
+  );
+}
+
+function createMermaidDiagram(diagram: NonNullable<BlogSection["diagram"]>) {
+  const nodeIds = new Map<string, string>();
+  const lines = ["```mermaid", "flowchart LR"];
+
+  diagram.nodes.forEach((node, index) => {
+    const id = `N${index}`;
+    nodeIds.set(node, id);
+    lines.push(`  ${id}["${node.replace(/"/g, '\\"')}"]`);
+  });
+
+  for (let index = 0; index < diagram.nodes.length - 1; index += 1) {
+    const from = nodeIds.get(diagram.nodes[index]);
+    const to = nodeIds.get(diagram.nodes[index + 1]);
+    const edgeLabel = diagram.edges?.[index]?.replace(/"/g, '\\"');
+    if (from && to) {
+      lines.push(edgeLabel ? `  ${from} -->|"${edgeLabel}"| ${to}` : `  ${from} --> ${to}`);
+    }
+  }
+
+  lines.push("```");
+  return lines.join("\n");
+}
+
 export function BlogArticleReader({ article }: BlogArticleReaderProps) {
   const [activeParagraphIndex, setActiveParagraphIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(42);
   const [hasLiked, setHasLiked] = useState<boolean>(false);
 
-  const paragraphRefs = useRef<Record<number, HTMLParagraphElement | null>>({});
+  const paragraphRefs = useRef<Record<number, HTMLElement | null>>({});
 
-  // Flatten all paragraphs for speech synthesis (takeaway + all section bodies)
-  const flatParagraphs = useMemo(() => {
-    const list: string[] = [];
-    list.push(article.heroTakeaway);
-    article.sections.forEach(sec => {
-      sec.body.forEach(para => {
-        list.push(para);
-      });
-    });
-    return list;
-  }, [article]);
-
-  // Map section/paragraph index to flat global index
-  // Helper to render paragraphs with alerts, blockquotes, and inline code
-  const renderParagraph = (paragraph: string, isActive: boolean, globalIdx: number) => {
-    // Alert syntax: [!NOTE] content
-    const alertMatch = paragraph.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/);
-    if (alertMatch) {
-      const type = alertMatch[1];
-      const content = alertMatch[2];
-      const typeClassMap: Record<string, string> = {
-        NOTE: 'bg-blue-900/30 border-l-4 border-blue-500 text-blue-200',
-        TIP: 'bg-green-900/30 border-l-4 border-green-500 text-green-200',
-        IMPORTANT: 'bg-amber-900/30 border-l-4 border-amber-500 text-amber-200',
-        WARNING: 'bg-orange-900/30 border-l-4 border-orange-500 text-orange-200',
-        CAUTION: 'bg-red-900/30 border-l-4 border-red-500 text-red-200',
-      };
-      const className = typeClassMap[type] || '';
-      return (
-        <div key={`paragraph-${globalIdx}`} className={`p-4 rounded-md my-2 ${className}`}>
-          <strong className="block uppercase text-xs mb-1">{type}</strong>
-          <p className="text-sm leading-6">{content}</p>
-        </div>
-      );
-    }
-
-    // Blockquote syntax: lines starting with >
-    if (paragraph.startsWith('>')) {
-      const quote = paragraph.replace(/^>\s?/, '');
-      return (
-        <blockquote
-          key={`paragraph-${globalIdx}`}
-          className="border-l-4 border-amber-500 pl-4 italic text-muted-foreground my-4"
-        >
-          {quote}
-        </blockquote>
-      );
-    }
-
-    // Default paragraph rendering with inline code handling
-    const parts = paragraph.split(/(`[^`]+`)/g);
-    return (
-      <p
-        key={`paragraph-${globalIdx}`}
-        className={`text-base leading-8 text-muted-foreground transition-all duration-300 p-2 rounded ${
-          isActive
-            ? 'border-l-2 border-amber bg-amber/5 pl-4 text-zinc-100 shadow-[0_0_15px_rgba(245,158,11,0.03)]'
-            : 'border-l border-transparent'
-        }`}
-        ref={el => { paragraphRefs.current[globalIdx] = el; }}
-      >
-        {isActive && (
-          <span className="inline-block size-1.5 rounded-full bg-amber mr-2 animate-ping" />
-        )}
-        {parts.map((part, partIdx) => {
-          if (part.startsWith('`') && part.endsWith('`')) {
-            return (
-              <code
-                key={`${globalIdx}-code-${partIdx}`}
-                className="rounded bg-secondary/50 px-1.5 py-0.5 font-mono text-xs text-amber font-semibold border border-border/40"
-              >
-                {part.slice(1, -1)}
-              </code>
-            );
-          }
-          return <React.Fragment key={`${globalIdx}-text-${partIdx}`}>{part}</React.Fragment>;
-        })}
-      </p>
-    );
-  };
-
-  const { sectionIndices } = useMemo(() => {
+  const {
+    flatParagraphs,
+    sectionHeadingIndices,
+    sectionIndices,
+    takeawayIdx,
+  } = useMemo(() => {
     let count = 0;
-    const takeawayIdx = count++;
-    
-    const indices: number[][] = [];
-    const sectionStarts: number[] = [];
+    const blocks: string[] = [article.heroTakeaway];
+    const currentTakeawayIdx = count++;
+    const headingIndices: number[] = [];
+    const bodyIndices: number[][] = [];
 
     article.sections.forEach((section) => {
-      sectionStarts.push(count);
-      const sectionIndicesList: number[] = [];
-      section.body.forEach(() => {
-        sectionIndicesList.push(count++);
+      headingIndices.push(count);
+      blocks.push(section.heading);
+      count += 1;
+
+      const sectionBodyIndices: number[] = [];
+      section.body.forEach((paragraph) => {
+        sectionBodyIndices.push(count);
+        blocks.push(paragraph);
+        count += 1;
       });
-      indices.push(sectionIndicesList);
+      bodyIndices.push(sectionBodyIndices);
     });
 
     return {
-      takeawayIdx,
-      sectionIndices: indices,
-      sectionStarts
+      flatParagraphs: blocks,
+      sectionHeadingIndices: headingIndices,
+      sectionIndices: bodyIndices,
+      takeawayIdx: currentTakeawayIdx,
     };
   }, [article]);
+
+  // Helper to render markdown, callouts, blockquotes, lists, tables, inline code, and links.
+  const renderParagraph = (paragraph: string, isActive: boolean, globalIdx: number) => {
+    // Alert syntax: [!NOTE] content
+    const alertMatch = paragraph.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/);
+    const wrapperClassName = cn(
+      "relative rounded-md border-l transition-all duration-300",
+      isActive
+        ? "border-amber bg-amber/5 pl-4 shadow-[0_0_15px_rgba(245,158,11,0.03)]"
+        : "border-transparent"
+    );
+
+    if (alertMatch) {
+      const type = alertMatch[1];
+      const content = alertMatch[2];
+      return (
+        <aside
+          key={`paragraph-${globalIdx}`}
+          ref={el => { paragraphRefs.current[globalIdx] = el; }}
+          className={cn(
+            "my-2 rounded-md border p-4",
+            alertClassMap[type] ?? alertClassMap.NOTE,
+            isActive && "ring-1 ring-amber/45",
+          )}
+        >
+          <strong className="block font-mono text-xs uppercase tracking-wide">{type}</strong>
+          <MarkdownBlock className="mt-2 text-sm leading-6">{content}</MarkdownBlock>
+        </aside>
+      );
+    }
+
+    return (
+      <div
+        key={`paragraph-${globalIdx}`}
+        className={wrapperClassName}
+        ref={el => { paragraphRefs.current[globalIdx] = el; }}
+      >
+        {isActive && (
+          <span className="absolute -left-1 top-4 inline-block size-1.5 rounded-full bg-amber animate-ping" />
+        )}
+        <MarkdownBlock>{paragraph}</MarkdownBlock>
+      </div>
+    );
+  };
 
   // Determine which section is currently active based on active paragraph index
   const activeSectionIdx = useMemo(() => {
     if (activeParagraphIndex === null) return null;
-    if (activeParagraphIndex === 0) return -1; // -1 represents the hero takeaway
+    if (activeParagraphIndex === takeawayIdx) return -1; // -1 represents the hero takeaway
     
     let activeSec = 0;
     for (let i = 0; i < sectionIndices.length; i++) {
-      if (sectionIndices[i].includes(activeParagraphIndex)) {
+      if (
+        sectionHeadingIndices[i] === activeParagraphIndex ||
+        sectionIndices[i].includes(activeParagraphIndex)
+      ) {
         activeSec = i;
         break;
       }
     }
     return activeSec;
-  }, [activeParagraphIndex, sectionIndices]);
+  }, [activeParagraphIndex, sectionHeadingIndices, sectionIndices, takeawayIdx]);
 
   // Scroll active paragraph smoothly into view
   useEffect(() => {
@@ -224,17 +274,17 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
         {/* Content Article */}
         <article className="min-w-0 space-y-12">
-          
+
           {/* Why this matters / Hero takeaway */}
-          <div 
+          <div
             ref={el => { paragraphRefs.current[0] = el; }}
             className={`border-y border-border py-8 transition-all duration-300 relative ${
-              activeParagraphIndex === 0 
-                ? "border-amber bg-amber/5 px-4 shadow-[0_0_20px_rgba(245,158,11,0.08)]" 
+              activeParagraphIndex === takeawayIdx
+                ? "border-amber bg-amber/5 px-4 shadow-[0_0_20px_rgba(245,158,11,0.08)]"
                 : ""
             }`}
           >
-            {activeParagraphIndex === 0 && (
+            {activeParagraphIndex === takeawayIdx && (
               <span className="absolute top-2 right-4 font-mono text-[8px] text-amber uppercase tracking-wider animate-pulse">
                 [AUDIO EMISSION ACTIVE]
               </span>
@@ -251,8 +301,9 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
           <div className="space-y-14">
             {article.sections.map((section, sIdx) => (
               <section key={section.heading} className="scroll-mt-20">
-                <h2 
+                <h2
                   id={`section-heading-${sIdx}`}
+                  ref={el => { paragraphRefs.current[sectionHeadingIndices[sIdx]] = el; }}
                   className={`font-display text-2xl md:text-3xl font-normal text-foreground border-b border-zinc-900 pb-3 transition-colors duration-300 ${
                     activeSectionIdx === sIdx ? "text-amber" : ""
                   }`}
@@ -272,18 +323,34 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                   })}
                 </div>
 
+                {section.diagram && (
+                  <div className="mt-7 overflow-hidden rounded-lg border border-border bg-zinc-950/45 p-4">
+                    <div className="mb-3 flex items-center justify-between gap-3 border-b border-zinc-900 pb-2">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-amber">
+                        {section.diagram.title}
+                      </span>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                        Mermaid
+                      </span>
+                    </div>
+                    <MarkdownBlock className="streamdown-code-clean text-zinc-200">
+                      {createMermaidDiagram(section.diagram)}
+                    </MarkdownBlock>
+                  </div>
+                )}
+
                 {/* Code Block */}
                 {section.codeBlock && (
-                  <div className="mt-6 overflow-hidden rounded-lg border border-border bg-[#0d0d0d] font-mono text-[11px] leading-relaxed shadow-lg">
-                    {section.codeBlock.filename && (
-                      <div className="bg-zinc-950 px-4 py-2 border-b border-border/80 text-[10px] text-muted-foreground tracking-wide flex justify-between select-none">
-                        <span>{section.codeBlock.filename}</span>
-                        <span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
-                      </div>
-                    )}
-                    <pre className="p-4 overflow-x-auto text-zinc-300">
-                      <code>{section.codeBlock.code}</code>
-                    </pre>
+                  <div className="mt-7 overflow-hidden rounded-lg border border-border bg-[#0d0d0d] shadow-lg">
+                    <div className="bg-zinc-950 px-4 py-2 border-b border-border/80 text-[10px] text-muted-foreground tracking-wide flex justify-between select-none">
+                      <span>{section.codeBlock.filename}</span>
+                      <span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
+                    </div>
+                    <div className="streamdown-code-clean p-4 text-zinc-300">
+                      <MarkdownBlock>
+                        {`\`\`\`${section.codeBlock.language}\n${section.codeBlock.code}\n\`\`\``}
+                      </MarkdownBlock>
+                    </div>
                   </div>
                 )}
               </section>
@@ -298,6 +365,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
             <button 
               onClick={handleLike}
               className={`flex items-center gap-1.5 transition-colors ${hasLiked ? "text-rose-500" : "hover:text-foreground"}`}
+              type="button"
             >
               <Heart className={`size-4 ${hasLiked ? "fill-current" : ""}`} /> {likes} claps
             </button>
@@ -311,6 +379,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
             <button 
               onClick={handleShare}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-border bg-zinc-900/30 hover:bg-zinc-900/60 hover:text-foreground transition-colors"
+              type="button"
             >
               <Share2 className="size-3.5" /> 
               {copiedLink ? "Link Copied!" : "Share Spec"}
@@ -344,22 +413,27 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                     const el = document.querySelector("article");
                     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
+                  aria-label="Scroll to article takeaway"
                   className={`size-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                     activeSectionIdx === -1 
                       ? "border-amber bg-amber/25 shadow-[0_0_8px_rgba(245,158,11,0.5)] scale-[1.2]" 
                       : "border-zinc-800 bg-zinc-950 hover:border-amber/50"
                   }`}
                   title="Why this matters"
+                  type="button"
                 >
                   <div className={`size-1.5 rounded-full ${activeSectionIdx === -1 ? 'bg-amber' : 'bg-zinc-700'}`} />
                 </button>
 
-                {article.sections.map((_, idx) => {
+                {article.sections.map((section, idx) => {
                   const isActive = activeSectionIdx === idx;
-                  const isPassed = activeSectionIdx !== null && activeParagraphIndex !== null && activeParagraphIndex >= sectionIndices[idx][0];
+                  const isPassed =
+                    activeSectionIdx !== null &&
+                    activeParagraphIndex !== null &&
+                    activeParagraphIndex >= sectionHeadingIndices[idx];
                   
                   return (
-                    <React.Fragment key={idx}>
+                    <React.Fragment key={section.heading}>
                       {/* Connecting Edge Line */}
                       <div className={`w-0.5 flex-1 h-8 my-0.5 transition-colors duration-300 ${
                         isPassed ? "bg-amber/40" : "bg-zinc-900"
@@ -368,12 +442,14 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                       {/* Section Node */}
                       <button
                         onClick={() => scrollToSection(idx)}
+                        aria-label={`Scroll to ${section.heading}`}
                         className={`size-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                           isActive 
                             ? "border-amber bg-amber/25 shadow-[0_0_8px_rgba(245,158,11,0.5)] scale-[1.2]" 
                             : "border-zinc-800 bg-zinc-950 hover:border-amber/50"
                         }`}
-                        title={article.sections[idx].heading}
+                        title={section.heading}
+                        type="button"
                       >
                         <div className={`size-1.5 rounded-full ${isActive ? 'bg-amber' : 'bg-zinc-700'}`} />
                       </button>
@@ -389,9 +465,11 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                     const el = document.querySelector("article");
                     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
+                  aria-label="Scroll to article takeaway"
                   className={`text-left text-[10px] font-mono uppercase tracking-wide transition-colors ${
                     activeSectionIdx === -1 ? "text-amber font-bold" : "text-muted-foreground hover:text-foreground"
                   }`}
+                  type="button"
                 >
                   00 // Why this matters
                 </button>
@@ -405,6 +483,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                       className={`text-left text-[10px] font-mono uppercase tracking-wide truncate max-w-[200px] transition-colors ${
                         isActive ? "text-amber font-bold" : "text-muted-foreground hover:text-foreground"
                       }`}
+                      type="button"
                     >
                       0{idx + 1}{" // "}{section.heading}
                     </button>
