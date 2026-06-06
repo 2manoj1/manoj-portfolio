@@ -12,7 +12,7 @@ export const metadata = createMetadata({
 
 export default function ResumePage() {
 	return (
-		<main className="min-h-screen bg-zinc-950/20 pt-20 pb-16">
+		<main className="min-h-screen bg-background pt-20 pb-16">
 			<div className="mx-auto max-w-5xl px-6">
 				{/* Top Navigation & Info */}
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-6 mb-8">
@@ -50,7 +50,7 @@ export default function ResumePage() {
 				</div>
 
 				{/* PDF Viewer Container */}
-				<div className="relative rounded-lg border border-border/80 bg-zinc-900/10 shadow-2xl p-1.5 md:p-3 overflow-hidden backdrop-blur-sm">
+				<div className="relative rounded-lg border border-border/80 bg-secondary/50 shadow-2xl p-1.5 md:p-3 overflow-hidden backdrop-blur-sm">
 					{/* Status Bar */}
 					<div className="flex items-center justify-between border-b border-border/40 pb-2 mb-2 px-1 text-xs text-muted-foreground">
 						<span className="flex items-center gap-1.5 font-medium">
@@ -61,7 +61,7 @@ export default function ResumePage() {
 					</div>
 
 					{/* Embedded PDF Viewer Iframe - Desktop Only */}
-					<div className="hidden md:flex w-full bg-zinc-950/80 rounded border border-border/50 overflow-hidden h-[800px] items-center justify-center">
+					<div className="hidden md:flex w-full bg-card rounded border border-border/50 overflow-hidden h-[800px] items-center justify-center">
 						<iframe
 							src="/resume.pdf#toolbar=0&navpanes=0&scrollbar=1"
 							className="w-full h-full border-none"
@@ -70,7 +70,7 @@ export default function ResumePage() {
 					</div>
 
 					{/* Mobile Helper - Mobile Only */}
-					<div className="md:hidden flex flex-col items-center justify-center text-center p-6 bg-zinc-950/60 rounded border border-border/50 min-h-[420px]">
+					<div className="md:hidden flex flex-col items-center justify-center text-center p-6 bg-card rounded border border-border/50 min-h-[420px]">
 						<div className="size-14 rounded-full bg-amber/10 flex items-center justify-center mb-5 ring-1 ring-amber/20">
 							<FileText className="size-6 text-amber" />
 						</div>

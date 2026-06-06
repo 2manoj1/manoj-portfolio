@@ -95,20 +95,20 @@ export default function ServicesPage() {
 				
 				<div className="mt-14 relative">
 					{/* Connecting Line (Desktop) */}
-					<div className="hidden lg:block absolute top-[45px] left-10 right-10 h-0.5 bg-gradient-to-r from-amber/30 via-zinc-800 to-amber/30" />
+					<div className="hidden lg:block absolute top-[45px] left-10 right-10 h-0.5 bg-gradient-to-r from-amber/30 via-border to-amber/30" />
 
 					<div className="grid gap-6 lg:grid-cols-5">
 						{deliverySteps.map((step) => {
 							const Icon = step.icon;
 							return (
-								<div key={step.number} className="group relative border border-border bg-zinc-950/30 p-5 rounded-lg flex flex-col justify-between hover:border-amber/35 hover:bg-zinc-900/10 transition-all duration-300">
+								<div key={step.number} className="group relative border border-border bg-secondary/30 p-5 rounded-lg flex flex-col justify-between hover:border-amber/35 hover:bg-secondary/55 transition-all duration-300">
 									
 									{/* Top hover indicator */}
 									<div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
 									<div>
 										<div className="flex items-center justify-between">
-											<div className="flex size-9 items-center justify-center rounded-lg border border-border bg-zinc-900 text-zinc-400 group-hover:bg-zinc-900/50 group-hover:text-amber group-hover:border-amber/25 transition-all duration-300">
+											<div className="flex size-9 items-center justify-center rounded-lg border border-border bg-secondary text-muted-foreground group-hover:bg-secondary/80 group-hover:text-amber group-hover:border-amber/25 transition-all duration-300">
 												<Icon className="size-4 shrink-0" />
 											</div>
 											<span className="font-mono text-xs font-bold text-muted-foreground/45 group-hover:text-amber/40 transition-colors">
@@ -116,7 +116,7 @@ export default function ServicesPage() {
 											</span>
 										</div>
 
-										<h4 className="mt-4 text-xs font-bold text-foreground transition-colors group-hover:text-zinc-100">
+										<h4 className="mt-4 text-xs font-bold text-foreground transition-colors group-hover:text-amber">
 											{step.title}
 										</h4>
 										<p className="mt-2.5 text-[11px] leading-relaxed text-muted-foreground/80">

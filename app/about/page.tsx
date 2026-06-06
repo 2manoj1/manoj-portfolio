@@ -88,7 +88,7 @@ export default function AboutPage() {
 					<article aria-labelledby="about-profile-title">
 						<Card className="border-border bg-card/30 p-0 shadow-sm shadow-black/5 overflow-visible">
 							{/* 1. Cover Banner Image at the top of the Card */}
-							<div className="relative w-full aspect-[2.8/1] md:aspect-[3.6/1] rounded-t-2xl overflow-hidden border-b border-border/80 bg-zinc-950/20">
+							<div className="relative w-full aspect-[2.8/1] md:aspect-[3.6/1] rounded-t-2xl overflow-hidden border-b border-border/80 bg-secondary/20">
 								<Image
 									src="/manoj_banner.png"
 									alt="Manoj Mukherjee Systems Architecture Cover Banner"
@@ -183,7 +183,7 @@ export default function AboutPage() {
 									</nav>
 								</section>
 
-								<div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border/60 bg-zinc-950/20 p-4 text-center dark:bg-zinc-900/10 md:justify-between md:py-6 md:h-full md:self-end">
+								<div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-secondary/35 p-4 text-center md:justify-between md:py-6 md:h-full md:self-end">
 									<div className="relative size-24 rounded border border-border bg-white p-1">
 										<Image
 											src="/manoj_qr.png"

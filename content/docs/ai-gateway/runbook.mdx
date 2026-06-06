@@ -1,0 +1,252 @@
+---
+title: "Production Runbook"
+description: "Operational checklists, startup steps, LaunchAgent configurations, and incident guides."
+order: 4
+category: "03. Operations"
+---
+
+# AI Home Lab Production Runbook
+
+This runbook is the operational checklist for running the API gateway as a macOS home-lab production service.
+
+## Golden Rules
+
+- Keep Ollama private on `127.0.0.1:11434`.
+- Keep production gateway private on `127.0.0.1:8000`.
+- Point Cloudflare Tunnel only to `http://127.0.0.1:8000`.
+- Never expose PostgreSQL, Redis, or Qdrant through Cloudflare.
+- Use client API keys for `/v1/*`.
+- Use the admin secret only for `/admin/*`.
+- Run `make api-check` before production changes.
+
+## Install or Update Ollama
+
+Install the official Ollama release used by this gateway profile:
+
+```bash
+make macos-ollama-install-official
+```
+
+Tune the macOS Ollama LaunchAgent for the gateway:
+
+```bash
+make macos-ollama-tune
+```
+
+The tuning script configures:
+
+```env
+OLLAMA_KEEP_ALIVE=-1
+OLLAMA_NUM_PARALLEL=10
+OLLAMA_MAX_QUEUE=10
+OLLAMA_MAX_LOADED_MODELS=1
+OLLAMA_CONTEXT_LENGTH=4096
+OLLAMA_FLASH_ATTENTION=1
+OLLAMA_KV_CACHE_TYPE=q8_0
+```
+
+Verify Ollama:
+
+```bash
+curl -fsS http://127.0.0.1:11434/api/version
+ollama ps
+```
+
+Expected current version:
+
+```text
+0.30.6
+```
+
+## Production Startup
+
+Build and start production:
+
+```bash
+make prod-build
+make prod-up
+```
+
+Check status:
+
+```bash
+make prod-ps
+curl -fsS http://127.0.0.1:8000/api/v1/health
+curl -fsS http://127.0.0.1:8000/openapi.json >/tmp/ai-gateway-openapi.json
+```
+
+Follow logs:
+
+```bash
+make prod-logs
+```
+
+Restart cleanly:
+
+```bash
+make prod-recreate
+```
+
+Stop production:
+
+```bash
+make prod-down
+```
+
+## Quality Gate
+
+Run before production:
+
+```bash
+make api-check
+```
+
+This runs:
+
+- Ruff format check.
+- Ruff lint.
+- mypy.
+- pytest.
+
+## API Key Flow
+
+Create a client API key:
+
+```bash
+curl -X POST http://127.0.0.1:8000/admin/api-keys \
+  -H "X-Admin-Secret: <ADMIN_SECRET>" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"production-client"}'
+```
+
+Call the OpenAI-compatible API:
+
+```bash
+curl -N http://127.0.0.1:8000/v1/chat/completions \
+  -H "Authorization: Bearer <CLIENT_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen3.5:9b",
+    "messages": [
+      {"role": "user", "content": "/no_think Say hello in one short sentence."}
+    ],
+    "stream": true,
+    "max_completion_tokens": 80
+  }'
+```
+
+## Cloudflare Tunnel Checklist
+
+Cloudflare Tunnel should target:
+
+```text
+http://127.0.0.1:8000
+```
+
+Recommended edge rules:
+
+- Rate limit `POST /v1/*`.
+- Rate limit `POST /api/v1/agent/*`.
+- Protect `/admin/*` with Cloudflare Access or a trusted allowlist.
+- Do not create public routes for `:11434`, `:5432`, `:6379`, or `:6333`.
+
+## Hardware Profile
+
+Current hardware profile:
+
+```text
+Apple Silicon M1 Pro
+32 GB unified memory
+```
+
+Recommended conservative Ollama profile:
+
+```env
+OLLAMA_MAX_LOADED_MODELS=1
+OLLAMA_CONTEXT_LENGTH=4096
+OLLAMA_KV_CACHE_TYPE=q8_0
+OLLAMA_FLASH_ATTENTION=1
+OLLAMA_KEEP_ALIVE=-1
+```
+
+For `qwen3.5:9b`, Ollama was observed exposing one active generation slot, even when `OLLAMA_NUM_PARALLEL=10` was set. That means the gateway can protect and queue up to 10 chat callers, but actual model generation may still happen one request at a time for this model.
+
+If latency matters more than answer depth, add a smaller fast model lane for simple tasks:
+
+```bash
+ollama pull llama3.2
+```
+
+Then route lightweight summarization, classification, and short chat to the smaller model while keeping `qwen3.5:9b` for heavier reasoning.
+
+## Common Incidents
+
+### Ollama Returns `llama-server binary not found`
+
+Cause: the installed Ollama package is missing the server helper binary.
+
+Fix:
+
+```bash
+make macos-ollama-install-official
+make macos-ollama-tune
+curl -fsS http://127.0.0.1:11434/api/version
+```
+
+### First Request Is Slow
+
+Check whether the model is loaded:
+
+```bash
+ollama ps
+```
+
+If it is not loaded, run:
+
+```bash
+make macos-ollama-tune
+```
+
+The gateway warmup should also load the model during FastAPI startup when `OLLAMA_WARMUP_ON_STARTUP=true`.
+
+### Gateway Returns 429
+
+Cause: all chat concurrency slots are busy.
+
+Options:
+
+- Ask clients to retry with backoff.
+- Increase `OLLAMA_CHAT_ACQUIRE_TIMEOUT_SECONDS` slightly.
+- Use a smaller model lane for lightweight traffic.
+- Keep the hard limit at 10 on this hardware unless load testing proves a higher value is stable.
+
+### Unified Memory Pressure
+
+Check loaded models:
+
+```bash
+ollama ps
+```
+
+Reduce pressure:
+
+```bash
+make dev-down
+make prod-ps
+```
+
+Keep only the production stack running when serving real traffic.
+
+## Production Definition of Done
+
+Before saying production is healthy:
+
+- `make api-check` passes.
+- `make prod-build` succeeds.
+- `make prod-up` starts containers.
+- `make prod-ps` shows healthy gateway, PostgreSQL, and Redis.
+- `curl http://127.0.0.1:8000/api/v1/health` returns `{"status":"ok"}`.
+- `curl http://127.0.0.1:11434/api/version` returns Ollama version `0.30.6`.
+- Gateway logs show Ollama warmup success.
+- Cloudflare Tunnel targets only `127.0.0.1:8000`.
+- `/admin/*` is not publicly usable without admin protection.

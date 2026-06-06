@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useTheme } from "next-themes";
 import { useMediaQuery } from "usehooks-ts";
 import {
   Background,
@@ -215,13 +216,13 @@ function ZoneBoundaryNode({ data }: NodeProps) {
     <section
       role="region"
       aria-label={`${zone.label} network zone`}
-      className="h-full w-full rounded-xl border border-dashed border-white/[0.24] bg-white/[0.04] shadow-[inset_0_0_44px_rgba(255,255,255,0.035)] transition-colors hover:border-amber/40 hover:bg-white/[0.05]"
+      className="h-full w-full rounded-xl border border-dashed border-zinc-300 dark:border-white/[0.24] bg-zinc-100/30 dark:bg-white/[0.04] shadow-[inset_0_0_44px_rgba(255,255,255,0.015)] dark:shadow-[inset_0_0_44px_rgba(255,255,255,0.035)] transition-colors hover:border-amber/40 hover:bg-zinc-100/50 dark:hover:bg-white/[0.05]"
     >
-      <div className="border-b border-white/[0.13] px-3 py-2">
+      <div className="border-b border-zinc-200 dark:border-white/[0.13] px-3 py-2">
         <p className="break-words font-mono text-[11px] font-semibold uppercase tracking-wide text-amber">
           {zone.label}
         </p>
-        <p className="mt-1 max-w-[28ch] break-words text-[11px] leading-relaxed text-zinc-300">
+        <p className="mt-1 max-w-[28ch] break-words text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-300">
           {zone.summary}
         </p>
       </div>
@@ -232,6 +233,7 @@ function ZoneBoundaryNode({ data }: NodeProps) {
 function ArchitectureNodeCard({ data, selected }: NodeProps) {
   const node = data as ArchitectureNodeData;
   const Icon = node.icon;
+  const { resolvedTheme } = useTheme();
   
   const simMode = node.simMode;
   const isLatency = simMode === "LATENCY";
@@ -244,12 +246,12 @@ function ArchitectureNodeCard({ data, selected }: NodeProps) {
       className={cn(
         "architecture-node relative w-full h-full rounded-lg border p-3.5 text-left shadow-2xl backdrop-blur transition-all duration-200",
         isFailure
-          ? "border-rose-500 bg-rose-950/15 shadow-[0_0_34px_rgba(244,63,94,0.3)] animate-pulse"
+          ? "border-rose-500 bg-rose-500/10 dark:bg-rose-950/15 shadow-[0_0_34px_rgba(244,63,94,0.2)] dark:shadow-[0_0_34px_rgba(244,63,94,0.3)] animate-pulse"
           : isLatency
-            ? "border-amber bg-amber-950/15 shadow-[0_0_34px_rgba(245,158,11,0.3)] animate-pulse"
+            ? "border-amber bg-amber-500/10 dark:bg-amber-950/15 shadow-[0_0_34px_rgba(245,158,11,0.2)] dark:shadow-[0_0_34px_rgba(245,158,11,0.3)] animate-pulse"
             : isActive
-              ? "border-amber/85 bg-zinc-900 shadow-[0_0_34px_rgba(245,158,11,0.26)]"
-              : "border-white/[0.24] bg-zinc-900/96 shadow-black/45 hover:border-white/[0.36] hover:bg-zinc-900",
+              ? "border-amber/85 bg-white dark:bg-zinc-900 shadow-[0_0_34px_rgba(245,158,11,0.18)] dark:shadow-[0_0_34px_rgba(245,158,11,0.26)]"
+              : "border-zinc-300 bg-white dark:border-white/[0.24] dark:bg-zinc-900/96 shadow-zinc-200/50 dark:shadow-black/45 hover:border-zinc-400 hover:bg-zinc-50 dark:hover:border-white/[0.36] dark:hover:bg-zinc-900",
       )}
     >
       {portPositions.map(({ side, position }) => (
@@ -274,30 +276,30 @@ function ArchitectureNodeCard({ data, selected }: NodeProps) {
           className={cn(
             "flex size-8 shrink-0 items-center justify-center rounded-md border transition-colors",
             isFailure
-              ? "border-rose-500/55 bg-rose-500/12 text-rose-400"
+              ? "border-rose-500/55 bg-rose-500/12 text-rose-500 dark:text-rose-400"
               : isLatency
                 ? "border-amber/55 bg-amber/[0.12] text-amber"
                 : isActive
                   ? "border-amber/55 bg-amber/[0.12] text-amber"
-                  : "border-white/[0.16] bg-white/[0.06] text-zinc-200",
+                  : "border-zinc-300 bg-zinc-50 text-zinc-700 dark:border-white/[0.16] dark:bg-white/[0.06] dark:text-zinc-200",
           )}
         >
           <Icon className="size-4" aria-hidden="true" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="break-words text-[13px] font-semibold leading-5 text-white">
+          <p className="break-words text-[13px] font-semibold leading-5 text-zinc-900 dark:text-white">
             {node.label}
           </p>
-          <p className="mt-1 break-words text-[12px] leading-relaxed text-zinc-200">
+          <p className="mt-1 break-words text-[12px] leading-relaxed text-zinc-700 dark:text-zinc-200">
             {node.description}
           </p>
         </div>
       </div>
 
-      <p className="mt-2 break-words font-mono text-[11px] leading-relaxed text-zinc-300">
+      <p className="mt-2 break-words font-mono text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-300">
         {node.detail}
       </p>
-      <p className="mt-2 break-words font-mono text-[10px] uppercase tracking-wide text-zinc-400">
+      <p className="mt-2 break-words font-mono text-[10px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
         {node.zoneLabel}
       </p>
     </div>
@@ -316,6 +318,7 @@ function TelemetryEdge({
   selected,
 }: EdgeProps) {
   const edgeData = data as TelemetryEdgeData | undefined;
+  const { resolvedTheme } = useTheme();
   const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -331,6 +334,7 @@ function TelemetryEdge({
   const isFailure = simMode === "FAILURE";
 
   const isActive = selected || edgeData?.isActive || edgeData?.isTraced || isLatency || isFailure;
+  const isLight = resolvedTheme === "light";
 
   const strokeColor = isFailure
     ? "rgba(244,63,94,0.95)"
@@ -338,15 +342,15 @@ function TelemetryEdge({
       ? "rgba(245,158,11,0.95)"
       : isActive
         ? "rgba(245,158,11,0.95)"
-        : "rgba(228,228,231,0.48)";
+        : (isLight ? "rgba(82,82,91,0.55)" : "rgba(228,228,231,0.28)");
 
   const strokeWidth = isActive ? 2.4 : 1.35;
   const filter = isFailure
-    ? "drop-shadow(0 0 10px rgba(244,63,94,0.56))"
+    ? "drop-shadow(0 0 10px rgba(244,63,94,0.4))"
     : isLatency
-      ? "drop-shadow(0 0 10px rgba(245,158,11,0.56))"
+      ? "drop-shadow(0 0 10px rgba(245,158,11,0.4))"
       : isActive
-        ? "drop-shadow(0 0 10px rgba(245,158,11,0.46))"
+        ? "drop-shadow(0 0 10px rgba(245,158,11,0.3))"
         : undefined;
 
   const labelText = edgeData?.simLabel || edgeData?.label;
@@ -388,12 +392,12 @@ function TelemetryEdge({
           className={cn(
             "nodrag nopan rounded border px-2 py-1 font-mono text-[10px] uppercase tracking-wide shadow-lg backdrop-blur",
             isFailure
-              ? "border-rose-500/50 bg-zinc-950/95 text-rose-400"
+              ? "border-rose-500/50 bg-rose-500/10 text-rose-700 dark:bg-zinc-950/95 dark:text-rose-400"
               : isLatency
-                ? "border-amber/55 bg-zinc-950/95 text-amber"
+                ? "border-amber/55 bg-amber-500/10 text-amber dark:bg-zinc-950/95"
                 : isActive
-                  ? "border-amber/55 bg-zinc-950/95 text-amber"
-                  : "border-white/[0.16] bg-zinc-950/92 text-zinc-300",
+                  ? "border-amber/55 bg-amber-500/10 text-amber dark:bg-zinc-950/95"
+                  : "border-zinc-200 bg-white/95 text-zinc-600 dark:border-white/[0.16] dark:bg-zinc-950/92 dark:text-zinc-300",
           )}
         >
           {labelText}
@@ -421,6 +425,7 @@ function TopologyCanvasInner({
   simMode = "HEALTHY",
 }: TopologyCanvasProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { resolvedTheme } = useTheme();
   const reactFlow = useReactFlow<ArchitectureFlowNode, ArchitectureFlowEdge>();
   const [nodes, setNodes, onNodesChange] = useNodesState<ArchitectureFlowNode>(
     buildFlowNodes(study),
@@ -683,7 +688,7 @@ function TopologyCanvasInner({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
       className={cn(
-        "architecture-flow relative overflow-hidden rounded-lg border border-white/[0.1] bg-zinc-950/92 focus-within:ring-2 focus-within:ring-amber/70",
+        "architecture-flow relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 dark:border-white/[0.1] dark:bg-zinc-950/92 focus-within:ring-2 focus-within:ring-amber/70",
         isFullscreen
           ? "h-full min-h-[520px]"
           : "h-[520px] sm:h-[680px] xl:h-[760px]",
@@ -709,7 +714,7 @@ function TopologyCanvasInner({
         maxZoom={2}
         snapToGrid
         snapGrid={[16, 16]}
-        colorMode="dark"
+        colorMode={resolvedTheme === "light" ? "light" : "dark"}
         nodesConnectable={false}
         edgesReconnectable={false}
         deleteKeyCode={null}
@@ -720,44 +725,44 @@ function TopologyCanvasInner({
         <Background
           variant={BackgroundVariant.Lines}
           gap={28}
-          color="rgba(255,255,255,0.055)"
+          color={resolvedTheme === "light" ? "rgba(0,0,0,0.022)" : "rgba(255,255,255,0.055)"}
         />
         <Background
           id="architecture-flow-cross"
           variant={BackgroundVariant.Cross}
           gap={112}
           size={2}
-          color="rgba(245,158,11,0.16)"
+          color={resolvedTheme === "light" ? "rgba(245,158,11,0.1)" : "rgba(245,158,11,0.16)"}
         />
 
         <Panel
           position="top-left"
-          className="max-w-[44ch] rounded-lg border border-white/[0.12] bg-black/78 px-3 py-2 shadow-2xl backdrop-blur"
+          className="max-w-[44ch] rounded-lg border border-zinc-200 bg-white/95 dark:border-white/[0.12] dark:bg-black/78 px-3 py-2 shadow-2xl backdrop-blur"
         >
           <div className="flex items-center gap-2">
             <ScanLine className="size-3.5 text-amber" aria-hidden="true" />
-            <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-300">
+            <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-700 dark:text-zinc-300">
               Live Trace
             </p>
           </div>
-          <p className="mt-1 break-words text-xs leading-5 text-zinc-400">
+          <p className="mt-1 break-words text-xs leading-5 text-zinc-600 dark:text-zinc-400">
             {liveTraceLabel}
           </p>
         </Panel>
 
         <Panel
           position="bottom-left"
-          className="rounded-md border border-white/[0.1] bg-black/72 px-2.5 py-1.5 shadow-xl backdrop-blur"
+          className="rounded-md border border-zinc-200 bg-white/95 dark:border-white/[0.1] dark:bg-black/72 px-2.5 py-1.5 shadow-xl backdrop-blur"
         >
           <div className="flex items-center gap-2">
             <span
               className={cn(
                 "size-1.5 rounded-full",
-                isTraceRunning ? "bg-emerald-400" : "bg-zinc-600",
+                isTraceRunning ? "bg-emerald-400" : "bg-zinc-400 dark:bg-zinc-600",
               )}
               aria-hidden="true"
             />
-            <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-400">
+            <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
               {isTraceRunning ? "Telemetry streaming" : "Trace paused"}
             </p>
           </div>
@@ -817,12 +822,12 @@ function TopologyCanvasInner({
             maskColor="rgba(0,0,0,0.58)"
             nodeColor={(node) =>
               node.type === "zone"
-                ? "rgba(63,63,70,0.45)"
+                ? (resolvedTheme === "light" ? "rgba(244,244,245,0.8)" : "rgba(63,63,70,0.45)")
                 : "rgba(245,158,11,0.72)"
             }
             nodeStrokeColor={(node) =>
               node.type === "zone"
-                ? "rgba(255,255,255,0.16)"
+                ? (resolvedTheme === "light" ? "rgba(9,9,11,0.15)" : "rgba(255,255,255,0.16)")
                 : "rgba(245,158,11,0.9)"
             }
           />

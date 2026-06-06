@@ -1,9 +1,10 @@
+import { siteConfig } from "@/content/site";
+
 const CALENDLY = "https://calendly.com/manojmukherjee777/meet-with-manoj";
-const LINKEDIN = "https://www.linkedin.com/in/manoj-mukherjee/";
-const MEDIUM = "https://medium.com/@manojmukherjee777";
-const GITHUB = "https://github.com/2manoj1";
-const GOOGLE_SCHOLAR =
-	"https://scholar.google.com/citations?user=he1gsYkAAAAJ&hl=en";
-const EMAIL = "info@manojmukherjee.co.in";
+const LINKEDIN = siteConfig.profileLinks.linkedin;
+const MEDIUM = siteConfig.profileLinks.medium;
+const GITHUB = siteConfig.profileLinks.github;
+const GOOGLE_SCHOLAR = siteConfig.profileLinks.googleScholar;
+const EMAIL = siteConfig.email;
 
 export { CALENDLY, LINKEDIN, MEDIUM, GITHUB, GOOGLE_SCHOLAR, EMAIL };

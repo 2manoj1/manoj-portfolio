@@ -41,14 +41,16 @@ export default async function BlogArticlePage({ params }: PageProps) {
 	}
 
 	const articleUrl = `${siteConfig.url}/blog/${article.slug}`;
+	const articleDate =
+		article.date === "June 2026" ? "2026-06-06" : "2026-05-25";
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "BlogPosting",
 		headline: article.title,
 		description: article.seoDescription,
 		url: articleUrl,
-		datePublished: "2026-05-25",
-		dateModified: "2026-05-25",
+		datePublished: articleDate,
+		dateModified: articleDate,
 		author: {
 			"@type": "Person",
 			name: siteConfig.name,

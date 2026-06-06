@@ -42,12 +42,12 @@ export function EngineeringPhilosophy() {
 			</div>
 
 			{/* Right Column: Monospace Research Ledger Terminal */}
-			<div className="flex flex-col rounded-xl border border-border bg-[#0d0d0d] shadow-2xl overflow-hidden justify-between min-h-[22rem]">
+			<div className="flex flex-col rounded-xl border border-zinc-200 dark:border-border bg-zinc-50 dark:bg-[#0d0d0d] shadow-md dark:shadow-2xl overflow-hidden justify-between min-h-[22rem]">
 				{/* Terminal Header */}
-				<div className="flex items-center justify-between bg-zinc-950 px-4 py-3 border-b border-border/60 select-none">
+				<div className="flex items-center justify-between bg-zinc-100 dark:bg-zinc-950 px-4 py-3 border-b border-zinc-200/65 dark:border-border/60 select-none">
 					<div className="flex items-center gap-2">
 						<Terminal className="size-4 text-amber" />
-						<span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+						<span className="font-mono text-[10px] text-zinc-500 dark:text-muted-foreground uppercase tracking-widest">
 							manoj@research-ledger
 						</span>
 					</div>
@@ -55,51 +55,51 @@ export function EngineeringPhilosophy() {
 						STABLE_SYNC
 					</span>
 				</div>
-
+ 
 				{/* Terminal Logs/Content */}
-				<div className="flex-1 p-5 font-mono text-[11px] leading-relaxed text-zinc-300 space-y-5 overflow-y-auto">
+				<div className="flex-1 p-5 font-mono text-[11px] leading-relaxed text-zinc-700 dark:text-zinc-300 space-y-5 overflow-y-auto">
 					{/* Research Inputs */}
 					<div className="space-y-1.5">
-						<div className="flex items-center gap-2 text-white/40">
+						<div className="flex items-center gap-2 text-zinc-400 dark:text-white/40">
 							<BookOpen className="size-3 text-amber/70" />
 							<span className="uppercase font-semibold tracking-wider">Research & Subscriptions</span>
 						</div>
-						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-400">
+						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-650 dark:text-zinc-400">
 							<li>Weekly review of arXiv GenAI and System Architecture papers</li>
 							<li>Subscribed to engineering publications (Vercel, Stripe, InfoQ)</li>
 							<li>LangGraph, LlamaIndex, and OpenAI API spec updates monitoring</li>
 						</ul>
 					</div>
-
+ 
 					{/* System Design Exercises */}
 					<div className="space-y-1.5">
-						<div className="flex items-center gap-2 text-white/40">
+						<div className="flex items-center gap-2 text-zinc-400 dark:text-white/40">
 							<Code className="size-3 text-amber/70" />
 							<span className="uppercase font-semibold tracking-wider">System Design & POC Lab</span>
 						</div>
-						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-400">
+						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-650 dark:text-zinc-400">
 							<li>State preservation using SQLite/Postgres checkpointers</li>
 							<li>Benchmarking local SLMs (Qwen-14B/Llama-3.2) on Apple Silicon</li>
 							<li>Model Context Protocol (MCP) tool security gateway mocks</li>
 						</ul>
 					</div>
-
+ 
 					{/* AI Multipliers */}
 					<div className="space-y-1.5">
-						<div className="flex items-center gap-2 text-white/40">
+						<div className="flex items-center gap-2 text-zinc-400 dark:text-white/40">
 							<RefreshCw className="size-3 text-amber/70" />
 							<span className="uppercase font-semibold tracking-wider">AI Integration & Context Eng.</span>
 						</div>
-						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-400">
+						<ul className="space-y-1 pl-4 list-disc list-outside text-zinc-650 dark:text-zinc-400">
 							<li>Utilizing AI for rapid boilerplate generation & testing</li>
 							<li>Context engineering: window compaction & RAG compression</li>
 							<li>Continuous prompt optimization using structured JSON evaluations</li>
 						</ul>
 					</div>
 				</div>
-
+ 
 				{/* Terminal Footer */}
-				<div className="bg-zinc-950/60 px-4 py-2.5 border-t border-border/60 flex items-center justify-between text-[9px] text-muted-foreground select-none">
+				<div className="bg-zinc-100/60 dark:bg-zinc-950/60 px-4 py-2.5 border-t border-zinc-200/60 dark:border-border/60 flex items-center justify-between text-[9px] text-zinc-500 dark:text-muted-foreground select-none">
 					<span className="flex items-center gap-1">
 						<span className="size-1.5 rounded-full bg-emerald-500" />
 						ACTIVE DISCOVERY HUB

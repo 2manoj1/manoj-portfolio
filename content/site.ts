@@ -493,12 +493,16 @@ export const articles = [
 			"Desktop AI Supercomputing is Here: A Practical Look at NVIDIA DGX Spark™ for Startups",
 		date: "April 2026",
 		topic: "AI infrastructure",
+		description:
+			"A practical deep dive into NVIDIA DGX Spark, exploring how startups can build offline-first, agentic AI systems using local compute, container-native architecture, and the NVIDIA ecosystem.",
 		url: "https://medium.com/@manojmukherjee777/desktop-ai-supercomputing-is-here-a-practical-look-at-nvidia-dgx-spark-for-startups-84526c573f40",
 	},
 	{
 		title: "The Future of AI: Building Agent-to-Agent Communication Systems",
 		date: "May 2025",
 		topic: "Multi-agent systems",
+		description:
+			"Exploring the shift from isolated AI models to interconnected agent-to-agent communication systems in the rapidly evolving world of artificial intelligence.",
 		url: "https://medium.com/@manojmukherjee777/the-future-of-ai-building-agent-to-agent-communication-systems-b502bbd954e7",
 	},
 	{
@@ -506,6 +510,8 @@ export const articles = [
 			"Building an AI-Powered Stock Analysis Pipeline with LangGraph, DeepSeek, and Ollama",
 		date: "January 2025",
 		topic: "LangGraph",
+		description:
+			"A guide to building cost-effective, sophisticated stock analysis solutions using open-source AI tools and local LLMs.",
 		url: "https://medium.com/@manojmukherjee777/building-an-ai-powered-stock-analysis-pipeline-with-langgraph-deepseek-and-ollama-11b0c00d0e72",
 	},
 	{
@@ -513,50 +519,119 @@ export const articles = [
 			"Building a Real-Time AI Agent with LangChain, LangGraph, and Open Source LLMs using Ollama",
 		date: "September 2024",
 		topic: "AI agents",
+		description:
+			"Combining real-time reasoning with local model deployment to build intelligent applications powered by open source LLMs.",
 		url: "https://medium.com/@manojmukherjee777/building-a-real-time-ai-agent-with-langchain-langgraph-and-open-source-llms-using-ollama-3602fc77c7c3",
 	},
 	{
 		title: "Advanced Retrieval-Augmented Generation (RAG) with LangChain, LangGraph, and AI Agents",
 		date: "October 2024",
 		topic: "RAG & Agents",
-		url: "https://medium.com/@manoj-mukherjee/advanced-retrieval-augmented-generation-rag-with-langchain-langgraph-and-ai-agents-0d7092984185",
+		description:
+			"An in-depth systems analysis of hybrid retrieval execution. Focuses on combining dense vector search (pgvector/Qdrant) and sparse document keyword indexes (MongoDB), optimized through cross-encoder reranking.",
+		url: "https://medium.com/@manojmukherjee777/advanced-retrieval-augmented-generation-rag-with-langchain-langgraph-and-ai-agents-588aab108abf",
 	},
 	{
 		title: "Advanced Agent Functionality with Ollama and LLAMA 3 in LangChain",
 		date: "July 2024",
 		topic: "AI agents",
-		url: "https://medium.com/@manoj-mukherjee/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-51c6c0628e93",
+		description:
+			"Exploring tool invocation dynamics, parameter schemas, and error boundaries using LLaMA 3 models locally.",
+		url: "https://medium.com/@manojmukherjee777/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-51c6c0628e93",
 	},
 	{
 		title: "Extracting Information from Images with OCR, Vision AI, and Language Models",
 		date: "February 2024",
 		topic: "OCR & Vision AI",
-		url: "https://medium.com/@manoj-mukherjee/extracting-information-from-images-with-ocr-vision-ai-and-language-models-a678d21c172a",
+		description:
+			"Extracting valuable information from images for applications ranging from document analysis to intelligent data processing using OCR, Vision AI, and Language Models.",
+		url: "https://medium.com/@manojmukherjee777/extracting-information-from-images-with-ocr-vision-ai-and-language-models-a678d21c172a",
 	},
 	{
 		title: "Local Image Understanding with OpenSource LLaVA and Ollama",
 		date: "February 2024",
 		topic: "Multimodal AI",
-		url: "https://medium.com/@manoj-mukherjee/local-image-understanding-with-opensource-llava-and-ollama-84f93a901046",
+		description:
+			"Setting up local multimodal workloads using LLaVA and Ollama to parse visual diagrams and document charts locally.",
+		url: "https://medium.com/@manojmukherjee777/local-image-understanding-with-opensource-llava-and-ollama-84f93a901046",
 	},
 	{
 		title: "React Testing Library: Portal Modal",
 		date: "April 2023",
 		topic: "React testing",
+		description:
+			"A unit testing blueprint for verification of React portals, overlay elements, and modal dialogue boxes.",
 		url: "https://medium.com/@manojmukherjee777/react-testing-library-portal-modal-b05aaeb5dda7",
 	},
 	{
 		title: "Replay.io: A Game-Changing Tool for Web Developers",
 		date: "April 2023",
 		topic: "Developer tools",
-		url: "https://medium.com/@manoj-mukherjee/replay-io-a-game-changing-tool-for-web-developers-89d1a37c3547",
+		description:
+			"Time-travel debugging analysis using Replay.io to track asynchronous race conditions and state changes in application workflows.",
+		url: "https://medium.com/@manojmukherjee777/replay-io-a-game-changing-tool-for-web-developers-89d1a37c3547",
 	},
 	{
 		title: "Cypress 10 — As Frontend or JavaScript Engineer",
 		date: "July 2022",
 		topic: "Frontend testing",
-		url: "https://medium.com/@manoj-mukherjee/cypress-10-as-frontend-or-javascript-engineer-f5e6a91d1e4e",
+		description:
+			"Testing strategy guides for end-to-end browser regression checks and component level testing under Cypress 10.",
+		url: "https://medium.com/@manojmukherjee777/cypress-10-as-frontend-or-javascript-engineer-f5e6a91d1e4e",
 	},
+] as const;
+
+export const publications = [
+	{
+		title: "FastAPI OpenAI Gateway Specs & Runbook",
+		description: "Production-grade documentation mapping loopback API routing, concurrency semaphore limits, LaunchAgent service managers, and unified memory allocations on macOS hardware.",
+		topic: "AI Infrastructure Specs",
+		year: "2026",
+		platform: "Internal System Specs / Docs",
+		contribution: "Designed and tested the loopback backpressure thresholds, caching conventions, and open-source release validation scripts.",
+		tags: ["FastAPI", "Ollama", "LaunchAgents", "React Flow", "ELK Layout"],
+		url: "/case-studies/production-grade-ai-home-lab"
+	},
+	{
+		title: "Agent-to-Agent Communication Systems",
+		description: "Architectural guidelines on multi-agent messaging protocols, state serialization, message schemas, and execution synchronization within LangGraph and Model Context Protocol architectures.",
+		topic: "Multi-Agent Systems",
+		year: "2026",
+		platform: "Medium / Research Brief",
+		contribution: "Modeled inter-agent execution loops and structured communication gateways to secure workspace routing.",
+		tags: ["LangGraph", "MCP", "State Synchronization", "JSON-RPC"],
+		url: "https://medium.com/@manojmukherjee777/the-future-of-ai-building-agent-to-agent-communication-systems-b502bbd954e7"
+	},
+	{
+		title: "Advanced Retrieval-Augmented Generation (RAG)",
+		description: "An in-depth systems analysis of hybrid retrieval execution. Focuses on combining dense vector search (pgvector/Qdrant) and sparse document keyword indexes (MongoDB), optimized through cross-encoder reranking.",
+		topic: "RAG Infrastructure",
+		year: "2026",
+		platform: "Medium / Systems Journal",
+		contribution: "Designed token-compaction formulas and hybrid search scoring formulas that reduced context payload sizes by 45%.",
+		tags: ["pgvector", "Qdrant", "Cross-Encoder", "Hybrid Search"],
+		url: "https://medium.com/@manojmukherjee777/advanced-retrieval-augmented-generation-rag-with-langchain-langgraph-and-ai-agents-588aab108abf"
+	},
+	{
+		title: "Real-Time AI Agents with LangChain & LangGraph",
+		description: "Research on low-latency local agent runtimes. Analyzes hardware-accelerated local execution constraints on Apple Silicon environments using Ollama, MLX, and vLLM gateways.",
+		topic: "Local Inference Platform",
+		year: "2026",
+		platform: "Research Hub / Blog",
+		contribution: "Built open-source benchmarks comparing time-to-first-token (TTFT) performance across unified memory lanes.",
+		tags: ["Ollama", "MLX", "vLLM", "Local Hardware"],
+		url: "https://medium.com/@manojmukherjee777/building-a-real-time-ai-agent-with-langchain-langgraph-and-open-source-llms-using-ollama-3602fc77c7c3"
+	},
+	{
+		title: "AI-Powered Stock Analysis using LangGraph & DeepSeek",
+		description: "Systems research analyzing automated financial market research. Features multi-agent routers executing complex technical audits, sentiment parsing, and algorithmic risk evaluations.",
+		topic: "Financial Systems Research",
+		year: "2026",
+		platform: "Google Scholar / Publications",
+		contribution: "Modeled the financial risk checking rules node as a human-in-the-loop validation interrupt.",
+		tags: ["DeepSeek", "Redux Saga", "Financial Charts", "Risk Gating"],
+		url: "https://medium.com/@manojmukherjee777/building-an-ai-powered-stock-analysis-pipeline-with-langgraph-deepseek-and-ollama-11b0c00d0e72"
+	}
 ] as const;
 
 export const awards = [

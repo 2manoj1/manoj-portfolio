@@ -220,8 +220,8 @@ export function SystemTopologyInspector() {
             onClick={() => handleSystemChange(idx)}
             className={`group relative text-left rounded-xl border p-5 transition-all duration-300 ${
               activeSystemIndex === idx
-                ? "border-amber/40 bg-zinc-900/40 shadow-[0_0_12px_rgba(245,158,11,0.06)]"
-                : "border-border/60 bg-zinc-950/20 hover:border-zinc-800 hover:bg-zinc-900/10"
+                ? "border-amber/40 bg-zinc-100 dark:bg-zinc-900/40 shadow-[0_0_12px_rgba(245,158,11,0.06)]"
+                : "border-border/60 bg-secondary/10 dark:bg-zinc-950/20 hover:border-zinc-300 dark:hover:border-zinc-800 hover:bg-zinc-200/50 dark:hover:bg-zinc-900/10"
             }`}
           >
             {/* Top border glow indicator */}
@@ -231,7 +231,7 @@ export function SystemTopologyInspector() {
 
             <div className="flex items-center justify-between">
               <h4 className={`text-sm font-semibold transition-colors ${
-                activeSystemIndex === idx ? "text-amber" : "text-foreground group-hover:text-zinc-100"
+                activeSystemIndex === idx ? "text-amber" : "text-foreground"
               }`}>
                 {sys.title}
               </h4>
@@ -251,7 +251,7 @@ export function SystemTopologyInspector() {
                   className={`font-mono text-[9px] px-1.5 py-0.5 rounded border ${
                     activeSystemIndex === idx && activeStepName === step
                       ? "bg-amber/10 border-amber/30 text-amber font-bold"
-                      : "bg-zinc-900/60 border-zinc-800/80 text-zinc-400"
+                      : "bg-zinc-150/60 dark:bg-zinc-900/60 border-zinc-250 dark:border-zinc-800/80 text-zinc-650 dark:text-zinc-400"
                   }`}
                 >
                   {step}
@@ -263,29 +263,29 @@ export function SystemTopologyInspector() {
       </div>
 
       {/* Right panel: Active system detailed inspector board */}
-      <div className="relative flex flex-col justify-between rounded-xl border border-border bg-zinc-950/40 p-6 shadow-md">
+      <div className="relative flex flex-col justify-between rounded-xl border border-zinc-200 dark:border-border bg-zinc-50 dark:bg-zinc-950/40 p-6 shadow-md">
         
         {/* Top window headers */}
         <div>
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200 dark:border-border pb-4">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
-                <span className="size-2.5 rounded-full bg-zinc-800" />
-                <span className="size-2.5 rounded-full bg-zinc-800" />
-                <span className="size-2.5 rounded-full bg-zinc-800" />
+                <span className="size-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                <span className="size-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+                <span className="size-2.5 rounded-full bg-zinc-200 dark:bg-zinc-800" />
               </div>
-              <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest pl-2 border-l border-zinc-800">
+              <span className="font-mono text-[10px] text-zinc-500 dark:text-muted-foreground uppercase tracking-widest pl-2 border-l border-zinc-200 dark:border-zinc-800">
                 system_topology_inspector.cfg
               </span>
             </div>
-
+ 
             {/* Toggle panels */}
-            <div className="flex gap-1 bg-zinc-900/80 border border-zinc-800/80 p-0.5 rounded-md">
+            <div className="flex gap-1 bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800/80 p-0.5 rounded-md">
               <button
                 onClick={() => setActivePanelTab("pipeline")}
                 className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-colors ${
                   activePanelTab === "pipeline"
-                    ? "bg-zinc-950 text-amber font-medium"
+                    ? "bg-white dark:bg-zinc-950 text-amber font-medium"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -295,7 +295,7 @@ export function SystemTopologyInspector() {
                 onClick={() => setActivePanelTab("tradeoffs")}
                 className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-colors ${
                   activePanelTab === "tradeoffs"
-                    ? "bg-zinc-950 text-amber font-medium"
+                    ? "bg-white dark:bg-zinc-950 text-amber font-medium"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -303,14 +303,14 @@ export function SystemTopologyInspector() {
               </button>
             </div>
           </div>
-
+ 
           <h3 className="text-base font-semibold text-foreground tracking-tight mt-5">
             {system.title} Specs
           </h3>
           <p className="text-xs text-muted-foreground leading-relaxed mt-1">
             {system.description}
           </p>
-
+ 
           {activePanelTab === "pipeline" ? (
             /* Pipeline execution flow visualizer */
             <div className="mt-8">
@@ -329,25 +329,25 @@ export function SystemTopologyInspector() {
                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md border font-mono text-[11px] transition-all duration-200 ${
                           isActive
                             ? "bg-amber/5 border-amber/40 text-amber shadow-[0_0_8px_rgba(245,158,11,0.06)] font-semibold"
-                            : "bg-zinc-900/30 border-zinc-800 hover:border-zinc-700/60 hover:bg-zinc-900/50 text-zinc-400"
+                            : "bg-zinc-100 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700/60 hover:bg-zinc-200/50 dark:hover:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400"
                         }`}
                       >
-                        <span className={`text-[9px] font-bold ${isActive ? "text-amber/70" : "text-zinc-500"}`}>
+                        <span className={`text-[9px] font-bold ${isActive ? "text-amber/70" : "text-zinc-500 dark:text-zinc-500"}`}>
                           0{index + 1}
                         </span>
                         <span>{step}</span>
                       </button>
                       {index < steps.length - 1 && (
-                        <span className="text-zinc-700 font-mono text-[10px] pr-0.5">→</span>
+                        <span className="text-zinc-400 dark:text-zinc-700 font-mono text-[10px] pr-0.5">→</span>
                       )}
                     </div>
                   );
                 })}
               </div>
-
+ 
               {/* Step Detail Card */}
               {stepInfo && (
-                <div className="mt-6 border border-border bg-zinc-900/20 p-5 rounded-lg relative overflow-hidden animate-fadeIn">
+                <div className="mt-6 border border-zinc-200 dark:border-border bg-zinc-150/30 dark:bg-zinc-900/20 p-5 rounded-lg relative overflow-hidden animate-fadeIn">
                   
                   {/* Glowing active step bullet */}
                   <div className="absolute top-0 right-0 p-3 flex items-center gap-1.5">
@@ -355,40 +355,40 @@ export function SystemTopologyInspector() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <span className="font-mono text-[8px] uppercase tracking-wider text-emerald-400">ACTIVE STATE</span>
+                    <span className="font-mono text-[8px] uppercase tracking-wider text-emerald-500 dark:text-emerald-400">ACTIVE STATE</span>
                   </div>
-
+ 
                   <h4 className="text-xs font-bold text-foreground">
                     Stage {steps.indexOf(currentStepName) + 1}: {currentStepName}
                   </h4>
                   <p className="text-xs text-muted-foreground/90 mt-2 leading-relaxed max-w-xl">
                     {stepInfo.description}
                   </p>
-
-                  <div className="mt-5 space-y-3.5 border-t border-zinc-800/80 pt-4">
+ 
+                  <div className="mt-5 space-y-3.5 border-t border-zinc-200 dark:border-zinc-800/80 pt-4">
                     <div className="grid gap-1 sm:grid-cols-[120px_1fr]">
-                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                         <Cpu className="size-3 text-amber/60" /> SPECIFICATION:
                       </span>
-                      <span className="font-mono text-[10px] text-zinc-300 leading-relaxed truncate-lines">
+                      <span className="font-mono text-[10px] text-zinc-700 dark:text-zinc-300 leading-relaxed truncate-lines">
                         {stepInfo.spec}
                       </span>
                     </div>
-
+ 
                     <div className="grid gap-1 sm:grid-cols-[120px_1fr]">
-                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                         <FileCode className="size-3 text-amber/60" /> DATA CONTRACT:
                       </span>
-                      <span className="font-mono text-[10px] text-zinc-300 leading-relaxed break-all bg-zinc-950/60 border border-zinc-900 px-2 py-1.5 rounded">
+                      <span className="font-mono text-[10px] text-zinc-800 dark:text-zinc-300 leading-relaxed break-all bg-zinc-100 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-900 px-2 py-1.5 rounded">
                         {stepInfo.contract}
                       </span>
                     </div>
-
+ 
                     <div className="grid gap-1 sm:grid-cols-[120px_1fr]">
-                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                      <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                         <ShieldAlert className="size-3 text-amber/60" /> MITIGATION:
                       </span>
-                      <span className="font-mono text-[10px] text-zinc-300 leading-relaxed">
+                      <span className="font-mono text-[10px] text-zinc-700 dark:text-zinc-300 leading-relaxed">
                         {stepInfo.mitigation}
                       </span>
                     </div>
@@ -407,25 +407,25 @@ export function SystemTopologyInspector() {
                   Adjusting state contracts directly changes verification capabilities, caching ratios, and operational latency budgets.
                 </p>
               </div>
-
+ 
               <div className="grid gap-4 md:grid-cols-2">
                 {system.tradeoffs.map((tradeoff) => {
                   const percent = levels[tradeoff] || "80%";
                   const explanation = system.tradeoffExplanations[tradeoff] || "System operational constraint.";
                   return (
-                    <div key={tradeoff} className="border border-border bg-zinc-900/10 p-4 rounded-lg flex flex-col justify-between gap-3">
+                    <div key={tradeoff} className="border border-zinc-200 dark:border-border bg-zinc-100/30 dark:bg-zinc-900/10 p-4 rounded-lg flex flex-col justify-between gap-3">
                       <div>
                         <div className="flex justify-between items-center text-[10px] font-mono leading-none">
-                          <span className="font-semibold text-zinc-300 uppercase tracking-wide">{tradeoff}</span>
+                          <span className="font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wide">{tradeoff}</span>
                           <span className="text-amber font-bold text-[10px] font-mono">{percent}</span>
                         </div>
                         <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground/75">
                           {explanation}
                         </p>
                       </div>
-
+ 
                       {/* Slider bar */}
-                      <div className="h-1 w-full bg-zinc-900 rounded-full overflow-hidden relative border border-zinc-900/50">
+                      <div className="h-1 w-full bg-zinc-200 dark:bg-zinc-900 rounded-full overflow-hidden relative border border-zinc-300 dark:border-zinc-900/50">
                         <div 
                           className="absolute left-0 top-0 h-full bg-amber/50 rounded-full"
                           style={{ width: percent }}
@@ -438,15 +438,15 @@ export function SystemTopologyInspector() {
             </div>
           )}
         </div>
-
+ 
         {/* Footer info link */}
-        <div className="mt-8 border-t border-border/80 pt-4 flex items-center justify-between text-[10px] font-mono text-muted-foreground/60">
+        <div className="mt-8 border-t border-zinc-200 dark:border-border/80 pt-4 flex items-center justify-between text-[10px] font-mono text-muted-foreground/60">
           <span className="flex items-center gap-1.5">
             <Activity className="size-3 text-emerald-500 animate-pulse" /> Trace status: telemetry active
           </span>
           <span>SYSTEM RUNTIME // VERIFIED</span>
         </div>
-
+ 
       </div>
 
     </div>

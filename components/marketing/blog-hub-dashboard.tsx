@@ -107,18 +107,18 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
     <div className="space-y-12">
       
       {/* Search & Filter Terminal Widget */}
-      <div className="overflow-hidden rounded-xl border border-border bg-zinc-950/40 shadow-lg relative">
+      <div className="overflow-hidden rounded-xl border border-border bg-secondary/15 dark:bg-zinc-950/40 shadow-lg relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
         
         {/* Terminal Header */}
-        <div className="flex flex-wrap items-center justify-between border-b border-zinc-900 bg-zinc-900/30 px-6 py-4.5 gap-4">
+        <div className="flex flex-wrap items-center justify-between border-b border-border bg-secondary/35 dark:bg-zinc-900/30 px-6 py-4.5 gap-4">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
-              <span className="size-2 rounded-full bg-zinc-800" />
-              <span className="size-2 rounded-full bg-zinc-800" />
-              <span className="size-2 rounded-full bg-zinc-800" />
+              <span className="size-2 rounded-full bg-zinc-300 dark:bg-zinc-800" />
+              <span className="size-2 rounded-full bg-zinc-300 dark:bg-zinc-800" />
+              <span className="size-2 rounded-full bg-zinc-300 dark:bg-zinc-800" />
             </div>
-            <span className="font-mono text-[9px] uppercase tracking-widest pl-2 border-l border-zinc-800 flex items-center gap-1.5 text-muted-foreground">
+            <span className="font-mono text-[9px] uppercase tracking-widest pl-2 border-l border-border flex items-center gap-1.5 text-muted-foreground">
               <Terminal className="size-3 text-amber" /> journal_search_query.dll
             </span>
           </div>
@@ -135,35 +135,35 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
             <label className="font-mono text-[10px] uppercase tracking-wider text-amber font-semibold block">
               &gt;_ Search AI Systems Index
             </label>
-            <div className="relative border border-zinc-850 bg-zinc-950 rounded px-4 py-2.5 flex items-center gap-2 group focus-within:border-amber/40 transition-colors">
+            <div className="relative border border-border bg-card rounded px-4 py-2.5 flex items-center gap-2 group focus-within:border-amber/40 transition-colors">
               <span className="font-mono text-zinc-500 text-xs select-none">console@manoj:~$</span>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Enter query (e.g. LangGraph, RAG, Otel)..."
-                className="flex-1 bg-transparent font-mono text-xs text-zinc-100 placeholder-zinc-700 focus:outline-none"
+                className="flex-1 bg-transparent font-mono text-xs text-foreground placeholder-muted-foreground/55 focus:outline-none"
               />
-              <Search className="size-4 text-zinc-700 shrink-0 group-focus-within:text-amber transition-colors" />
+              <Search className="size-4 text-muted-foreground/60 shrink-0 group-focus-within:text-amber transition-colors" />
             </div>
           </div>
 
           {/* HUD Trace Readout */}
-          <div className="bg-zinc-950/80 border border-zinc-900 rounded p-4 font-mono text-[9px] leading-relaxed text-zinc-400 space-y-1.5">
+          <div className="bg-card dark:bg-zinc-950/80 border border-border rounded p-4 font-mono text-[9px] leading-relaxed text-zinc-400 space-y-1.5">
             <div>
-              <span className="text-zinc-600">{"// TRACE SUMMARY"}</span>
+              <span className="text-zinc-500">{"// TRACE SUMMARY"}</span>
             </div>
             <div className="flex justify-between">
               <span>ACTIVE SCHEMA:</span>
-              <span className="text-zinc-300">SYSTEM_INDEX</span>
+              <span className="text-foreground/90">SYSTEM_INDEX</span>
             </div>
             <div className="flex justify-between">
               <span>LOCAL ARTICLES:</span>
-              <span className="text-zinc-300">{filteredLocalArticles.length} matching</span>
+              <span className="text-foreground/90">{filteredLocalArticles.length} matching</span>
             </div>
             <div className="flex justify-between">
               <span>MEDIUM ARTICLES:</span>
-              <span className="text-zinc-300">{filteredMediumArticles.length} matching</span>
+              <span className="text-foreground/90">{filteredMediumArticles.length} matching</span>
             </div>
             <div className="flex justify-between">
               <span>CONSOLE STATE:</span>
@@ -174,7 +174,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
         </div>
 
         {/* Category filters */}
-        <div className="px-6 py-4 bg-zinc-900/10 flex flex-wrap gap-1.5 items-center">
+        <div className="px-6 py-4 bg-secondary/40 dark:bg-zinc-900/10 flex flex-wrap gap-1.5 items-center">
           <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest mr-2 flex items-center gap-1">
             <Filter className="size-3" /> Filters:
           </span>
@@ -184,7 +184,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-3 py-1 rounded font-mono text-[9px] uppercase transition-all duration-200 border ${
                 selectedCategory === cat.id
-                  ? "bg-zinc-950 text-amber border-amber/40 font-bold"
+                  ? "bg-background dark:bg-zinc-950 text-amber border-amber/40 font-bold"
                   : "bg-transparent text-muted-foreground border-transparent hover:text-foreground"
               }`}
             >
@@ -209,7 +209,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
           </div>
 
           {filteredLocalArticles.length === 0 ? (
-            <div className="border border-zinc-900 bg-zinc-950/20 p-8 rounded-lg text-center font-mono text-xs text-zinc-600 italic">
+            <div className="border border-border bg-secondary/10 p-8 rounded-lg text-center font-mono text-xs text-muted-foreground/60 italic">
               No matching blog articles found in system registry.
             </div>
           ) : (
@@ -218,7 +218,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
                 <Link
                   key={article.slug}
                   href={`/blog/${article.slug}`}
-                  className="group relative border border-border bg-zinc-950/20 p-5 rounded-lg flex flex-col justify-between hover:border-amber/35 hover:bg-zinc-900/10 transition-all duration-300"
+                  className="group relative border border-border bg-secondary/10 dark:bg-zinc-950/20 p-5 rounded-lg flex flex-col justify-between hover:border-amber/35 hover:bg-secondary/30 dark:hover:bg-zinc-900/10 transition-all duration-300"
                 >
                   {/* Neon border hover effect */}
                   <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -229,7 +229,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
                       <span>{article.readingTime}</span>
                     </div>
 
-                    <h4 className="mt-4 text-sm font-bold text-foreground leading-snug group-hover:text-zinc-100 transition-colors">
+                    <h4 className="mt-4 text-sm font-bold text-foreground leading-snug group-hover:text-amber transition-colors">
                       {article.title}
                     </h4>
                     <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground/80">
@@ -258,17 +258,17 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
           </div>
 
           {/* Medium distribution feed list */}
-          <div className="border border-border bg-zinc-950/20 p-5 rounded-lg space-y-4">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 border-b border-zinc-900 pb-2">
+          <div className="border border-border bg-secondary/15 dark:bg-zinc-950/20 p-5 rounded-lg space-y-4">
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground flex items-center gap-1.5 border-b border-border pb-2">
               <Rss className="size-3 text-amber animate-pulse" /> {"Medium Feed Distribution // Live Syndication"}
             </span>
 
             {filteredMediumArticles.length === 0 ? (
-              <div className="font-mono text-[10px] text-zinc-700 italic text-center py-4">
+              <div className="font-mono text-[10px] text-muted-foreground/60 italic text-center py-4">
                 No matching Medium publications found.
               </div>
             ) : (
-              <div className="divide-y divide-zinc-900/60">
+              <div className="divide-y divide-border/60">
                 {filteredMediumArticles.map(article => (
                   <a
                     key={article.title}
@@ -283,7 +283,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
                         <span>·</span>
                         <span>{article.date}</span>
                       </div>
-                      <h5 className="mt-1 text-[11.5px] text-zinc-300 font-bold leading-snug group-hover:text-amber transition-colors truncate max-w-[280px]">
+                      <h5 className="mt-1 text-[11.5px] text-foreground font-bold leading-snug group-hover:text-amber transition-colors truncate max-w-[280px]">
                         {article.title}
                       </h5>
                     </div>
@@ -295,21 +295,21 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
           </div>
 
           {/* Sticky LinkedIn CTA console card */}
-          <div className="border border-zinc-800 bg-zinc-950 p-5 rounded-lg space-y-4 relative">
+          <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 rounded-lg space-y-4 relative">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber/30 to-transparent" />
             
-            <div className="flex items-center justify-between border-b border-zinc-900 pb-2.5">
+            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-900 pb-2.5">
               <span className="font-mono text-[9px] uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
                 <LinkedInIcon className="size-3.5 text-sky-500" /> linkedin_channel.exe
               </span>
               <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
 
-            <h4 className="text-[11px] font-mono font-bold text-zinc-200 uppercase tracking-wide">
+            <h4 className="text-[11px] font-mono font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">
               Manoj&apos;s LinkedIn Engineering Thread Hub
             </h4>
             
-            <p className="text-[10px] leading-relaxed text-muted-foreground">
+            <p className="text-[10px] leading-relaxed text-zinc-600 dark:text-zinc-400">
               Manoj shares technical solutions diagrams, RAG pipeline evaluation traces, and platform deployment topographies directly with a 2.8K+ strong developer audience.
             </p>
 
@@ -317,7 +317,7 @@ export function BlogHubDashboard({ blogArticles, mediumArticles }: BlogHubDashbo
               href={LINKEDIN}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded bg-amber/10 border border-amber/25 hover:bg-amber hover:text-zinc-950 px-3 py-2 font-mono text-[10px] text-amber font-bold transition-all"
+              className="flex w-full items-center justify-center gap-2 rounded bg-amber/10 border border-amber-300 dark:border-amber/25 hover:bg-amber hover:text-zinc-950 dark:hover:text-zinc-950 text-amber-800 dark:text-amber px-3 py-2 font-mono text-[10px] font-bold transition-all"
             >
               Connect & Review LinkedIn Feed <ExternalLink className="size-3" />
             </a>

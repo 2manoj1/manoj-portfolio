@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AdvisoryEstimator } from "@/components/marketing/advisory-estimator";
 import { LabDashboard } from "@/components/marketing/lab-dashboard";
 import { OrchestrationPlayground } from "@/components/marketing/orchestration-playground";
@@ -87,12 +88,13 @@ const blueprintLayers = [
 const researchThreads = [
 	{
 		id: "LAB-01",
-		status: "Publishing",
+		status: "Published",
 		title: "AI Home Lab Blueprint",
 		focus:
 			"Private AI platform on MacBook M1 Pro with Vercel-hosted Astra, Cloudflare Tunnel, FastAPI, Python LangGraph, Ollama, PostgreSQL, Redis, and Qdrant.",
 		nextDetail:
-			"Topology notes, constraints, and failure-mode checks.",
+			"System topologies, network zones, and deployment checklists.",
+		url: "/case-studies/production-grade-ai-home-lab?tab=diagrams",
 	},
 	{
 		id: "LAB-02",
@@ -105,12 +107,13 @@ const researchThreads = [
 	},
 	{
 		id: "LAB-03",
-		status: "Hardening",
+		status: "Published",
 		title: "OpenAI-Compatible AI Gateway",
 		focus:
 			"One API contract for local models, cloud models, tools, scripts, and future MCP clients.",
 		nextDetail:
-			"Validation, auth, fallback routing, traces, and cost/privacy tradeoffs.",
+			"API specifications, loopback port controls, and authentication structures.",
+		url: "/case-studies/production-grade-ai-home-lab?tab=architecture",
 	},
 	{
 		id: "LAB-04",
@@ -123,12 +126,13 @@ const researchThreads = [
 	},
 	{
 		id: "LAB-05",
-		status: "Planned",
+		status: "Published",
 		title: "Native Editorial Engine",
 		focus:
 			"First-party architecture notes with diagrams, code walkthroughs, and file-aware references.",
 		nextDetail:
-			"Structured blog model, Mermaid rendering, code highlighting, SEO, and newsletter capture.",
+			"Structured MDX specs viewer, dynamic Table of Contents, and custom React Flow integrations.",
+		url: "/case-studies/production-grade-ai-home-lab",
 	},
 ] as const;
 
@@ -247,16 +251,26 @@ function ResearchThreads() {
 	return (
 		<div className="mt-12 grid min-w-0 gap-3 lg:grid-cols-2">
 			{researchThreads.map((thread) => (
-				<article key={thread.id} className="min-w-0 border border-border p-5 md:p-6">
+				<article 
+					key={thread.id} 
+					className="min-w-0 border border-border p-5 md:p-6 relative overflow-hidden group hover:border-amber/40 hover:bg-secondary/15 transition-all duration-300"
+				>
+					{"url" in thread && thread.url && (
+						<Link
+							href={thread.url}
+							className="absolute inset-0 z-10"
+							aria-label={`Read spec: ${thread.title}`}
+						/>
+					)}
 					<div className="flex flex-wrap items-center justify-between gap-3">
 						<p className="font-mono text-xs uppercase tracking-wide text-amber">
 							{thread.id}
 						</p>
-						<span className="rounded-md border border-border bg-card/10 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+						<span className="rounded-md border border-border bg-card/10 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground group-hover:border-amber/20 transition-colors">
 							{thread.status}
 						</span>
 					</div>
-					<h3 className="mt-5 text-xl font-medium text-foreground">
+					<h3 className="mt-5 text-xl font-medium text-foreground group-hover:text-amber transition-colors">
 						{thread.title}
 					</h3>
 					<p className="mt-3 break-words text-sm leading-7 text-muted-foreground">
@@ -264,10 +278,10 @@ function ResearchThreads() {
 					</p>
 					<div className="mt-5 border-t border-border pt-4">
 						<p className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-							Next detail to publish
+							{"url" in thread ? "Specs Link / Details" : "Next detail to publish"}
 						</p>
 						<p className="mt-2 break-words text-sm leading-7 text-foreground">
-							{thread.nextDetail}
+							{"url" in thread ? "Click card to view technical documentation specifications." : thread.nextDetail}
 						</p>
 					</div>
 				</article>

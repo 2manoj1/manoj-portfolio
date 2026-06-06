@@ -284,7 +284,7 @@ I would like to request an architecture review to discuss implementing these cac
 
 					<a
 						href={`mailto:${EMAIL}?subject=${emailSubject}&body=${emailBody}`}
-						className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-amber px-4 text-sm font-medium text-zinc-950 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+						className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-zinc-200 dark:border-transparent bg-white dark:bg-amber px-4 text-sm font-medium text-zinc-900 dark:text-zinc-950 transition-all hover:bg-zinc-50 dark:hover:bg-amber/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-background shadow-sm dark:shadow-none">
 						Request Architecture Review via Email
 						<ArrowRight className="size-4" />
 					</a>

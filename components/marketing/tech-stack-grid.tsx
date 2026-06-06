@@ -353,8 +353,8 @@ export function TechStackGrid() {
           onClick={() => setActiveTab("all")}
           className={`rounded-md px-3.5 py-1.5 font-mono text-[10px] font-medium uppercase tracking-wider transition-all duration-200 ${
             activeTab === "all"
-              ? "bg-zinc-900 border border-amber/40 text-amber shadow-[0_0_8px_rgba(245,158,11,0.05)]"
-              : "border border-transparent text-muted-foreground hover:bg-zinc-950/40 hover:text-foreground"
+              ? "bg-secondary dark:bg-zinc-900 border border-amber/40 text-amber shadow-[0_0_8px_rgba(245,158,11,0.05)]"
+              : "border border-transparent text-muted-foreground hover:bg-secondary/40 dark:hover:bg-zinc-950/40 hover:text-foreground"
           }`}
         >
           All Matrix
@@ -365,8 +365,8 @@ export function TechStackGrid() {
             onClick={() => setActiveTab(group.id)}
             className={`rounded-md px-3.5 py-1.5 font-mono text-[10px] font-medium uppercase tracking-wider transition-all duration-200 ${
               activeTab === group.id
-                ? "bg-zinc-900 border border-amber/40 text-amber shadow-[0_0_8px_rgba(245,158,11,0.05)]"
-                : "border border-transparent text-muted-foreground hover:bg-zinc-950/40 hover:text-foreground"
+                ? "bg-secondary dark:bg-zinc-900 border border-amber/40 text-amber shadow-[0_0_8px_rgba(245,158,11,0.05)]"
+                : "border border-transparent text-muted-foreground hover:bg-secondary/40 dark:hover:bg-zinc-950/40 hover:text-foreground"
             }`}
           >
             {group.code}
@@ -396,15 +396,15 @@ export function TechStackGrid() {
               {group.items.map((item) => (
                 <div
                   key={item.name}
-                  className="group flex items-center gap-3 rounded-lg border border-border bg-zinc-950/15 px-3.5 py-3 shadow-sm transition-all duration-300 hover:border-amber/35 hover:bg-zinc-900/35 hover:shadow-[0_0_12px_rgba(245,158,11,0.05)]"
+                  className="group flex items-center gap-3 rounded-lg border border-border bg-secondary/15 dark:bg-zinc-950/15 px-3.5 py-3 shadow-sm transition-all duration-300 hover:border-amber/35 hover:bg-secondary/35 dark:hover:bg-zinc-900/35 hover:shadow-[0_0_12px_rgba(245,158,11,0.05)]"
                 >
                   {/* Logo frame */}
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-zinc-900 text-zinc-400 transition-all duration-300 group-hover:bg-zinc-900/50 group-hover:text-amber group-hover:border-amber/30">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-secondary dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 transition-all duration-300 group-hover:bg-secondary-foreground/5 dark:group-hover:bg-zinc-900/50 group-hover:text-amber group-hover:border-amber/30">
                     {item.logo}
                   </div>
                   {/* Name block */}
                   <div className="min-w-0 text-left">
-                    <h4 className="text-xs font-semibold text-foreground transition-colors group-hover:text-zinc-100 truncate">
+                    <h4 className="text-xs font-semibold text-foreground transition-colors truncate">
                       {item.name}
                     </h4>
                     <span className="block font-mono text-[9px] text-muted-foreground/50 tracking-tight uppercase mt-0.5 truncate">

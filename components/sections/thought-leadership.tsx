@@ -3,48 +3,9 @@
 import { useScrollReveal } from "@/components/ui/scroll-reveal";
 import { ExternalLink } from "lucide-react";
 import { MEDIUM, GOOGLE_SCHOLAR } from "@/lib/links";
+import { articles } from "@/content/site";
 
-const articles = [
-	{
-		title:
-			"Desktop AI Supercomputing is Here: A Practical Look at NVIDIA DGX Spark™ for Startups",
-		date: "April 2026",
-		description:
-			"A practical deep dive into NVIDIA DGX Spark, exploring how startups can build offline-first, agentic AI systems using local compute, container-native architecture, and the NVIDIA ecosystem.",
-		url: "https://medium.com/@manojmukherjee777/desktop-ai-supercomputing-is-here-a-practical-look-at-nvidia-dgx-spark-for-startups-84526c573f40",
-	},
-	{
-		title: "The Future of AI: Building Agent-to-Agent Communication Systems",
-		date: "May 2025",
-		description:
-			"Exploring the shift from isolated AI models to interconnected agent-to-agent communication systems in the rapidly evolving world of artificial intelligence.",
-		url: "https://medium.com/@manojmukherjee777/the-future-of-ai-building-agent-to-agent-communication-systems-b502bbd954e7",
-	},
-	{
-		title:
-			"Building an AI-Powered Stock Analysis Pipeline with LangGraph, DeepSeek, and Ollama",
-		date: "January 2025",
-		description:
-			"A guide to building cost-effective, sophisticated stock analysis solutions using open-source AI tools and local LLMs.",
-		url: "https://medium.com/@manojmukherjee777/building-an-ai-powered-stock-analysis-pipeline-with-langgraph-deepseek-and-ollama-11b0c00d0e72",
-	},
-	{
-		title:
-			"Building a Real-Time AI Agent with LangChain, LangGraph, and Open Source LLMs using Ollama",
-		date: "September 2024",
-		description:
-			"Combining real-time reasoning with local model deployment to build intelligent applications powered by open source LLMs.",
-		url: "https://medium.com/@manojmukherjee777/building-a-real-time-ai-agent-with-langchain-langgraph-and-open-source-llms-using-ollama-3602fc77c7c3",
-	},
-	{
-		title:
-			"Extracting Information from Images with OCR, Vision AI, and Language Models",
-		date: "February 2024",
-		description:
-			"Extracting valuable information from images for applications ranging from document analysis to intelligent data processing using OCR, Vision AI, and Language Models.",
-		url: "https://medium.com/@manojmukherjee777/extracting-information-from-images-with-ocr-vision-ai-and-language-models-7ab8dd271bae",
-	},
-];
+const leadArticles = articles.filter(a => a.description).slice(0, 5);
 
 export function ThoughtLeadership() {
 	const ref = useScrollReveal();
@@ -62,7 +23,7 @@ export function ThoughtLeadership() {
 				</h2>
 
 				<div className="mt-16 flex flex-col divide-y divide-border/50">
-					{articles.map((article) => (
+					{leadArticles.map((article) => (
 						<a
 							key={article.title}
 							href={article.url}

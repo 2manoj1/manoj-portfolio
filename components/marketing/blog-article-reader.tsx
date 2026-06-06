@@ -57,19 +57,19 @@ const streamdownPlugins = { cjk, code, math, mermaid };
 
 const markdownClassName =
   "blog-reader-markdown text-base leading-8 text-muted-foreground " +
-  "[&_p]:my-0 [&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-100 " +
-  "[&_em]:text-zinc-300 [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
+  "[&_p]:my-0 [&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-900 dark:[&_strong]:text-zinc-100 " +
+  "[&_em]:text-zinc-800 dark:[&_em]:text-zinc-300 [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
   "[&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_li]:pl-1 " +
-  "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-zinc-300 [&_blockquote]:italic " +
-  "[&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
-  "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-border/50 [&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:py-0.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber";
+  "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-muted-foreground [&_blockquote]:italic " +
+  "[&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:bg-zinc-100 dark:[&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
+  "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-border/50 [&_[data-streamdown='inline-code']]:bg-zinc-100 dark:[&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:py-0.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber";
 
 const alertClassMap: Record<string, string> = {
-  NOTE: "border-sky-500/45 bg-sky-950/20 text-sky-100",
-  TIP: "border-emerald-500/45 bg-emerald-950/20 text-emerald-100",
+  NOTE: "border-sky-500/45 bg-sky-100/50 dark:bg-sky-950/20 text-sky-800 dark:text-sky-100",
+  TIP: "border-emerald-500/45 bg-emerald-100/50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-100",
   IMPORTANT: "border-amber/55 bg-amber/10 text-amber",
-  WARNING: "border-orange-500/45 bg-orange-950/20 text-orange-100",
-  CAUTION: "border-rose-500/45 bg-rose-950/20 text-rose-100",
+  WARNING: "border-orange-500/45 bg-orange-100/50 dark:bg-orange-950/20 text-orange-800 dark:text-orange-100",
+  CAUTION: "border-rose-500/45 bg-rose-100/50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-100",
 };
 
 function MarkdownBlock({
@@ -266,7 +266,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                 "shrink-0 rounded-md border px-3 py-2 text-left font-mono text-[10px] uppercase tracking-wide",
                 activeSectionIdx === -1
                   ? "border-amber/50 bg-amber/10 text-amber"
-                  : "border-border bg-zinc-950/25 text-muted-foreground",
+                  : "border-zinc-200 dark:border-border bg-zinc-100/50 dark:bg-zinc-950/25 text-muted-foreground",
               )}
               type="button"
             >
@@ -280,7 +280,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                   "max-w-[220px] shrink-0 truncate rounded-md border px-3 py-2 text-left font-mono text-[10px] uppercase tracking-wide",
                   activeSectionIdx === idx
                     ? "border-amber/50 bg-amber/10 text-amber"
-                    : "border-border bg-zinc-950/25 text-muted-foreground",
+                    : "border-zinc-200 dark:border-border bg-zinc-100/50 dark:bg-zinc-950/25 text-muted-foreground",
                 )}
                 type="button"
               >
@@ -322,7 +322,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                 <h2
                   id={`section-heading-${sIdx}`}
                   ref={el => { paragraphRefs.current[sectionHeadingIndices[sIdx]] = el; }}
-                  className={`font-display text-2xl md:text-3xl font-normal text-foreground border-b border-zinc-900 pb-3 transition-colors duration-300 ${
+                  className={`font-display text-2xl md:text-3xl font-normal text-foreground border-b border-border pb-3 transition-colors duration-300 ${
                     activeSectionIdx === sIdx ? "text-amber" : ""
                   }`}
                 >
@@ -351,7 +351,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                 {/* Code Block */}
                 {section.codeBlock && (
                   <div className="mt-7 overflow-hidden rounded-lg border border-border bg-[#0d0d0d] shadow-lg">
-                    <div className="bg-zinc-950 px-4 py-2 border-b border-border/80 text-[10px] text-muted-foreground tracking-wide flex justify-between select-none">
+                    <div className="bg-zinc-100 dark:bg-zinc-950 px-4 py-2 border-b border-zinc-250 dark:border-border/80 text-[10px] text-zinc-700 dark:text-muted-foreground tracking-wide flex justify-between select-none">
                       <span>{section.codeBlock.filename}</span>
                       <span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
                     </div>
@@ -378,7 +378,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
             >
               <Heart className={`size-4 ${hasLiked ? "fill-current" : ""}`} /> {likes} claps
             </button>
-            <span className="text-zinc-800">|</span>
+            <span className="text-zinc-200 dark:text-zinc-800">|</span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="size-4" /> {article.readingTime}
             </span>
@@ -387,7 +387,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
           <div className="flex items-center gap-2">
             <button 
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-border bg-zinc-900/30 hover:bg-zinc-900/60 hover:text-foreground transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded border border-zinc-200 dark:border-border bg-zinc-100 dark:bg-zinc-900/30 hover:bg-zinc-200 dark:hover:bg-zinc-900/60 text-zinc-700 dark:text-muted-foreground hover:text-zinc-900 dark:hover:text-foreground transition-colors"
               type="button"
             >
               <Share2 className="size-3.5" /> 
@@ -404,9 +404,9 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
       <aside className="hidden space-y-8 lg:sticky lg:top-24 lg:block lg:self-start">
         
         {/* Interactive SVG TOC Node Graph */}
-        <div className="border border-border bg-zinc-950/20 p-5 rounded-lg relative overflow-hidden">
+        <div className="border border-zinc-200 dark:border-border bg-zinc-100/20 dark:bg-zinc-950/20 p-5 rounded-lg relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-          <p className="font-mono text-xs uppercase tracking-wide text-amber border-b border-zinc-900 pb-2">
+          <p className="font-mono text-xs uppercase tracking-wide text-amber border-b border-zinc-200 dark:border-zinc-900 pb-2">
             System Graph Outline
           </p>
           
@@ -426,12 +426,12 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                   className={`size-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                     activeSectionIdx === -1 
                       ? "border-amber bg-amber/25 shadow-[0_0_8px_rgba(245,158,11,0.5)] scale-[1.2]" 
-                      : "border-zinc-800 bg-zinc-950 hover:border-amber/50"
+                      : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 hover:border-amber/50"
                   }`}
                   title="Why this matters"
                   type="button"
                 >
-                  <div className={`size-1.5 rounded-full ${activeSectionIdx === -1 ? 'bg-amber' : 'bg-zinc-700'}`} />
+                  <div className={`size-1.5 rounded-full ${activeSectionIdx === -1 ? 'bg-amber' : 'bg-zinc-350 dark:bg-zinc-700'}`} />
                 </button>
 
                 {article.sections.map((section, idx) => {
@@ -445,7 +445,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                     <React.Fragment key={section.heading}>
                       {/* Connecting Edge Line */}
                       <div className={`w-0.5 flex-1 h-8 my-0.5 transition-colors duration-300 ${
-                        isPassed ? "bg-amber/40" : "bg-zinc-900"
+                        isPassed ? "bg-amber/40" : "bg-zinc-200 dark:bg-zinc-900"
                       }`} />
                       
                       {/* Section Node */}
@@ -455,12 +455,12 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
                         className={`size-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                           isActive 
                             ? "border-amber bg-amber/25 shadow-[0_0_8px_rgba(245,158,11,0.5)] scale-[1.2]" 
-                            : "border-zinc-800 bg-zinc-950 hover:border-amber/50"
+                            : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 hover:border-amber/50"
                         }`}
                         title={section.heading}
                         type="button"
                       >
-                        <div className={`size-1.5 rounded-full ${isActive ? 'bg-amber' : 'bg-zinc-700'}`} />
+                        <div className={`size-1.5 rounded-full ${isActive ? 'bg-amber' : 'bg-zinc-350 dark:bg-zinc-700'}`} />
                       </button>
                     </React.Fragment>
                   );
@@ -505,8 +505,8 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
         </div>
 
         {/* Technical Signals console */}
-        <div className="border border-border bg-zinc-950/20 p-5 rounded-lg relative overflow-hidden">
-          <p className="font-mono text-xs uppercase tracking-wide text-amber border-b border-zinc-900 pb-2 flex items-center gap-1.5">
+        <div className="border border-zinc-200 dark:border-border bg-zinc-100/20 dark:bg-zinc-950/20 p-5 rounded-lg relative overflow-hidden">
+          <p className="font-mono text-xs uppercase tracking-wide text-amber border-b border-zinc-200 dark:border-zinc-900 pb-2 flex items-center gap-1.5">
             <Activity className="size-3.5 text-amber animate-pulse" /> Architecture Signals
           </p>
           <ul className="mt-5 space-y-4">
@@ -523,36 +523,36 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
         </div>
 
         {/* Reader signal panel */}
-        <div className="border border-zinc-800 bg-zinc-950 p-4 rounded-lg font-mono text-[9px] leading-relaxed relative">
-          <div className="flex items-center justify-between border-b border-zinc-900 pb-2 mb-3">
+        <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-4 rounded-lg font-mono text-[9px] leading-relaxed relative">
+          <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-900 pb-2 mb-3">
             <span className="text-zinc-500 uppercase tracking-widest flex items-center gap-1">
               <Terminal className="size-3 text-amber" /> reader_pipeline.sys
             </span>
             <span className="text-emerald-500 uppercase tracking-wider font-semibold">SECURE // OK</span>
           </div>
-          <div className="space-y-2 text-zinc-400">
-            <div className="flex justify-between border-b border-zinc-900 pb-1">
+          <div className="space-y-2 text-zinc-600 dark:text-zinc-400">
+            <div className="flex justify-between border-b border-zinc-200 dark:border-zinc-900 pb-1">
               <span className="text-zinc-500">ARTICLE STATE</span>
-              <span className="text-zinc-200">CLIENT READY</span>
+              <span className="text-zinc-800 dark:text-zinc-200">CLIENT READY</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-900 pb-1">
+            <div className="flex justify-between border-b border-zinc-200 dark:border-zinc-900 pb-1">
               <span className="text-zinc-500">MARKDOWN PIPELINE</span>
-              <span className="text-zinc-200">STREAMDOWN</span>
+              <span className="text-zinc-800 dark:text-zinc-200">STREAMDOWN</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-900 pb-1">
+            <div className="flex justify-between border-b border-zinc-200 dark:border-zinc-900 pb-1">
               <span className="text-zinc-500">DIAGRAM ENGINE</span>
               <span className="text-amber">REACT FLOW</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-900 pb-1">
+            <div className="flex justify-between border-b border-zinc-200 dark:border-zinc-900 pb-1">
               <span className="text-zinc-500">AUDIO SEGMENTS</span>
-              <span className="text-zinc-200">{flatParagraphs.length}</span>
+              <span className="text-zinc-800 dark:text-zinc-200">{flatParagraphs.length}</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-900 pb-1">
+            <div className="flex justify-between border-b border-zinc-200 dark:border-zinc-900 pb-1">
               <span className="text-zinc-500">EST. WORDS</span>
-              <span className="text-emerald-400">{estimatedWordCount}</span>
+              <span className="text-emerald-600 dark:text-emerald-400">{estimatedWordCount}</span>
             </div>
           </div>
-          <div className="mt-3.5 text-[8px] text-zinc-600 leading-normal flex items-center gap-1 bg-zinc-900/30 p-2 border border-zinc-900/60 rounded">
+          <div className="mt-3.5 text-[8px] text-zinc-500 dark:text-zinc-600 leading-normal flex items-center gap-1 bg-zinc-100/50 dark:bg-zinc-900/30 p-2 border border-zinc-200 dark:border-zinc-900/60 rounded">
             <ShieldCheck className="size-3 text-emerald-500 shrink-0" />
             <span>OpenTelemetry convention signals streaming active.</span>
           </div>
@@ -560,8 +560,8 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
         {/* References widget */}
         {article.references && article.references.length > 0 && (
-          <div className="border border-border bg-zinc-950/20 p-5 rounded-lg">
-            <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground/75 border-b border-zinc-900 pb-2">
+          <div className="border border-zinc-200 dark:border-border bg-zinc-100/20 dark:bg-zinc-950/20 p-5 rounded-lg">
+            <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground/75 border-b border-zinc-200 dark:border-zinc-900 pb-2">
               Resource Indexes
             </p>
             <div className="mt-5 space-y-3.5">

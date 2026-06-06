@@ -1,5 +1,197 @@
 export const blogArticles = [
 	{
+		slug: "private-ai-home-lab-api-gateway-cloudflare-ollama-fastapi",
+		title: "Building a Private AI Home Lab API Gateway",
+		date: "June 2026",
+		topic: "FastAPI AI home lab",
+		readingTime: "10 min read",
+		summary:
+			"A production-shaped walkthrough of my local AI gateway: Cloudflare Tunnel, FastAPI, OpenAI-compatible routes, Ollama 0.30.6, qwen3.5:9b, API-key auth, and concurrency guardrails on Apple Silicon.",
+		seoDescription:
+			"Case study: build a private AI home lab API gateway with Cloudflare Tunnel, FastAPI, Ollama, OpenAI-compatible APIs, API-key auth, and local model concurrency controls.",
+		keywords: [
+			"AI home lab",
+			"FastAPI AI gateway",
+			"Ollama API gateway",
+			"Cloudflare Tunnel AI",
+			"OpenAI-compatible API",
+			"local AI infrastructure",
+			"Apple Silicon AI",
+		],
+		heroTakeaway:
+			"A home lab becomes serious infrastructure when it has a stable API contract, private ingress, model backpressure, secrets discipline, and a repeatable production runbook.",
+		architectureSignals: [
+			"Expose the gateway, not Ollama, as the public contract",
+			"Use Cloudflare Tunnel for ingress and keep the Mac on localhost",
+			"Protect local inference with API-key auth and chat concurrency limits",
+			"Keep one model warm while bounding context and loaded model count",
+			"Separate development and production ports, env files, and compose stacks",
+		],
+		sections: [
+			{
+				heading: "Why I built it",
+				body: [
+					"I wanted my AI home lab to behave less like a weekend script and more like a small private platform. The website, agent workflows, scripts, and future tools needed one API shape they could trust. The model runtime could change, but clients should keep calling the same OpenAI-compatible /v1 interface.",
+					"The boundary matters. Client applications should not call Ollama directly, and the Mac should not open public inbound ports. The gateway owns authentication, request shape, usage logs, OpenAPI docs, and model backpressure. Ollama remains a private provider behind it.",
+					"[!IMPORTANT] The core architectural decision is simple: Cloudflare exposes the FastAPI gateway, FastAPI protects Ollama, and Ollama never becomes the public API.",
+					"This is the difference between a local model experiment and a reusable AI infrastructure lane. The same client can call the gateway with only base_url and api_key changes, while the backend keeps control over local hardware, model warmup, and failure behavior.",
+				],
+			},
+			{
+				heading: "The production topology",
+				body: [
+					"The current topology is a macOS Apple Silicon server running a FastAPI model gateway through Podman Compose. Cloudflare Tunnel forwards public HTTPS traffic to 127.0.0.1:8000. Ollama listens privately on 127.0.0.1:11434. PostgreSQL stores API keys and usage logs, while Redis and Qdrant are wired for rate limiting, caching, and RAG expansion.",
+					"The model runtime is the official Ollama Darwin release 0.30.6 with qwen3.5:9b as the default model. The gateway passes OpenAI-compatible chat, completions, embeddings, responses, image, and model routes while preserving Ollama-specific options in the upstream request body.",
+					"Development and production are deliberately separated. Development runs on 127.0.0.1:8010 with infra/.env.dev and compose.dev.yaml. Production runs on 127.0.0.1:8000 with infra/.env and compose.yaml. That prevents local experiments from accidentally changing the public tunnel target.",
+				],
+				diagram: {
+					title: "Private AI Gateway Topology",
+					summary:
+						"Public traffic reaches only the FastAPI gateway. Ollama and the data plane stay private on the Mac.",
+					nodes: [
+						{
+							id: "client",
+							label: "Trusted Clients",
+							role: "OpenAI SDK callers",
+							detail: "Website, scripts, agents, and tools call the same /v1 API contract.",
+							layer: "Client",
+							kind: "client",
+						},
+						{
+							id: "cloudflare",
+							label: "Cloudflare Tunnel",
+							role: "Secure ingress",
+							detail: "Forwards HTTPS traffic to the local production gateway without opening Mac inbound ports.",
+							layer: "Edge",
+							kind: "approval",
+						},
+						{
+							id: "fastapi",
+							label: "FastAPI Gateway",
+							role: "Control plane",
+							detail: "Owns auth, OpenAI-compatible routes, usage logs, request IDs, and backpressure.",
+							layer: "Gateway",
+							kind: "runtime",
+						},
+						{
+							id: "postgres",
+							label: "PostgreSQL",
+							role: "Identity and usage",
+							detail: "Stores hashed API keys, last-used timestamps, and endpoint/model usage metadata.",
+							layer: "Data",
+							kind: "data",
+						},
+						{
+							id: "ollama",
+							label: "Ollama 0.30.6",
+							role: "Private model runtime",
+							detail: "Runs qwen3.5:9b locally behind an AsyncOpenAI-compatible gateway client.",
+							layer: "Model",
+							kind: "commit",
+						},
+					],
+					edges: [
+						{ source: "client", target: "cloudflare", label: "HTTPS /v1" },
+						{ source: "cloudflare", target: "fastapi", label: "localhost tunnel" },
+						{ source: "fastapi", target: "postgres", label: "verify + log" },
+						{ source: "fastapi", target: "ollama", label: "model request" },
+					],
+				},
+			},
+			{
+				heading: "Concurrency is a product decision",
+				body: [
+					"Local inference has a different failure mode from cloud inference. If ten clients hit the gateway at once, the API must decide whether to queue, reject, or overwhelm the local model runtime. I chose explicit backpressure at the gateway boundary.",
+					"The gateway uses a bounded async semaphore for chat calls. The configured API boundary is 10 concurrent chat requests. If a caller cannot acquire a slot within 0.25 seconds, it receives an OpenAI-style 429 with a chat_concurrency_limit code. That is much better than allowing unbounded request buildup inside Ollama.",
+					"One subtle lesson: gateway concurrency and model parallelism are not the same thing. qwen3.5:9b was observed exposing one active Ollama generation slot on this Mac, so the gateway can safely admit and protect up to 10 callers, while actual token generation may still serialize inside the model runtime.",
+					"[!TIP] For true low-latency 10-user traffic, add a smaller model lane for lightweight chat, classification, and summarization. Keep qwen3.5:9b for heavier reasoning.",
+				],
+				codeBlock: {
+					language: "python",
+					filename: "apps/model-gateway/src/clients/ollama.py",
+					code: `class OllamaClient:
+    def __init__(self, settings):
+        self._chat_limiter = asyncio.BoundedSemaphore(
+            settings.ollama_chat_concurrency_limit
+        )
+
+    async def _acquire_chat_slot(self):
+        try:
+            await asyncio.wait_for(
+                self._chat_limiter.acquire(),
+                timeout=self._settings.ollama_chat_acquire_timeout_seconds,
+            )
+        except TimeoutError as exc:
+            raise OllamaClientError(
+                message="Ollama chat concurrency limit reached.",
+                status_code=429,
+                code="chat_concurrency_limit",
+            ) from exc`
+				},
+			},
+			{
+				heading: "Unified memory changes the rules",
+				body: [
+					"The server is an M1 Pro MacBook Pro with 32 GB unified memory. That is powerful enough for serious local AI, but it is not infinite. Every extra loaded model, long context, and parallel generation slot competes with the OS, containers, browser sessions, databases, and the model itself.",
+					"The stable profile keeps qwen3.5:9b warm with keep_alive=-1, limits Ollama to one loaded model, sets context length to 4096, enables flash attention, and uses q8_0 KV cache. That profile is designed to reduce cold-start delay without inviting swap pressure.",
+					"The operational lesson is that less can be faster. A smaller context window and one loaded model may produce better user-perceived latency than a more ambitious setup that starts swapping under real traffic.",
+				],
+				codeBlock: {
+					language: "env",
+					filename: "Ollama LaunchAgent profile",
+					code: `OLLAMA_KEEP_ALIVE=-1
+OLLAMA_NUM_PARALLEL=10
+OLLAMA_MAX_QUEUE=10
+OLLAMA_MAX_LOADED_MODELS=1
+OLLAMA_CONTEXT_LENGTH=4096
+OLLAMA_FLASH_ATTENTION=1
+OLLAMA_KV_CACHE_TYPE=q8_0`
+				},
+			},
+			{
+				heading: "Hardening the Mac behind Cloudflare",
+				body: [
+					"Cloudflare Tunnel makes the Mac safer because the public internet does not connect directly to local ports. But a tunnel is not a replacement for application security. The gateway still requires client API keys for /v1 routes and an admin secret for /admin routes.",
+					"The current production posture keeps Ollama, PostgreSQL, Redis, and Qdrant private. Cloudflare should target only http://127.0.0.1:8000. Admin routes should be protected with Cloudflare Access or a trusted allowlist, and public model routes should have Cloudflare WAF rate limits.",
+					"The next hardening layer is Redis-backed FastAPI rate limiting by API key. Cloudflare can limit abusive IP behavior at the edge, but API-key rate limits protect the system even when requests come from trusted networks or a leaked key is used from many IPs.",
+					"[!WARNING] Never expose Ollama on a public tunnel. Expose only the gateway, and let the gateway enforce authentication, logging, and request limits.",
+				],
+			},
+			{
+				heading: "What changed in production",
+				body: [
+					"The production readiness work fixed practical problems, not theoretical ones. The Makefile merge conflict was resolved by keeping both the production commands and the macOS Ollama targets. Production Compose was corrected so PostgreSQL, Redis, and Qdrant have predictable localhost bindings and the gateway rebuilds before restart.",
+					"A Homebrew Ollama runtime produced a llama-server binary error, so the fix was to install the official Ollama 0.30.6 Darwin release and point the LaunchAgent to that binary. After tuning, the gateway warmed qwen3.5 successfully on startup.",
+					"The verification gate passed: Ruff format check, Ruff lint, mypy, and pytest. The production image built, the stack came up, /api/v1/health returned ok, /openapi.json loaded, and gateway logs showed Ollama warmup success with chat_concurrency_limit=10.",
+					"The final architecture is still a home lab, but it has the habits of production: repeatable commands, separate environments, health checks, OpenAPI docs, scoped auth, logs, model warmup, and backpressure.",
+					"[!NOTE] Complete deployment instructions, LaunchAgent plists, and troubleshooting guides are available in the official [Production Runbook](/case-studies/production-grade-ai-home-lab?tab=runbook) and [Development Guide](/case-studies/production-grade-ai-home-lab?tab=development).",
+				],
+			},
+		],
+		references: [
+			{
+				label: "AI Gateway Local Specs & Runbook",
+				url: "/case-studies/production-grade-ai-home-lab",
+			},
+			{
+				label: "AI Gateway Mac Local Server",
+				url: "https://github.com/2manoj1/ai-gateway-mac-local-server",
+			},
+			{
+				label: "Cloudflare Tunnel documentation",
+				url: "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/",
+			},
+			{
+				label: "Ollama project",
+				url: "https://github.com/ollama/ollama",
+			},
+			{
+				label: "FastAPI documentation",
+				url: "https://fastapi.tiangolo.com/",
+			},
+		],
+	},
+	{
 		slug: "langgraph-v1-durable-agent-architecture",
 		title: "Durable Agent Architecture with LangGraph v1",
 		date: "May 2026",

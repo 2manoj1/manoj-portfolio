@@ -210,29 +210,29 @@ export function EngineeringJourney() {
 				</div>
 
 				{/* Right Column: Monospace Technology Radar */}
-				<div className="flex flex-col rounded-xl border border-border bg-[#0d0d0d] p-5 md:p-6 shadow-2xl overflow-hidden justify-between">
+				<div className="flex flex-col rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#0d0d0d] p-5 md:p-6 shadow-md dark:shadow-2xl overflow-hidden justify-between">
 					<div>
 						{/* Top Bar */}
-						<div className="flex items-center justify-between border-b border-border/60 pb-4 mb-5 select-none">
+						<div className="flex items-center justify-between border-b border-zinc-200/60 dark:border-zinc-800/60 pb-4 mb-5 select-none">
 							<div className="flex items-center gap-2">
 								<Terminal className="size-4 text-amber" />
-								<span className="font-mono text-xs uppercase tracking-widest text-foreground font-semibold">
+								<span className="font-mono text-xs uppercase tracking-widest text-zinc-700 dark:text-zinc-200 font-semibold">
 									Technology Radar
 								</span>
 							</div>
 							<div className="flex items-center gap-1.5">
 								<span className="size-2 rounded-full bg-rose-500/80 animate-pulse" />
-								<span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+								<span className="font-mono text-[9px] text-zinc-500 dark:text-zinc-500 uppercase tracking-widest">
 									System.Scan_active
 								</span>
 							</div>
 						</div>
-
+ 
 						{/* Radar Categories */}
 						<div className="space-y-6 font-mono text-[11px] leading-relaxed">
 							{currentEra.techRadar.map((group) => (
 								<div key={group.category} className="space-y-2">
-									<div className="flex items-center gap-2 text-white/40 border-b border-border/30 pb-1">
+									<div className="flex items-center gap-2 text-zinc-400 dark:text-white/40 border-b border-zinc-200/50 dark:border-zinc-800/30 pb-1">
 										<Layers className="size-3 text-amber/70" />
 										<span className="uppercase tracking-wider font-semibold">
 											{group.category}
@@ -242,7 +242,7 @@ export function EngineeringJourney() {
 										{group.items.map((item) => (
 											<span
 												key={item}
-												className="rounded border border-border bg-zinc-900/60 px-2 py-1 text-zinc-300 transition-colors hover:border-amber/40 hover:text-amber"
+												className="rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 px-2 py-1 text-zinc-700 dark:text-zinc-300 transition-colors hover:border-amber/40 hover:text-amber"
 											>
 												{item}
 											</span>
@@ -252,8 +252,8 @@ export function EngineeringJourney() {
 							))}
 						</div>
 					</div>
-
-					<div className="mt-8 border-t border-border/60 pt-4 flex items-center justify-between text-[9px] font-mono text-muted-foreground">
+ 
+					<div className="mt-8 border-t border-zinc-200/60 dark:border-zinc-800/60 pt-4 flex items-center justify-between text-[9px] font-mono text-zinc-500 dark:text-zinc-500">
 						<div className="flex items-center gap-1.5">
 							<ShieldCheck className="size-3.5 text-amber/70" />
 							<span>VERIFIED PRODUCTION STACK</span>

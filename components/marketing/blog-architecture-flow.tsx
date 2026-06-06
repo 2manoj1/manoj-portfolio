@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useEffect, useMemo, useState } from "react";
+import { useTheme } from "next-themes";
 import {
   Background,
   BackgroundVariant,
@@ -107,10 +108,10 @@ function BlogArchitectureNode({ data, selected }: NodeProps) {
   return (
     <div
       className={cn(
-        "blog-architecture-node relative h-full w-full rounded-lg border bg-zinc-950/95 p-3 text-left shadow-2xl backdrop-blur transition-colors",
+        "blog-architecture-node relative h-full w-full rounded-lg border p-3 text-left shadow-2xl backdrop-blur transition-colors",
         node.active || selected
-          ? "border-amber/85 shadow-[0_0_28px_rgba(245,158,11,0.2)]"
-          : "border-white/[0.16] shadow-black/40",
+          ? "border-amber/85 bg-white dark:bg-zinc-950/95 shadow-[0_0_28px_rgba(245,158,11,0.14)] dark:shadow-[0_0_28px_rgba(245,158,11,0.2)]"
+          : "border-zinc-200 bg-white dark:border-white/[0.16] dark:bg-zinc-950/95 shadow-zinc-200/40 dark:shadow-black/40",
       )}
     >
       <Handle
@@ -146,15 +147,15 @@ function BlogArchitectureNode({ data, selected }: NodeProps) {
           <span className="block font-mono text-[9px] uppercase tracking-wide text-amber/80">
             {node.layer}
           </span>
-          <span className="mt-1 block text-sm font-semibold leading-snug text-zinc-100">
+          <span className="mt-1 block text-sm font-semibold leading-snug text-zinc-900 dark:text-zinc-100">
             {node.label}
           </span>
-          <span className="mt-1 block font-mono text-[10px] uppercase tracking-wide text-zinc-500">
+          <span className="mt-1 block font-mono text-[10px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
             {node.role}
           </span>
         </span>
       </div>
-      <p className="mt-3 hidden text-xs leading-5 text-zinc-400 sm:block">
+      <p className="mt-3 hidden text-xs leading-5 text-zinc-700 dark:text-zinc-400 sm:block">
         {node.detail}
       </p>
     </div>
@@ -213,6 +214,7 @@ function buildFlowElements(
   diagram: BlogDiagram,
   isMobile: boolean,
   active: boolean,
+  isLight: boolean,
 ) {
   const normalizedNodes = diagram.nodes.map(normalizeDiagramNode);
   const nodeLookup = new Map(normalizedNodes.map((node) => [node.label, node.id]));
@@ -259,9 +261,9 @@ function buildFlowElements(
           animated: active,
           data: { label: edge, active },
           label: getEdgeLabel(edge),
-          labelStyle: { fill: "rgb(161 161 170)", fontSize: 9 },
+          labelStyle: { fill: isLight ? "rgb(82 82 91)" : "rgb(209 213 219)", fontSize: 9 },
           style: {
-            stroke: active ? "rgb(245 158 11)" : "rgba(161,161,170,0.44)",
+            stroke: active ? "rgb(245 158 11)" : (isLight ? "rgba(82,82,91,0.55)" : "rgba(161,161,170,0.44)"),
             strokeWidth: active ? 1.8 : 1.2,
           },
         };
@@ -285,9 +287,9 @@ function buildFlowElements(
         animated: active,
         data: { label, active },
         label: getEdgeLabel(label),
-        labelStyle: { fill: "rgb(161 161 170)", fontSize: 9 },
+        labelStyle: { fill: isLight ? "rgb(82 82 91)" : "rgb(209 213 219)", fontSize: 9 },
         style: {
-          stroke: active ? "rgb(245 158 11)" : "rgba(161,161,170,0.44)",
+          stroke: active ? "rgb(245 158 11)" : (isLight ? "rgba(82,82,91,0.55)" : "rgba(161,161,170,0.44)"),
           strokeWidth: active ? 1.8 : 1.2,
         },
       };
@@ -302,9 +304,9 @@ function buildFlowElements(
       animated: active,
       data: { label: "handoff", active },
       label: getEdgeLabel("handoff"),
-      labelStyle: { fill: "rgb(161 161 170)", fontSize: 9 },
+      labelStyle: { fill: isLight ? "rgb(82 82 91)" : "rgb(209 213 219)", fontSize: 9 },
       style: {
-        stroke: active ? "rgb(245 158 11)" : "rgba(161,161,170,0.44)",
+        stroke: active ? "rgb(245 158 11)" : (isLight ? "rgba(82,82,91,0.55)" : "rgba(161,161,170,0.44)"),
         strokeWidth: active ? 1.8 : 1.2,
       },
     }));
@@ -320,19 +322,22 @@ export function BlogArchitectureFlow({
   active?: boolean;
 }) {
   const isMobile = useMobileDiagramLayout();
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
+
   const { nodes, edges } = useMemo(
-    () => buildFlowElements(diagram, isMobile, active),
-    [active, diagram, isMobile],
+    () => buildFlowElements(diagram, isMobile, active, isLight),
+    [active, diagram, isMobile, isLight],
   );
 
   return (
-    <figure className="mt-7 overflow-hidden rounded-lg border border-border bg-zinc-950/70 shadow-2xl shadow-black/20">
-      <figcaption className="border-b border-zinc-900 px-4 py-3">
+    <figure className="mt-7 overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-border dark:bg-zinc-950/70 shadow-2xl shadow-zinc-200/25 dark:shadow-black/20">
+      <figcaption className="border-b border-zinc-100 dark:border-zinc-900 px-4 py-3">
         <p className="font-mono text-[10px] uppercase tracking-wider text-amber">
           {diagram.title}
         </p>
         {diagram.summary && (
-          <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
+          <p className="mt-1.5 text-xs leading-5 text-zinc-500 dark:text-muted-foreground">
             {diagram.summary}
           </p>
         )}
@@ -357,13 +362,14 @@ export function BlogArchitectureFlow({
             zoomOnDoubleClick={false}
             zoomOnPinch
             zoomOnScroll={false}
+            colorMode={isLight ? "light" : "dark"}
             proOptions={{ hideAttribution: true }}
           >
             <Background
               variant={BackgroundVariant.Dots}
               gap={16}
               size={1}
-              color="rgba(161,161,170,0.34)"
+              color={isLight ? "rgba(113,113,122,0.22)" : "rgba(161,161,170,0.34)"}
             />
             <Controls
               showInteractive={false}

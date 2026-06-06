@@ -84,7 +84,7 @@ function AgentAvatar({ className }: { className?: string }) {
 				alt="Manoj Mukherjee"
 				fill
 				sizes="56px"
-				className="rounded-full border border-white/15 object-cover object-top"
+				className="rounded-full border border-zinc-350 dark:border-white/15 object-cover object-top"
 				priority={false}
 			/>
 			<span className="absolute -right-1 -bottom-1 flex size-5 items-center justify-center rounded-full border border-[#111] bg-amber text-amber-foreground shadow-sm">
@@ -108,7 +108,7 @@ function StatusLine({
 		: "Powered by AI | Grounded by Manoj's context";
 
 	return (
-		<div className="flex h-5 items-center gap-2 text-xs text-white/42">
+		<div className="flex h-5 items-center gap-2 text-xs text-zinc-500 dark:text-white/42">
 			{isLoading ? (
 				<span className="relative flex size-3 items-center justify-center">
 					<span className="absolute size-3 rounded-full bg-amber/50 animate-ping" />
@@ -132,7 +132,7 @@ function ThinkingInline({
 	return (
 		<div
 			className={cn(
-				"inline-flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-2.5 text-sm text-white/70 shadow-sm animate-pulse",
+				"inline-flex items-center gap-2.5 rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.045] px-4 py-2.5 text-sm text-zinc-700 dark:text-white/70 shadow-sm animate-pulse",
 				className,
 			)}>
 			<Loader2 className="size-3.5 animate-spin text-amber" />
@@ -164,10 +164,10 @@ function MessageParts({
 		return (
 			<div
 				className={cn(
-					"min-w-0 flex-1 text-sm leading-6 text-white/82",
+					"min-w-0 flex-1 text-sm leading-6 text-zinc-800 dark:text-white/82",
 					mode === "page" && "text-[0.96rem] leading-7",
 				)}>
-				<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-white/38">
+				<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-white/38">
 					<span>{agentName}</span>
 				</div>
 				{hasTextContent ? (
@@ -177,7 +177,7 @@ function MessageParts({
 							return (
 								<MessageResponse
 									key={`${message.id}-text-${index}`}
-									className="break-words text-white/82">
+									className="break-words text-zinc-800 dark:text-white/82">
 									{cleanText}
 								</MessageResponse>
 							);
@@ -193,7 +193,7 @@ function MessageParts({
 	return (
 		<div
 			className={cn(
-				"max-w-[86%] rounded-2xl border border-white/10 bg-white/[0.075] px-4 py-3 text-sm leading-6 text-white shadow-sm shadow-black/10",
+				"max-w-[86%] rounded-2xl border border-zinc-250 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.075] px-4 py-3 text-sm leading-6 text-zinc-900 dark:text-white shadow-sm shadow-zinc-200/50 dark:shadow-black/10",
 				mode === "page" && "max-w-[min(36rem,86%)]",
 			)}>
 			{textParts.map((part, index) => (
@@ -219,16 +219,16 @@ function WelcomePanel({
 	if (mode === "page") {
 		return (
 			<div className="mx-auto flex min-h-full w-full max-w-3xl flex-col justify-center px-1 py-8 text-center sm:py-12">
-				<div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] shadow-2xl shadow-black/20">
+				<div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100/50 dark:bg-white/[0.04] shadow-2xl shadow-zinc-200/20 dark:shadow-black/20">
 					<AgentAvatar className="size-16" />
 				</div>
-				<p className="mx-auto mb-3 w-fit rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-white/45">
+				<p className="mx-auto mb-3 w-fit rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-white/45">
 					Production AI Systems Copilot
 				</p>
-				<h1 className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+				<h1 className="text-balance text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
 					Ask Astra about Manoj&apos;s AI architecture work.
 				</h1>
-				<p className="mx-auto mt-4 max-w-2xl text-pretty text-sm leading-7 text-white/56 sm:text-base">
+				<p className="mx-auto mt-4 max-w-2xl text-pretty text-sm leading-7 text-zinc-650 dark:text-white/56 sm:text-base">
 					Explore LangGraph systems, RAG reliability, platform engineering,
 					technical writing, and advisory fit through a grounded assistant.
 				</p>
@@ -250,22 +250,22 @@ function WelcomePanel({
 
 	return (
 		<div className="mx-auto flex min-h-full w-full max-w-sm flex-col justify-center px-1 py-5">
-			<div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+			<div className="rounded-3xl border border-zinc-200 dark:border-white/10 bg-zinc-100/50 dark:bg-white/[0.035] p-5">
 				<div className="flex items-center gap-4">
-					<span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber/12 text-amber">
+					<span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber/10 dark:bg-amber/12 text-amber">
 						<CircuitBoard className="size-5" />
 					</span>
 					<div className="min-w-0">
-						<h3 className="text-lg font-semibold tracking-tight text-white">
+						<h3 className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-white">
 							Welcome to {agentName}
 						</h3>
-						<p className="mt-1 text-sm text-white/50">
+						<p className="mt-1 text-sm text-zinc-500 dark:text-white/50">
 							Production AI systems intelligence
 						</p>
 					</div>
 				</div>
 
-				<p className="mt-6 text-sm leading-7 text-white/68">
+				<p className="mt-6 text-sm leading-7 text-zinc-650 dark:text-white/68">
 					Ask about Manoj&apos;s architecture work, LangGraph orchestration,
 					RAG reliability, platform engineering, writing, or advisory fit.
 				</p>
@@ -283,13 +283,13 @@ function WelcomePanel({
 				</div>
 
 				<div className="mt-6 flex flex-wrap gap-2">
-					<span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-white/58">
+					<span className="inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-white/58">
 						<BriefcaseBusiness className="size-3.5" />
 						<a href="/advisory-intake" className="hover:underline">
 							Advisory
 						</a>
 					</span>
-					<span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-white/58">
+					<span className="inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-white/58">
 						<ShieldCheck className="size-3.5" />
 						<a href="mailto:info@manojmukherjee.co.in" className="hover:underline">
 							Email inquiry
@@ -318,7 +318,7 @@ function PromptButton({
 			disabled={isLoading}
 			onClick={() => onPrompt(prompt)}
 			className={cn(
-				"group min-h-11 rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-left text-sm text-white/68 transition hover:border-amber/25 hover:bg-white/[0.075] hover:text-white disabled:pointer-events-none disabled:opacity-50",
+				"group min-h-11 rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.045] px-4 py-3 text-left text-sm text-zinc-700 dark:text-white/68 transition hover:border-amber/25 hover:bg-zinc-200 dark:hover:bg-white/[0.075] hover:text-zinc-900 dark:hover:text-white disabled:pointer-events-none disabled:opacity-50",
 				variant === "page" && "min-h-16 px-5 py-4",
 			)}>
 			<span className="block break-words">{prompt}</span>
@@ -349,7 +349,7 @@ function HeaderControls({
 					type="button"
 					variant="ghost"
 					size="icon-sm"
-					className="size-9 rounded-full bg-white/[0.055] text-white/62 hover:bg-white/[0.1] hover:text-white"
+					className="size-9 rounded-full bg-zinc-100 dark:bg-white/[0.055] text-zinc-600 dark:text-white/62 hover:bg-zinc-200 dark:hover:bg-white/[0.1] hover:text-zinc-900 dark:hover:text-white"
 					aria-label="Stop response"
 					onClick={stop}>
 					<StopCircle className="size-4" />
@@ -361,7 +361,7 @@ function HeaderControls({
 					type="button"
 					variant="ghost"
 					size="lg"
-					className="h-9 rounded-full border border-white/10 bg-white/[0.055] px-3 text-white/68 hover:bg-white/[0.1] hover:text-white"
+					className="h-9 rounded-full border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.055] px-3 text-zinc-700 dark:text-white/68 hover:bg-zinc-200 dark:hover:bg-white/[0.1] hover:text-zinc-900 dark:hover:text-white"
 					aria-label="Return to Manoj site">
 					<Link href="/">
 						<ArrowLeft className="size-4" />
@@ -374,7 +374,7 @@ function HeaderControls({
 						type="button"
 						variant="ghost"
 						size="icon-sm"
-						className="hidden size-9 rounded-full bg-white/[0.055] text-white/62 hover:bg-white/[0.1] hover:text-white sm:inline-flex"
+						className="hidden size-9 rounded-full bg-zinc-100 dark:bg-white/[0.055] text-zinc-600 dark:text-white/62 hover:bg-zinc-200 dark:hover:bg-white/[0.1] hover:text-zinc-900 dark:hover:text-white sm:inline-flex"
 						aria-label={
 							expanded ? "Return to compact chat" : "Open half-screen chat"
 						}
@@ -390,7 +390,7 @@ function HeaderControls({
 						type="button"
 						variant="ghost"
 						size="icon-sm"
-						className="size-9 rounded-full bg-white/[0.055] text-white/62 hover:bg-white/[0.1] hover:text-white"
+						className="size-9 rounded-full bg-zinc-100 dark:bg-white/[0.055] text-zinc-600 dark:text-white/62 hover:bg-zinc-200 dark:hover:bg-white/[0.1] hover:text-zinc-900 dark:hover:text-white"
 						aria-label="Open full-screen chat">
 						<Link href="/chat">
 							<ExternalLink className="size-4" />
@@ -400,7 +400,7 @@ function HeaderControls({
 						type="button"
 						variant="ghost"
 						size="icon-sm"
-						className="size-9 rounded-full bg-white/[0.055] text-white/62 hover:bg-white/[0.1] hover:text-white"
+						className="size-9 rounded-full bg-zinc-100 dark:bg-white/[0.055] text-zinc-600 dark:text-white/62 hover:bg-zinc-200 dark:hover:bg-white/[0.1] hover:text-zinc-900 dark:hover:text-white"
 						aria-label="Minimize chat"
 						onClick={onClose}>
 						<Minus className="size-4" />
@@ -519,10 +519,10 @@ export function AstraChatSurface({
 		<section
 			aria-label="Astra production AI chatbot"
 			className={cn(
-				"relative isolate grid grid-rows-[auto_1fr_auto] overflow-hidden border border-white/10 bg-[#0b0b0b] text-white shadow-2xl shadow-black/35",
+				"relative isolate grid grid-rows-[auto_1fr_auto] overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-[#0b0b0b] text-zinc-900 dark:text-white shadow-2xl shadow-zinc-200/50 dark:shadow-black/35",
 				isPage
 					? "h-dvh min-h-dvh w-full rounded-none border-0"
-					: "h-dvh w-dvw rounded-none border-0 sm:h-[min(44rem,calc(100dvh-3rem))] sm:w-[27rem] sm:rounded-[1.5rem] sm:border sm:bg-[#111]/96",
+					: "h-dvh w-dvw rounded-none border-0 sm:h-[min(44rem,calc(100dvh-3rem))] sm:w-[27rem] sm:rounded-[1.5rem] sm:border sm:bg-white/96 dark:sm:bg-[#111]/96",
 				!isPage &&
 					expanded &&
 					"sm:w-[calc(100vw-3rem)] md:w-[min(50vw,58rem)] md:min-w-[40rem]",
@@ -530,21 +530,21 @@ export function AstraChatSurface({
 			<div
 				aria-hidden="true"
 				className={cn(
-					"pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.028)_1px,transparent_1px)] bg-[size:42px_42px] opacity-70 [mask-image:linear-gradient(to_bottom,black,rgba(0,0,0,0.72),transparent)]",
+					"pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(9,9,11,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(9,9,11,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.028)_1px,transparent_1px)] bg-[size:42px_42px] opacity-70 [mask-image:linear-gradient(to_bottom,black,rgba(0,0,0,0.72),transparent)]",
 					!isPage && "hidden sm:block",
 				)}
 			/>
 
-			<header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/28 px-4 sm:px-5">
+			<header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-black/28 px-4 sm:px-5">
 				<div className="flex min-w-0 items-center gap-3">
 					<AgentAvatar className="size-10" />
 					<div className="min-w-0">
 						<div className="flex min-w-0 items-center gap-2">
-							<h2 className="truncate text-lg font-semibold tracking-tight text-white">
+							<h2 className="truncate text-lg font-semibold tracking-tight text-zinc-900 dark:text-white">
 								{agentName}
 							</h2>
 						</div>
-						<p className="truncate text-xs text-white/45">
+						<p className="truncate text-xs text-zinc-500 dark:text-white/45">
 							AI Agent - Manoj
 						</p>
 					</div>
@@ -597,7 +597,7 @@ export function AstraChatSurface({
 							<div className="flex min-w-0 items-start gap-3">
 								<AgentAvatar className="mt-0.5 size-8" />
 								<div className="min-w-0 flex-1 text-sm leading-6 text-white/82">
-									<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-white/38">
+									<div className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-white/38">
 										<span>{agentName}</span>
 									</div>
 									<ThinkingInline status={currentStatus} />
@@ -614,7 +614,7 @@ export function AstraChatSurface({
 				)}
 			</div>
 
-			<footer className="shrink-0 border-t border-white/10 bg-black/32 px-3 py-3 sm:px-4">
+			<footer className="shrink-0 border-t border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-black/32 px-3 py-3 sm:px-4">
 				<div className={cn("mx-auto w-full", isPage ? "max-w-3xl" : "max-w-full")}>
 					{!showWelcome && suggestions.length > 0 && !isLoading && (
 						<div className="mb-3 flex max-w-full flex-col gap-2 overflow-hidden pb-1 animate-in fade-in slide-in-from-bottom-2 duration-300 sm:flex-row sm:flex-wrap sm:items-start sm:overflow-visible">
@@ -624,7 +624,7 @@ export function AstraChatSurface({
 									type="button"
 									title={suggestion}
 									onClick={() => void sendPrompt(suggestion)}
-									className="min-w-0 max-w-full overflow-hidden whitespace-normal break-words rounded-2xl border border-white/10 bg-white/[0.045] px-3.5 py-2 text-left font-mono text-[11px] leading-5 tracking-wide text-white/68 transition hover:border-amber/30 hover:bg-white/[0.08] hover:text-white sm:w-auto sm:max-w-[240px] sm:shrink-0 sm:truncate sm:rounded-full sm:px-3 sm:py-1.5 sm:text-center sm:text-[10px] sm:leading-4"
+									className="min-w-0 max-w-full overflow-hidden whitespace-normal break-words rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.045] px-3.5 py-2 text-left font-mono text-[11px] leading-5 tracking-wide text-zinc-700 dark:text-white/68 transition hover:border-amber/30 hover:bg-zinc-200 dark:hover:bg-white/[0.08] hover:text-white sm:w-auto sm:max-w-[240px] sm:shrink-0 sm:truncate sm:rounded-full sm:px-3 sm:py-1.5 sm:text-center sm:text-[10px] sm:leading-4"
 								>
 									{suggestion}
 								</button>
@@ -647,7 +647,7 @@ export function AstraChatSurface({
 							}}
 							placeholder="Ask Astra anything..."
 							rows={1}
-							className="min-h-12 min-w-0 flex-1 resize-none overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-sm leading-normal text-white caret-white outline-none transition placeholder:text-white/32 focus:border-amber/40 focus:ring-2 focus:ring-amber/10"
+							className="min-h-12 min-w-0 flex-1 resize-none overflow-hidden rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/[0.045] px-4 py-3 text-sm leading-normal text-zinc-900 dark:text-white caret-zinc-900 dark:caret-white outline-none transition placeholder:text-zinc-500 dark:placeholder:text-white/32 focus:border-amber/40 focus:ring-2 focus:ring-amber/10"
 						/>
 						<Button
 							type="submit"

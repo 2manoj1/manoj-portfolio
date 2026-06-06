@@ -44,6 +44,11 @@ export type TelemetryMetric = {
   description: string;
 };
 
+export type CaseStudyDoc = {
+  slug: string;
+  title: string;
+};
+
 export type CaseStudy = {
   id: string;
   slug: string;
@@ -66,53 +71,62 @@ export type CaseStudy = {
     choice: string;
     code: string;
   };
+  docs?: readonly CaseStudyDoc[];
 };
 
 export const caseStudies = [
   {
     id: "01",
     slug: "production-grade-ai-home-lab",
-    title: "AI Home Lab Platform",
-    shortTitle: "Private AI Lab",
-    status: "DEPLOYED",
-    environment: "Vercel Hobby + personal macOS server",
+    title: "AI Home Lab API Gateway",
+    shortTitle: "Local AI Gateway",
+    status: "PRODUCTION",
+    environment: "macOS Apple Silicon + Podman Compose",
     ingress: "Cloudflare Tunnel",
     kicker: "Python FastAPI gateway",
     problem:
-      "I built a local OpenAI-compatible AI gateway that runs on my personal macOS server and is reached from my deployed Next.js website through a Cloudflare Tunnel. The website-side Astra experience is JavaScript/TypeScript, while the gateway orchestration layer is Python 3.14 with uv, FastAPI, LangChain/LangGraph, and Ollama.",
+      "I built a local OpenAI-compatible API gateway for my AI home lab so trusted apps can call a stable /v1 contract while Ollama, PostgreSQL, Redis, and Qdrant stay private on the Mac. The gateway had to serve up to 10 concurrent chat callers at the API boundary, keep qwen3.5 loaded to reduce first-token delay, and remain safe behind Cloudflare Tunnel without public inbound ports.",
     narration:
-      "The important boundary is runtime separation: Vercel handles the public Next.js surface and grounded Astra workflow, Cloudflare owns secure ingress, and the private macOS subnet runs FastAPI, Python LangGraph streaming, Ollama, PostgreSQL-backed key usage, plus Redis and Qdrant clients prepared for caching and RAG expansion.",
+      "The production pattern is runtime separation: Cloudflare owns public HTTPS ingress, FastAPI owns auth, OpenAI-compatible routing, usage logs, and chat backpressure, and Ollama stays local through an AsyncOpenAI wrapper. The model profile keeps qwen3.5:9b warm with keep_alive=-1 while limiting loaded models and context size to protect 32 GB unified memory.",
+    docs: [
+      { slug: "architecture", title: "Architecture" },
+      { slug: "diagrams", title: "Diagrams" },
+      { slug: "case-study", title: "Case Study" },
+      { slug: "runbook", title: "Runbook" },
+      { slug: "development", title: "Dev Guide" },
+      { slug: "open-source", title: "Open Source" },
+    ] as const,
     telemetry: [
       {
-        label: "Public surface",
-        value: "Next.js",
+        label: "Ingress",
+        value: "Cloudflare",
         description:
-          "Astra chat and website routes run from the Vercel deployment.",
+          "Tunnel targets only the localhost production gateway on port 8000.",
       },
       {
-        label: "Gateway runtime",
-        value: "Python 3.14",
+        label: "Gateway limit",
+        value: "10 chats",
         description:
-          "FastAPI service managed with uv and typed Python services.",
+          "Bounded async semaphore returns 429 when slots are saturated.",
       },
       {
-        label: "Model contract",
-        value: "OpenAI /v1",
+        label: "Model runtime",
+        value: "Ollama 0.30.6",
         description:
-          "Chat, completions, embeddings, responses, image, and model routes.",
+          "Official Darwin release serving qwen3.5:9b through /v1.",
       },
       {
-        label: "Private stores",
-        value: "PG/Redis/Qdrant",
+        label: "Memory profile",
+        value: "q8 KV",
         description:
-          "PostgreSQL is live for keys and usage; Redis/Qdrant are staged.",
+          "One loaded model, 4096 context, flash attention, keep_alive forever.",
       },
     ],
     zones: [
       {
         id: "vercel",
         label: "Vercel Hobby Serverless",
-        summary: "Public website, Astra UI, and Next.js API route boundary.",
+        summary: "Public website, Astra UI, and OpenAI-compatible client calls.",
         x: 40,
         y: 90,
         width: 330,
@@ -130,7 +144,7 @@ export const caseStudies = [
       {
         id: "mac",
         label: "Personal macOS Server",
-        summary: "FastAPI gateway on 127.0.0.1:8000 with Python orchestration.",
+        summary: "FastAPI gateway on 127.0.0.1:8000 with auth, logs, and chat backpressure.",
         x: 820,
         y: 70,
         width: 430,
@@ -140,7 +154,7 @@ export const caseStudies = [
         id: "private-data",
         label: "Private Local Services",
         summary:
-          "Ollama, PostgreSQL 17, Redis 8, and Qdrant stay off the public internet.",
+          "Ollama 0.30.6, PostgreSQL, Redis, and Qdrant stay off the public internet.",
         x: 1320,
         y: 70,
         width: 380,
@@ -154,7 +168,7 @@ export const caseStudies = [
         label: "Astra chat surface",
         description: "Next.js UI and /api/chat route in JS/TS",
         detail:
-          "Website-side agent experience runs in the Manoj site deployment and prepares OpenAI-compatible requests.",
+          "Website-side agent experience can call the gateway with a standard OpenAI baseURL and client API key.",
         icon: Monitor,
       },
       {
@@ -163,7 +177,7 @@ export const caseStudies = [
         label: "TS agent layer",
         description: "LangChain/deepagents tooling with gateway baseURL",
         detail:
-          "Uses MANOJ_LLM_BASE_URL and MANOJ_LLM_API_KEY to call the OpenAI-compatible gateway contract.",
+          "Uses a tunnel hostname and /v1 contract, so model traffic can move between local and future provider lanes.",
         icon: GitBranch,
       },
       {
@@ -172,7 +186,7 @@ export const caseStudies = [
         label: "Cloudflare Tunnel",
         description: "api.manojmukherjee.co.in to local gateway",
         detail:
-          "Public HTTPS traffic reaches the private gateway without opening inbound ports on the Mac.",
+          "Public HTTPS traffic reaches the private gateway without opening inbound macOS ports.",
         icon: ShieldCheck,
       },
       {
@@ -181,7 +195,7 @@ export const caseStudies = [
         label: "FastAPI gateway",
         description: "Python 3.14, uv, OpenAI-compatible routes",
         detail:
-          "Exposes /v1/chat/completions, /v1/models, /v1/responses, /api/v1/agent/direct-message, and admin key routes.",
+          "Exposes /v1 chat, completions, embeddings, responses, images, models, agent routes, and admin key routes.",
         icon: Network,
       },
       {
@@ -190,25 +204,25 @@ export const caseStudies = [
         label: "Auth and usage",
         description: "SHA-256 API keys with PostgreSQL usage logs",
         detail:
-          "Validates X-API-Key or bearer tokens, marks last-used timestamps, and records endpoint/model usage.",
+          "Validates X-API-Key or bearer tokens, protects admin routes, marks last-used timestamps, and records endpoint/model usage.",
         icon: CheckCircle2,
       },
       {
         id: "python-graph",
         zoneId: "mac",
-        label: "Python LangGraph",
-        description: "StateGraph astream with custom SSE chunks",
+        label: "Chat backpressure",
+        description: "10-slot async limiter with clean 429 overflow",
         detail:
-          "DirectMessageAgentService compiles a Python StateGraph and streams custom chunks from the internal OpenAI service.",
+          "The gateway bounds concurrent chat calls before forwarding to Ollama, protecting unified memory and model queues.",
         icon: GitBranch,
       },
       {
         id: "ollama",
         zoneId: "private-data",
         label: "Ollama client",
-        description: "AsyncOpenAI wrapper over local Ollama /v1",
+        description: "Official 0.30.6 runtime with qwen3.5:9b",
         detail:
-          "The gateway forwards compatible payloads to Ollama, defaulting to llama3.2 when a model is not supplied.",
+          "The gateway forwards compatible payloads through AsyncOpenAI, adds keep_alive, and warms the model at startup.",
         icon: Cpu,
       },
       {
@@ -217,7 +231,7 @@ export const caseStudies = [
         label: "Private data plane",
         description: "PostgreSQL 17, Redis 8, Qdrant clients",
         detail:
-          "PostgreSQL is used for key records and usage logs; Redis and Qdrant are wired for future cache and RAG paths.",
+          "PostgreSQL stores keys and usage logs; Redis and Qdrant are wired for rate limiting, cache, and RAG expansion.",
         icon: Database,
       },
     ],
@@ -236,49 +250,34 @@ export const caseStudies = [
       "AGENT_TS: Gateway baseURL normalized to the OpenAI-compatible /v1 contract.",
       "EDGE: Cloudflare Tunnel forwards HTTPS traffic to the private macOS gateway.",
       "FASTAPI: X-API-Key or bearer token validated against PostgreSQL key hash.",
-      "LANGGRAPH_PY: DirectMessageAgentService StateGraph compiled with node llm.",
-      "STREAM: graph.astream(..., stream_mode='custom') emits SSE-compatible chunks.",
-      "OLLAMA: AsyncOpenAI client streams local model output from llama3.2.",
+      "LIMITER: Chat request acquired one of 10 bounded gateway slots.",
+      "OLLAMA: AsyncOpenAI client forwards keep_alive=-1 to official Ollama 0.30.6.",
+      "MODEL: qwen3.5:9b remains warm with 4096 context and q8 KV cache.",
       "USAGE: endpoint and model usage recorded in PostgreSQL usage_logs.",
     ],
     adr: {
-      filename: "apps/model-gateway/src/services/agent_service.py",
+      filename: "apps/model-gateway/src/clients/ollama.py",
       language: "python",
       choice:
-        "I kept the gateway orchestration in Python because the private server needs to own FastAPI routing, auth context, SSE streaming, and local Ollama calls. The website can remain JS/TS on Vercel while the private Python service controls the local model boundary.",
-      code: `from langgraph.config import get_stream_writer
-from langgraph.graph import END, START, StateGraph
+        "I kept concurrency control in the gateway rather than trusting the model runtime queue. That gives clients an explicit 429 when the Mac is saturated and keeps the local Ollama process from receiving unbounded chat work.",
+      code: `class OllamaClient:
+    def __init__(self, settings):
+        self._chat_limiter = asyncio.BoundedSemaphore(
+            settings.ollama_chat_concurrency_limit
+        )
 
-class DirectMessageAgentService:
-    def _build_graph(self):
-        graph = StateGraph(DirectMessageAgentState)
-        graph.add_node("llm", self._stream_llm)
-        graph.add_edge(START, "llm")
-        graph.add_edge("llm", END)
-        return graph.compile()
-
-    async def _stream_llm(self, state):
-        writer = get_stream_writer()
-        async for chunk in self._openai_service.stream_chat_completion(
-            request=ChatCompletionRequest(
-                model=state["model"],
-                messages=[ChatMessage(role="user", content=state["message"])],
-                stream=True,
-            ),
-            auth_context=state["auth_context"],
-        ):
-            writer(chunk)
-
-    async def stream_direct_message(self, *, request, auth_context):
-        async for event in self._graph.astream(
-            {
-                "message": request.message,
-                "model": request.model,
-                "auth_context": auth_context,
-            },
-            stream_mode="custom",
-        ):
-            yield event`,
+    async def _acquire_chat_slot(self):
+        try:
+            await asyncio.wait_for(
+                self._chat_limiter.acquire(),
+                timeout=self._settings.ollama_chat_acquire_timeout_seconds,
+            )
+        except TimeoutError as exc:
+            raise OllamaClientError(
+                message="Ollama chat concurrency limit reached.",
+                status_code=429,
+                code="chat_concurrency_limit",
+            ) from exc`,
     },
   },
   {

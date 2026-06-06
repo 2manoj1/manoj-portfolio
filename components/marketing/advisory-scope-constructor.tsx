@@ -353,43 +353,49 @@ Let's schedule a brief conversation.`);
   };
 
   return (
-    <div className="mt-12 overflow-hidden rounded-xl border border-border bg-zinc-950/40 shadow-lg">
+    <div className="mt-12 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/95 text-zinc-800 dark:text-zinc-100 shadow-lg transition-colors duration-300">
       
       {/* Chrome Window Header */}
-      <div className="flex flex-wrap items-center justify-between border-b border-border bg-zinc-900/50 px-6 py-4 gap-4">
+      <div className="flex flex-wrap items-center justify-between border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/60 dark:bg-zinc-900/50 px-6 py-4 gap-4">
         <div className="flex items-center gap-2.5">
           <div className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-zinc-800" />
-            <span className="size-2.5 rounded-full bg-zinc-800" />
-            <span className="size-2.5 rounded-full bg-zinc-800" />
+            <span className="size-2.5 rounded-full bg-zinc-300 dark:bg-zinc-800" />
+            <span className="size-2.5 rounded-full bg-zinc-300 dark:bg-zinc-800" />
+            <span className="size-2.5 rounded-full bg-zinc-300 dark:bg-zinc-800" />
           </div>
-          <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest pl-2 border-l border-zinc-800 flex items-center gap-1.5">
+          <span className="font-mono text-[10px] text-zinc-500 dark:text-muted-foreground uppercase tracking-widest pl-2 border-l border-zinc-300 dark:border-zinc-800 flex items-center gap-1.5">
             <Sparkles className="size-3 text-amber animate-pulse" /> architect_sandbox_hub.exe
           </span>
         </div>
 
         {/* Tab Selection */}
-        <div className="flex gap-1 bg-zinc-900/80 border border-zinc-800/80 p-0.5 rounded-md">
+        <div className="flex gap-1 bg-zinc-200/50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800/80 p-0.5 rounded-md">
           <button
             onClick={() => setActiveTab("router")}
-            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-colors flex items-center gap-1.5 ${
-              activeTab === "router" ? "bg-zinc-950 text-amber font-medium" : "text-muted-foreground hover:text-foreground"
+            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTab === "router" 
+                ? "bg-white dark:bg-zinc-950 text-amber font-medium shadow-xs" 
+                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             }`}
           >
             <Sliders className="size-3" /> Scope Router
           </button>
           <button
             onClick={() => setActiveTab("simulator")}
-            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-colors flex items-center gap-1.5 ${
-              activeTab === "simulator" ? "bg-zinc-950 text-amber font-medium" : "text-muted-foreground hover:text-foreground"
+            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTab === "simulator" 
+                ? "bg-white dark:bg-zinc-950 text-amber font-medium shadow-xs" 
+                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             }`}
           >
             <Calculator className="size-3" /> Cost Simulator
           </button>
           <button
             onClick={() => setActiveTab("telemetry")}
-            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-colors flex items-center gap-1.5 ${
-              activeTab === "telemetry" ? "bg-zinc-950 text-amber font-medium" : "text-muted-foreground hover:text-foreground"
+            className={`px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              activeTab === "telemetry" 
+                ? "bg-white dark:bg-zinc-950 text-amber font-medium shadow-xs" 
+                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             }`}
           >
             <Terminal className="size-3" /> Telemetry Sandbox
@@ -414,10 +420,10 @@ Let's schedule a brief conversation.`);
                   <button
                     key={opt.id}
                     onClick={() => setSelectedBottleneck(opt.id)}
-                    className={`text-left text-xs px-4 py-3 rounded-lg border transition-all duration-200 leading-relaxed ${
+                    className={`text-left text-xs px-4 py-3 rounded-lg border transition-all duration-200 leading-relaxed cursor-pointer ${
                       selectedBottleneck === opt.id
-                        ? "border-amber/40 bg-zinc-900/30 text-zinc-100"
-                        : "border-border bg-zinc-950/20 text-muted-foreground hover:border-zinc-855 hover:bg-zinc-900/10 hover:text-foreground"
+                        ? "border-amber bg-amber/5 dark:bg-zinc-900/30 text-zinc-900 dark:text-zinc-100 font-medium"
+                        : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/10 hover:text-zinc-900 dark:hover:text-zinc-100"
                     }`}
                   >
                     {opt.label}
@@ -436,14 +442,14 @@ Let's schedule a brief conversation.`);
                   <button
                     key={opt.id}
                     onClick={() => setSelectedScale(opt.id)}
-                    className={`text-left rounded-lg border px-3 py-2.5 transition-all duration-200 ${
+                    className={`text-left rounded-lg border px-3 py-2.5 transition-all duration-200 cursor-pointer ${
                       selectedScale === opt.id
-                        ? "border-amber/40 bg-zinc-900/30 text-zinc-100"
-                        : "border-border bg-zinc-950/20 text-muted-foreground hover:border-zinc-855 hover:bg-zinc-900/10 hover:text-foreground"
+                        ? "border-amber bg-amber/5 dark:bg-zinc-900/30 text-zinc-900 dark:text-zinc-100 font-medium"
+                        : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/10 hover:text-zinc-900 dark:hover:text-zinc-100"
                     }`}
                   >
                     <div className="text-[11px] font-bold truncate">{opt.label}</div>
-                    <div className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">{opt.timeline}</div>
+                    <div className="font-mono text-[9px] text-zinc-500 dark:text-zinc-400 mt-0.5">{opt.timeline}</div>
                   </button>
                 ))}
               </div>
@@ -459,10 +465,10 @@ Let's schedule a brief conversation.`);
                   <button
                     key={opt.id}
                     onClick={() => setSelectedStack(opt.id)}
-                    className={`text-left rounded-lg border px-3 py-2.5 transition-all duration-200 ${
+                    className={`text-left rounded-lg border px-3 py-2.5 transition-all duration-200 cursor-pointer ${
                       selectedStack === opt.id
-                        ? "border-amber/40 bg-zinc-900/30 text-zinc-100"
-                        : "border-border bg-zinc-950/20 text-muted-foreground hover:border-zinc-855 hover:bg-zinc-900/10 hover:text-foreground"
+                        ? "border-amber bg-amber/5 dark:bg-zinc-900/30 text-zinc-900 dark:text-zinc-100 font-medium"
+                        : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/10 hover:text-zinc-900 dark:hover:text-zinc-100"
                     }`}
                   >
                     <div className="text-[11px] leading-snug">{opt.label}</div>
@@ -474,11 +480,11 @@ Let's schedule a brief conversation.`);
           </div>
 
           {/* Right Side: Output Scope Panel */}
-          <div className="flex flex-col justify-between border-t border-border/80 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+          <div className="flex flex-col justify-between border-t border-zinc-200 dark:border-zinc-800 pt-6 lg:border-t-0 lg:border-l lg:border-zinc-200 lg:dark:border-zinc-800 lg:pt-0 lg:pl-6">
             <div className="space-y-5">
               
               <div>
-                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// ARCHITECTURE ROUTING OUTPUT"}</span>
+                <span className="font-mono text-[9px] font-bold text-amber-700 dark:text-amber uppercase tracking-widest">{"// ARCHITECTURE ROUTING OUTPUT"}</span>
                 <h3 className="text-base font-bold text-foreground mt-1">
                   {bottleneck.recommendation}
                 </h3>
@@ -488,13 +494,13 @@ Let's schedule a brief conversation.`);
               </div>
 
               {/* Deliverables lists */}
-              <div className="border border-border bg-zinc-900/20 p-4 rounded-lg">
-                <span className="font-mono text-[9px] text-muted-foreground/60 uppercase tracking-widest block mb-2.5">
+              <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-100/30 dark:bg-zinc-900/20 p-4 rounded-lg">
+                <span className="font-mono text-[9px] text-zinc-500 dark:text-muted-foreground/60 uppercase tracking-widest block mb-2.5">
                   Expected System Deliverables:
                 </span>
                 <ul className="space-y-2">
                   {bottleneck.deliverables.map(deliv => (
-                    <li key={deliv} className="flex items-start gap-2 text-xs text-zinc-300 leading-snug">
+                    <li key={deliv} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300 leading-snug">
                       <CheckCircle2 className="size-3.5 text-amber/80 shrink-0 mt-0.5" />
                       <span>{deliv}</span>
                     </li>
@@ -504,20 +510,20 @@ Let's schedule a brief conversation.`);
 
               {/* Scope Summary Preview */}
               <div className="relative">
-                <span className="font-mono text-[9px] text-muted-foreground/60 uppercase tracking-widest block mb-1.5">
+                <span className="font-mono text-[9px] text-zinc-500 dark:text-muted-foreground/60 uppercase tracking-widest block mb-1.5">
                   Scope Summary Config:
                 </span>
-                <pre className="font-mono text-[9px] leading-relaxed text-zinc-400 bg-zinc-950/80 border border-zinc-900 p-3.5 rounded-lg overflow-x-auto whitespace-pre-wrap max-h-40">
+                <pre className="font-mono text-[9px] leading-relaxed text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-900 p-3.5 rounded-lg overflow-x-auto whitespace-pre-wrap max-h-40">
                   {scopeSummary}
                 </pre>
                 
                 <button
                   onClick={handleCopy}
-                  className="absolute top-8 right-2.5 p-1.5 rounded border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-zinc-200 transition-colors"
+                  className="absolute top-8 right-2.5 p-1.5 rounded border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors cursor-pointer"
                   title="Copy Scope Configuration"
                 >
                   {copied ? (
-                    <span className="text-[8px] font-mono px-1 font-bold text-emerald-400 uppercase">Copied!</span>
+                    <span className="text-[8px] font-mono px-1 font-bold text-emerald-600 dark:text-emerald-400 uppercase">Copied!</span>
                   ) : (
                     <Clipboard className="size-3.5" />
                   )}
@@ -527,9 +533,9 @@ Let's schedule a brief conversation.`);
             </div>
 
             {/* Direct Connect Hub */}
-            <div className="mt-8 pt-4 border-t border-border/60 space-y-3">
-              <div className="p-3 bg-amber/5 border border-amber/25 rounded-lg">
-                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber uppercase font-semibold">
+            <div className="mt-8 pt-4 border-t border-zinc-200 dark:border-zinc-800/60 space-y-3">
+              <div className="p-3 bg-amber/5 border border-amber-200/50 dark:border-amber/25 rounded-lg">
+                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber-700 dark:text-amber uppercase font-semibold">
                   <Sparkle className="size-3 animate-spin-slow" /> Conversion Hub
                 </div>
                 <p className="text-[11px] text-muted-foreground/80 mt-1 leading-relaxed">
@@ -537,17 +543,17 @@ Let's schedule a brief conversation.`);
                 </p>
                 
                 {/* Copy LinkedIn template helper */}
-                <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
-                  <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
+                <div className="mt-2.5 flex items-center justify-between border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
+                  <span className="text-[10px] font-mono text-zinc-650 dark:text-zinc-400 truncate max-w-[200px]">
                     {`"${linkedInNote}"`}
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
-                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber hover:text-amber/80 transition-colors"
+                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber-700 dark:text-amber hover:text-amber-800 dark:hover:text-amber/80 transition-colors cursor-pointer"
                   >
                     {noteCopied ? (
                       <>
-                        <Check className="size-3 text-emerald-400" /> Copied!
+                        <Check className="size-3 text-emerald-600 dark:text-emerald-400" /> Copied!
                       </>
                     ) : (
                       <>
@@ -572,7 +578,7 @@ Let's schedule a brief conversation.`);
                   href={LINKEDIN}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <LinkedInIcon className="size-3.5 text-sky-500" /> Connect on LinkedIn
                 </a>
@@ -580,7 +586,7 @@ Let's schedule a brief conversation.`);
                   href={CALENDLY}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <Calendar className="size-3.5 text-amber/85" /> Book 15m Call
                 </a>
@@ -607,14 +613,14 @@ Let's schedule a brief conversation.`);
                   <button
                     key={key}
                     onClick={() => setSelectedModel(key)}
-                    className={`text-left px-3.5 py-2.5 rounded-lg border text-xs transition-all duration-200 ${
+                    className={`text-left px-3.5 py-2.5 rounded-lg border text-xs transition-all duration-200 cursor-pointer ${
                       selectedModel === key
-                        ? "border-amber/40 bg-zinc-900/30 text-zinc-100"
-                        : "border-border bg-zinc-950/20 text-muted-foreground hover:border-zinc-855 hover:bg-zinc-900/10"
+                        ? "border-amber bg-amber/5 dark:bg-zinc-900/30 text-zinc-900 dark:text-zinc-100 font-medium"
+                        : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/10"
                     }`}
                   >
                     <div className="font-semibold">{modelsConfig[key].name}</div>
-                    <div className="text-[10px] text-muted-foreground/60 mt-0.5 font-mono">
+                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 font-mono">
                       in: ${modelsConfig[key].input}/M // out: ${modelsConfig[key].output}/M
                     </div>
                   </button>
@@ -625,10 +631,10 @@ Let's schedule a brief conversation.`);
             {/* Slider 1: Requests volume */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-amber font-semibold">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-amber-700 dark:text-amber font-semibold">
                   02 // Monthly Request Volume
                 </span>
-                <span className="font-mono text-zinc-300 font-bold">
+                <span className="font-mono text-zinc-700 dark:text-zinc-300 font-bold">
                   {(requestsVolume / 1000).toFixed(0)}k calls / mo
                 </span>
               </div>
@@ -639,17 +645,17 @@ Let's schedule a brief conversation.`);
                 step="10000"
                 value={requestsVolume}
                 onChange={(e) => setRequestsVolume(Number(e.target.value))}
-                className="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-amber"
+                className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber"
               />
             </div>
 
             {/* Slider 2: Average tokens */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-amber font-semibold">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-amber-700 dark:text-amber font-semibold">
                   03 // Average Tokens per Request
                 </span>
-                <span className="font-mono text-zinc-300 font-bold">
+                <span className="font-mono text-zinc-700 dark:text-zinc-300 font-bold">
                   {avgTokens.toLocaleString()} tokens
                 </span>
               </div>
@@ -660,17 +666,17 @@ Let's schedule a brief conversation.`);
                 step="500"
                 value={avgTokens}
                 onChange={(e) => setAvgTokens(Number(e.target.value))}
-                className="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-amber"
+                className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber"
               />
             </div>
 
             {/* Slider 3: Caching hit ratio */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-amber font-semibold">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-amber-700 dark:text-amber font-semibold">
                   04 // Prompt Cache Hit Ratio (Redis)
                 </span>
-                <span className="font-mono text-zinc-300 font-bold">
+                <span className="font-mono text-zinc-700 dark:text-zinc-300 font-bold">
                   {(cacheRatio * 100).toFixed(0)}% hits
                 </span>
               </div>
@@ -681,7 +687,7 @@ Let's schedule a brief conversation.`);
                 step="0.05"
                 value={cacheRatio}
                 onChange={(e) => setCacheRatio(Number(e.target.value))}
-                className="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-amber"
+                className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber"
               />
             </div>
 
@@ -693,22 +699,26 @@ Let's schedule a brief conversation.`);
               <div className="grid gap-2 sm:grid-cols-2">
                 <button
                   onClick={() => setHasHnsw(!hasHnsw)}
-                  className={`flex items-center justify-between text-xs px-3.5 py-2.5 rounded-lg border transition-all ${
-                    hasHnsw ? "border-amber/40 bg-zinc-900/20 text-zinc-100" : "border-border text-muted-foreground"
+                  className={`flex items-center justify-between text-xs px-3.5 py-2.5 rounded-lg border transition-all cursor-pointer ${
+                    hasHnsw 
+                      ? "border-amber bg-amber/5 dark:bg-zinc-900/20 text-zinc-900 dark:text-zinc-100 font-medium" 
+                      : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-500 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                   }`}
                 >
                   <span className="font-mono text-[11px]">pgvector HNSW Index</span>
-                  <span className="text-[10px] font-mono text-amber">-{hasHnsw ? "25% Latency" : "0%" }</span>
+                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber font-semibold">-{hasHnsw ? "25% Latency" : "0%" }</span>
                 </button>
 
                 <button
                   onClick={() => setHasGuardrails(!hasGuardrails)}
-                  className={`flex items-center justify-between text-xs px-3.5 py-2.5 rounded-lg border transition-all ${
-                    hasGuardrails ? "border-amber/40 bg-zinc-900/20 text-zinc-100" : "border-border text-muted-foreground"
+                  className={`flex items-center justify-between text-xs px-3.5 py-2.5 rounded-lg border transition-all cursor-pointer ${
+                    hasGuardrails 
+                      ? "border-amber bg-amber/5 dark:bg-zinc-900/20 text-zinc-900 dark:text-zinc-100 font-medium" 
+                      : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-500 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                   }`}
                 >
                   <span className="font-mono text-[11px]">LangGraph Guardrails</span>
-                  <span className="text-[10px] font-mono text-amber">{hasGuardrails ? "+16% Safety" : "+0%" }</span>
+                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber font-semibold">{hasGuardrails ? "+16% Safety" : "+0%" }</span>
                 </button>
               </div>
             </div>
@@ -716,12 +726,12 @@ Let's schedule a brief conversation.`);
           </div>
 
           {/* Right Side: Simulation Results Dashboard */}
-          <div className="flex flex-col justify-between border-t border-border/80 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+          <div className="flex flex-col justify-between border-t border-zinc-200 dark:border-zinc-800 pt-6 lg:border-t-0 lg:border-l lg:border-zinc-200 lg:dark:border-zinc-800 lg:pt-0 lg:pl-6">
             <div className="space-y-6">
               
               <div>
-                <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// MODEL OUTPUT PERFORMANCE MATRIX"}</span>
-                <h3 className="text-sm font-bold text-zinc-200 mt-1">
+                <span className="font-mono text-[9px] font-bold text-amber-700 dark:text-amber uppercase tracking-widest">{"// MODEL OUTPUT PERFORMANCE MATRIX"}</span>
+                <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-1">
                   Architecture Efficiency Analysis
                 </h3>
               </div>
@@ -729,50 +739,50 @@ Let's schedule a brief conversation.`);
               {/* Metrics grid */}
               <div className="grid grid-cols-2 gap-3.5">
                 
-                <div className="border border-border bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
-                  <span className="font-mono text-[8px] text-muted-foreground/60 uppercase tracking-widest">
+                <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-100/30 dark:bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
+                  <span className="font-mono text-[8px] text-zinc-500 dark:text-muted-foreground/60 uppercase tracking-widest">
                     Avg Latency
                   </span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-xl font-bold font-mono text-zinc-100">{estimatedLatency}</span>
-                    <span className="text-[10px] font-mono text-muted-foreground">ms</span>
+                    <span className="text-xl font-bold font-mono text-zinc-900 dark:text-zinc-100">{estimatedLatency}</span>
+                    <span className="text-[10px] font-mono text-zinc-500 dark:text-muted-foreground">ms</span>
                   </div>
-                  <span className="font-mono text-[8px] text-amber/80 mt-1">Target: &lt;180ms</span>
+                  <span className="font-mono text-[8px] text-amber-700 dark:text-amber/80 mt-1">Target: &lt;180ms</span>
                 </div>
 
-                <div className="border border-border bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
-                  <span className="font-mono text-[8px] text-muted-foreground/60 uppercase tracking-widest">
+                <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-100/30 dark:bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
+                  <span className="font-mono text-[8px] text-zinc-500 dark:text-muted-foreground/60 uppercase tracking-widest">
                     Safety Grounding
                   </span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-xl font-bold font-mono text-zinc-100">{estimatedGrounding.toFixed(0)}</span>
-                    <span className="text-[10px] font-mono text-muted-foreground">%</span>
+                    <span className="text-xl font-bold font-mono text-zinc-900 dark:text-zinc-100">{estimatedGrounding.toFixed(0)}</span>
+                    <span className="text-[10px] font-mono text-zinc-500 dark:text-muted-foreground">%</span>
                   </div>
-                  <span className="font-mono text-[8px] text-amber/80 mt-1">Target: &gt;95%</span>
+                  <span className="font-mono text-[8px] text-amber-700 dark:text-amber/80 mt-1">Target: &gt;95%</span>
                 </div>
 
-                <div className="border border-border bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
-                  <span className="font-mono text-[8px] text-muted-foreground/60 uppercase tracking-widest">
+                <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-100/30 dark:bg-zinc-900/20 p-3 rounded-lg flex flex-col justify-between">
+                  <span className="font-mono text-[8px] text-zinc-500 dark:text-muted-foreground/60 uppercase tracking-widest">
                     Raw API Cost
                   </span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-xs text-muted-foreground">$</span>
-                    <span className="text-xl font-bold font-mono text-zinc-400">{rawMonthlyCost.toFixed(0)}</span>
-                    <span className="text-[9px] font-mono text-muted-foreground">/mo</span>
+                    <span className="text-xs text-zinc-500 dark:text-muted-foreground">$</span>
+                    <span className="text-xl font-bold font-mono text-zinc-700 dark:text-zinc-400">{rawMonthlyCost.toFixed(0)}</span>
+                    <span className="text-[9px] font-mono text-zinc-500 dark:text-muted-foreground">/mo</span>
                   </div>
-                  <span className="font-mono text-[8px] text-zinc-500 mt-1">No optimization</span>
+                  <span className="font-mono text-[8px] text-zinc-400 dark:text-zinc-500 mt-1">No optimization</span>
                 </div>
 
                 <div className="border border-amber/25 bg-amber/5 p-3 rounded-lg flex flex-col justify-between shadow-[0_0_10px_rgba(245,158,11,0.03)]">
-                  <span className="font-mono text-[8px] text-amber/70 uppercase tracking-widest">
+                  <span className="font-mono text-[8px] text-amber-700 dark:text-amber/70 uppercase tracking-widest">
                     Optimized Cost
                   </span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-xs text-amber/80">$</span>
-                    <span className="text-xl font-bold font-mono text-amber">{optimizedMonthlyCost.toFixed(0)}</span>
-                    <span className="text-[9px] font-mono text-amber/80">/mo</span>
+                    <span className="text-xs text-amber-700 dark:text-amber/80">$</span>
+                    <span className="text-xl font-bold font-mono text-amber-700 dark:text-amber">{optimizedMonthlyCost.toFixed(0)}</span>
+                    <span className="text-[9px] font-mono text-amber-700 dark:text-amber/80">/mo</span>
                   </div>
-                  <span className="font-mono text-[8px] text-emerald-400 mt-1 font-bold">
+                  <span className="font-mono text-[8px] text-emerald-600 dark:text-emerald-400 mt-1 font-bold">
                     Saves ${monthlySavings.toFixed(0)}/mo ({((monthlySavings/rawMonthlyCost)*100).toFixed(0)}%)
                   </span>
                 </div>
@@ -780,16 +790,16 @@ Let's schedule a brief conversation.`);
               </div>
 
               {/* Capable Explainer box */}
-              <div className="text-[11px] leading-relaxed text-muted-foreground border-l-2 border-amber/35 pl-4">
-                This configuration yields a <strong className="text-zinc-200">{((monthlySavings/rawMonthlyCost)*100).toFixed(0)}% cost reduction</strong> and optimized latency. Let&apos;s deploy pgvector indexes, build Redis caching hooks, and secure your workflows.
+              <div className="text-[11px] leading-relaxed text-zinc-600 dark:text-muted-foreground border-l-2 border-amber-500/35 pl-4">
+                This configuration yields a <strong className="text-zinc-800 dark:text-zinc-200">{((monthlySavings/rawMonthlyCost)*100).toFixed(0)}% cost reduction</strong> and optimized latency. Let&apos;s deploy pgvector indexes, build Redis caching hooks, and secure your workflows.
               </div>
 
             </div>
 
             {/* Direct Connect Hub */}
-            <div className="mt-8 pt-4 border-t border-border/60 space-y-3">
-              <div className="p-3 bg-amber/5 border border-amber/25 rounded-lg">
-                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber uppercase font-semibold">
+            <div className="mt-8 pt-4 border-t border-zinc-200 dark:border-zinc-800/60 space-y-3">
+              <div className="p-3 bg-amber/5 border border-amber-200/50 dark:border-amber/25 rounded-lg">
+                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber-700 dark:text-amber uppercase font-semibold">
                   <Sparkle className="size-3 animate-spin-slow" /> Connection Hub
                 </div>
                 <p className="text-[11px] text-muted-foreground/80 mt-1 leading-relaxed">
@@ -797,17 +807,17 @@ Let's schedule a brief conversation.`);
                 </p>
                 
                 {/* Copy LinkedIn template helper */}
-                <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
-                  <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
+                <div className="mt-2.5 flex items-center justify-between border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
+                  <span className="text-[10px] font-mono text-zinc-650 dark:text-zinc-400 truncate max-w-[200px]">
                     {`"${linkedInNote}"`}
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
-                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber hover:text-amber/80 transition-colors"
+                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber-700 dark:text-amber hover:text-amber-800 dark:hover:text-amber/80 transition-colors cursor-pointer"
                   >
                     {noteCopied ? (
                       <>
-                        <Check className="size-3 text-emerald-400" /> Copied!
+                        <Check className="size-3 text-emerald-600 dark:text-emerald-400" /> Copied!
                       </>
                     ) : (
                       <>
@@ -832,7 +842,7 @@ Let's schedule a brief conversation.`);
                   href={LINKEDIN}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2.5 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <LinkedInIcon className="size-3.5 text-sky-500" /> Connect on LinkedIn
                 </a>
@@ -840,7 +850,7 @@ Let's schedule a brief conversation.`);
                   href={CALENDLY}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2.5 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <Calendar className="size-3.5 text-amber/85" /> Book 15m Call
                 </a>
@@ -857,7 +867,7 @@ Let's schedule a brief conversation.`);
           {/* Left Side: Controls & Selector */}
           <div className="space-y-6">
             <div>
-              <span className="font-mono text-[9px] font-bold text-amber uppercase tracking-widest">{"// SYSTEM TELEMETRY CONTROL PANEL"}</span>
+              <span className="font-mono text-[9px] font-bold text-amber-700 dark:text-amber uppercase tracking-widest">{"// SYSTEM TELEMETRY CONTROL PANEL"}</span>
               <h3 className="text-base font-bold text-foreground mt-1">
                 Select Runtime Trace Target
               </h3>
@@ -881,41 +891,41 @@ Let's schedule a brief conversation.`);
                       }
                     }}
                     disabled={isSimulating}
-                    className={`w-full text-left p-3.5 rounded-lg border transition-all duration-200 ${
+                    className={`w-full text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer ${
                       selectedScenario === key
-                        ? "border-amber/40 bg-zinc-900/30 text-zinc-100"
-                        : "border-border bg-zinc-950/20 text-muted-foreground hover:border-zinc-855 hover:bg-zinc-900/10 disabled:opacity-50"
+                        ? "border-amber bg-amber/5 dark:bg-zinc-900/30 text-zinc-900 dark:text-zinc-100 font-medium"
+                        : "border-zinc-200 dark:border-zinc-800/80 bg-white/50 dark:bg-zinc-950/20 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/10 disabled:opacity-50"
                     }`}
                   >
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold font-mono">{item.name}</span>
                       {selectedScenario === key && (
-                        <span className="size-1.5 rounded-full bg-amber animate-ping" />
+                        <span className="size-1.5 rounded-full bg-amber-600 dark:bg-amber animate-ping" />
                       )}
                     </div>
-                    <p className="text-[10px] text-muted-foreground/60 mt-1">{item.description}</p>
+                    <p className="text-[10px] text-zinc-500 dark:text-zinc-450 mt-1">{item.description}</p>
                   </button>
                 );
               })}
             </div>
 
             {/* Simulated Performance Metrics Banner */}
-            <div className="border border-zinc-800 bg-zinc-900/30 p-4 rounded-lg space-y-3.5">
-              <span className="font-mono text-[9px] text-muted-foreground/50 uppercase tracking-widest block">
+            <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-100/40 dark:bg-zinc-900/30 p-4 rounded-lg space-y-3.5">
+              <span className="font-mono text-[9px] text-zinc-500 dark:text-zinc-500 uppercase tracking-widest block">
                 Target Reference Metrics:
               </span>
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="p-2 border border-zinc-800 bg-zinc-950/40 rounded">
-                  <div className="font-mono text-[9px] text-muted-foreground/60 uppercase">P95 Latency</div>
-                  <div className="font-mono text-xs font-bold text-amber mt-1">{telemetryScenarios[selectedScenario].metrics.latency}</div>
+                <div className="p-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 rounded">
+                  <div className="font-mono text-[9px] text-zinc-500 dark:text-zinc-450 uppercase">P95 Latency</div>
+                  <div className="font-mono text-xs font-bold text-amber-700 dark:text-amber mt-1">{telemetryScenarios[selectedScenario].metrics.latency}</div>
                 </div>
-                <div className="p-2 border border-zinc-800 bg-zinc-950/40 rounded">
-                  <div className="font-mono text-[9px] text-muted-foreground/60 uppercase">Token Load</div>
-                  <div className="font-mono text-xs font-bold text-zinc-200 mt-1">{telemetryScenarios[selectedScenario].metrics.tokens}</div>
+                <div className="p-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 rounded">
+                  <div className="font-mono text-[9px] text-zinc-500 dark:text-zinc-450 uppercase">Token Load</div>
+                  <div className="font-mono text-xs font-bold text-zinc-800 dark:text-zinc-200 mt-1">{telemetryScenarios[selectedScenario].metrics.tokens}</div>
                 </div>
-                <div className="p-2 border border-zinc-800 bg-zinc-950/40 rounded">
-                  <div className="font-mono text-[9px] text-muted-foreground/60 uppercase">API Cost</div>
-                  <div className="font-mono text-xs font-bold text-zinc-200 mt-1">{telemetryScenarios[selectedScenario].metrics.cost}</div>
+                <div className="p-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 rounded">
+                  <div className="font-mono text-[9px] text-zinc-500 dark:text-zinc-450 uppercase">API Cost</div>
+                  <div className="font-mono text-xs font-bold text-zinc-800 dark:text-zinc-200 mt-1">{telemetryScenarios[selectedScenario].metrics.cost}</div>
                 </div>
               </div>
             </div>
@@ -924,11 +934,11 @@ Let's schedule a brief conversation.`);
             <button
               onClick={handleStartSimulation}
               disabled={isSimulating}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber px-4 py-3 font-mono text-xs font-bold text-zinc-950 transition-all duration-300 hover:bg-amber/90 disabled:bg-zinc-800 disabled:text-zinc-500 shadow-[0_0_10px_rgba(245,158,11,0.05)]"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber px-4 py-3 font-mono text-xs font-bold text-zinc-950 transition-all duration-300 hover:bg-amber/90 disabled:bg-zinc-200 dark:disabled:bg-zinc-800 disabled:text-zinc-400 dark:disabled:text-zinc-500 shadow-[0_0_10px_rgba(245,158,11,0.05)] cursor-pointer"
             >
               {isSimulating ? (
                 <>
-                  <Activity className="size-4 shrink-0 animate-pulse text-amber-500" /> SIMULATING TRACE OUTPUT...
+                  <Activity className="size-4 shrink-0 animate-pulse text-amber-700 dark:text-amber-500" /> SIMULATING TRACE OUTPUT...
                 </>
               ) : (
                 <>
@@ -940,17 +950,17 @@ Let's schedule a brief conversation.`);
           </div>
 
           {/* Right Side: Log Console Screen */}
-          <div className="flex flex-col justify-between border-t border-border/80 pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+          <div className="flex flex-col justify-between border-t border-zinc-200 dark:border-zinc-800 pt-6 lg:border-t-0 lg:border-l lg:border-zinc-200 lg:dark:border-zinc-800 lg:pt-0 lg:pl-6">
             
             {/* Terminal Panel */}
-            <div className="flex flex-col h-[320px] bg-zinc-950 border border-zinc-900 rounded-lg overflow-hidden shadow-inner font-mono text-[10px] leading-relaxed">
+            <div className="flex flex-col h-[320px] bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-lg overflow-hidden shadow-xs dark:shadow-inner font-mono text-[10px] leading-relaxed">
               
               {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-3.5 py-2 bg-zinc-900/60 border-b border-zinc-950">
-                <span className="text-[9px] text-zinc-500 flex items-center gap-1.5">
-                  <Terminal className="size-3 text-amber" /> console@manoj-architect:~
+              <div className="flex items-center justify-between px-3.5 py-2 bg-zinc-100 dark:bg-zinc-900/60 border-b border-zinc-200 dark:border-zinc-950">
+                <span className="text-[9px] text-zinc-650 dark:text-zinc-400 flex items-center gap-1.5">
+                  <Terminal className="size-3 text-amber-700 dark:text-amber" /> console@manoj-architect:~
                 </span>
-                <span className="text-[8px] text-amber px-1.5 py-0.5 rounded bg-amber/10 border border-amber/15 animate-pulse uppercase tracking-wider font-semibold">
+                <span className="text-[8px] text-amber-700 dark:text-amber px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber/10 border border-amber-200 dark:border-amber/15 animate-pulse uppercase tracking-wider font-semibold">
                   {isSimulating ? "Running" : "Idle"}
                 </span>
               </div>
@@ -958,23 +968,23 @@ Let's schedule a brief conversation.`);
               {/* Terminal Logs Output */}
               <div 
                 ref={consoleContainerRef}
-                className="flex-1 p-3.5 overflow-y-auto space-y-2 select-text scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
+                className="flex-1 p-3.5 overflow-y-auto space-y-2 select-text scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-800 scrollbar-track-transparent"
               >
                 {displayedLogs.length === 0 ? (
-                  <div className="text-zinc-600 italic flex flex-col items-center justify-center h-full gap-2">
-                    <Terminal className="size-8 text-zinc-800" />
+                  <div className="text-zinc-400 dark:text-zinc-600 italic flex flex-col items-center justify-center h-full gap-2">
+                    <Terminal className="size-8 text-zinc-300 dark:text-zinc-800" />
                     <span>Awaiting signal. Click &apos;RUN TELEMETRY SIMULATION&apos; to stream trace.</span>
                   </div>
                 ) : (
                   displayedLogs.map((log, index) => {
-                    let typeColor = "text-zinc-300";
-                    if (log.type === "system") typeColor = "text-amber font-semibold";
-                    if (log.type === "query") typeColor = "text-sky-400";
-                    if (log.type === "tool") typeColor = "text-fuchsia-400";
-                    if (log.type === "db") typeColor = "text-indigo-400";
-                    if (log.type === "success") typeColor = "text-emerald-400";
-                    if (log.type === "warning") typeColor = "text-rose-400";
-                    if (log.type === "metric") typeColor = "text-amber bg-amber/5 px-1 py-0.5 border border-amber/10 rounded inline-block";
+                    let typeColor = "text-zinc-700 dark:text-zinc-300";
+                    if (log.type === "system") typeColor = "text-amber-700 dark:text-amber font-semibold";
+                    if (log.type === "query") typeColor = "text-blue-600 dark:text-sky-400";
+                    if (log.type === "tool") typeColor = "text-fuchsia-750 dark:text-fuchsia-400";
+                    if (log.type === "db") typeColor = "text-indigo-650 dark:text-indigo-400";
+                    if (log.type === "success") typeColor = "text-emerald-600 dark:text-emerald-400";
+                    if (log.type === "warning") typeColor = "text-rose-600 dark:text-rose-400";
+                    if (log.type === "metric") typeColor = "text-amber-800 dark:text-amber bg-amber-50 dark:bg-amber/5 px-1 py-0.5 border border-amber-200 dark:border-amber/10 rounded inline-block";
 
                     return (
                       <div key={index} className={`whitespace-pre-wrap ${typeColor}`}>
@@ -984,17 +994,17 @@ Let's schedule a brief conversation.`);
                   })
                 )}
                 {isSimulating && (
-                  <div className="text-amber">
-                    &gt; executing trace log stream<span className="inline-block w-1.5 h-3.5 bg-amber ml-1 animate-pulse" />
+                  <div className="text-amber-700 dark:text-amber">
+                    &gt; executing trace log stream<span className="inline-block w-1.5 h-3.5 bg-amber-700 dark:bg-amber ml-1 animate-pulse" />
                   </div>
                 )}
               </div>
             </div>
 
             {/* Direct Connect Hub */}
-            <div className="mt-8 pt-4 border-t border-border/60 space-y-3">
-              <div className="p-3 bg-amber/5 border border-amber/25 rounded-lg">
-                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber uppercase font-semibold">
+            <div className="mt-8 pt-4 border-t border-zinc-200 dark:border-zinc-800/60 space-y-3">
+              <div className="p-3 bg-amber/5 border border-amber-200/50 dark:border-amber/25 rounded-lg">
+                <div className="flex items-center gap-1.5 font-mono text-[10px] text-amber-700 dark:text-amber uppercase font-semibold">
                   <Sparkle className="size-3 animate-spin-slow" /> Let&apos;s Build This Telemetry
                 </div>
                 <p className="text-[11px] text-muted-foreground/80 mt-1 leading-relaxed">
@@ -1002,17 +1012,17 @@ Let's schedule a brief conversation.`);
                 </p>
 
                 {/* Copy LinkedIn template helper */}
-                <div className="mt-2.5 flex items-center justify-between border border-zinc-800 bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
-                  <span className="text-[10px] font-mono text-zinc-400 truncate max-w-[200px]">
+                <div className="mt-2.5 flex items-center justify-between border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/60 rounded px-2.5 py-1.5 gap-2">
+                  <span className="text-[10px] font-mono text-zinc-650 dark:text-zinc-400 truncate max-w-[200px]">
                     &quot;Hi Manoj, I tried your Telemetry Sandbox...&quot;
                   </span>
                   <button
                     onClick={handleCopyLinkedInNote}
-                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber hover:text-amber/80 transition-colors"
+                    className="flex items-center gap-1 shrink-0 font-mono text-[9px] uppercase font-bold text-amber-700 dark:text-amber hover:text-amber-800 dark:hover:text-amber/80 transition-colors cursor-pointer"
                   >
                     {noteCopied ? (
                       <>
-                        <Check className="size-3 text-emerald-400" /> Copied!
+                        <Check className="size-3 text-emerald-600 dark:text-emerald-400" /> Copied!
                       </>
                     ) : (
                       <>
@@ -1037,7 +1047,7 @@ Let's schedule a brief conversation.`);
                   href={LINKEDIN}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2.5 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <LinkedInIcon className="size-3.5 text-sky-500" /> Connect on LinkedIn
                 </a>
@@ -1045,7 +1055,7 @@ Let's schedule a brief conversation.`);
                   href={CALENDLY}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-border bg-zinc-900/35 hover:bg-zinc-900/60 hover:text-foreground text-muted-foreground px-3 py-2.5 font-mono text-[10px] transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/35 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 hover:text-zinc-900 dark:hover:text-foreground text-zinc-600 dark:text-zinc-400 px-3 py-2.5 font-mono text-[10px] transition-all cursor-pointer"
                 >
                   <Calendar className="size-3.5 text-amber/85" /> Book 15m Call
                 </a>
@@ -1058,18 +1068,18 @@ Let's schedule a brief conversation.`);
       )}
 
       {/* Footer Info strip */}
-      <div className="border-t border-border bg-zinc-900/20 px-6 py-4 flex flex-wrap justify-between items-center gap-4 text-[10px] font-mono text-muted-foreground/60">
+      <div className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-100/40 dark:bg-zinc-900/20 px-6 py-4 flex flex-wrap justify-between items-center gap-4 text-[10px] font-mono text-zinc-500 dark:text-muted-foreground/60">
         <span className="flex items-center gap-1.5">
           <Activity className="size-3 text-emerald-500 animate-pulse" /> Telemetry: OK // Trace connection validated
         </span>
         <span className="flex items-center gap-3">
-          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors flex items-center gap-1">
+          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="hover:text-amber-700 dark:hover:text-amber transition-colors flex items-center gap-1">
             LinkedIn <ArrowUpRight className="size-2.5" />
           </a>
-          <a href={`mailto:${EMAIL}`} className="hover:text-amber transition-colors flex items-center gap-1">
+          <a href={`mailto:${EMAIL}`} className="hover:text-amber-700 dark:hover:text-amber transition-colors flex items-center gap-1">
             Email <ArrowUpRight className="size-2.5" />
           </a>
-          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors flex items-center gap-1">
+          <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="hover:text-amber-700 dark:hover:text-amber transition-colors flex items-center gap-1">
             Book Meet <ArrowUpRight className="size-2.5" />
           </a>
         </span>

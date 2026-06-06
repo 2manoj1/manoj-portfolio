@@ -233,7 +233,7 @@ export function TechRadar() {
 		const activePreview = hoveredItem || activeItem;
 
 		return (
-			<div className={cn("relative w-full aspect-square border border-border/80 bg-zinc-950/20 rounded-xl overflow-hidden shadow-inner select-none", sizeClass)}>
+			<div className={cn("relative w-full aspect-square border border-zinc-200 dark:border-border/80 bg-zinc-100/50 dark:bg-zinc-950/20 rounded-xl overflow-hidden shadow-inner select-none", sizeClass)}>
 				
 				{/* Style block for pure CSS animations (GPU-driven to prevent React re-render flickers) */}
 				<svg className="hidden">
@@ -279,12 +279,12 @@ export function TechRadar() {
 										cx={cx}
 										cy={cy}
 										r={r}
-										className="fill-none stroke-zinc-600/75 stroke-[1px]"
+										className="fill-none stroke-zinc-300 dark:stroke-zinc-600/75 stroke-[1px]"
 									/>
 									<text
 										x={cx + 3}
 										y={cy - r + 10}
-										className="fill-zinc-400 font-mono text-[8px] font-bold tracking-widest uppercase pointer-events-none"
+										className="fill-zinc-500 dark:fill-zinc-400 font-mono text-[8px] font-bold tracking-widest uppercase pointer-events-none"
 									>
 										{key}
 									</text>
@@ -293,8 +293,8 @@ export function TechRadar() {
 						})}
 
 						{/* Grid polar crosshairs */}
-						<line x1="200" y1="20" x2="200" y2="380" className="stroke-zinc-500/50 stroke-[1px]" strokeDasharray="3 3" />
-						<line x1="20" y1="200" x2="380" y2="200" className="stroke-zinc-500/50 stroke-[1px]" strokeDasharray="3 3" />
+						<line x1="200" y1="20" x2="200" y2="380" className="stroke-zinc-300 dark:stroke-zinc-500/50 stroke-[1px]" strokeDasharray="3 3" />
+						<line x1="20" y1="200" x2="380" y2="200" className="stroke-zinc-300 dark:stroke-zinc-500/50 stroke-[1px]" strokeDasharray="3 3" />
 
 						{/* Fine tick compass indexing around perimeter (r=180) */}
 						{Array.from({ length: 36 }).map((_, i) => {
@@ -313,7 +313,7 @@ export function TechRadar() {
 									y1={y1}
 									x2={x2}
 									y2={y2}
-									className="stroke-zinc-400/50 stroke-[1px] pointer-events-none"
+									className="stroke-zinc-300 dark:stroke-zinc-400/50 stroke-[1px] pointer-events-none"
 								/>
 							);
 						})}
@@ -335,10 +335,10 @@ export function TechRadar() {
 						</g>
 
 						{/* Quadrant Static Labels */}
-						<text x="340" y="35" className="fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase text-right pointer-events-none">Orchestration</text>
-						<text x="340" y="375" className="fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase text-right pointer-events-none">Models</text>
-						<text x="60" y="375" className="fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase pointer-events-none">Data</text>
-						<text x="60" y="35" className="fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase pointer-events-none">Platform</text>
+						<text x="340" y="35" className="fill-zinc-500 dark:fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase text-right pointer-events-none">Orchestration</text>
+						<text x="340" y="375" className="fill-zinc-500 dark:fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase text-right pointer-events-none">Models</text>
+						<text x="60" y="375" className="fill-zinc-500 dark:fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase pointer-events-none">Data</text>
+						<text x="60" y="35" className="fill-zinc-500 dark:fill-zinc-400 font-mono text-[9px] font-extrabold tracking-widest uppercase pointer-events-none">Platform</text>
 
 						{/* Active Node Points mapping */}
 						{filteredItems.map((item) => {
@@ -407,9 +407,9 @@ export function TechRadar() {
 											x={x + 7}
 											y={y + 2.5}
 											className={cn(
-												"font-mono text-[8px] tracking-tight pointer-events-none font-medium fill-zinc-300",
+												"font-mono text-[8px] tracking-tight pointer-events-none font-medium fill-zinc-600 dark:fill-zinc-300",
 												isSelected && "fill-amber font-bold",
-												isHovered && "fill-white"
+												isHovered && "fill-zinc-900 dark:fill-white"
 											)}
 										>
 											{item.name}
@@ -423,20 +423,20 @@ export function TechRadar() {
 
 				{/* Stabilized Hover/Selected Preview Card (Fixed at the bottom of the SVG container to prevent overlaps) */}
 				{activePreview && (
-					<div className="absolute bottom-4 left-4 right-4 rounded-lg border border-border bg-zinc-950/95 p-3.5 shadow-xl backdrop-blur-md font-mono text-[10px] flex justify-between items-center z-10 animate-in slide-in-from-bottom-2 duration-200">
+					<div className="absolute bottom-4 left-4 right-4 rounded-lg border border-zinc-200 dark:border-border bg-white/95 dark:bg-zinc-950/95 p-3.5 shadow-xl backdrop-blur-md font-mono text-[10px] flex justify-between items-center z-10 animate-in slide-in-from-bottom-2 duration-200">
 						<div className="space-y-0.5 min-w-0 pr-3">
 							<div className="flex items-center gap-2">
-								<span className="font-semibold text-zinc-100 truncate">{activePreview.name}</span>
+								<span className="font-semibold text-zinc-900 dark:text-zinc-100 truncate">{activePreview.name}</span>
 								<span className="text-[8px] text-muted-foreground/60 uppercase">[{activePreview.quadrant}]</span>
 							</div>
-							<p className="text-zinc-400 text-[9px] truncate leading-normal">{activePreview.insight}</p>
+							<p className="text-zinc-500 dark:text-zinc-400 text-[9px] truncate leading-normal">{activePreview.insight}</p>
 						</div>
 						<span className={cn(
 							"rounded-md px-2 py-0.5 text-[8px] uppercase tracking-wide border shrink-0 font-medium",
-							activePreview.ring === "Adopt" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-							activePreview.ring === "Trial" && "bg-amber/10 text-amber border-amber/20",
-							activePreview.ring === "Assess" && "bg-blue-500/10 text-blue-400 border-blue-500/20",
-							activePreview.ring === "Hold" && "bg-rose-500/10 text-rose-400 border-rose-500/20"
+							activePreview.ring === "Adopt" && "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20",
+							activePreview.ring === "Trial" && "bg-amber-50 dark:bg-amber/10 text-amber-800 dark:text-amber border-amber-200 dark:border-amber/20",
+							activePreview.ring === "Assess" && "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/20",
+							activePreview.ring === "Hold" && "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/20"
 						)}>
 							{activePreview.ring}
 						</span>
@@ -444,7 +444,7 @@ export function TechRadar() {
 				)}
 
 				{/* Interaction Help Label */}
-				<div className="absolute top-3 right-3 pointer-events-none rounded bg-black/60 border border-white/5 px-2 py-1 font-mono text-[7px] text-muted-foreground uppercase tracking-wider">
+				<div className="absolute top-3 right-3 pointer-events-none rounded bg-zinc-100/80 dark:bg-black/60 border border-zinc-200 dark:border-white/5 px-2 py-1 font-mono text-[7px] text-zinc-650 dark:text-muted-foreground uppercase tracking-wider">
 					Drag to Pan | Scroll to Zoom
 				</div>
 			</div>
@@ -457,38 +457,38 @@ export function TechRadar() {
 			<div className="space-y-4">
 				{item.adr ? (
 					<div className="space-y-3 font-mono text-xs">
-						<div className="rounded-lg border border-border bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
-							<div className="flex items-center gap-1.5 text-amber text-[9px] font-bold uppercase tracking-widest">
-								<AlertTriangle className="size-3 text-amber/80 shrink-0" />
+						<div className="rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
+							<div className="flex items-center gap-1.5 text-amber-800 dark:text-amber text-[9px] font-bold uppercase tracking-widest">
+								<AlertTriangle className="size-3 text-amber-800/80 dark:text-amber/80 shrink-0" />
 								<span>[PROBLEM / CONTEXT]</span>
 							</div>
-							<p className="text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-amber/30 break-words">
+							<p className="text-zinc-700 dark:text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-amber-300 dark:border-amber/30 break-words">
 								{item.adr.problem}
 							</p>
 						</div>
 
-						<div className="rounded-lg border border-border bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
-							<div className="flex items-center gap-1.5 text-emerald-400 text-[9px] font-bold uppercase tracking-widest">
-								<ShieldCheck className="size-3 text-emerald-400/80 shrink-0" />
+						<div className="rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
+							<div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 text-[9px] font-bold uppercase tracking-widest">
+								<ShieldCheck className="size-3 text-emerald-700/80 dark:text-emerald-400/80 shrink-0" />
 								<span>[ARCHITECTURAL DECISION]</span>
 							</div>
-							<p className="text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-emerald-500/30 break-words">
+							<p className="text-zinc-700 dark:text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-emerald-300 dark:border-emerald-500/30 break-words">
 								{item.adr.decision}
 							</p>
 						</div>
 
-						<div className="rounded-lg border border-border bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
-							<div className="flex items-center gap-1.5 text-blue-400 text-[9px] font-bold uppercase tracking-widest">
-								<Info className="size-3 text-blue-400/80 shrink-0" />
+						<div className="rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-zinc-950/45 p-3.5 space-y-1.5 min-w-0">
+							<div className="flex items-center gap-1.5 text-blue-700 dark:text-blue-400 text-[9px] font-bold uppercase tracking-widest">
+								<Info className="size-3 text-blue-700/80 dark:text-blue-400/80 shrink-0" />
 								<span>[ENGINEERING TRADEOFFS]</span>
 							</div>
-							<p className="text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-blue-500/30 break-words">
+							<p className="text-zinc-700 dark:text-zinc-300 leading-normal font-sans text-xs pl-4 border-l border-blue-300 dark:border-blue-500/30 break-words">
 								{item.adr.tradeoff}
 							</p>
 						</div>
 					</div>
 				) : (
-					<div className="rounded-lg border border-dashed border-border/80 p-6 text-center text-xs font-mono text-muted-foreground/60 italic bg-secondary/5">
+					<div className="rounded-lg border border-dashed border-zinc-200 dark:border-border/80 p-6 text-center text-xs font-mono text-muted-foreground/60 italic bg-zinc-100/50 dark:bg-secondary/5">
 						No formal ADR is registered for this evaluation block. This node reflects minor experimental tests or deprecated tools.
 					</div>
 				)}
@@ -540,8 +540,8 @@ export function TechRadar() {
 									className={cn(
 										"flex items-center justify-between text-left font-mono text-[10px] rounded-lg px-2.5 py-1.5 transition-all truncate border min-w-0 w-full",
 										isSelected 
-											? "bg-amber/10 border-amber/30 text-amber font-semibold"
-											: "bg-secondary/20 border-border/40 hover:bg-secondary/40 text-zinc-300"
+											? "bg-amber-100/50 dark:bg-amber/10 border-amber-300 dark:border-amber/30 text-amber-800 dark:text-amber font-semibold"
+											: "bg-zinc-100/50 dark:bg-secondary/20 border-zinc-200 dark:border-border/40 hover:bg-zinc-200/85 dark:hover:bg-secondary/40 text-zinc-700 dark:text-zinc-300"
 									)}
 								>
 									<span className="truncate pr-2">{item.name}</span>
@@ -558,10 +558,10 @@ export function TechRadar() {
 	return (
 		<div className="space-y-8">
 			{/* High-Impact Centered Radar Visual Workspace */}
-			<div className="flex flex-col items-center justify-center border border-border bg-card/10 rounded-xl p-5 md:p-8 shadow-sm overflow-hidden min-w-0 w-full space-y-6">
+			<div className="flex flex-col items-center justify-center border border-zinc-200 dark:border-border/80 bg-zinc-50 dark:bg-zinc-950/20 rounded-xl p-5 md:p-8 shadow-sm overflow-hidden min-w-0 w-full space-y-6">
 				
 				{/* Controls Toolbar: Stacked on mobile, side-by-side on desktop */}
-				<div className="w-full flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center pb-4 border-b border-border/60">
+				<div className="w-full flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center pb-4 border-b border-zinc-200 dark:border-border/60">
 					{/* Search Input */}
 					<div className="relative w-full md:max-w-[240px]">
 						<Search className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
@@ -570,13 +570,13 @@ export function TechRadar() {
 							placeholder="Search radar nodes..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="w-full rounded-lg border border-border bg-background/50 py-1.5 pl-9 pr-4 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none"
+							className="w-full rounded-lg border border-zinc-200 dark:border-border bg-zinc-100/30 dark:bg-background/50 py-1.5 pl-9 pr-4 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none"
 						/>
 					</div>
-
+ 
 					{/* Pan/Zoom & Fullscreen tools */}
 					<div className="flex items-center gap-2 justify-between md:justify-end">
-						<div className="flex items-center border border-border rounded-lg bg-background/40 p-0.5 overflow-hidden">
+						<div className="flex items-center border border-zinc-200 dark:border-border rounded-lg bg-zinc-100/30 dark:bg-background/40 p-0.5 overflow-hidden">
 							<button
 								type="button"
 								onClick={handleZoomOut}
@@ -600,24 +600,24 @@ export function TechRadar() {
 								type="button"
 								onClick={handleZoomReset}
 								title="Reset View"
-								className="p-1.5 border-l border-border hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
+								className="p-1.5 border-l border-zinc-200 dark:border-border hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
 							>
 								<RefreshCw className="size-3" />
 							</button>
 						</div>
-
+ 
 						<button
 							type="button"
 							onClick={() => setIsFullscreen(true)}
 							title="Open Presentation Mode"
-							className="flex items-center gap-1.5 rounded-lg border border-border bg-background/50 hover:bg-secondary/80 text-xs font-mono text-muted-foreground hover:text-foreground px-3 py-1.5 transition-all"
+							className="flex items-center gap-1.5 rounded-lg border border-zinc-200 dark:border-border bg-zinc-100/30 dark:bg-background/50 hover:bg-zinc-200/50 dark:hover:bg-secondary/80 text-xs font-mono text-muted-foreground hover:text-foreground px-3 py-1.5 transition-all"
 						>
 							<Maximize2 className="size-3.5" />
 							<span className="hidden sm:inline">Presentation Hub</span>
 						</button>
 					</div>
 				</div>
-
+ 
 				{/* Focus target quick-buttons with hover spotlights */}
 				<div className="w-full flex flex-wrap gap-1 justify-center">
 					<button
@@ -626,8 +626,8 @@ export function TechRadar() {
 						className={cn(
 							"rounded px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider transition-all border font-semibold",
 							activeQuadrant === "All"
-								? "bg-amber/15 border-amber/40 text-amber"
-								: "bg-secondary/10 border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground"
+								? "bg-amber-100/50 dark:bg-amber/15 border-amber-300 dark:border-amber/40 text-amber-800 dark:text-amber"
+								: "bg-zinc-100/50 dark:bg-secondary/10 border-zinc-200 dark:border-border/20 text-muted-foreground hover:bg-zinc-200 dark:hover:bg-secondary hover:text-foreground"
 						)}
 					>
 						Fit All
@@ -642,22 +642,22 @@ export function TechRadar() {
 							className={cn(
 								"rounded px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider transition-all border",
 								activeQuadrant === key
-									? "bg-amber/15 border-amber/40 text-amber font-semibold"
-									: "bg-secondary/10 border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground"
+									? "bg-amber-100/50 dark:bg-amber/15 border-amber-300 dark:border-amber/40 text-amber-800 dark:text-amber font-semibold"
+									: "bg-zinc-100/50 dark:bg-secondary/10 border-zinc-200 dark:border-border/20 text-muted-foreground hover:bg-zinc-200 dark:hover:bg-secondary hover:text-foreground"
 							)}
 						>
 							Focus: {radarQuadrants[key].name}
 						</button>
 					))}
 				</div>
-
+ 
 				{/* Massive Radar Center Stage SVG */}
 				<div className="w-full flex justify-center py-4">
 					{renderRadarSVG("max-w-[420px] sm:max-w-[480px] md:max-w-[560px]")}
 				</div>
-
+ 
 				{/* Volume statistics legends at the base of the radar with hover highlights & filtering */}
-				<div className="w-full border-t border-border/60 pt-5">
+				<div className="w-full border-t border-zinc-200 dark:border-border/60 pt-5">
 					<span className="font-mono text-[8px] text-muted-foreground uppercase tracking-widest block text-center mb-3">
 						Interactive Legend (Hover to Spotlight | Click to Filter)
 					</span>
@@ -669,13 +669,13 @@ export function TechRadar() {
 							className={cn(
 								"rounded-lg border p-3.5 text-center font-mono cursor-pointer transition-all",
 								selectedLegendRing === "Adopt" 
-									? "bg-emerald-500/10 border-emerald-400/80 shadow-md shadow-emerald-500/5" 
-									: "border-border bg-zinc-950/40 hover:bg-secondary/40",
+									? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-400/85 dark:border-emerald-400/80 shadow-md shadow-emerald-500/5" 
+									: "border-zinc-200 dark:border-border bg-zinc-100/40 dark:bg-zinc-950/40 hover:bg-zinc-200/50 dark:hover:bg-secondary/40",
 								hoveredRing === "Adopt" && "border-emerald-500/60"
 							)}
 						>
 							<span className="text-[8px] text-muted-foreground uppercase block font-semibold tracking-wide">Adopt</span>
-							<p className="mt-1 text-lg font-bold text-emerald-400">{adoptCount}</p>
+							<p className="mt-1 text-lg font-bold text-emerald-600 dark:text-emerald-400">{adoptCount}</p>
 						</div>
 
 						<div 
@@ -685,13 +685,13 @@ export function TechRadar() {
 							className={cn(
 								"rounded-lg border p-3.5 text-center font-mono cursor-pointer transition-all",
 								selectedLegendRing === "Trial" 
-									? "bg-amber/10 border-amber/80 shadow-md shadow-amber/5" 
-									: "border-border bg-zinc-950/40 hover:bg-secondary/40",
+									? "bg-amber-50 dark:bg-amber/10 border-amber-300 dark:border-amber/80 dark:border-amber/80 shadow-md shadow-amber/5" 
+									: "border-zinc-200 dark:border-border bg-zinc-100/40 dark:bg-zinc-950/40 hover:bg-zinc-200/50 dark:hover:bg-secondary/40",
 								hoveredRing === "Trial" && "border-amber/60"
 							)}
 						>
 							<span className="text-[8px] text-muted-foreground uppercase block font-semibold tracking-wide">Trial</span>
-							<p className="mt-1 text-lg font-bold text-amber">{trialCount}</p>
+							<p className="mt-1 text-lg font-bold text-amber-800 dark:text-amber">{trialCount}</p>
 						</div>
 
 						<div 
@@ -701,13 +701,13 @@ export function TechRadar() {
 							className={cn(
 								"rounded-lg border p-3.5 text-center font-mono cursor-pointer transition-all",
 								selectedLegendRing === "Assess" 
-									? "bg-blue-500/10 border-blue-400/80 shadow-md shadow-blue-500/5" 
-									: "border-border bg-zinc-950/40 hover:bg-secondary/40",
+									? "bg-blue-50 dark:bg-blue-500/10 border-blue-400/85 dark:border-blue-400/80 shadow-md shadow-blue-500/5" 
+									: "border-zinc-200 dark:border-border bg-zinc-100/40 dark:bg-zinc-950/40 hover:bg-zinc-200/50 dark:hover:bg-secondary/40",
 								hoveredRing === "Assess" && "border-blue-500/60"
 							)}
 						>
 							<span className="text-[8px] text-muted-foreground uppercase block font-semibold tracking-wide">Assess</span>
-							<p className="mt-1 text-lg font-bold text-blue-400">{assessCount}</p>
+							<p className="mt-1 text-lg font-bold text-blue-600 dark:text-blue-400">{assessCount}</p>
 						</div>
 
 						<div 
@@ -717,36 +717,36 @@ export function TechRadar() {
 							className={cn(
 								"rounded-lg border p-3.5 text-center font-mono cursor-pointer transition-all",
 								selectedLegendRing === "Hold" 
-									? "bg-rose-500/10 border-rose-400/80 shadow-md shadow-rose-500/5" 
-									: "border-border bg-zinc-950/40 hover:bg-secondary/40",
+									? "bg-rose-50 dark:bg-rose-500/10 border-rose-400/85 dark:border-rose-400/80 shadow-md shadow-rose-500/5" 
+									: "border-zinc-200 dark:border-border bg-zinc-100/40 dark:bg-zinc-950/40 hover:bg-zinc-200/50 dark:hover:bg-secondary/40",
 								hoveredRing === "Hold" && "border-rose-500/60"
 							)}
 						>
 							<span className="text-[8px] text-muted-foreground uppercase block font-semibold tracking-wide">Hold</span>
-							<p className="mt-1 text-lg font-bold text-rose-400">{holdCount}</p>
+							<p className="mt-1 text-lg font-bold text-rose-600 dark:text-rose-400">{holdCount}</p>
 						</div>
 					</div>
 				</div>
 			</div>
-
+ 
 			{/* Second-Stage Panels (Directory on left, ADR Document on right) */}
-			<div className="grid gap-6 grid-cols-1 lg:grid-cols-2 pt-4 border-t border-border/40">
+			<div className="grid gap-6 grid-cols-1 lg:grid-cols-2 pt-4 border-t border-zinc-200 dark:border-border/40">
 				
 				{/* Pane A: Systems Directory Groupings */}
-				<div className="border border-border/80 bg-zinc-900/10 rounded-xl p-5 md:p-6 flex flex-col max-h-[560px] overflow-y-auto">
-					<div className="flex items-center justify-between border-b border-border/60 pb-3 mb-3 shrink-0">
-						<div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-zinc-100">
+				<div className="border border-zinc-200 dark:border-border/80 bg-zinc-50 dark:bg-zinc-900/10 rounded-xl p-5 md:p-6 flex flex-col max-h-[560px] overflow-y-auto">
+					<div className="flex items-center justify-between border-b border-zinc-200 dark:border-border/60 pb-3 mb-3 shrink-0">
+						<div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-100">
 							<Grid className="size-4 text-amber" />
 							<span>Systems Directory</span>
 						</div>
-
-						<div className="flex border border-border rounded p-0.5 bg-zinc-950/20">
+ 
+						<div className="flex border border-zinc-200 dark:border-border rounded p-0.5 bg-zinc-100/50 dark:bg-zinc-950/20">
 							<button
 								type="button"
 								onClick={() => setGroupBy("ring")}
 								className={cn(
 									"px-2 py-0.5 rounded text-[8px] font-mono uppercase transition-all",
-									groupBy === "ring" ? "bg-amber/15 text-amber" : "text-muted-foreground"
+									groupBy === "ring" ? "bg-amber-100/50 dark:bg-amber/15 text-amber-800 dark:text-amber font-semibold" : "text-muted-foreground"
 								)}
 							>
 								Ring
@@ -756,27 +756,27 @@ export function TechRadar() {
 								onClick={() => setGroupBy("quadrant")}
 								className={cn(
 									"px-2 py-0.5 rounded text-[8px] font-mono uppercase transition-all ml-1",
-									groupBy === "quadrant" ? "bg-amber/15 text-amber" : "text-muted-foreground"
+									groupBy === "quadrant" ? "bg-amber-100/50 dark:bg-amber/15 text-amber-800 dark:text-amber font-semibold" : "text-muted-foreground"
 								)}
 							>
 								Quadrant
 							</button>
 						</div>
 					</div>
-
+ 
 					<div className="space-y-4 overflow-y-auto pr-1">
 						{renderDirectoryGroupings()}
 					</div>
 				</div>
-
+ 
 				{/* Pane B: ADR Inspector Technical Document */}
 				<div 
 					ref={inspectorRef}
-					className="border border-border/80 bg-zinc-900/10 rounded-xl p-5 md:p-6 space-y-4 max-h-[560px] overflow-y-auto scroll-mt-20"
+					className="border border-zinc-200 dark:border-border/80 bg-zinc-50 dark:bg-zinc-900/10 rounded-xl p-5 md:p-6 space-y-4 max-h-[560px] overflow-y-auto scroll-mt-20"
 				>
-					<div className="flex items-center gap-1.5 border-b border-border/60 pb-3 shrink-0">
+					<div className="flex items-center gap-1.5 border-b border-zinc-200 dark:border-border/60 pb-3 shrink-0">
 						<Radio className="size-4 text-amber animate-pulse shrink-0" />
-						<span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-100">
+						<span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-800 dark:text-zinc-100">
 							ADR Technical Document
 						</span>
 					</div>
@@ -784,68 +784,68 @@ export function TechRadar() {
 					<div className="space-y-4">
 						<div>
 							<div className="flex items-center justify-between">
-								<span className="font-mono text-[10px] text-amber/80 uppercase tracking-widest">
+								<span className="font-mono text-[10px] text-amber-800/80 dark:text-amber/80 uppercase tracking-widest">
 									{radarQuadrants[activeItem.quadrant].name}
 								</span>
 								<span className={cn(
 									"rounded px-2.5 py-0.5 font-mono text-[8px] uppercase tracking-wide border shrink-0",
-									activeItem.ring === "Adopt" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-									activeItem.ring === "Trial" && "bg-amber/10 text-amber border-amber/20",
-									activeItem.ring === "Assess" && "bg-blue-500/10 text-blue-400 border-blue-500/20",
-									activeItem.ring === "Hold" && "bg-rose-500/10 text-rose-400 border-rose-500/20"
+									activeItem.ring === "Adopt" && "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20",
+									activeItem.ring === "Trial" && "bg-amber-50 dark:bg-amber/10 text-amber-800 dark:text-amber border-amber-200 dark:border-amber/20",
+									activeItem.ring === "Assess" && "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/20",
+									activeItem.ring === "Hold" && "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/20"
 								)}>
 									{activeItem.verdict}
 								</span>
 							</div>
-							<h4 className="mt-1 text-xl font-normal text-zinc-100 truncate">
+							<h4 className="mt-1 text-xl font-normal text-zinc-900 dark:text-zinc-100 truncate">
 								{activeItem.name}
 							</h4>
 						</div>
 
 						{/* System Insight */}
-						<div className="rounded-lg border border-border bg-secondary/15 p-4 font-mono text-xs leading-relaxed break-words">
+						<div className="rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-secondary/15 p-4 font-mono text-xs leading-relaxed break-words">
 							<span className="text-muted-foreground/60 block uppercase font-bold tracking-wider mb-1">&gt; System Insight:</span>
-							<p className="text-zinc-300 leading-normal font-sans text-xs">{activeItem.insight}</p>
+							<p className="text-zinc-700 dark:text-zinc-300 leading-normal font-sans text-xs">{activeItem.insight}</p>
 						</div>
-
+ 
 						{/* Detailed ADR breakdown */}
 						{renderADR(activeItem)}
 					</div>
 				</div>
-
+ 
 			</div>
 
 			{/* Fullscreen Presentation Hub overlay */}
 			{isFullscreen && (
-				<div className="fixed inset-0 z-50 bg-zinc-950/98 backdrop-blur-lg overflow-y-auto flex flex-col p-4 md:p-8 animate-in fade-in duration-300">
+				<div className="fixed inset-0 z-50 bg-zinc-50/98 dark:bg-zinc-950/98 backdrop-blur-lg overflow-y-auto flex flex-col p-4 md:p-8 animate-in fade-in duration-300">
 					
 					{/* Overlay Header Bar */}
-					<div className="w-full flex items-center justify-between border-b border-border/80 pb-4 mb-6 shrink-0">
+					<div className="w-full flex items-center justify-between border-b border-zinc-200 dark:border-border/80 pb-4 mb-6 shrink-0">
 						<div className="flex items-center gap-2.5">
 							<Compass className="size-5 text-amber animate-spin-slow" />
 							<div>
-								<h3 className="text-sm font-semibold tracking-wide uppercase font-mono text-zinc-100">
+								<h3 className="text-sm font-semibold tracking-wide uppercase font-mono text-zinc-900 dark:text-zinc-100">
 									Manoj Mukherjee — Architecture Systems Radar
 								</h3>
-								<p className="text-[10px] font-mono text-muted-foreground">
+								<p className="text-[10px] font-mono text-zinc-500 dark:text-muted-foreground">
 									Polished vector presentation model for Client & Dev partners
 								</p>
 							</div>
 						</div>
 
 						<div className="flex items-center gap-3">
-							<div className="hidden md:flex gap-1.5 border-r border-border/60 pr-4 mr-2 font-mono text-[9px] uppercase">
-								<span className="text-emerald-400">Adopt: {adoptCount}</span>
-								<span className="text-zinc-600">|</span>
-								<span className="text-amber">Trial: {trialCount}</span>
-								<span className="text-zinc-600">|</span>
-								<span className="text-blue-400">Assess: {assessCount}</span>
+							<div className="hidden md:flex gap-1.5 border-r border-zinc-200 dark:border-border/60 pr-4 mr-2 font-mono text-[9px] uppercase">
+								<span className="text-emerald-600 dark:text-emerald-400">Adopt: {adoptCount}</span>
+								<span className="text-zinc-300 dark:text-zinc-600">|</span>
+								<span className="text-amber-800 dark:text-amber">Trial: {trialCount}</span>
+								<span className="text-zinc-300 dark:text-zinc-600">|</span>
+								<span className="text-blue-600 dark:text-blue-400">Assess: {assessCount}</span>
 							</div>
 
 							<button
 								type="button"
 								onClick={() => setIsFullscreen(false)}
-								className="flex items-center gap-1.5 rounded-lg border border-border bg-background/50 hover:bg-secondary text-xs font-mono text-zinc-300 hover:text-foreground px-3 py-1.5 transition-all"
+								className="flex items-center gap-1.5 rounded-lg border border-zinc-200 dark:border-border bg-zinc-100/50 dark:bg-background/50 hover:bg-zinc-200/50 dark:hover:bg-secondary text-zinc-700 dark:text-zinc-300 hover:text-foreground px-3 py-1.5 transition-all"
 							>
 								<X className="size-4" />
 								<span>Exit Presentation</span>
@@ -857,8 +857,8 @@ export function TechRadar() {
 					<div className="grid gap-6 lg:grid-cols-[1.3fr_0.8fr_1.1fr] flex-1 items-start max-w-7xl mx-auto w-full pb-8">
 						
 						{/* SVG canvas stage */}
-						<div className="flex flex-col items-center justify-center space-y-6 border border-border/80 bg-zinc-900/10 rounded-xl p-5 md:p-8 w-full min-w-0">
-							<div className="w-full flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center pb-3 border-b border-border/60">
+						<div className="flex flex-col items-center justify-center space-y-6 border border-zinc-200 dark:border-border/80 bg-zinc-100/50 dark:bg-zinc-900/10 rounded-xl p-5 md:p-8 w-full min-w-0">
+							<div className="w-full flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center pb-3 border-b border-zinc-200 dark:border-border/60">
 								<div className="relative w-full md:max-w-[200px]">
 									<Search className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
 									<input
@@ -866,16 +866,16 @@ export function TechRadar() {
 										placeholder="Search stack..."
 										value={searchQuery}
 										onChange={(e) => setSearchQuery(e.target.value)}
-										className="w-full rounded-lg border border-border bg-background/50 py-1.5 pl-9 pr-4 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none"
+										className="w-full rounded-lg border border-zinc-200 dark:border-border bg-zinc-100/30 dark:bg-background/50 py-1.5 pl-9 pr-4 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:border-amber focus:outline-none"
 									/>
 								</div>
 
 								{/* Zoom */}
-								<div className="flex items-center border border-border rounded-lg bg-background/40 p-0.5 overflow-hidden justify-between">
+								<div className="flex items-center border border-zinc-200 dark:border-border rounded-lg bg-zinc-100/30 dark:bg-background/40 p-0.5 overflow-hidden justify-between">
 									<button
 										type="button"
 										onClick={handleZoomOut}
-										className="p-1.5 rounded hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
+										className="p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
 									>
 										<ZoomOut className="size-4" />
 									</button>
@@ -885,14 +885,14 @@ export function TechRadar() {
 									<button
 										type="button"
 										onClick={handleZoomIn}
-										className="p-1.5 rounded hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
+										className="p-1.5 rounded hover:bg-zinc-200 dark:hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
 									>
 										<ZoomIn className="size-4" />
 									</button>
 									<button
 										type="button"
 										onClick={handleZoomReset}
-										className="p-1.5 border-l border-border hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
+										className="p-1.5 border-l border-zinc-200 dark:border-border hover:bg-zinc-200 dark:hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all"
 									>
 										<RefreshCw className="size-3.5" />
 									</button>
@@ -907,8 +907,8 @@ export function TechRadar() {
 									className={cn(
 										"rounded px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider transition-all border font-semibold",
 										activeQuadrant === "All"
-											? "bg-amber/15 border-amber/40 text-amber"
-											: "bg-secondary/10 border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground"
+											? "bg-amber-100/50 dark:bg-amber/15 border-amber-300 dark:border-amber/40 text-amber-800 dark:text-amber"
+											: "bg-zinc-100/50 dark:bg-secondary/10 border-zinc-200 dark:border-border/20 text-muted-foreground hover:bg-zinc-200 dark:hover:bg-secondary hover:text-foreground"
 									)}
 								>
 									Fit All
@@ -923,8 +923,8 @@ export function TechRadar() {
 										className={cn(
 											"rounded px-2.5 py-1 text-[9px] font-mono uppercase tracking-wider transition-all border",
 											activeQuadrant === key
-												? "bg-amber/15 border-amber/40 text-amber font-semibold"
-												: "bg-secondary/10 border-border/20 text-muted-foreground hover:bg-secondary hover:text-foreground"
+												? "bg-amber-100/50 dark:bg-amber/15 border-amber-300 dark:border-amber/40 text-amber-800 dark:text-amber font-semibold"
+												: "bg-zinc-100/50 dark:bg-secondary/10 border-zinc-200 dark:border-border/20 text-muted-foreground hover:bg-zinc-200 dark:hover:bg-secondary hover:text-foreground"
 										)}
 									>
 										Focus: {radarQuadrants[key].name}
@@ -937,20 +937,20 @@ export function TechRadar() {
 						</div>
 
 						{/* Directory panel */}
-						<div className="border border-border/80 bg-zinc-900/10 rounded-xl p-5 flex flex-col max-h-[640px] overflow-y-auto w-full min-w-0">
-							<div className="flex items-center justify-between border-b border-border/60 pb-3 mb-3 shrink-0">
-								<div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-zinc-100">
+						<div className="border border-zinc-200 dark:border-border/80 bg-zinc-100/40 dark:bg-zinc-900/10 rounded-xl p-5 flex flex-col max-h-[640px] overflow-y-auto w-full min-w-0">
+							<div className="flex items-center justify-between border-b border-zinc-200 dark:border-border/60 pb-3 mb-3 shrink-0">
+								<div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-100">
 									<Grid className="size-4 text-amber" />
 									<span>Systems Directory</span>
 								</div>
 
-								<div className="flex border border-border rounded p-0.5 bg-zinc-950/20">
+								<div className="flex border border-zinc-200 dark:border-border rounded p-0.5 bg-zinc-100/50 dark:bg-zinc-950/20">
 									<button
 										type="button"
 										onClick={() => setGroupBy("ring")}
 										className={cn(
 											"opacity-100 px-2 py-0.5 rounded text-[8px] font-mono uppercase transition-all",
-											groupBy === "ring" ? "bg-amber/15 text-amber" : "text-muted-foreground"
+											groupBy === "ring" ? "bg-amber-100/50 dark:bg-amber/15 text-amber-800 dark:text-amber font-semibold" : "text-muted-foreground"
 										)}
 									>
 										Ring
@@ -960,7 +960,7 @@ export function TechRadar() {
 										onClick={() => setGroupBy("quadrant")}
 										className={cn(
 											"opacity-100 px-2 py-0.5 rounded text-[8px] font-mono uppercase transition-all ml-1",
-											groupBy === "quadrant" ? "bg-amber/15 text-amber" : "text-muted-foreground"
+											groupBy === "quadrant" ? "bg-amber-100/50 dark:bg-amber/15 text-amber-800 dark:text-amber font-semibold" : "text-muted-foreground"
 										)}
 									>
 										Quadrant
@@ -974,10 +974,10 @@ export function TechRadar() {
 						</div>
 
 						{/* ADR detail sheet */}
-						<div className="border border-border/80 bg-zinc-900/10 rounded-xl p-5 md:p-6 space-y-4 max-h-[640px] overflow-y-auto w-full min-w-0">
-							<div className="flex items-center gap-1.5 border-b border-border/60 pb-3 shrink-0">
+						<div className="border border-zinc-200 dark:border-border/80 bg-zinc-100/40 dark:bg-zinc-900/10 rounded-xl p-5 md:p-6 space-y-4 max-h-[640px] overflow-y-auto w-full min-w-0">
+							<div className="flex items-center gap-1.5 border-b border-zinc-200 dark:border-border/60 pb-3 shrink-0">
 								<Radio className="size-4 text-amber animate-pulse shrink-0" />
-								<span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-100">
+								<span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-850 dark:text-zinc-100">
 									ADR Technical Document
 								</span>
 							</div>
@@ -985,28 +985,28 @@ export function TechRadar() {
 							<div className="space-y-4 min-w-0">
 								<div>
 									<div className="flex items-center justify-between">
-										<span className="font-mono text-[10px] text-amber/80 uppercase tracking-widest">
+										<span className="font-mono text-[10px] text-amber-800/80 dark:text-amber/80 uppercase tracking-widest">
 											{radarQuadrants[activeItem.quadrant].name}
 										</span>
 										<span className={cn(
 											"rounded px-2.5 py-0.5 font-mono text-[8px] uppercase tracking-wide border shrink-0",
-											activeItem.ring === "Adopt" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-											activeItem.ring === "Trial" && "bg-amber/10 text-amber border-amber/20",
-											activeItem.ring === "Assess" && "bg-blue-500/10 text-blue-400 border-blue-500/20",
-											activeItem.ring === "Hold" && "bg-rose-500/10 text-rose-400 border-rose-500/20"
+											activeItem.ring === "Adopt" && "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20",
+											activeItem.ring === "Trial" && "bg-amber-50 dark:bg-amber/10 text-amber-800 dark:text-amber border-amber-200 dark:border-amber/20",
+											activeItem.ring === "Assess" && "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/20",
+											activeItem.ring === "Hold" && "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/20"
 										)}>
 											{activeItem.verdict}
 										</span>
 									</div>
-									<h4 className="mt-1 text-xl font-normal text-zinc-100 truncate">
+									<h4 className="mt-1 text-xl font-normal text-zinc-900 dark:text-zinc-100 truncate">
 										{activeItem.name}
 									</h4>
 								</div>
 
 								{/* System Insight */}
-								<div className="rounded-lg border border-border bg-secondary/15 p-4 font-mono text-xs leading-relaxed break-words">
+								<div className="rounded-lg border border-zinc-200 dark:border-border bg-white dark:bg-secondary/15 p-4 font-mono text-xs leading-relaxed break-words">
 									<span className="text-muted-foreground/60 block uppercase font-bold tracking-wider mb-1">&gt; System Insight:</span>
-									<p className="text-zinc-300 leading-normal font-sans text-xs">{activeItem.insight}</p>
+									<p className="text-zinc-700 dark:text-zinc-300 leading-normal font-sans text-xs">{activeItem.insight}</p>
 								</div>
 
 								{/* Detailed ADR breakdown */}
