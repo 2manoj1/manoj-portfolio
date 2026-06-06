@@ -56,13 +56,13 @@ interface BlogArticleReaderProps {
 const streamdownPlugins = { cjk, code, math, mermaid };
 
 const markdownClassName =
-  "blog-reader-markdown text-base leading-8 text-muted-foreground " +
+  "blog-reader-markdown text-base leading-8 text-zinc-800 dark:text-zinc-300 " +
   "[&_p]:my-0 [&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-900 dark:[&_strong]:text-zinc-100 " +
   "[&_em]:text-zinc-800 dark:[&_em]:text-zinc-300 [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
   "[&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_li]:pl-1 " +
-  "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-muted-foreground [&_blockquote]:italic " +
+  "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-zinc-650 dark:text-zinc-400 [&_blockquote]:italic " +
   "[&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:bg-zinc-100 dark:[&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
-  "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-border/50 [&_[data-streamdown='inline-code']]:bg-zinc-100 dark:[&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:py-0.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber";
+  "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-zinc-200/60 dark:[&_[data-streamdown='inline-code']]:border-white/10 [&_[data-streamdown='inline-code']]:bg-zinc-150/70 dark:[&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber-800 dark:[&_[data-streamdown='inline-code']]:text-amber";
 
 const alertClassMap: Record<string, string> = {
   NOTE: "border-sky-500/45 bg-sky-100/50 dark:bg-sky-950/20 text-sky-800 dark:text-sky-100",
@@ -248,6 +248,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
           <BlogAudioBook 
             paragraphs={flatParagraphs} 
             title={article.title}
+            slug={article.slug}
             onParagraphChange={(idx) => setActiveParagraphIndex(idx)}
           />
         </div>
@@ -350,8 +351,8 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
                 {/* Code Block */}
                 {section.codeBlock && (
-                  <div className="mt-7 overflow-hidden rounded-lg border border-border bg-[#0d0d0d] shadow-lg">
-                    <div className="bg-zinc-100 dark:bg-zinc-950 px-4 py-2 border-b border-zinc-250 dark:border-border/80 text-[10px] text-zinc-700 dark:text-muted-foreground tracking-wide flex justify-between select-none">
+                  <div className="mt-7 overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-[#0d0d0d] shadow-lg">
+                    <div className="bg-[#141416] px-4 py-2 border-b border-zinc-800/80 text-[10px] text-zinc-400 tracking-wide flex justify-between select-none">
                       <span>{section.codeBlock.filename}</span>
                       <span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
                     </div>
