@@ -6,9 +6,9 @@ export const blogArticles = [
 		topic: "FastAPI AI home lab",
 		readingTime: "10 min read",
 		summary:
-			"A production-shaped walkthrough of my local AI gateway: Cloudflare Tunnel, FastAPI, OpenAI-compatible routes, Ollama 0.30.6, qwen3.5:9b, API-key auth, and concurrency guardrails on Apple Silicon.",
+			"A production‑shaped walkthrough of my local AI gateway: Cloudflare Tunnel, FastAPI, OpenAI‑compatible routes, Ollama 0.30.6, qwen3.5:9b, API‑key auth, concurrency guardrails, and synchronized documentation with the architecture guide.",
 		seoDescription:
-			"Case study: build a private AI home lab API gateway with Cloudflare Tunnel, FastAPI, Ollama, OpenAI-compatible APIs, API-key auth, and local model concurrency controls.",
+			"Case study: build a private AI home lab API gateway with Cloudflare Tunnel, FastAPI, Ollama, OpenAI‑compatible APIs, API‑key auth, local model concurrency controls, and fully synchronized docs for a seamless developer experience.",
 		keywords: [
 			"AI home lab",
 			"FastAPI AI gateway",

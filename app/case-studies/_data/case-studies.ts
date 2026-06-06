@@ -85,16 +85,14 @@ export const caseStudies = [
     ingress: "Cloudflare Tunnel",
     kicker: "Python FastAPI gateway",
     problem:
-      "I built a local OpenAI-compatible API gateway for my AI home lab so trusted apps can call a stable /v1 contract while Ollama, PostgreSQL, Redis, and Qdrant stay private on the Mac. The gateway had to serve up to 10 concurrent chat callers at the API boundary, keep qwen3.5 loaded to reduce first-token delay, and remain safe behind Cloudflare Tunnel without public inbound ports.",
+      "I built a local OpenAI-compatible gateway so my site, agents, and scripts could call one stable /v1 contract. Ollama, PostgreSQL, Redis, and Qdrant stay private on the Mac. The hard parts were auth, backpressure, model warmup, and zero public inbound ports.",
     narration:
-      "The production pattern is runtime separation: Cloudflare owns public HTTPS ingress, FastAPI owns auth, OpenAI-compatible routing, usage logs, and chat backpressure, and Ollama stays local through an AsyncOpenAI wrapper. The model profile keeps qwen3.5:9b warm with keep_alive=-1 while limiting loaded models and context size to protect 32 GB unified memory.",
+      "The pattern is simple: Cloudflare handles ingress, FastAPI owns auth and request shape, and Ollama stays local. I keep qwen3.5 warm, limit context, and return 429 when the Mac is full.",
     docs: [
       { slug: "architecture", title: "Architecture" },
       { slug: "diagrams", title: "Diagrams" },
-      { slug: "case-study", title: "Case Study" },
       { slug: "runbook", title: "Runbook" },
-      { slug: "development", title: "Dev Guide" },
-      { slug: "open-source", title: "Open Source" },
+      { slug: "development", title: "Dev Guide" }
     ] as const,
     telemetry: [
       {
@@ -259,7 +257,7 @@ export const caseStudies = [
       filename: "apps/model-gateway/src/clients/ollama.py",
       language: "python",
       choice:
-        "I kept concurrency control in the gateway rather than trusting the model runtime queue. That gives clients an explicit 429 when the Mac is saturated and keeps the local Ollama process from receiving unbounded chat work.",
+        "I kept concurrency in the gateway. When the Mac is full, callers get a clear 429 instead of hidden queue buildup inside Ollama.",
       code: `class OllamaClient:
     def __init__(self, settings):
         self._chat_limiter = asyncio.BoundedSemaphore(
@@ -290,9 +288,9 @@ export const caseStudies = [
     ingress: "Istio Ingress Gateway",
     kicker: "BFSI workloads",
     problem:
-      "I architected a production-grade agentic RAG pattern for financial workloads where long regulatory filings needed layout-aware parsing, hybrid retrieval, deterministic state transitions, and strict grounding checks before an answer could be trusted.",
+      "I designed an agentic RAG pattern for long financial filings. The system needed layout-aware parsing, hybrid retrieval, clear state transitions, and a grounding check before any answer could ship.",
     narration:
-      "The core decision was to keep retrieval metadata and vector search close together in PostgreSQL with pgvector, then use a stateful LangGraph workflow to separate query planning, retrieval, evaluation, and answer synthesis. That kept the architecture inspectable under enterprise governance.",
+      "I kept metadata and vectors together in PostgreSQL/pgvector. LangGraph handles planning, retrieval, evaluation, and answer synthesis so the flow stays auditable.",
     telemetry: [
       {
         label: "Retrieval",
@@ -319,41 +317,41 @@ export const caseStudies = [
     ],
     zones: [
       {
-  id: "ingress",
-  label: "Client Edge Network",
-  summary: "...",
-  x: 40,
-  y: 220,
-  width: 300,
-  height: 360,
-},
-{
-  id: "services",
-  label: "GKE Service Boundary",
-  summary: "...",
-  x: 420,
-  y: 70,
-  width: 430,
-  height: 640,
-},
-{
-  id: "retrieval",
-  label: "Retrieval Data Plane",
-  summary: "...",
-  x: 920,
-  y: 170,
-  width: 320,
-  height: 420,
-},
-{
-  id: "governance",
-  label: "Reliability Controls",
-  summary: "...",
-  x: 1320,
-  y: 90,
-  width: 370,
-  height: 620,
-}
+        id: "ingress",
+        label: "Client Edge Network",
+        summary: "Governed entry point for filing questions.",
+        x: 40,
+        y: 220,
+        width: 300,
+        height: 360,
+      },
+      {
+        id: "services",
+        label: "GKE Service Boundary",
+        summary: "Parser and LangGraph workflow run inside the cluster.",
+        x: 420,
+        y: 70,
+        width: 430,
+        height: 640,
+      },
+      {
+        id: "retrieval",
+        label: "Retrieval Data Plane",
+        summary: "Postgres keeps metadata and vectors together.",
+        x: 920,
+        y: 170,
+        width: 320,
+        height: 420,
+      },
+      {
+        id: "governance",
+        label: "Reliability Controls",
+        summary: "Eval and trace nodes decide if an answer can ship.",
+        x: 1320,
+        y: 90,
+        width: 370,
+        height: 620,
+      }
     ],
     nodes: [
       {
@@ -432,7 +430,7 @@ export const caseStudies = [
       filename: "rag_graph.py",
       language: "python",
       choice:
-        "I used a Python LangGraph workflow with PostgreSQL/pgvector because BFSI RAG needed auditable state transitions and retrieval metadata close to the vector index. The tradeoff is less database specialization, but fewer network boundaries and stronger governance.",
+        "I used LangGraph with PostgreSQL/pgvector because the RAG flow needed auditable states and retrieval metadata near the vector index.",
       code: `from langgraph.graph import END, START, StateGraph
 from langgraph.checkpoint.postgres import PostgresSaver
 
@@ -464,9 +462,9 @@ def compile_rag_graph(pool):
     ingress: "Kube Ingress Controller",
     kicker: "Inference scaling",
     problem:
-      "I worked on containerized inference platform patterns where static GPU allocation created developer bottlenecks and production workloads needed predictable serving capacity.",
+      "I worked on inference platform patterns where static GPU allocation slowed teams down. Production serving needed quota, priority, and predictable capacity.",
     narration:
-      "The platform design separates ingress, scheduling, GPU slicing, model serving, and observability. Run:AI manages allocation policy, vLLM handles high-throughput serving, and OpenTelemetry keeps the inference path visible.",
+      "The design separates ingress, scheduling, GPU slices, serving, and observability. Run:AI owns allocation policy. vLLM serves traffic. OTel shows saturation.",
     telemetry: [
       {
         label: "Scheduler",
@@ -490,42 +488,42 @@ def compile_rag_graph(pool):
       },
     ],
     zones: [
-     {
-  id: "edge",
-  label: "Cluster Edge",
-  summary: "...",
-  x: 60,
-  y: 220,
-  width: 300,
-  height: 340,
-},
-{
-  id: "scheduler",
-  label: "Run:AI Scheduler",
-  summary: "...",
-  x: 430,
-  y: 80,
-  width: 420,
-  height: 620,
-},
-{
-  id: "serving",
-  label: "Model Serving Pool",
-  summary: "...",
-  x: 930,
-  y: 180,
-  width: 330,
-  height: 360,
-},
-{
-  id: "observability",
-  label: "Platform Observability",
-  summary: "...",
-  x: 1320,
-  y: 120,
-  width: 360,
-  height: 500,
-}
+      {
+        id: "edge",
+        label: "Cluster Edge",
+        summary: "Ingress keeps model traffic behind platform policy.",
+        x: 60,
+        y: 220,
+        width: 300,
+        height: 340,
+      },
+      {
+        id: "scheduler",
+        label: "Run:AI Scheduler",
+        summary: "Quota, priority, and GPU slices are decided here.",
+        x: 430,
+        y: 80,
+        width: 420,
+        height: 620,
+      },
+      {
+        id: "serving",
+        label: "Model Serving Pool",
+        summary: "vLLM pods serve model traffic from GPU capacity.",
+        x: 930,
+        y: 180,
+        width: 330,
+        height: 360,
+      },
+      {
+        id: "observability",
+        label: "Platform Observability",
+        summary: "Metrics and traces show saturation early.",
+        x: 1320,
+        y: 120,
+        width: 360,
+        height: 500,
+      }
     ],
     nodes: [
       {
@@ -592,7 +590,7 @@ def compile_rag_graph(pool):
       filename: "gpu-allocation.yaml",
       language: "yaml",
       choice:
-        "I separated GPU allocation policy from model serving implementation. That lets platform teams change quota, priority, and sharing rules without rewriting the inference runtime.",
+        "I kept GPU allocation policy separate from model serving. Platform teams can change quota and priority without rewriting the runtime.",
       code: `apiVersion: scheduling.run.ai/v1
 kind: PodGroup
 metadata:
@@ -622,9 +620,9 @@ spec:
     ingress: "Corporate Gateway",
     kicker: "Upskilling teams",
     problem:
-      "I designed enablement patterns for teams adopting model-context tooling, where proprietary databases and calculators needed to be callable by agents without collapsing security and ownership boundaries.",
+      "I designed patterns for teams adopting MCP-style tools. The goal was to let agents call databases and APIs without exposing raw credentials or ownership boundaries.",
     narration:
-      "The architecture makes tools explicit: MCP hosts broker protocol traffic, tool servers isolate database/API capabilities, and schema validation protects the agent core from ungoverned execution.",
+      "The tool boundary is explicit: MCP hosts broker calls, tool servers own access, and schema validation keeps unsafe data away from the agent core.",
     telemetry: [
       {
         label: "Protocol",
@@ -649,41 +647,41 @@ spec:
     ],
     zones: [
       {
-  id: "portal",
-  label: "Developer Portal",
-  summary: "...",
-  x: 50,
-  y: 210,
-  width: 330,
-  height: 350,
-},
-{
-  id: "host",
-  label: "MCP Host Boundary",
-  summary: "...",
-  x: 470,
-  y: 180,
-  width: 420,
-  height: 420,
-},
-{
-  id: "tools",
-  label: "Secure Tool Subnets",
-  summary: "...",
-  x: 980,
-  y: 130,
-  width: 420,
-  height: 520,
-},
-{
-  id: "agent",
-  label: "Agent Runtime",
-  summary: "...",
-  x: 1480,
-  y: 210,
-  width: 330,
-  height: 360,
-}
+        id: "portal",
+        label: "Developer Portal",
+        summary: "Teams see approved tools and examples.",
+        x: 50,
+        y: 210,
+        width: 330,
+        height: 350,
+      },
+      {
+        id: "host",
+        label: "MCP Host Boundary",
+        summary: "Protocol work stays outside the agent prompt.",
+        x: 470,
+        y: 180,
+        width: 420,
+        height: 420,
+      },
+      {
+        id: "tools",
+        label: "Secure Tool Subnets",
+        summary: "Databases and APIs sit behind typed tools.",
+        x: 980,
+        y: 130,
+        width: 420,
+        height: 520,
+      },
+      {
+        id: "agent",
+        label: "Agent Runtime",
+        summary: "The agent receives safe, schema-checked results.",
+        x: 1480,
+        y: 210,
+        width: 330,
+        height: 360,
+      }
     ],
     nodes: [
       {
@@ -751,7 +749,7 @@ spec:
       filename: "ADR-04-MCP.md",
       language: "markdown",
       choice:
-        "I standardized tool access through MCP-style boundaries because teams needed reusable agent capabilities without pushing database credentials, API keys, or proprietary logic into every model integration.",
+        "I used MCP-style tool boundaries so teams can reuse agent capabilities without copying secrets or proprietary logic into every app.",
       code: `# ADR-04: Model Context Protocol Adoption
 
 ## Status
@@ -781,9 +779,9 @@ auditability, and reuse improve across teams.`,
     ingress: "Next.js API Routes",
     kicker: "Static Git Graph RAG",
     problem:
-      "Enterprise search systems often suffer from high token usage, slow retrieval latencies, and complex external vector database dependencies (e.g. Pinecone) that complicate deployment pipelines.",
+      "I wanted fast site retrieval without a managed vector database. The system needed low token use, fast lookup, and a Git-friendly build path.",
     narration:
-      "To address this, I built a local, file-based Graph RAG engine that works entirely inside Git. It pre-compiles and serializes the document knowledge graph and MiniSearch trie indexes during the Next.js build phase. At runtime, the data is eagerly deserialized and queries are cached in a warm Map in serverless nodes, serving grounded results in sub-millisecond ranges.",
+      "I built a file-based Graph RAG layer inside the repo. The build writes graph and MiniSearch indexes. Runtime loads them into memory and serves cached results quickly.",
     telemetry: [
       {
         label: "Public Surface",
@@ -803,7 +801,7 @@ auditability, and reuse improve across teams.`,
       {
         label: "Token Savings",
         value: "80-90%",
-        description: "Drastically compressed context prompts.",
+        description: "Smaller prompts for the same site context.",
       },
     ],
     zones: [
@@ -896,7 +894,7 @@ auditability, and reuse improve across teams.`,
       filename: "lib/context.ts",
       language: "typescript",
       choice:
-        "I chose to build a static file-based Graph RAG engine with build-time indexing because it eliminates external database costs, matches Git versioning pipelines, and guarantees sub-millisecond retrieval speeds without serverless cold-start penalties.",
+        "I chose build-time indexing because the site content already lives in Git. It keeps retrieval cheap, fast, and easy to deploy.",
       code: `import { getCompressedContext } from "@/lib/context";
 import { runManojFastAgent } from "@/lib/manoj-agent";
 

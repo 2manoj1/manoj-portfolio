@@ -140,7 +140,6 @@ export const diagramsData: Record<string, BlogDiagram> = {
         id: "callers",
         label: "Concurrent Clients",
         role: "Inbound Load",
-        detail: "Multiple application threads calling chat completion endpoints.",
         layer: "Ingress",
         kind: "client",
       },

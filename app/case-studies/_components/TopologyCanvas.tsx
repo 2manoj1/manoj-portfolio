@@ -80,34 +80,34 @@ const SIMULATION_CONFIGS = {
   "production-grade-ai-home-lab": {
     latencyNodeId: "fastapi",
     latencyEdgeId: "production-grade-ai-home-lab-cloudflare-fastapi",
-    latencyLabel: "3.4s Latency Spike",
+    latencyLabel: "3.4s delay",
     failureNodeId: "ollama",
     failureEdgeId: "production-grade-ai-home-lab-python-graph-ollama",
-    failureLabel: "CRITICAL: Ollama Offline",
+    failureLabel: "Ollama offline",
   },
   "enterprise-agentic-rag-platform": {
     latencyNodeId: "planner",
     latencyEdgeId: "enterprise-agentic-rag-platform-parser-planner",
-    latencyLabel: "5.2s Latency Spike",
+    latencyLabel: "5.2s delay",
     failureNodeId: "eval",
     failureEdgeId: "enterprise-agentic-rag-platform-pgvector-eval",
-    failureLabel: "CRITICAL: Grounding Rejected",
+    failureLabel: "Grounding blocked",
   },
   "gpu-ai-platform-modernization": {
     latencyNodeId: "runai",
     latencyEdgeId: "gpu-ai-platform-modernization-ingress-runai",
-    latencyLabel: "Congested Queue",
+    latencyLabel: "Queue full",
     failureNodeId: "vllm",
     failureEdgeId: "gpu-ai-platform-modernization-slices-vllm",
-    failureLabel: "CRITICAL: CUDA OOM",
+    failureLabel: "CUDA memory pressure",
   },
   "ai-architecture-enablement": {
     latencyNodeId: "mcp-host",
     latencyEdgeId: "ai-architecture-enablement-admin-ui-mcp-host",
-    latencyLabel: "Negotiation Delay",
+    latencyLabel: "Handshake delay",
     failureNodeId: "api-tool",
     failureEdgeId: "ai-architecture-enablement-mcp-host-api-tool",
-    failureLabel: "CRITICAL: Access Denied",
+    failureLabel: "Access blocked",
   },
 };
 
@@ -215,7 +215,7 @@ function ZoneBoundaryNode({ data }: NodeProps) {
   return (
     <section
       role="region"
-      aria-label={`${zone.label} network zone`}
+      aria-label={`${zone.label} zone`}
       className="h-full w-full rounded-xl border border-dashed border-zinc-300 dark:border-white/[0.24] bg-zinc-100/30 dark:bg-white/[0.04] shadow-[inset_0_0_44px_rgba(255,255,255,0.015)] dark:shadow-[inset_0_0_44px_rgba(255,255,255,0.035)] transition-colors hover:border-amber/40 hover:bg-zinc-100/50 dark:hover:bg-white/[0.05]"
     >
       <div className="border-b border-zinc-200 dark:border-white/[0.13] px-3 py-2">
@@ -455,8 +455,8 @@ function TopologyCanvasInner({
   const liveTraceLabel = traceConnection
     ? `${traceConnection.label}: ${nodeLabelById.get(traceConnection.from) ?? traceConnection.from} -> ${nodeLabelById.get(traceConnection.to) ?? traceConnection.to}`
     : activeNodeId
-      ? `Inspecting ${nodeLabelById.get(activeNodeId) ?? activeNodeId}`
-      : "Trace ready";
+      ? `Viewing ${nodeLabelById.get(activeNodeId) ?? activeNodeId}`
+      : "Path ready";
 
   useEffect(() => {
     const trace = getTraceConnection(
@@ -686,7 +686,7 @@ function TopologyCanvasInner({
   return (
     <motion.div
       role="region"
-      aria-label={`${study.title} architecture topology`}
+      aria-label={`${study.title} system map`}
       initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
@@ -694,7 +694,7 @@ function TopologyCanvasInner({
         "architecture-flow relative overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 dark:border-white/[0.1] dark:bg-zinc-950/92 focus-within:ring-2 focus-within:ring-amber/70",
         isFullscreen
           ? "h-full min-h-[520px]"
-          : "h-[520px] sm:h-[680px] xl:h-[760px]",
+          : "h-[460px] sm:h-[640px] xl:h-[760px]",
       )}
     >
       <ReactFlow
@@ -740,12 +740,12 @@ function TopologyCanvasInner({
 
         <Panel
           position="top-left"
-          className="max-w-[44ch] rounded-lg border border-zinc-200 bg-white/95 dark:border-white/[0.12] dark:bg-black/78 px-3 py-2 shadow-2xl backdrop-blur"
+          className="max-w-[calc(100vw-4rem)] rounded-[8px] border border-zinc-200 bg-white/95 px-3 py-2 shadow-2xl backdrop-blur dark:border-white/[0.12] dark:bg-black/78 sm:max-w-[44ch]"
         >
           <div className="flex items-center gap-2">
             <ScanLine className="size-3.5 text-amber" aria-hidden="true" />
             <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-700 dark:text-zinc-300">
-              Live Trace
+              Live path
             </p>
           </div>
           <p className="mt-1 break-words text-xs leading-5 text-zinc-600 dark:text-zinc-400">
@@ -755,7 +755,7 @@ function TopologyCanvasInner({
 
         <Panel
           position="bottom-left"
-          className="rounded-md border border-zinc-200 bg-white/95 dark:border-white/[0.1] dark:bg-black/72 px-2.5 py-1.5 shadow-xl backdrop-blur"
+          className="max-w-[calc(100vw-4rem)] rounded-[8px] border border-zinc-200 bg-white/95 px-2.5 py-1.5 shadow-xl backdrop-blur dark:border-white/[0.1] dark:bg-black/72"
         >
           <div className="flex items-center gap-2">
             <span
@@ -766,7 +766,7 @@ function TopologyCanvasInner({
               aria-hidden="true"
             />
             <p className="font-mono text-[10px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
-              {isTraceRunning ? "Telemetry streaming" : "Trace paused"}
+              {isTraceRunning ? "Path running" : "Path paused"}
             </p>
           </div>
         </Panel>
@@ -787,13 +787,13 @@ function TopologyCanvasInner({
               onClick={() => setIsTraceRunning((current) => !current)}
               aria-label={
                 isTraceRunning
-                  ? "Pause telemetry trace"
-                  : "Play telemetry trace"
+                  ? "Pause path"
+                  : "Play path"
               }
               title={
                 isTraceRunning
-                  ? "Pause telemetry trace"
-                  : "Play telemetry trace"
+                  ? "Pause path"
+                  : "Play path"
               }
             >
               {isTraceRunning ? (
@@ -806,8 +806,8 @@ function TopologyCanvasInner({
               <ControlButton
                 type="button"
                 onClick={onFullscreen}
-                aria-label="Open topology fullscreen"
-                title="Open fullscreen"
+                aria-label="Open full screen map"
+                title="Open full screen"
               >
                 <Maximize2 className="size-4" aria-hidden="true" />
               </ControlButton>

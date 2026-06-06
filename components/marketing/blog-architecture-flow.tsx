@@ -85,9 +85,9 @@ function normalizeDiagramNode(node: string | BlogDiagramNode, index: number) {
       id: slugifyId(node, index),
       label: node,
       role: "Architecture step",
-      detail: "Part of the production execution path.",
       layer: `Step ${index + 1}`,
       kind: "default" as const,
+      detail: "",
     };
   }
 
@@ -95,9 +95,9 @@ function normalizeDiagramNode(node: string | BlogDiagramNode, index: number) {
     id: node.id ?? slugifyId(node.label, index),
     label: node.label,
     role: node.role ?? "Architecture step",
-    detail: node.detail ?? "Part of the production execution path.",
     layer: node.layer ?? `Step ${index + 1}`,
     kind: node.kind ?? "default",
+    detail: node.detail ?? "",
   };
 }
 

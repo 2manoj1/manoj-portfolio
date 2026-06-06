@@ -22,14 +22,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!study) {
     return createMetadata({
-      title: "Architecture Spec Not Found | AI Systems Architecture Lab",
-      description: "The requested case study architecture specification could not be located.",
+      title: "Case Study Not Found | AI Systems Architecture Lab",
+      description: "The requested case study could not be found.",
     });
   }
 
   return createMetadata({
-    title: `${study.title} Specs & Console | AI Systems Architecture Lab`,
-    description: `${study.kicker} — ${study.problem.slice(0, 150)}...`,
+    title: `${study.title} Case Study | AI Systems Architecture Lab`,
+    description: `${study.kicker}: ${study.problem.slice(0, 145)}...`,
   });
 }
 
