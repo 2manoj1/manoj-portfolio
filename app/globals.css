@@ -190,6 +190,114 @@
   }
 }
 
+@keyframes audioSpectrumPulse {
+  0%,
+  100% {
+    transform: scaleY(var(--audio-scale, 0.28));
+    opacity: 0.58;
+  }
+  45% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  68% {
+    transform: scaleY(0.52);
+    opacity: 0.8;
+  }
+}
+
+@keyframes audioOrbSweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes audioRailSheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.audio-spectrum-bar {
+  transform: scaleY(var(--audio-scale, 0.28));
+  transform-origin: bottom;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.audio-spectrum-bar.is-active {
+  animation: audioSpectrumPulse var(--audio-duration, 1000ms)
+    cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  animation-delay: var(--audio-delay, 0ms);
+}
+
+.audio-progress-orb {
+  background: conic-gradient(
+    from 180deg,
+    rgba(245, 158, 11, 0.95) 0deg,
+    rgba(245, 158, 11, 0.95) var(--audio-progress-angle, 0deg),
+    rgba(113, 113, 122, 0.18) var(--audio-progress-angle, 0deg),
+    rgba(113, 113, 122, 0.18) 360deg
+  );
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.dark .audio-progress-orb {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+}
+
+.audio-progress-orb::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  opacity: 0;
+  transform: rotate(0deg);
+}
+
+.audio-progress-orb.is-active::after {
+  opacity: 1;
+  animation: audioOrbSweep 9s linear infinite;
+  border-style: dashed;
+}
+
+.audio-progress-orb.is-paused::after {
+  opacity: 0.55;
+}
+
+.audio-progress-fill {
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.36);
+}
+
+.audio-progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.62),
+    transparent
+  );
+  animation: audioRailSheen 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-spectrum-bar,
+  .audio-progress-orb::after,
+  .audio-progress-fill,
+  .audio-progress-fill::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .architecture-flow .react-flow__node {
   background: transparent;
   border: 0;

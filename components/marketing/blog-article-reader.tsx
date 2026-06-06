@@ -11,6 +11,7 @@ import {
   type BlogDiagram,
 } from "./blog-architecture-flow";
 import { BlogAudioBook } from "./blog-audio-book";
+import type { SpeechSegment } from "@/context/audio-player-context";
 import { 
   ArrowRight, 
   ExternalLink, 
@@ -54,6 +55,7 @@ interface BlogArticleReaderProps {
 }
 
 const streamdownPlugins = { cjk, code, math, mermaid };
+const disabledLinkSafety = { enabled: false };
 
 const markdownClassName =
   "blog-reader-markdown text-base leading-8 text-zinc-800 dark:text-zinc-300 " +
@@ -72,6 +74,8 @@ const alertClassMap: Record<string, string> = {
   CAUTION: "border-rose-500/45 bg-rose-100/50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-100",
 };
 
+const alertPattern = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/;
+
 function MarkdownBlock({
   children,
   className,
@@ -86,6 +90,7 @@ function MarkdownBlock({
       plugins={streamdownPlugins}
       shikiTheme={["dracula", "dracula"]}
       controls={{ code: { download: false } }}
+      linkSafety={disabledLinkSafety}
     >
       {children}
     </Streamdown>
@@ -102,12 +107,22 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
   const {
     flatParagraphs,
+    speechSegments,
     sectionHeadingIndices,
     sectionIndices,
     takeawayIdx,
   } = useMemo(() => {
     let count = 0;
     const blocks: string[] = [article.heroTakeaway];
+    const segments: SpeechSegment[] = [
+      {
+        text: article.heroTakeaway,
+        kind: "takeaway",
+        sourceIndex: 0,
+        sectionTitle: "Why this matters",
+        pauseAfterMs: 760,
+      },
+    ];
     const currentTakeawayIdx = count++;
     const headingIndices: number[] = [];
     const bodyIndices: number[][] = [];
@@ -115,12 +130,27 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
     article.sections.forEach((section) => {
       headingIndices.push(count);
       blocks.push(section.heading);
+      segments.push({
+        text: section.heading,
+        kind: "heading",
+        sourceIndex: count,
+        sectionTitle: section.heading,
+        pauseAfterMs: 980,
+      });
       count += 1;
 
       const sectionBodyIndices: number[] = [];
       section.body.forEach((paragraph) => {
+        const sourceIndex = count;
         sectionBodyIndices.push(count);
         blocks.push(paragraph);
+        segments.push({
+          text: paragraph,
+          kind: alertPattern.test(paragraph) ? "callout" : "paragraph",
+          sourceIndex,
+          sectionTitle: section.heading,
+          pauseAfterMs: alertPattern.test(paragraph) ? 720 : 340,
+        });
         count += 1;
       });
       bodyIndices.push(sectionBodyIndices);
@@ -128,6 +158,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
     return {
       flatParagraphs: blocks,
+      speechSegments: segments,
       sectionHeadingIndices: headingIndices,
       sectionIndices: bodyIndices,
       takeawayIdx: currentTakeawayIdx,
@@ -142,7 +173,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
   // Helper to render markdown, callouts, blockquotes, lists, tables, inline code, and links.
   const renderParagraph = (paragraph: string, isActive: boolean, globalIdx: number) => {
     // Alert syntax: [!NOTE] content
-    const alertMatch = paragraph.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/);
+    const alertMatch = paragraph.match(alertPattern);
     const wrapperClassName = cn(
       "relative rounded-md border-l transition-all duration-300",
       isActive
@@ -246,7 +277,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
         <div className="sticky top-14 z-[70] lg:top-20">
           <div className="pointer-events-none absolute -inset-0.5 rounded-lg bg-gradient-to-r from-amber/25 to-zinc-500/10 opacity-50 blur-sm" />
           <BlogAudioBook 
-            paragraphs={flatParagraphs} 
+            paragraphs={speechSegments}
             title={article.title}
             slug={article.slug}
             onParagraphChange={(idx) => setActiveParagraphIndex(idx)}

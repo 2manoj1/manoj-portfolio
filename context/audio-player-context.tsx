@@ -1,6 +1,25 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+export type SpeechSegmentKind = "takeaway" | "heading" | "paragraph" | "callout";
+
+export interface SpeechSegment {
+  text: string;
+  kind: SpeechSegmentKind;
+  sourceIndex: number;
+  sectionTitle?: string;
+  pauseAfterMs?: number;
+}
+
+export type SpeechInputSegment = string | SpeechSegment;
 
 interface AudioPlayerContextType {
   supported: boolean;
@@ -11,10 +30,18 @@ interface AudioPlayerContextType {
   isPaused: boolean;
   title: string | null;
   slug: string | null;
-  paragraphs: string[];
+  paragraphs: SpeechSegment[];
   currentIdx: number;
+  currentSourceIndex: number | null;
+  currentSectionTitle: string | null;
+  currentSegmentKind: SpeechSegmentKind | null;
   showGlobalPlayer: boolean;
-  play: (title: string, paragraphs: string[], slug: string, startIdx?: number) => void;
+  play: (
+    title: string,
+    paragraphs: SpeechInputSegment[],
+    slug: string,
+    startIdx?: number,
+  ) => void;
   pause: () => void;
   resume: () => void;
   stop: () => void;
@@ -32,6 +59,54 @@ const subscribeToSpeechSupport = () => () => {};
 const getSpeechSupportSnapshot = () =>
   typeof window !== "undefined" && "speechSynthesis" in window;
 const getServerSpeechSupportSnapshot = () => false;
+
+const defaultPauseByKind: Record<SpeechSegmentKind, number> = {
+  takeaway: 720,
+  heading: 950,
+  paragraph: 320,
+  callout: 680,
+};
+
+const voicePreferencePatterns = [
+  /natural/i,
+  /neural/i,
+  /premium/i,
+  /enhanced/i,
+  /online/i,
+  /samantha/i,
+  /alex/i,
+  /ava/i,
+  /nicky/i,
+  /jenny/i,
+  /aria/i,
+  /guy/i,
+  /zira/i,
+  /google us english/i,
+] as const;
+
+const lowQualityVoicePatterns = [
+  /compact/i,
+  /novelty/i,
+  /whisper/i,
+  /robot/i,
+  /bells/i,
+  /organ/i,
+  /trinoids/i,
+] as const;
+
+function normalizeSpeechSegments(segments: SpeechInputSegment[]) {
+  return segments.map((segment, index): SpeechSegment => {
+    if (typeof segment === "string") {
+      return {
+        text: segment,
+        kind: "paragraph",
+        sourceIndex: index,
+      };
+    }
+
+    return segment;
+  });
+}
 
 function cleanSpeechText(markdown: string) {
   return markdown
@@ -51,6 +126,151 @@ function cleanSpeechText(markdown: string) {
     .trim();
 }
 
+function applyTechnicalPronunciations(text: string) {
+  return text
+    .replace(/\bGraphRAG\b/g, "graph rag")
+    .replace(/\bFastAPI\b/g, "Fast A P I")
+    .replace(/\bOpenAI\b/g, "Open A I")
+    .replace(/\bAPIs\b/g, "A P I's")
+    .replace(/\bAPI\b/g, "A P I")
+    .replace(/\bLLMs\b/g, "L L M's")
+    .replace(/\bLLM\b/g, "L L M")
+    .replace(/\bRAG\b/g, "rag")
+    .replace(/\bMCP\b/g, "M C P")
+    .replace(/\bA2A\b/g, "A to A")
+    .replace(/\bGPUs\b/g, "G P U's")
+    .replace(/\bGPU\b/g, "G P U")
+    .replace(/\bCPUs\b/g, "C P U's")
+    .replace(/\bCPU\b/g, "C P U")
+    .replace(/\bAI\b/g, "A I")
+    .replace(/\bNVIDIA\b/g, "N vidia")
+    .replace(/\bKubernetes\b/g, "Koo ber net ease")
+    .replace(/\bLangChain\b/g, "Lang Chain")
+    .replace(/\bPostgreSQL\b/g, "Postgres Q L")
+    .replace(/\bqwen(\d+(?:\.\d+)?):(\d+)b\b/gi, "Qwen $1, $2 B");
+}
+
+function improveSentencePacing(text: string) {
+  return text
+    .replace(/\s*;\s*/g, ". ")
+    .replace(/\s*:\s+(?=[A-Z])/g, ". ")
+    .replace(/\bFor example,\s*/g, "For example, ")
+    .replace(/\bIn practice,\s*/g, "In practice, ")
+    .replace(/\bThe key idea is\b/gi, "The key idea is")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildNarrationText(segment: SpeechSegment, index: number) {
+  const cleanText = applyTechnicalPronunciations(
+    improveSentencePacing(cleanSpeechText(segment.text)),
+  );
+
+  if (!cleanText) {
+    return "";
+  }
+
+  if (segment.kind === "takeaway") {
+    return `Here is the core idea. ${cleanText}`;
+  }
+
+  if (segment.kind === "heading") {
+    return index <= 1
+      ? `First, let's look at ${cleanText}.`
+      : `Next, let's look at ${cleanText}.`;
+  }
+
+  if (segment.kind === "callout") {
+    return `Important note. ${cleanText}`;
+  }
+
+  return cleanText;
+}
+
+function splitNarrationIntoChunks(text: string, maxLength = 280) {
+  const sentences = text.match(/[^.!?]+[.!?]+(?:["')\]]+)?|[^.!?]+$/g) ?? [
+    text,
+  ];
+  const chunks: string[] = [];
+  let current = "";
+
+  for (const sentence of sentences.map((item) => item.trim()).filter(Boolean)) {
+    if (!current) {
+      current = sentence;
+      continue;
+    }
+
+    if (`${current} ${sentence}`.length <= maxLength) {
+      current = `${current} ${sentence}`;
+      continue;
+    }
+
+    chunks.push(current);
+    current = sentence;
+  }
+
+  if (current) {
+    chunks.push(current);
+  }
+
+  return chunks.flatMap((chunk) => {
+    if (chunk.length <= maxLength * 1.4) {
+      return [chunk];
+    }
+
+    return chunk
+      .split(/,\s+|\s+-\s+/)
+      .reduce<string[]>((parts, phrase) => {
+        const last = parts.at(-1);
+        if (!last || `${last}, ${phrase}`.length > maxLength) {
+          parts.push(phrase.trim());
+        } else {
+          parts[parts.length - 1] = `${last}, ${phrase.trim()}`;
+        }
+        return parts;
+      }, [])
+      .filter(Boolean);
+  });
+}
+
+function getPauseAfter(segment: SpeechSegment) {
+  return segment.pauseAfterMs ?? defaultPauseByKind[segment.kind];
+}
+
+function getNarrationRate(baseRate: number, kind: SpeechSegmentKind) {
+  const multiplier =
+    kind === "heading" ? 0.88 : kind === "takeaway" ? 0.92 : kind === "callout" ? 0.9 : 0.96;
+
+  return Math.min(2, Math.max(0.72, baseRate * multiplier));
+}
+
+function getNarrationPitch(kind: SpeechSegmentKind) {
+  if (kind === "heading") return 1.04;
+  if (kind === "takeaway") return 1.02;
+  if (kind === "callout") return 0.98;
+  return 1;
+}
+
+function scoreVoice(voice: SpeechSynthesisVoice) {
+  const name = voice.name.toLowerCase();
+  let score = 0;
+
+  if (voice.lang.startsWith("en-US")) score += 16;
+  if (voice.lang.startsWith("en-GB")) score += 12;
+  if (voice.lang.startsWith("en-AU")) score += 8;
+  if (voice.default) score += 5;
+
+  for (const pattern of voicePreferencePatterns) {
+    if (pattern.test(name)) score += 12;
+  }
+
+  for (const pattern of lowQualityVoicePatterns) {
+    if (pattern.test(name)) score -= 24;
+  }
+
+  return score;
+}
+
 export function AudioPlayerProvider({ children }: { children: React.ReactNode }) {
   const supported = useSyncExternalStore(
     subscribeToSpeechSupport,
@@ -66,7 +286,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   
   const [title, setTitle] = useState<string | null>(null);
   const [slug, setSlug] = useState<string | null>(null);
-  const [paragraphs, setParagraphs] = useState<string[]>([]);
+  const [paragraphs, setParagraphs] = useState<SpeechSegment[]>([]);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [showGlobalPlayer, setShowGlobalPlayer] = useState<boolean>(false);
 
@@ -104,18 +324,16 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     const synth = window.speechSynthesis;
     const loadVoices = () => {
       const availableVoices = synth.getVoices();
-      const engVoices = availableVoices.filter(v => v.lang.startsWith("en"));
-      const finalVoices = engVoices.length > 0 ? engVoices : availableVoices;
+      const engVoices = availableVoices.filter((voice) =>
+        voice.lang.startsWith("en"),
+      );
+      const finalVoices = (engVoices.length > 0 ? engVoices : availableVoices)
+        .slice()
+        .sort((a, b) => scoreVoice(b) - scoreVoice(a));
       setVoices(finalVoices);
 
       if (finalVoices.length > 0) {
-        // Try to pick a natural/high-quality voice first
-        const defaultVoice = finalVoices.find(v => 
-          v.name.includes("Google") || 
-          v.name.includes("Natural") || 
-          v.name.includes("Premium")
-        ) || finalVoices[0];
-        setSelectedVoice(current => current || defaultVoice.name);
+        setSelectedVoice((current) => current || finalVoices[0].name);
       }
     };
 
@@ -145,12 +363,22 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     }
   }
 
-  function speakSegment(index: number, skipCancel = false) {
+  function clearPendingSpeechTimer() {
+    if (playTimeoutRef.current) {
+      window.clearTimeout(playTimeoutRef.current);
+      playTimeoutRef.current = null;
+    }
+  }
+
+  function finishPlayback() {
+    setIsPlaying(false);
+    setIsPaused(false);
+    utteranceRef.current = null;
+  }
+
+  function speakSegment(index: number, skipCancel = false, chunkIndex = 0) {
     if (!supported || index < 0 || index >= stateRef.current.paragraphs.length) {
-      // Completed or out of bounds
-      setIsPlaying(false);
-      setIsPaused(false);
-      utteranceRef.current = null;
+      finishPlayback();
       return;
     }
 
@@ -159,38 +387,51 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     }
 
     const currentUtteranceId = activeUtteranceIdRef.current;
-    const rawText = cleanSpeechText(stateRef.current.paragraphs[index]);
+    const segment = stateRef.current.paragraphs[index];
+    const narrationText = buildNarrationText(segment, index);
+    const chunks = splitNarrationIntoChunks(narrationText);
 
-    // If it's an empty segment, move to next immediately
-    if (!rawText) {
+    if (chunks.length === 0 || chunkIndex >= chunks.length) {
       setCurrentIdx(index);
       if (index + 1 < stateRef.current.paragraphs.length) {
         speakSegment(index + 1, true);
       } else {
-        setIsPlaying(false);
-        setIsPaused(false);
+        finishPlayback();
       }
       return;
     }
 
     setCurrentIdx(index);
 
-    const utterance = new SpeechSynthesisUtterance(rawText);
+    const utterance = new SpeechSynthesisUtterance(chunks[chunkIndex]);
     utteranceRef.current = utterance;
 
-    // Apply voice settings
-    const voiceObj = stateRef.current.voices.find(v => v.name === stateRef.current.selectedVoice);
-    if (voiceObj) utterance.voice = voiceObj;
-    utterance.rate = stateRef.current.rate;
+    const voiceObj = stateRef.current.voices.find(
+      (voice) => voice.name === stateRef.current.selectedVoice,
+    );
+    if (voiceObj) {
+      utterance.voice = voiceObj;
+      utterance.lang = voiceObj.lang;
+    }
+    utterance.rate = getNarrationRate(stateRef.current.rate, segment.kind);
+    utterance.pitch = getNarrationPitch(segment.kind);
 
     utterance.onend = () => {
       if (activeUtteranceIdRef.current !== currentUtteranceId) return;
+
+      if (chunkIndex + 1 < chunks.length) {
+        playTimeoutRef.current = window.setTimeout(() => {
+          speakSegment(index, true, chunkIndex + 1);
+        }, 170);
+        return;
+      }
+
       if (index + 1 < stateRef.current.paragraphs.length) {
-        speakSegment(index + 1, false);
+        playTimeoutRef.current = window.setTimeout(() => {
+          speakSegment(index + 1, true);
+        }, getPauseAfter(segment));
       } else {
-        setIsPlaying(false);
-        setIsPaused(false);
-        utteranceRef.current = null;
+        finishPlayback();
       }
     };
 
@@ -208,31 +449,31 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }
 
   // Plays a new set of paragraphs (e.g. from an article)
-  const play = (newTitle: string, newParagraphs: string[], newSlug: string, startIdx = 0) => {
+  const play = (
+    newTitle: string,
+    newParagraphs: SpeechInputSegment[],
+    newSlug: string,
+    startIdx = 0,
+  ) => {
     if (!supported || newParagraphs.length === 0) return;
 
-    // Clean up timers
-    if (playTimeoutRef.current) {
-      window.clearTimeout(playTimeoutRef.current);
-    }
-
+    const normalizedParagraphs = normalizeSpeechSegments(newParagraphs);
+    clearPendingSpeechTimer();
     cancelActiveSpeech();
 
     setTitle(newTitle);
-    setParagraphs(newParagraphs);
+    setParagraphs(normalizedParagraphs);
     setSlug(newSlug);
     setCurrentIdx(startIdx);
     setIsPlaying(true);
     setIsPaused(false);
     setShowGlobalPlayer(true);
 
-    // Update internal ref so it has the new data immediately
-    stateRef.current.paragraphs = newParagraphs;
+    stateRef.current.paragraphs = normalizedParagraphs;
     stateRef.current.isPlaying = true;
     stateRef.current.isPaused = false;
     stateRef.current.currentIdx = startIdx;
 
-    // Use a small timeout to let the cancel settle before starting new speech
     playTimeoutRef.current = window.setTimeout(() => {
       speakSegment(startIdx, true);
     }, 50);
@@ -270,6 +511,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
   const stop = () => {
     if (!supported) return;
+    clearPendingSpeechTimer();
     cancelActiveSpeech();
     setIsPlaying(false);
     setIsPaused(false);
@@ -305,9 +547,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     stateRef.current.isPaused = false;
     stateRef.current.currentIdx = targetIdx;
 
-    if (playTimeoutRef.current) {
-      window.clearTimeout(playTimeoutRef.current);
-    }
+    clearPendingSpeechTimer();
 
     playTimeoutRef.current = window.setTimeout(() => {
       speakSegment(targetIdx, true);
@@ -321,9 +561,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
     if (stateRef.current.isPlaying && !stateRef.current.isPaused) {
       cancelActiveSpeech();
-      if (playTimeoutRef.current) {
-        window.clearTimeout(playTimeoutRef.current);
-      }
+      clearPendingSpeechTimer();
       playTimeoutRef.current = window.setTimeout(() => {
         speakSegment(stateRef.current.currentIdx, true);
       }, 150);
@@ -336,14 +574,17 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
     if (stateRef.current.isPlaying && !stateRef.current.isPaused) {
       cancelActiveSpeech();
-      if (playTimeoutRef.current) {
-        window.clearTimeout(playTimeoutRef.current);
-      }
+      clearPendingSpeechTimer();
       playTimeoutRef.current = window.setTimeout(() => {
         speakSegment(stateRef.current.currentIdx, true);
       }, 150);
     }
   };
+
+  const currentSegment = paragraphs[currentIdx] ?? null;
+  const currentSourceIndex = currentSegment?.sourceIndex ?? null;
+  const currentSectionTitle = currentSegment?.sectionTitle ?? null;
+  const currentSegmentKind = currentSegment?.kind ?? null;
 
   return (
     <AudioPlayerContext.Provider
@@ -358,6 +599,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         slug,
         paragraphs,
         currentIdx,
+        currentSourceIndex,
+        currentSectionTitle,
+        currentSegmentKind,
         showGlobalPlayer,
         play,
         pause,

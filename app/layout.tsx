@@ -124,7 +124,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" suppressHydrationWarning className="h-full antialiased">
+		<html
+			lang="en"
+			suppressHydrationWarning
+			data-scroll-behavior="smooth"
+			className="h-full antialiased">
 			<body
 				className={`${inter.className} ${monaSans.className} flex min-h-full flex-col isolate`}>
 				<SiteChrome>{children}</SiteChrome>

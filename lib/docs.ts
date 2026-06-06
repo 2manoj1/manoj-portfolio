@@ -54,7 +54,7 @@ export function getDocBySlug(slug: string): DocContent | null {
     const content = parts.slice(2).join("---").trim();
 
     // Parse Frontmatter
-    const metadata: Record<string, any> = {};
+    const metadata: Partial<Pick<DocMetadata, "title" | "description" | "category" | "order">> = {};
     frontmatterRaw.split("\n").forEach((line) => {
       const match = line.match(/^([^:]+):\s*(.*)$/);
       if (match) {
@@ -68,8 +68,8 @@ export function getDocBySlug(slug: string): DocContent | null {
         }
 
         if (key === "order") {
-          metadata[key] = parseInt(val, 10);
-        } else {
+          metadata.order = Number.parseInt(val, 10);
+        } else if (key === "title" || key === "description" || key === "category") {
           metadata[key] = val;
         }
       }

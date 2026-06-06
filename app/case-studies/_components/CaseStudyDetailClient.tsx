@@ -31,18 +31,6 @@ import { Streamdown } from "streamdown";
 import { code } from "@streamdown/code";
 import { DocsMdxRenderer } from "@/components/marketing/docs-mdx-renderer";
 
-function statusTone(status: CaseStudy["status"]) {
-  if (status === "PRODUCTION") {
-    return "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.55)]";
-  }
-
-  if (status === "ACTIVE") {
-    return "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.55)]";
-  }
-
-  return "bg-amber shadow-[0_0_10px_rgba(245,158,11,0.55)]";
-}
-
 const SIMULATION_DETAILS = {
   "production-grade-ai-home-lab": {
     HEALTHY: "System fully online. Cloudflare Tunnel reaches localhost FastAPI, qwen3.5 is warm in Ollama, and the gateway is enforcing 10 chat slots.",
@@ -329,31 +317,38 @@ interface CaseStudyDetailClientProps {
 
 export function CaseStudyDetailClient({ slug }: CaseStudyDetailClientProps) {
   const study = caseStudies.find((s) => s.slug === slug);
-  if (!study) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 font-mono text-xs">
-        Case study not found: {slug}
-      </div>
-    );
-  }
-
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [simMode, setSimMode] = useState<SimMode>("HEALTHY");
 
-  const [activeDocSlug, setActiveDocSlug] = useState<string | null>(null);
-  const [docContent, setDocContent] = useState<string>("");
-  const [isLoadingDoc, setIsLoadingDoc] = useState<boolean>(false);
-  const [docError, setDocError] = useState<string | null>(null);
+  const [requestedDocSlug, setRequestedDocSlug] = useState<string | null>(null);
+  const [docContentBySlug, setDocContentBySlug] = useState<Record<string, string>>({});
+  const [docErrorBySlug, setDocErrorBySlug] = useState<Record<string, string>>({});
+  const docs = study?.docs ?? [];
+  const defaultDocSlug = docs[0]?.slug ?? null;
+  const activeDocSlug = docs.some((doc) => doc.slug === requestedDocSlug)
+    ? requestedDocSlug
+    : defaultDocSlug;
+  const hasLoadedDoc = activeDocSlug
+    ? Object.prototype.hasOwnProperty.call(docContentBySlug, activeDocSlug)
+    : false;
+  const docContent =
+    activeDocSlug && hasLoadedDoc ? docContentBySlug[activeDocSlug] : "";
+  const docError = activeDocSlug ? (docErrorBySlug[activeDocSlug] ?? null) : null;
+  const isLoadingDoc = Boolean(activeDocSlug && !hasLoadedDoc && !docError);
 
   useEffect(() => {
+    if (!study?.docs?.length) {
+      return;
+    }
+
     const parseUrlTab = () => {
       const searchParams = new URLSearchParams(window.location.search);
       let tab = searchParams.get("tab");
 
       if (!tab) {
         const hash = window.location.hash.replace("#", "");
-        const [_, queryStr] = hash.split("?");
+        const [, queryStr] = hash.split("?");
         if (queryStr) {
           const hashParams = new URLSearchParams(queryStr);
           tab = hashParams.get("tab");
@@ -361,7 +356,7 @@ export function CaseStudyDetailClient({ slug }: CaseStudyDetailClientProps) {
       }
 
       if (tab && study.docs?.some((d) => d.slug === tab)) {
-        setActiveDocSlug(tab);
+        setRequestedDocSlug(tab);
       }
     };
 
@@ -371,25 +366,15 @@ export function CaseStudyDetailClient({ slug }: CaseStudyDetailClientProps) {
   }, [study]);
 
   useEffect(() => {
-    if (study?.docs && study.docs.length > 0) {
-      const isValid = study.docs.some((d) => d.slug === activeDocSlug);
-      if (!isValid) {
-        setActiveDocSlug(study.docs[0].slug);
-      }
-    } else {
-      setActiveDocSlug(null);
-    }
-  }, [study, activeDocSlug]);
-
-  useEffect(() => {
-    if (!activeDocSlug) {
-      setDocContent("");
+    if (
+      !activeDocSlug ||
+      Object.prototype.hasOwnProperty.call(docContentBySlug, activeDocSlug) ||
+      Object.prototype.hasOwnProperty.call(docErrorBySlug, activeDocSlug)
+    ) {
       return;
     }
 
     let isMounted = true;
-    setIsLoadingDoc(true);
-    setDocError(null);
 
     fetch(`/api/docs?slug=${activeDocSlug}`)
       .then((res) => {
@@ -398,24 +383,33 @@ export function CaseStudyDetailClient({ slug }: CaseStudyDetailClientProps) {
       })
       .then((data) => {
         if (isMounted) {
-          setDocContent(data.content || "");
+          setDocContentBySlug((current) => ({
+            ...current,
+            [activeDocSlug]: data.content || "",
+          }));
         }
       })
       .catch((err) => {
         if (isMounted) {
-          setDocError(err.message || "Failed to load document");
-        }
-      })
-      .finally(() => {
-        if (isMounted) {
-          setIsLoadingDoc(false);
+          setDocErrorBySlug((current) => ({
+            ...current,
+            [activeDocSlug]: err.message || "Failed to load document",
+          }));
         }
       });
 
     return () => {
       isMounted = false;
     };
-  }, [activeDocSlug]);
+  }, [activeDocSlug, docContentBySlug, docErrorBySlug]);
+
+  if (!study) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 font-mono text-xs">
+        Case study not found: {slug}
+      </div>
+    );
+  }
 
   const getSimulatedLogs = () => {
     const baseLogs = study.logs;
@@ -573,26 +567,26 @@ export function CaseStudyDetailClient({ slug }: CaseStudyDetailClientProps) {
 
           <div className="mt-8 flex flex-col gap-6">
             {/* Playbook Navigation Tabs */}
-            <div className="flex flex-wrap gap-2 border-b border-zinc-200 dark:border-border/40 pb-4">
-              {study.docs.map((doc) => {
-                const isActive = activeDocSlug === doc.slug;
-                return (
-                  <button
-                    key={doc.slug}
-                    type="button"
-                    onClick={() => setActiveDocSlug(doc.slug)}
-                    className={cn(
-                      "rounded-md border px-4 py-2 font-mono text-xs uppercase transition-all duration-150",
-                      isActive
-                        ? "border-amber/65 bg-amber/[0.06] text-zinc-900 dark:text-white shadow-[0_0_12px_rgba(245,158,11,0.15)]"
-                        : "border-zinc-200 dark:border-border/60 bg-zinc-100/50 dark:bg-zinc-950/40 text-zinc-600 dark:text-zinc-400 hover:border-zinc-350 dark:hover:border-border hover:bg-zinc-200 dark:hover:bg-white/[0.02]"
-                    )}
-                  >
-                    {doc.title}
-                  </button>
-                );
-              })}
-            </div>
+	            <div className="flex flex-wrap gap-2 border-b border-zinc-200 dark:border-border/40 pb-4">
+	              {study.docs.map((doc) => {
+	                const isActive = activeDocSlug === doc.slug;
+	                return (
+	                  <button
+	                    key={doc.slug}
+	                    type="button"
+	                    onClick={() => setRequestedDocSlug(doc.slug)}
+	                    className={cn(
+	                      "rounded-md border px-4 py-2 font-mono text-xs uppercase transition-all duration-150",
+	                      isActive
+	                        ? "border-amber/65 bg-amber/[0.06] text-zinc-900 dark:text-white shadow-[0_0_12px_rgba(245,158,11,0.15)]"
+	                        : "border-zinc-200 dark:border-border/60 bg-zinc-100/50 dark:bg-zinc-950/40 text-zinc-600 dark:text-zinc-400 hover:border-zinc-350 dark:hover:border-border hover:bg-zinc-200 dark:hover:bg-white/[0.02]"
+	                    )}
+	                  >
+	                    {doc.title}
+	                  </button>
+	                );
+	              })}
+	            </div>
 
             {/* Document Render Area */}
             <div className="relative min-h-[300px] rounded-lg border border-zinc-250 dark:border-border/80 bg-white dark:bg-black/45 p-6 backdrop-blur-md md:p-8">

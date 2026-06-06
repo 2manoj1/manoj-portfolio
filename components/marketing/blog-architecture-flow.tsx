@@ -1,7 +1,6 @@
 "use client";
 
 import { memo, useEffect, useMemo, useState } from "react";
-import { useTheme } from "next-themes";
 import {
   Background,
   BackgroundVariant,
@@ -25,6 +24,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useHydratedThemeMode } from "@/hooks/use-hydrated-theme-mode";
 
 export type BlogDiagramNode = {
   id?: string;
@@ -322,8 +322,8 @@ export function BlogArchitectureFlow({
   active?: boolean;
 }) {
   const isMobile = useMobileDiagramLayout();
-  const { resolvedTheme } = useTheme();
-  const isLight = resolvedTheme === "light";
+  const themeMode = useHydratedThemeMode();
+  const isLight = themeMode === "light";
 
   const { nodes, edges } = useMemo(
     () => buildFlowElements(diagram, isMobile, active, isLight),
@@ -362,7 +362,7 @@ export function BlogArchitectureFlow({
             zoomOnDoubleClick={false}
             zoomOnPinch
             zoomOnScroll={false}
-            colorMode={isLight ? "light" : "dark"}
+            colorMode={themeMode}
             proOptions={{ hideAttribution: true }}
           >
             <Background

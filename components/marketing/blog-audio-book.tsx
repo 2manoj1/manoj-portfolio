@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   Gauge,
-  Maximize2,
   Minimize2,
-  Music,
   Pause,
   Play,
   Settings,
@@ -14,15 +13,32 @@ import {
   Volume2,
   X,
 } from "lucide-react";
+import {
+  AudioIconButton,
+  AudioMetric,
+  AudioProgressOrb,
+  AudioProgressRail,
+  AudioSpectrum,
+} from "@/components/marketing/audio-player-visuals";
+import {
+  useAudioPlayer,
+  type SpeechInputSegment,
+} from "@/context/audio-player-context";
 import { cn } from "@/lib/utils";
-import { useAudioPlayer } from "@/context/audio-player-context";
 
 interface BlogAudioBookProps {
-  paragraphs: string[];
+  paragraphs: SpeechInputSegment[];
   title: string;
   slug: string;
   onParagraphChange?: (index: number | null) => void;
 }
+
+const springTransition = {
+  type: "spring",
+  stiffness: 280,
+  damping: 30,
+  mass: 0.8,
+} as const;
 
 export function BlogAudioBook({
   paragraphs,
@@ -39,6 +55,9 @@ export function BlogAudioBook({
     isPaused: globalIsPaused,
     slug: activeSlug,
     currentIdx,
+    currentSourceIndex,
+    currentSectionTitle,
+    currentSegmentKind,
     play,
     pause,
     resume,
@@ -48,6 +67,7 @@ export function BlogAudioBook({
     setSelectedVoice,
   } = useAudioPlayer();
 
+  const prefersReducedMotion = useReducedMotion();
   const [isMinimized, setIsMinimized] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [chatState, setChatState] = useState({ open: false, expanded: false });
@@ -56,11 +76,32 @@ export function BlogAudioBook({
   const isPlaying = isActiveTrack && globalIsPlaying;
   const isPaused = isActiveTrack && globalIsPaused;
   const activeIdx = isActiveTrack ? currentIdx : 0;
+  const totalSegments = Math.max(paragraphs.length, 1);
+  const currentSegment = paragraphs.length
+    ? Math.min(activeIdx + 1, paragraphs.length)
+    : 0;
+  const progressPercent = paragraphs.length
+    ? ((activeIdx + (isPlaying || isPaused ? 0.35 : 0)) / paragraphs.length) *
+      100
+    : 0;
+  const segmentLabel = `${currentSegment} / ${paragraphs.length}`;
+  const currentSectionLabel =
+    isActiveTrack && currentSectionTitle
+      ? currentSectionTitle
+      : isActiveTrack && currentSegmentKind === "takeaway"
+        ? "Why this matters"
+        : "Ready";
+  const PlayStateIcon = isPlaying ? Pause : Play;
+  const canGoPrev = isActiveTrack && currentIdx > 0;
+  const canGoNext = isActiveTrack && currentIdx < paragraphs.length - 1;
 
-  // Listen for chatbot status changes to position the minimized floating pill correctly
   useEffect(() => {
-    const handleChatState = (e: Event) => {
-      const customEvent = e as CustomEvent<{ open: boolean; expanded: boolean }>;
+    const handleChatState = (event: Event) => {
+      const customEvent = event as CustomEvent<{
+        open: boolean;
+        expanded: boolean;
+      }>;
+
       if (customEvent.detail) {
         setChatState(customEvent.detail);
       }
@@ -74,16 +115,13 @@ export function BlogAudioBook({
     };
   }, []);
 
-  // Sync index change to parent reader
   useEffect(() => {
-    if (isActiveTrack) {
-      onParagraphChange?.(currentIdx);
-    } else {
-      onParagraphChange?.(null);
-    }
-  }, [isActiveTrack, currentIdx, onParagraphChange]);
+    onParagraphChange?.(isActiveTrack ? currentSourceIndex : null);
+  }, [isActiveTrack, currentSourceIndex, onParagraphChange]);
 
-  if (!supported) return null;
+  if (!supported) {
+    return null;
+  }
 
   const handlePlayToggle = () => {
     if (isActiveTrack) {
@@ -100,410 +138,308 @@ export function BlogAudioBook({
   };
 
   const handleNext = () => {
-    if (isActiveTrack) {
-      if (currentIdx + 1 < paragraphs.length) {
-        jumpToParagraph(currentIdx + 1);
-      }
-    } else {
+    if (isActiveTrack && currentIdx + 1 < paragraphs.length) {
+      jumpToParagraph(currentIdx + 1);
+      return;
+    }
+
+    if (!isActiveTrack && paragraphs.length > 1) {
       play(title, paragraphs, slug, 1);
     }
   };
 
   const handlePrev = () => {
-    if (isActiveTrack) {
-      if (currentIdx - 1 >= 0) {
-        jumpToParagraph(currentIdx - 1);
-      }
-    } else {
+    if (isActiveTrack && currentIdx > 0) {
+      jumpToParagraph(currentIdx - 1);
+      return;
+    }
+
+    if (!isActiveTrack) {
       play(title, paragraphs, slug, 0);
     }
   };
 
-  const progressPercent =
-    paragraphs.length > 0
-      ? ((activeIdx + (isPlaying || isPaused ? 0.35 : 0)) / paragraphs.length) * 100
-      : 0;
-
-  const segmentLabel = `${Math.min(activeIdx + 1, paragraphs.length)} / ${paragraphs.length}`;
-  const PlayStateIcon = isPlaying ? Pause : Play;
-
-  // 12-bar equalizer properties for organic bounce
-  const visualizerBars = [
-    { delay: "0ms", duration: "1.0s", inactiveScale: 0.2 },
-    { delay: "150ms", duration: "0.8s", inactiveScale: 0.3 },
-    { delay: "300ms", duration: "1.2s", inactiveScale: 0.15 },
-    { delay: "50ms", duration: "0.9s", inactiveScale: 0.4 },
-    { delay: "200ms", duration: "1.1s", inactiveScale: 0.25 },
-    { delay: "100ms", duration: "0.7s", inactiveScale: 0.3 },
-    { delay: "250ms", duration: "1.0s", inactiveScale: 0.2 },
-    { delay: "0ms", duration: "0.8s", inactiveScale: 0.45 },
-    { delay: "350ms", duration: "1.3s", inactiveScale: 0.15 },
-    { delay: "150ms", duration: "0.9s", inactiveScale: 0.3 },
-    { delay: "200ms", duration: "1.1s", inactiveScale: 0.25 },
-    { delay: "100ms", duration: "0.7s", inactiveScale: 0.2 },
-  ];
-
-  // Dynamic positioning for the floating minimized pill based on chatbot state
-  let floatingPositionClasses = "bottom-22 left-4 right-4 md:bottom-6";
+  let floatingPositionClasses = "bottom-[5.5rem] left-4 right-4 md:bottom-6";
   if (chatState.open) {
-    if (chatState.expanded) {
-      floatingPositionClasses += " md:left-6 md:right-auto";
-    } else {
-      floatingPositionClasses += " md:left-auto md:right-[480px]";
-    }
+    floatingPositionClasses += chatState.expanded
+      ? " md:left-6 md:right-auto"
+      : " md:left-auto md:right-[480px]";
   } else {
     floatingPositionClasses += " md:left-auto md:right-36";
   }
 
+  const motionInitial = prefersReducedMotion
+    ? false
+    : { opacity: 0, y: 14, scale: 0.98 };
+  const motionExit = prefersReducedMotion
+    ? undefined
+    : { opacity: 0, y: 12, scale: 0.98 };
+
   return (
     <>
-      {/* Hardware-accelerated keyframe animations for the equalizer visualizer */}
-      <style>{`
-        @keyframes soundWave {
-          0%, 100% { transform: scaleY(0.2); }
-          50% { transform: scaleY(1.0); }
-        }
-        .sound-bar-animate {
-          transform-origin: bottom;
-          animation: soundWave 1.0s ease-in-out infinite;
-        }
-      `}</style>
-
-      {/* 1. Minimized View: Floating Glass Pill (rendered conditionally with smooth CSS transitions) */}
-      <div
-        aria-label="Floating audio mini player"
-        className={cn(
-          "fixed z-[60] flex items-center gap-3 rounded-full border border-zinc-200/80 dark:border-white/10 bg-white/60 dark:bg-zinc-900/40 p-2 shadow-[0_12px_36px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 ease-out transform text-zinc-850 dark:text-zinc-200",
-          floatingPositionClasses,
-          isMinimized
-            ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
-            : "opacity-0 scale-95 pointer-events-none translate-y-4"
-        )}
-        role="region"
-      >
-        {/* Reflection border */}
-        <div className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/70 dark:via-zinc-700/20 to-transparent" />
-
-        {/* Small visualizer button */}
-        <button
-          onClick={() => setIsMinimized(false)}
-          className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-zinc-200 dark:border-white/15 bg-zinc-100/50 dark:bg-white/[0.04] text-amber shadow-inner transition hover:scale-105"
-          title="Restore Player"
-          type="button"
-        >
-          <Music className={cn("size-4", isPlaying && "animate-[bounce_2s_infinite]")} />
-          {isPlaying && (
-            <span className="absolute inset-0.5 rounded-full border border-dashed border-amber/30 animate-[spin_12s_linear_infinite]" />
-          )}
-        </button>
-
-        {/* Title details */}
-        <div 
-          onClick={() => setIsMinimized(false)}
-          className="min-w-0 max-w-[100px] md:max-w-[160px] cursor-pointer"
-        >
-          <p className="truncate text-xs font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-            {title}
-          </p>
-          <p className="mt-0.5 font-mono text-[9px] text-zinc-500 dark:text-zinc-400">
-            Seg {segmentLabel} · {rate}x
-          </p>
-        </div>
-
-        {/* Mini controls with Previous and Next Skip buttons */}
-        <div className="flex items-center gap-1 pr-1.5">
-          {/* Skip Back */}
-          <button
-            aria-label="Previous segment"
-            onClick={handlePrev}
-            disabled={isActiveTrack && currentIdx <= 0}
-            className="flex size-7 items-center justify-center rounded-full border border-zinc-200 dark:border-white/10 bg-white/20 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-150 disabled:opacity-35 transition"
-            title="Previous Segment"
-            type="button"
+      <AnimatePresence initial={false}>
+        {isMinimized ? (
+          <motion.div
+            key="article-audio-mini"
+            aria-label="Floating audio mini player"
+            className={cn(
+              "fixed z-[60] flex min-h-16 items-center gap-3 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-2.5 text-zinc-900 shadow-[0_20px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-100 dark:shadow-[0_22px_65px_rgba(0,0,0,0.48)] md:w-[min(calc(100vw-2rem),430px)]",
+              floatingPositionClasses,
+            )}
+            initial={motionInitial}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={motionExit}
+            transition={springTransition}
+            role="region"
           >
-            <SkipBack className="size-3" />
-          </button>
-
-          {/* Play/Pause */}
-          <button
-            onClick={handlePlayToggle}
-            className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-amber to-amber-600 text-zinc-950 shadow-[0_2px_8px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition"
-            type="button"
-          >
-            <PlayStateIcon className="size-3.5 fill-current" />
-          </button>
-
-          {/* Skip Next */}
-          <button
-            aria-label="Next segment"
-            onClick={handleNext}
-            disabled={isActiveTrack && currentIdx >= paragraphs.length - 1}
-            className="flex size-7 items-center justify-center rounded-full border border-zinc-200 dark:border-white/10 bg-white/20 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-150 disabled:opacity-35 transition"
-            title="Next Segment"
-            type="button"
-          >
-            <SkipForward className="size-3" />
-          </button>
-
-          <div className="h-4 w-px bg-zinc-250 dark:bg-white/10 mx-1" />
-
-          {/* Expand */}
-          <button
-            onClick={() => setIsMinimized(false)}
-            className="flex size-7 items-center justify-center rounded-full border border-zinc-200 dark:border-white/10 bg-white/20 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-150 transition"
-            title="Expand Controls"
-            type="button"
-          >
-            <Maximize2 className="size-3" />
-          </button>
-
-          {/* Stop / Close */}
-          <button
-            onClick={stop}
-            className="flex size-7 items-center justify-center rounded-full border border-zinc-200 dark:border-white/10 bg-white/20 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400 hover:text-rose-500 transition"
-            title="Stop Reading"
-            type="button"
-          >
-            <X className="size-3" />
-          </button>
-        </div>
-      </div>
-
-      {/* 2. Maximized View: Full Docked Card (rendered inline with layout-preserving height collapses) */}
-      <div
-        aria-label="Article audio player"
-        className={cn(
-          "relative w-full rounded-2xl border border-zinc-200/80 dark:border-white/5 bg-gradient-to-b from-white/60 to-white/30 dark:from-zinc-900/50 dark:to-zinc-950/30 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-2xl text-zinc-850 dark:text-zinc-200 transition-all duration-300 ease-out transform",
-          isMinimized
-            ? "opacity-0 scale-95 pointer-events-none h-0 overflow-hidden p-0 mt-0 border-0"
-            : "opacity-100 scale-100 pointer-events-auto mt-5"
-        )}
-        role="region"
-      >
-        {/* Glossy top edge highlight */}
-        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/70 dark:via-zinc-700/25 to-transparent" />
-        
-        {/* Background glowing energy node */}
-        <div className="pointer-events-none absolute -left-24 -top-24 size-48 bg-[radial-gradient(circle,rgba(245,158,11,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(245,158,11,0.08)_0%,transparent_70%)] blur-2xl rounded-full" />
-        
-        {/* Tech grid background overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(245,158,11,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.01)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]" />
-
-        <div className="relative z-10 flex flex-col gap-4">
-          {/* Header Console */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-3.5">
-              {/* Spinning Fusion Core / CD Artwork */}
-              <div className="relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-250 dark:border-white/10 bg-zinc-100/60 dark:bg-white/[0.04] text-amber shadow-inner">
-                <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/20 via-transparent to-transparent" />
-                <Volume2 className={cn("relative z-10 size-5.5 transition-transform duration-300", isPlaying && "scale-110")} />
-                
-                {/* Rotating radar graphic */}
-                <div className={cn(
-                  "absolute inset-1 rounded-full border border-dashed border-amber/25 transition-transform",
-                  isPlaying ? "animate-[spin_8s_linear_infinite]" : "rotate-45"
-                )} />
-                <div className={cn(
-                  "absolute inset-3 rounded-full border border-amber/10 transition-transform",
-                  isPlaying ? "animate-[spin_4s_linear_infinite_reverse]" : ""
-                )} />
-              </div>
-              
-              <div className="min-w-0">
-                <span className="font-mono text-[9px] uppercase tracking-widest text-amber dark:text-amber/90 font-bold flex items-center gap-1.5">
-                  <span className={cn("size-1.5 rounded-full bg-amber", isPlaying && "animate-ping")} />
-                  {isActiveTrack && isPlaying ? "SYS AUDIOSTREAM ACTIVE" : "SYS AUDIO GATEWAY"}
-                </span>
-                <h4 className="mt-1.5 truncate text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-base">
-                  {title}
-                </h4>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {/* Holographic Status Badge */}
-              <span
-                aria-live="polite"
-                className={cn(
-                  "hidden items-center gap-2 rounded-full border px-3 py-1 font-mono text-[9px] uppercase tracking-wider transition-all duration-300 sm:inline-flex",
-                  isPlaying
-                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 shadow-[0_0_10px_rgba(16,185,129,0.1)]"
-                    : isPaused
-                    ? "border-amber/30 bg-amber/10 text-amber shadow-[0_0_10px_rgba(245,158,11,0.1)]"
-                    : "border-zinc-250 dark:border-white/10 bg-white/20 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400"
-                )}
-              >
-                <span className={cn("size-1.5 rounded-full", isPlaying ? "bg-emerald-500 animate-pulse" : isPaused ? "bg-amber" : "bg-zinc-400 dark:bg-zinc-650")} />
-                {isPlaying ? "STREAMING" : isPaused ? "PAUSED" : "STANDBY"}
-              </span>
-
-              {/* Minimize trigger */}
-              <button
-                onClick={() => setIsMinimized(true)}
-                className="flex size-8 items-center justify-center rounded-xl border border-zinc-200 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-400 hover:text-amber dark:hover:text-amber hover:scale-105 transition"
-                title="Minimize to Floating Pill"
-                type="button"
-              >
-                <Minimize2 className="size-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Dashboard parameters */}
-          <div className="flex items-center justify-between gap-4 border-y border-zinc-200/50 dark:border-white/5 py-3">
-            <div className="flex items-center gap-2">
-              <span className="rounded-lg border border-zinc-200/80 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-700 dark:text-zinc-300 font-semibold">
-                SEGMENT: {segmentLabel}
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200/80 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-700 dark:text-zinc-300 font-semibold">
-                <Gauge className="size-3.5 text-amber" />
-                {rate}X RATE
-              </span>
-            </div>
-
-            {/* Bouncing visualizer bars with scaleY transformation */}
-            <div className="flex h-5 shrink-0 items-end gap-0.75 pr-1">
-              {visualizerBars.map((bar, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "w-[2px] h-5 rounded-t bg-gradient-to-t from-amber to-amber/90 shadow-[0_0_6px_rgba(245,158,11,0.4)]",
-                    isPlaying ? "sound-bar-animate" : ""
-                  )}
-                  style={{
-                    animationDelay: bar.delay,
-                    animationDuration: bar.duration,
-                    transform: isPlaying ? undefined : `scaleY(${bar.inactiveScale})`,
-                    transformOrigin: "bottom",
-                    transition: "transform 0.3s ease-out",
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Glossy seek timeline */}
-          <div className="space-y-1">
-            <div
-              aria-label="Playback timeline progress"
-              aria-valuemax={100}
-              aria-valuemin={0}
-              aria-valuenow={Math.round(progressPercent)}
-              className="relative h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-white/[0.07] shadow-inner"
-              role="progressbar"
+            <button
+              aria-label="Restore article audio player"
+              className="group rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/55"
+              onClick={() => setIsMinimized(false)}
+              title="Restore player"
+              type="button"
             >
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-amber via-amber-500/90 to-amber/80 shadow-[0_0_12px_rgba(245,158,11,0.5)] transition-all duration-300"
-                style={{ width: `${progressPercent || (isPlaying ? 3 : 0)}%` }}
-              />
-            </div>
-          </div>
+              <AudioProgressOrb
+                active={isPlaying}
+                paused={isPaused}
+                progress={progressPercent}
+                size="sm"
+              >
+                <Volume2 className="size-4" aria-hidden="true" />
+              </AudioProgressOrb>
+            </button>
 
-          {/* Polished Glass Deck Controller */}
-          <div className="flex items-center justify-between gap-3 pt-1">
-            <div className="flex items-center gap-3">
-              {/* Prev Segment button */}
-              <button
-                aria-label="Previous segment"
-                onClick={handlePrev}
+            <button
+              aria-label="Restore article audio player panel"
+              className="min-w-0 flex-1 cursor-pointer rounded-[6px] border-0 bg-transparent p-0 text-left text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/55"
+              onClick={() => setIsMinimized(false)}
+              title="Restore player"
+              type="button"
+            >
+              <p className="truncate text-sm font-semibold tracking-tight">
+                {title}
+              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <AudioProgressRail progress={progressPercent} />
+                <span className="shrink-0 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                  {segmentLabel}
+                </span>
+              </div>
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              <AudioIconButton
                 disabled={isActiveTrack && currentIdx <= 0}
-                className="flex size-9 items-center justify-center rounded-xl border border-zinc-250 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-455 transition hover:bg-white/50 dark:hover:bg-white/[0.07] hover:text-zinc-900 dark:hover:text-zinc-100 hover:scale-105 active:scale-95 disabled:opacity-35 disabled:hover:scale-100 disabled:hover:bg-white/30 disabled:hover:text-zinc-600 sm:size-10"
-                title="Previous Segment"
-                type="button"
+                label="Previous segment"
+                onClick={handlePrev}
               >
-                <SkipBack className="size-4.5" />
-              </button>
-
-              {/* Glowing Core Play/Pause Trigger */}
-              <button
-                aria-label={PlayStateIcon === Play ? "Play reading" : "Pause reading"}
+                <SkipBack className="size-3.5" aria-hidden="true" />
+              </AudioIconButton>
+              <AudioIconButton
+                label={isPlaying ? "Pause reading" : "Play reading"}
                 onClick={handlePlayToggle}
-                className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-amber to-amber-600 text-zinc-950 shadow-[0_6px_20px_rgba(245,158,11,0.35)] hover:scale-105 hover:shadow-[0_6px_24_rgba(245,158,11,0.45)] active:scale-95 transition-all sm:size-10.5"
-                type="button"
+                prominent
               >
-                <PlayStateIcon className="size-4.5 fill-current" />
-              </button>
-
-              {/* Next Segment button */}
-              <button
-                aria-label="Next segment"
-                onClick={handleNext}
+                <PlayStateIcon className="size-4 fill-current" aria-hidden="true" />
+              </AudioIconButton>
+              <AudioIconButton
                 disabled={isActiveTrack && currentIdx >= paragraphs.length - 1}
-                className="flex size-9 items-center justify-center rounded-xl border border-zinc-250 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-455 transition hover:bg-white/50 dark:hover:bg-white/[0.07] hover:text-zinc-900 dark:hover:text-zinc-100 hover:scale-105 active:scale-95 disabled:opacity-35 disabled:hover:scale-100 disabled:hover:bg-white/30 disabled:hover:text-zinc-600 sm:size-10"
-                title="Next Segment"
-                type="button"
+                label="Next segment"
+                onClick={handleNext}
               >
-                <SkipForward className="size-4.5" />
-              </button>
+                <SkipForward className="size-3.5" aria-hidden="true" />
+              </AudioIconButton>
             </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
-            <div className="flex items-center gap-2">
-              {/* Technical settings toggle */}
-              <button
-                aria-label="Voice options console"
-                aria-expanded={isSettingsOpen}
-                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                className={cn(
-                  "flex size-9 items-center justify-center rounded-xl border transition-all sm:size-10",
-                  isSettingsOpen
-                    ? "border-amber/50 bg-white/50 dark:bg-white/[0.09] text-amber shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]"
-                    : "border-zinc-250 dark:border-white/10 bg-white/30 dark:bg-white/[0.03] text-zinc-600 dark:text-zinc-455 hover:bg-white/50 dark:hover:bg-white/[0.07] hover:text-zinc-900 dark:hover:text-zinc-100"
-                )}
-                title="Console Options"
-                type="button"
-              >
-                <Settings className="size-4.5" />
-              </button>
-            </div>
-          </div>
+      <AnimatePresence initial={false}>
+        {!isMinimized ? (
+          <motion.section
+            key="article-audio-docked"
+            aria-label="Article audio player"
+            className="relative mt-5 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/72 p-4 text-zinc-900 shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/62 dark:text-zinc-100 dark:shadow-[0_24px_75px_rgba(0,0,0,0.46)] sm:p-5"
+            initial={motionInitial}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={motionExit}
+            transition={springTransition}
+            role="region"
+          >
+            <div
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(9,9,11,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(9,9,11,0.025)_1px,transparent_1px)] bg-[size:24px_24px] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent_92%)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]"
+              aria-hidden="true"
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber/50 to-transparent" />
 
-          {/* Dropdown settings console */}
-          {isSettingsOpen && (
-            <div className="mt-2 space-y-3.5 rounded-xl border border-zinc-200/50 dark:border-white/5 bg-zinc-100/60 dark:bg-[#09090b]/40 p-4 shadow-inner backdrop-blur-md animate-in fade-in slide-in-from-top-2 duration-300">
-              {/* Speed slider */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-[9px] font-mono uppercase tracking-wider text-zinc-600 dark:text-zinc-400 font-bold">
-                  <span>SPEED READOUT</span>
-                  <span className="text-amber">{rate}X</span>
+            <div className="relative z-10 grid gap-5">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 items-center gap-4">
+                  <AudioProgressOrb
+                    active={isPlaying}
+                    paused={isPaused}
+                    progress={progressPercent}
+                    size="lg"
+                  >
+                    <Volume2 className="size-5" aria-hidden="true" />
+                  </AudioProgressOrb>
+                  <div className="min-w-0">
+                    <p className="font-mono text-[10px] uppercase text-amber">
+                      {isPlaying
+                        ? "stream active"
+                        : isPaused
+                          ? "stream held"
+                          : "audio gateway"}
+                    </p>
+                    <h4 className="mt-1 truncate text-base font-semibold leading-6 tracking-tight text-zinc-950 dark:text-white">
+                      {title}
+                    </h4>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="0.8"
-                  max="2.0"
-                  step="0.1"
-                  value={rate}
-                  onChange={(e) => setRate(Number(e.target.value))}
-                  className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-zinc-200 dark:bg-white/[0.08] accent-amber"
-                />
+
+                <div className="flex items-center justify-between gap-3 sm:justify-end">
+                  <AudioSpectrum active={isPlaying} />
+                  <AudioIconButton
+                    label="Minimize player"
+                    onClick={() => {
+                      setIsMinimized(true);
+                      setIsSettingsOpen(false);
+                    }}
+                  >
+                    <Minimize2 className="size-4" aria-hidden="true" />
+                  </AudioIconButton>
+                </div>
               </div>
 
-              {/* Voice select */}
-              {voices.length > 0 && (
-                <div className="space-y-2">
-                  <label
-                    className="block font-mono text-[9px] uppercase tracking-wider text-zinc-650 dark:text-zinc-400 font-bold"
-                    htmlFor="docked-audio-voice"
-                  >
-                    SPEECH ENGINE VOICE
-                  </label>
-                  <select
-                    id="docked-audio-voice"
-                    value={selectedVoice}
-                    onChange={(e) => setSelectedVoice(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-[#09090b]/80 px-3 py-2 font-mono text-[10px] text-zinc-800 dark:text-zinc-250 focus:border-amber/40 focus:ring-1 focus:ring-amber/25 outline-none transition-all"
-                  >
-                    {voices.map((v) => (
-                      <option key={v.name} value={v.name} className="dark:bg-[#111] text-zinc-800 dark:text-zinc-250">
-                        {v.name.replace(/Microsoft|Google|Apple/g, "").trim()} ({v.lang})
-                      </option>
-                    ))}
-                  </select>
+              <div className="grid gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <AudioMetric
+                    className="max-w-full sm:max-w-[280px]"
+                    label="section"
+                    value={currentSectionLabel}
+                  />
+                  <AudioMetric label="segment" value={segmentLabel} />
+                  <AudioMetric label="rate" value={`${rate.toFixed(1)}x`}>
+                    <Gauge className="size-3.5 text-amber" aria-hidden="true" />
+                  </AudioMetric>
+                  <AudioMetric
+                    label="queue"
+                    value={`${Math.max(totalSegments - currentSegment, 0)} left`}
+                  />
                 </div>
-              )}
+                <AudioProgressRail progress={progressPercent} />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <AudioIconButton
+                    disabled={!canGoPrev}
+                    label="Previous segment"
+                    onClick={handlePrev}
+                  >
+                    <SkipBack className="size-4" aria-hidden="true" />
+                  </AudioIconButton>
+                  <AudioIconButton
+                    className="size-12"
+                    label={isPlaying ? "Pause reading" : "Play reading"}
+                    onClick={handlePlayToggle}
+                    prominent
+                  >
+                    <PlayStateIcon className="size-5 fill-current" aria-hidden="true" />
+                  </AudioIconButton>
+                  <AudioIconButton
+                    disabled={!canGoNext}
+                    label="Next segment"
+                    onClick={handleNext}
+                  >
+                    <SkipForward className="size-4" aria-hidden="true" />
+                  </AudioIconButton>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <AudioIconButton
+                    active={isSettingsOpen}
+                    aria-expanded={isSettingsOpen}
+                    label="Voice and speed options"
+                    onClick={() => setIsSettingsOpen((current) => !current)}
+                  >
+                    <Settings className="size-4" aria-hidden="true" />
+                  </AudioIconButton>
+                  {isActiveTrack ? (
+                    <AudioIconButton label="Stop reading" onClick={stop}>
+                      <X className="size-4" aria-hidden="true" />
+                    </AudioIconButton>
+                  ) : null}
+                </div>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {isSettingsOpen ? (
+                  <motion.div
+                    key="article-audio-settings"
+                    className="grid gap-4 rounded-[8px] border border-zinc-200/80 bg-white/68 p-4 shadow-inner dark:border-white/10 dark:bg-black/22 sm:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]"
+                    initial={
+                      prefersReducedMotion
+                        ? false
+                        : { opacity: 0, height: 0, y: -8 }
+                    }
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={
+                      prefersReducedMotion
+                        ? undefined
+                        : { opacity: 0, height: 0, y: -8 }
+                    }
+                    transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <label className="grid gap-2">
+                      <span className="font-mono text-[10px] uppercase text-zinc-500 dark:text-zinc-400">
+                        speed
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="range"
+                          min="0.8"
+                          max="2.0"
+                          step="0.1"
+                          value={rate}
+                          onChange={(event) => setRate(Number(event.target.value))}
+                          className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-zinc-200 accent-amber dark:bg-white/[0.1]"
+                        />
+                        <span className="w-11 text-right font-mono text-xs text-amber">
+                          {rate.toFixed(1)}x
+                        </span>
+                      </div>
+                    </label>
+
+                    {voices.length > 0 ? (
+                      <label className="grid gap-2">
+                        <span className="font-mono text-[10px] uppercase text-zinc-500 dark:text-zinc-400">
+                          voice
+                        </span>
+                        <select
+                          value={selectedVoice}
+                          onChange={(event) => setSelectedVoice(event.target.value)}
+                          className="h-10 w-full rounded-[8px] border border-zinc-200 bg-white/85 px-3 font-mono text-xs text-zinc-800 outline-none transition focus:border-amber/55 focus:ring-2 focus:ring-amber/15 dark:border-white/10 dark:bg-zinc-950/90 dark:text-zinc-200"
+                        >
+                          {voices.map((voice) => (
+                            <option
+                              key={voice.name}
+                              value={voice.name}
+                              className="text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200"
+                            >
+                              {voice.name.replace(/Microsoft|Google|Apple/g, "").trim()} ({voice.lang})
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    ) : null}
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
             </div>
-          )}
-        </div>
-      </div>
+          </motion.section>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

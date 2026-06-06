@@ -8,13 +8,13 @@ import { math } from "@streamdown/math";
 import { mermaid } from "@streamdown/mermaid";
 import { BlogArchitectureFlow } from "./blog-architecture-flow";
 import { diagramsData } from "@/content/docs/diagrams-data";
-import { cn } from "@/lib/utils";
 
 interface DocsMdxRendererProps {
   content: string;
 }
 
 const streamdownPlugins = { cjk, code, math, mermaid };
+const disabledLinkSafety = { enabled: false };
 
 const mdxMarkdownClass =
   "docs-markdown text-muted-foreground text-sm leading-7 " +
@@ -119,6 +119,7 @@ export function DocsMdxRenderer({ content }: DocsMdxRendererProps) {
             plugins={streamdownPlugins}
             shikiTheme={["dracula", "dracula"]}
             controls={{ code: { download: false } }}
+            linkSafety={disabledLinkSafety}
           >
             {preProcessMarkdown(part)}
           </Streamdown>

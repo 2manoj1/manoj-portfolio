@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { useTheme } from "next-themes";
 import { useMediaQuery } from "usehooks-ts";
 import {
   Background,
@@ -38,6 +37,7 @@ import type {
 } from "../_data/case-studies";
 import { getLayoutedElements, NODE_WIDTH } from "../_lib/elk-layout";
 import type { SimMode } from "./SimulationDeck";
+import { useHydratedThemeMode } from "@/hooks/use-hydrated-theme-mode";
 
 const FIT_VIEW_DURATION = 420;
 const INLINE_FIT_PADDING = 0.08;
@@ -233,8 +233,7 @@ function ZoneBoundaryNode({ data }: NodeProps) {
 function ArchitectureNodeCard({ data, selected }: NodeProps) {
   const node = data as ArchitectureNodeData;
   const Icon = node.icon;
-  const { resolvedTheme } = useTheme();
-  
+
   const simMode = node.simMode;
   const isLatency = simMode === "LATENCY";
   const isFailure = simMode === "FAILURE";
@@ -318,7 +317,7 @@ function TelemetryEdge({
   selected,
 }: EdgeProps) {
   const edgeData = data as TelemetryEdgeData | undefined;
-  const { resolvedTheme } = useTheme();
+  const themeMode = useHydratedThemeMode();
   const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -334,7 +333,7 @@ function TelemetryEdge({
   const isFailure = simMode === "FAILURE";
 
   const isActive = selected || edgeData?.isActive || edgeData?.isTraced || isLatency || isFailure;
-  const isLight = resolvedTheme === "light";
+  const isLight = themeMode === "light";
 
   const strokeColor = isFailure
     ? "rgba(244,63,94,0.95)"
@@ -425,7 +424,7 @@ function TopologyCanvasInner({
   simMode = "HEALTHY",
 }: TopologyCanvasProps) {
   const prefersReducedMotion = useReducedMotion();
-  const { resolvedTheme } = useTheme();
+  const themeMode = useHydratedThemeMode();
   const reactFlow = useReactFlow<ArchitectureFlowNode, ArchitectureFlowEdge>();
   const [nodes, setNodes, onNodesChange] = useNodesState<ArchitectureFlowNode>(
     buildFlowNodes(study),
@@ -435,9 +434,13 @@ function TopologyCanvasInner({
   );
   const [traceIndex, setTraceIndex] = useState(0);
   const [isTraceRunning, setIsTraceRunning] = useState(true);
-  const isMobile = useMediaQuery("(max-width: 767px)");
+  const isMobile = useMediaQuery("(max-width: 767px)", {
+    initializeWithValue: false,
+  });
 
-  const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1279px)");
+  const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1279px)", {
+    initializeWithValue: false,
+  });
 
   const nodeLabelById = useMemo(
     () => new Map(study.nodes.map((node) => [node.id, node.label])),
@@ -714,7 +717,7 @@ function TopologyCanvasInner({
         maxZoom={2}
         snapToGrid
         snapGrid={[16, 16]}
-        colorMode={resolvedTheme === "light" ? "light" : "dark"}
+        colorMode={themeMode}
         nodesConnectable={false}
         edgesReconnectable={false}
         deleteKeyCode={null}
@@ -725,14 +728,14 @@ function TopologyCanvasInner({
         <Background
           variant={BackgroundVariant.Lines}
           gap={28}
-          color={resolvedTheme === "light" ? "rgba(0,0,0,0.022)" : "rgba(255,255,255,0.055)"}
+          color={themeMode === "light" ? "rgba(0,0,0,0.022)" : "rgba(255,255,255,0.055)"}
         />
         <Background
           id="architecture-flow-cross"
           variant={BackgroundVariant.Cross}
           gap={112}
           size={2}
-          color={resolvedTheme === "light" ? "rgba(245,158,11,0.1)" : "rgba(245,158,11,0.16)"}
+          color={themeMode === "light" ? "rgba(245,158,11,0.1)" : "rgba(245,158,11,0.16)"}
         />
 
         <Panel
@@ -822,12 +825,12 @@ function TopologyCanvasInner({
             maskColor="rgba(0,0,0,0.58)"
             nodeColor={(node) =>
               node.type === "zone"
-                ? (resolvedTheme === "light" ? "rgba(244,244,245,0.8)" : "rgba(63,63,70,0.45)")
+                ? (themeMode === "light" ? "rgba(244,244,245,0.8)" : "rgba(63,63,70,0.45)")
                 : "rgba(245,158,11,0.72)"
             }
             nodeStrokeColor={(node) =>
               node.type === "zone"
-                ? (resolvedTheme === "light" ? "rgba(9,9,11,0.15)" : "rgba(255,255,255,0.16)")
+                ? (themeMode === "light" ? "rgba(9,9,11,0.15)" : "rgba(255,255,255,0.16)")
                 : "rgba(245,158,11,0.9)"
             }
           />

@@ -1,26 +1,18 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
-  Activity,
   ArrowRight,
   Cpu,
   Database,
   Layers,
-  Monitor,
   Network,
   ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  PageHero,
-  Section,
-} from "@/components/marketing/section";
+import { Card } from "@/components/ui/card";
+import { PageHero } from "@/components/marketing/section";
 import { caseStudies, type CaseStudy } from "./_data/case-studies";
 import { cn } from "@/lib/utils";
+import { LegacyHashRedirect } from "./_components/legacy-hash-redirect";
 
 function statusTone(status: CaseStudy["status"]) {
   if (status === "PRODUCTION") {
@@ -73,35 +65,9 @@ function GitBranchIcon({ className }: { className?: string }) {
 }
 
 export default function CaseStudiesPage() {
-  const router = useRouter();
-  const [isRedirecting, setIsRedirecting] = useState(false);
-
-  // Legacy hash redirect checker to support old bookmarks
-  useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash) {
-      const [slug, queryStr] = hash.split("?");
-      const match = caseStudies.find((c) => c.slug === slug);
-      if (match) {
-        setIsRedirecting(true);
-        router.replace(`/case-studies/${slug}${queryStr ? "?" + queryStr : ""}`);
-      }
-    }
-  }, [router]);
-
-  if (isRedirecting) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background text-foreground">
-        <div className="size-6 animate-spin rounded-full border-2 border-amber border-t-transparent" />
-        <p className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
-          Redirecting to specs console...
-        </p>
-      </div>
-    );
-  }
-
   return (
     <>
+      <LegacyHashRedirect />
       <PageHero
         kicker="Architecture Portfolio"
         title="System architectures under telemetry."
