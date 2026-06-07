@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, BrainCircuit, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SystemsConsole } from "@/components/marketing/systems-console";
 import { TechStackGrid } from "@/components/marketing/tech-stack-grid";
@@ -172,6 +172,32 @@ export default function Home() {
             </MotionReveal>
           ))}
         </div>
+        <MotionReveal>
+          <Link
+            href="/engineering/ai-human"
+            className="group mt-6 grid gap-4 border border-border bg-background/50 p-4 transition-colors hover:border-amber/45 hover:bg-background md:grid-cols-[auto_1fr_auto] md:items-center md:p-5"
+          >
+            <div className="flex size-10 items-center justify-center rounded-[8px] border border-border bg-card/30 text-amber">
+              <BrainCircuit className="size-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="font-mono text-[11px] uppercase tracking-wide text-amber">
+                Interactive engineering guide
+              </p>
+              <h3 className="mt-1 text-base font-medium text-foreground">
+                See human anatomy mapped to AI architecture.
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                A visual walkthrough of LLM reasoning, GraphRAG memory, MCP
+                routing, tools, context, and guardrails.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors group-hover:text-amber">
+              Open guide
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        </MotionReveal>
         <MotionReveal>
           <div className="mt-10 flex justify-center">
             <Button asChild variant="outline" size="lg">

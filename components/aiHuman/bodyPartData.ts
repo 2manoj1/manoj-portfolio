@@ -1,306 +1,381 @@
-// ─────────────────────────────────────────────────────────────
-// bodyPartData.ts — Canonical data for the AI ↔ Human body map
-// All positions are in a 400×700 SVG coordinate space.
-// ─────────────────────────────────────────────────────────────
+// Canonical data for the AI <-> human anatomy map.
+// Positions use the HumanFigureSVG 420 x 760 coordinate space.
 
-/** A single body-part node in the constellation figure. */
 export interface BodyPart {
   id: string;
   label: string;
   aiLabel: string;
+  systemType: string;
   humanDescription: string;
   aiDescription: string;
   insight: string;
-  /** Tailwind color name used for active-state glow */
+  detailPoints: string[];
   color: string;
   icon: string;
-  /** Center position in the 400×700 SVG viewBox */
   position: { x: number; y: number };
-  /** IDs of other parts this node connects to via filaments */
   connections: string[];
 }
 
-/** One step in the perception → action signal cascade. */
 export interface SignalFlowStep {
   id: string;
   fromPart: string;
   toPart: string;
   humanText: string;
   aiText: string;
-  /** Duration of the animation for this leg (ms) */
   duration: number;
 }
 
-/** One beat of the hallucination narrative. */
 export interface HallucinationStep {
   id: string;
   text: string;
   type: "normal" | "error" | "insight";
 }
 
-// ─────────────────────────────────────────────────────────────
-// Body Parts
-// ─────────────────────────────────────────────────────────────
-
 export const bodyParts: Record<string, BodyPart> = {
   brain: {
     id: "brain",
     label: "Brain",
-    aiLabel: "Large Language Model",
+    aiLabel: "LLM reasoning core",
+    systemType: "reasoning",
     humanDescription:
-      "The brain is the body's central processing unit — a 86-billion-neuron network that interprets sensory input, reasons about abstract concepts, and orchestrates every conscious decision.",
+      "The brain integrates perception, memory, goals, and motor plans. The prefrontal cortex handles planning while attention decides what matters right now.",
     aiDescription:
-      "A Large Language Model is a transformer-based neural network trained on trillions of tokens. It performs next-token prediction, embedding complex world knowledge into billions of learned parameters that enable reasoning, summarization, and generation.",
+      "The LLM is the reasoning core. It attends to context, chooses the next step, and routes work to retrieval, tools, or response generation.",
     insight:
-      "Both compress the vast complexity of the world into weighted connections — one biological, one mathematical — yet neither truly 'understands' without grounding in action.",
+      "A useful agent is not just a model. It is a model connected to memory, tools, policies, and feedback.",
+    detailPoints: [
+      "Prefrontal cortex -> planning",
+      "Attention -> context weighting",
+      "Motor plan -> tool-call plan",
+    ],
     color: "cyan",
-    icon: "🧠",
-    position: { x: 200, y: 80 },
-    connections: ["eyes", "ears", "mouth", "heart", "nervous-system"],
+    icon: "LLM",
+    position: { x: 210, y: 76 },
+    connections: [
+      "eyes",
+      "ears",
+      "mouth",
+      "heart",
+      "lungs",
+      "memory",
+      "nervous-system",
+    ],
+  },
+
+  memory: {
+    id: "memory",
+    label: "Hippocampus",
+    aiLabel: "GraphRAG memory",
+    systemType: "memory",
+    humanDescription:
+      "The hippocampus binds experience into recallable context. Memory is reconstructed from signals, emotion, and prior knowledge.",
+    aiDescription:
+      "GraphRAG and vector memory retrieve trusted context from documents, entities, and relationships before the model responds.",
+    insight:
+      "Recall is not storage alone. Good memory systems need retrieval quality, ranking, and source grounding.",
+    detailPoints: [
+      "Episodic memory -> traces",
+      "Semantic memory -> facts",
+      "Graph traversal -> connected context",
+    ],
+    color: "amber",
+    icon: "RAG",
+    position: { x: 160, y: 100 },
+    connections: ["brain", "nervous-system"],
   },
 
   eyes: {
     id: "eyes",
     label: "Eyes",
-    aiLabel: "Vision Models",
+    aiLabel: "Vision encoder",
+    systemType: "input",
     humanDescription:
-      "Human eyes capture roughly 10 million bits of visual information per second, converting photons into neural signals. The visual cortex then assembles edges, colors, and motion into coherent perception.",
+      "The retina turns photons into electrical signals. The visual cortex assembles edges, motion, color, depth, and objects.",
     aiDescription:
-      "Vision models like CLIP and GPT-4V process pixel matrices through convolutional and transformer layers, extracting features at increasing abstraction — from edges and textures to objects and scenes — enabling multimodal understanding.",
+      "Vision encoders convert pixels into embeddings that a multimodal model can reason over with language and context.",
     insight:
-      "Both systems transform raw light into meaning — the eye through retinal chemistry, the model through matrix multiplication — converging on the same goal: seeing what matters.",
+      "Raw input becomes useful only after it is encoded into a structure the reasoning system can use.",
+    detailPoints: [
+      "Retina -> signal capture",
+      "Visual cortex -> pattern extraction",
+      "Embeddings -> machine-readable perception",
+    ],
     color: "blue",
-    icon: "👁️",
-    position: { x: 200, y: 120 },
-    connections: ["brain"],
+    icon: "VIS",
+    position: { x: 210, y: 122 },
+    connections: ["brain", "skin"],
   },
 
   ears: {
     id: "ears",
     label: "Ears",
-    aiLabel: "Speech Recognition",
+    aiLabel: "Audio encoder",
+    systemType: "input",
     humanDescription:
-      "The cochlea converts sound pressure waves into electrical signals across 15,000 hair cells, each tuned to a specific frequency. The auditory cortex then decodes speech, music, and spatial cues in real time.",
+      "The cochlea converts vibration into frequency-specific neural signals. The auditory cortex turns sound into speech, rhythm, and location cues.",
     aiDescription:
-      "Speech recognition systems like Whisper use encoder-decoder transformers to convert mel-spectrograms of audio into text tokens, handling accents, noise, and multilingual input with near-human accuracy.",
+      "Speech and audio models transform waveforms into tokens or embeddings for transcription, intent detection, and multimodal reasoning.",
     insight:
-      "From vibrating air to structured language — both systems solve the same inverse problem of recovering intent from waveforms, separated by billions of years of evolution versus billions of gradient steps.",
+      "Both systems recover intent from noisy signals before higher-level reasoning begins.",
+    detailPoints: [
+      "Cochlea -> frequency map",
+      "Auditory cortex -> speech structure",
+      "ASR -> text and intent",
+    ],
     color: "blue",
-    icon: "👂",
-    position: { x: 140, y: 130 },
-    connections: ["brain"],
+    icon: "AUD",
+    position: { x: 142, y: 124 },
+    connections: ["brain", "skin"],
   },
 
   mouth: {
     id: "mouth",
     label: "Mouth",
-    aiLabel: "Text & Speech Generation",
+    aiLabel: "Response generator",
+    systemType: "output",
     humanDescription:
-      "Human speech production coordinates over 100 muscles in the larynx, tongue, and lips to convert abstract thought into precise acoustic patterns at up to 150 words per minute.",
+      "Speech coordinates breath, vocal cords, tongue, and lips to turn thought into words other people can act on.",
     aiDescription:
-      "Text generation decodes the model's internal representations into token sequences via autoregressive sampling. Speech synthesis (TTS) then converts text into natural-sounding audio using neural vocoders like WaveNet.",
+      "The output layer turns plans and tool results into text, speech, UI state, or structured data returned to the user.",
     insight:
-      "Generation is the final mile of intelligence — both biological and artificial minds must compress rich internal states into the narrow bandwidth of sequential language.",
+      "Output quality is the final mile of intelligence. The system has to be accurate and understandable.",
+    detailPoints: [
+      "Breath -> speech energy",
+      "Articulation -> format control",
+      "Decoder -> user-facing response",
+    ],
     color: "violet",
-    icon: "🗣️",
-    position: { x: 200, y: 180 },
-    connections: ["brain"],
+    icon: "OUT",
+    position: { x: 210, y: 156 },
+    connections: ["brain", "lungs"],
   },
 
   heart: {
     id: "heart",
     label: "Heart",
-    aiLabel: "System Prompt & Intent",
+    aiLabel: "System intent",
+    systemType: "goal",
     humanDescription:
-      "Beyond pumping blood, the heart is the metaphorical seat of purpose and motivation. Emotions, values, and drives — rooted in the limbic system — shape every decision the brain makes.",
+      "The heart sustains the body while emotional systems shape urgency, motivation, and priority.",
     aiDescription:
-      "The system prompt defines an AI agent's goals, constraints, persona, and ethical boundaries. It is the persistent instruction set that shapes every inference, acting as the model's motivational architecture.",
+      "System prompts, product goals, and policy constraints shape what the agent should optimize for and what it must refuse.",
     insight:
-      "Purpose precedes intelligence — without a reason to act, neither the human mind nor the AI model can produce meaningful output.",
+      "Purpose constrains intelligence. Without goals and boundaries, reasoning becomes uncontrolled generation.",
+    detailPoints: [
+      "Motivation -> task priority",
+      "Values -> boundaries",
+      "System prompt -> agent contract",
+    ],
     color: "red",
-    icon: "❤️",
-    position: { x: 210, y: 280 },
-    connections: ["brain", "nervous-system"],
+    icon: "GOAL",
+    position: { x: 222, y: 282 },
+    connections: ["brain", "lungs", "nervous-system"],
+  },
+
+  lungs: {
+    id: "lungs",
+    label: "Lungs",
+    aiLabel: "Context window",
+    systemType: "context",
+    humanDescription:
+      "The lungs regulate oxygen and breath cadence. They keep the system stable while speech and movement consume energy.",
+    aiDescription:
+      "The context window supplies the working set: instructions, retrieved facts, recent conversation, tool results, and constraints.",
+    insight:
+      "Context is the agent's oxygen. Too little context starves reasoning; too much unmanaged context creates noise.",
+    detailPoints: [
+      "Oxygen -> usable energy",
+      "Breath cadence -> pacing",
+      "Context budget -> working set",
+    ],
+    color: "cyan",
+    icon: "CTX",
+    position: { x: 168, y: 266 },
+    connections: ["brain", "heart", "mouth", "nervous-system"],
   },
 
   "nervous-system": {
     id: "nervous-system",
-    label: "Nervous System",
-    aiLabel: "MCP Protocol",
+    label: "Spine and Nerves",
+    aiLabel: "MCP + event bus",
+    systemType: "routing",
     humanDescription:
-      "The nervous system is the body's communication backbone — 7 trillion nerves carrying electrical signals at up to 120 m/s, connecting the brain to every organ, muscle, and sensor.",
+      "The spinal cord and peripheral nerves move signals between the brain, organs, skin, and muscles with very low latency.",
     aiDescription:
-      "The Model Context Protocol (MCP) is the standardized communication layer that connects LLMs to external tools, data sources, and execution environments — the 'nervous system' of an AI agent architecture.",
+      "MCP, workflow routers, and event buses connect the model to tools, data, memory, user interfaces, and execution systems.",
     insight:
-      "Intelligence without infrastructure is paralysis — both systems need a reliable, low-latency communication bus to translate thought into coordinated action.",
+      "An intelligent core still needs reliable routing. Architecture is what lets thought become action.",
+    detailPoints: [
+      "Spinal cord -> central route",
+      "Peripheral nerves -> tool channels",
+      "MCP servers -> external capability bus",
+    ],
     color: "amber",
-    icon: "⚡",
-    position: { x: 200, y: 350 },
-    connections: ["brain", "heart", "memory", "hands", "reflexes"],
+    icon: "MCP",
+    position: { x: 210, y: 360 },
+    connections: [
+      "brain",
+      "heart",
+      "lungs",
+      "memory",
+      "gut",
+      "skin",
+      "hands",
+      "reflexes",
+    ],
   },
 
-  memory: {
-    id: "memory",
-    label: "Memory",
-    aiLabel: "GraphRAG & Knowledge Bases",
+  gut: {
+    id: "gut",
+    label: "Digestive System",
+    aiLabel: "Data ingestion",
+    systemType: "pipeline",
     humanDescription:
-      "Human memory spans working memory (~7 items), episodic recall of experiences, and semantic knowledge accumulated over a lifetime — all dynamically reconstructed rather than replayed.",
+      "The digestive system breaks raw material into nutrients, filters waste, and feeds the body over time.",
     aiDescription:
-      "GraphRAG combines vector similarity search with knowledge-graph traversal to retrieve contextually relevant information from massive document corpora, giving the model access to facts beyond its training cutoff.",
+      "Ingestion pipelines parse documents, clean data, chunk content, extract metadata, and prepare embeddings for retrieval.",
     insight:
-      "Neither system stores memories as static files — both reconstruct knowledge on demand, blending retrieval with inference, making every recall a creative act.",
-    color: "amber",
-    icon: "💾",
-    position: { x: 200, y: 380 },
-    connections: ["nervous-system", "brain"],
+      "Bad ingestion becomes bad reasoning. The quality of the pipeline controls the quality of downstream answers.",
+    detailPoints: [
+      "Digestion -> transformation",
+      "Filtering -> quality control",
+      "Chunking -> retrievable units",
+    ],
+    color: "orange",
+    icon: "ETL",
+    position: { x: 210, y: 430 },
+    connections: ["nervous-system", "memory"],
+  },
+
+  skin: {
+    id: "skin",
+    label: "Skin",
+    aiLabel: "User interface",
+    systemType: "interface",
+    humanDescription:
+      "Skin is the body's largest interface. It senses pressure, heat, pain, and contact while protecting internal systems.",
+    aiDescription:
+      "The UI and API surface collect user intent, expose system state, and protect internals with validation and permissions.",
+    insight:
+      "Interfaces are not decoration. They are the contract between a system and the outside world.",
+    detailPoints: [
+      "Touch -> interaction signal",
+      "Barrier -> access control",
+      "UI/API -> system boundary",
+    ],
+    color: "green",
+    icon: "I/O",
+    position: { x: 320, y: 238 },
+    connections: ["eyes", "ears", "nervous-system", "reflexes"],
   },
 
   hands: {
     id: "hands",
     label: "Hands",
-    aiLabel: "Tools & APIs",
+    aiLabel: "Tools and APIs",
+    systemType: "action",
     humanDescription:
-      "The human hand has 27 bones and 34 muscles enabling extraordinary dexterity — from brain surgery to piano performance. Hands are how the brain physically manipulates the world.",
+      "Hands convert intent into physical change. Fine motor control lets the body write, build, repair, and operate tools.",
     aiDescription:
-      "Tool-use enables AI agents to call APIs, execute code, query databases, and interact with external systems. Function calling transforms the model from a passive oracle into an active agent that changes the world.",
+      "Tool calling lets agents run code, call APIs, query databases, create files, and change external systems safely.",
     insight:
-      "Agency requires manipulation — both hands and APIs are the interface through which intelligence reaches beyond thought to reshape reality.",
+      "Agency begins when reasoning can affect the world through controlled actions.",
+    detailPoints: [
+      "Motor control -> execution",
+      "Dexterity -> tool choice",
+      "Function call -> bounded action",
+    ],
     color: "green",
-    icon: "🤲",
-    position: { x: 200, y: 420 },
-    connections: ["nervous-system"],
+    icon: "API",
+    position: { x: 330, y: 394 },
+    connections: ["nervous-system", "reflexes"],
   },
 
   reflexes: {
     id: "reflexes",
     label: "Reflexes",
-    aiLabel: "Guardrails & Workflows",
+    aiLabel: "Guardrails",
+    systemType: "safety",
     humanDescription:
-      "Reflexes are hardwired neural shortcuts that bypass conscious thought — pulling your hand from a flame in 50ms. They protect the body before the brain even registers danger.",
+      "Reflexes and immune responses act before conscious reasoning. They protect the body from immediate damage.",
     aiDescription:
-      "Guardrails are deterministic safety layers — content filters, schema validation, rate limiting, and workflow gates — that intercept harmful or malformed outputs before they reach the user, no inference required.",
+      "Guardrails enforce schemas, permissions, policy checks, rate limits, and validation before outputs or tool calls ship.",
     insight:
-      "Not every decision should require thinking — both biological and artificial systems need fast, reliable safety mechanisms that operate below the level of reasoning.",
+      "Not every safety decision should wait for the model. Some checks must be deterministic and fast.",
+    detailPoints: [
+      "Reflex arc -> fast protection",
+      "Immune response -> anomaly handling",
+      "Policy gate -> deterministic control",
+    ],
     color: "orange",
-    icon: "🛡️",
-    position: { x: 200, y: 480 },
-    connections: ["nervous-system", "hands"],
-  },
-
-  team: {
-    id: "team",
-    label: "Team / Society",
-    aiLabel: "Multi-Agent Systems",
-    humanDescription:
-      "No human operates alone. Teams, organizations, and societies achieve what no individual can — dividing labor, sharing knowledge, debating ideas, and coordinating toward goals no single mind could hold.",
-    aiDescription:
-      "Multi-agent systems orchestrate specialized AI agents — planners, researchers, coders, critics — that collaborate through structured communication, task decomposition, and consensus to solve problems beyond any single model's capability.",
-    insight:
-      "Intelligence scales through collaboration — whether in boardrooms or agent swarms, the architecture of coordination determines the ceiling of collective capability.",
-    color: "violet",
-    icon: "👥",
-    position: { x: 200, y: 580 },
-    connections: ["reflexes", "nervous-system"],
+    icon: "SAFE",
+    position: { x: 116, y: 454 },
+    connections: ["nervous-system", "hands", "skin"],
   },
 };
-
-// ─────────────────────────────────────────────────────────────
-// Signal Flow — the perception → action cascade
-// eyes → brain → memory → brain → heart → brain → hands → mouth
-// ─────────────────────────────────────────────────────────────
 
 export const signalFlowSteps: SignalFlowStep[] = [
   {
     id: "perceive",
     fromPart: "eyes",
     toPart: "brain",
-    humanText: "Light hits the retina and the visual cortex begins pattern recognition.",
-    aiText: "Image tokens are encoded by the vision model and passed to the transformer.",
+    humanText: "The retina captures light and the visual cortex begins pattern recognition.",
+    aiText: "A vision encoder turns pixels into embeddings for the model.",
     duration: 800,
   },
   {
     id: "retrieve",
     fromPart: "brain",
     toPart: "memory",
-    humanText: "The brain searches episodic and semantic memory for relevant context.",
-    aiText: "The model generates a retrieval query; GraphRAG fetches relevant documents and entities.",
+    humanText: "The hippocampus pulls relevant context from memory.",
+    aiText: "GraphRAG retrieves grounded documents, entities, and relationships.",
     duration: 1000,
   },
   {
-    id: "recall",
-    fromPart: "memory",
-    toPart: "brain",
-    humanText: "Memories surface — past experiences and learned knowledge reshape perception.",
-    aiText: "Retrieved context is injected into the prompt, grounding the model's next inference.",
-    duration: 800,
-  },
-  {
-    id: "motivate",
+    id: "decide",
     fromPart: "brain",
     toPart: "heart",
-    humanText: "The limbic system weighs emotional significance and assigns priority to the stimulus.",
-    aiText: "The system prompt's goals and constraints are evaluated against the current context.",
-    duration: 700,
-  },
-  {
-    id: "decide",
-    fromPart: "heart",
-    toPart: "brain",
-    humanText: "Purpose and values guide the brain toward a decision — fight, flee, or engage.",
-    aiText: "Intent alignment narrows the generation space; the model commits to a plan of action.",
+    humanText: "Purpose and priority shape the next action.",
+    aiText: "System intent and constraints narrow the action plan.",
     duration: 700,
   },
   {
     id: "act",
     fromPart: "brain",
     toPart: "hands",
-    humanText: "Motor cortex fires — the brain sends precise signals to muscles for coordinated action.",
-    aiText: "The model emits a function call — an API request, code execution, or database write.",
+    humanText: "Motor signals coordinate the body to act.",
+    aiText: "The agent emits a bounded tool call or API request.",
     duration: 900,
   },
   {
     id: "speak",
     fromPart: "hands",
     toPart: "mouth",
-    humanText: "Action complete, the brain formulates a verbal response — words shaped by breath and tongue.",
-    aiText: "Results are synthesized into a coherent response; tokens are decoded into natural language.",
+    humanText: "The result becomes speech, movement, or feedback.",
+    aiText: "The result is summarized into text, speech, or UI state.",
     duration: 800,
   },
 ];
 
-// ─────────────────────────────────────────────────────────────
-// Hallucination Narrative
-// ─────────────────────────────────────────────────────────────
-
 export const hallucinationSteps: HallucinationStep[] = [
   {
     id: "h1",
-    text: "A user asks: 'What paper did Dr. Elena Vasquez publish on quantum error correction in 2019?'",
+    text: "A user asks for a precise fact the system does not actually know.",
     type: "normal",
   },
   {
     id: "h2",
-    text: "The model searches its parameters — no exact match exists, but the statistical neighborhood is rich with plausible patterns.",
+    text: "The model finds nearby patterns and starts completing the answer fluently.",
     type: "normal",
   },
   {
     id: "h3",
-    text: "Neurons fire confidently. The model generates: 'Dr. Vasquez published \"Topological Codes for Scalable Quantum Memory\" in Physical Review Letters, 2019.'",
+    text: "The answer sounds plausible, but the source does not exist.",
     type: "error",
   },
   {
     id: "h4",
-    text: "The title sounds real. The journal is real. The year matches. But the paper does not exist — the model has hallucinated a plausible fiction.",
-    type: "error",
-  },
-  {
-    id: "h5",
-    text: "This is the gap between pattern-matching and knowledge. Human memory fabricates too — we call them false memories. Both systems confuse fluency with truth.",
-    type: "insight",
-  },
-  {
-    id: "h6",
-    text: "The solution is the same for both: external verification. Humans check sources. AI systems use RAG, citations, and guardrails to anchor generation in retrievable fact.",
+    text: "The fix is grounding: retrieval, citations, verification, and guardrails.",
     type: "insight",
   },
 ];

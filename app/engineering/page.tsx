@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SystemTopologyInspector } from "@/components/marketing/system-topology-inspector";
 import { ArchitectureDecisionMap } from "@/components/marketing/architecture-decision-map";
 import { EngineeringJourney } from "@/components/marketing/engineering-journey";
@@ -8,6 +9,7 @@ import { CtaBand } from "@/components/marketing/cta-band";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { createMetadata } from "@/lib/seo";
 import {
+	ArrowRight,
 	BrainCircuit,
 	Database,
 	GitBranch,
@@ -66,6 +68,14 @@ const radarSignals = [
 			"FastAPI services, container paths, observability, deployment handoff, and frontend surfaces.",
 		icon: ServerCog,
 	},
+] as const;
+
+const interactiveGuideTags = [
+	"LLM reasoning",
+	"GraphRAG memory",
+	"MCP routing",
+	"Tool execution",
+	"Guardrails",
 ] as const;
 
 const stackGroups = [
@@ -170,6 +180,49 @@ function RadarSignalStrip() {
 	);
 }
 
+function InteractiveGuideLink() {
+	return (
+		<Section className="border-b border-border bg-background py-14 md:py-16">
+			<Link
+				href="/engineering/ai-human"
+				className="group grid gap-6 border border-border bg-card/10 p-5 transition-colors hover:border-amber/45 hover:bg-card/20 md:grid-cols-[minmax(0,0.72fr)_minmax(16rem,0.28fr)] md:p-6">
+				<div className="min-w-0">
+					<div className="flex items-center gap-2">
+						<BrainCircuit className="size-4 text-amber" />
+						<p className="font-mono text-xs uppercase tracking-wide text-amber">
+							Interactive guide
+						</p>
+					</div>
+					<h2 className="mt-4 max-w-[18ch] font-display text-3xl font-normal leading-[1.08] text-foreground md:text-4xl">
+						Human anatomy as AI architecture.
+					</h2>
+					<p className="mt-5 max-w-[72ch] text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
+						Explore a visual map of the body as a production AI system:
+						sensors, memory, routing, tools, interface, context, and safety
+						loops.
+					</p>
+				</div>
+
+				<div className="flex min-w-0 flex-col justify-between gap-5 border-t border-border pt-5 md:border-t-0 md:border-l md:pt-0 md:pl-6">
+					<div className="flex flex-wrap gap-2">
+						{interactiveGuideTags.map((tag) => (
+							<span
+								key={tag}
+								className="rounded-[6px] border border-border bg-background/40 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+								{tag}
+							</span>
+						))}
+					</div>
+					<span className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors group-hover:text-amber">
+						Open anatomy map
+						<ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+					</span>
+				</div>
+			</Link>
+		</Section>
+	);
+}
+
 function StackGroups() {
 	return (
 		<div className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -197,6 +250,7 @@ export default function EngineeringPage() {
 	return (
 		<>
 			<EngineeringIntro />
+			<InteractiveGuideLink />
 
 			<Section className="bg-card/5">
 				<SectionHeader

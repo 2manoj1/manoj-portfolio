@@ -1,28 +1,16 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
 import { bodyParts } from "./bodyPartData";
 import type { BodyPart } from "./bodyPartData";
 
-// ─────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────
-
 interface HumanFigureSVGProps {
-  /** Currently highlighted body part ID */
   activePart: string | null;
-  /** Active signal animation between two parts */
   signalPath: { from: string; to: string } | null;
-  /** Callback when a body-part node is clicked */
   onPartClick: (partId: string) => void;
   className?: string;
 }
-
-// ─────────────────────────────────────────────────────────────
-// Color mapping — Tailwind color names → hex values
-// Used for SVG fills/strokes where Tailwind classes can't reach
-// ─────────────────────────────────────────────────────────────
 
 const COLOR_MAP: Record<string, string> = {
   cyan: "#22d3ee",
@@ -34,145 +22,50 @@ const COLOR_MAP: Record<string, string> = {
   green: "#22c55e",
 };
 
-/** Warm white/gold — the default constellation node color */
-const WARM_WHITE = "#f5f0e8";
-const FILAMENT_COLOR = "rgba(245, 240, 232, 0.15)";
-const FILAMENT_ACTIVE = "rgba(245, 240, 232, 0.35)";
+const LABEL_PLACEMENTS: Record<
+  string,
+  { x: number; y: number; anchor: "start" | "middle" | "end" }
+> = {
+  brain: { x: 286, y: 62, anchor: "start" },
+  memory: { x: 96, y: 86, anchor: "end" },
+  eyes: { x: 294, y: 126, anchor: "start" },
+  ears: { x: 82, y: 132, anchor: "end" },
+  mouth: { x: 294, y: 166, anchor: "start" },
+  lungs: { x: 78, y: 260, anchor: "end" },
+  heart: { x: 292, y: 294, anchor: "start" },
+  skin: { x: 352, y: 232, anchor: "start" },
+  "nervous-system": { x: 292, y: 366, anchor: "start" },
+  gut: { x: 292, y: 438, anchor: "start" },
+  reflexes: { x: 72, y: 468, anchor: "end" },
+  hands: { x: 350, y: 412, anchor: "start" },
+};
 
-function stableOffset(value: string, modulo: number) {
-  return Array.from(value).reduce((total, char) => total + char.charCodeAt(0), 0) % modulo;
-}
+const WARM_WHITE = "#f8f3ea";
+const SOFT_LINE = "rgba(248, 243, 234, 0.16)";
 
-// ─────────────────────────────────────────────────────────────
-// Decorative outline points — small dots that trace a
-// recognizable human silhouette (head → shoulders → arms →
-// torso → legs) to reinforce the constellation metaphor.
-// ─────────────────────────────────────────────────────────────
-
-const OUTLINE_DOTS: { x: number; y: number; r: number }[] = [
-  // Head outline
-  { x: 185, y: 55, r: 1.2 },
-  { x: 215, y: 55, r: 1.0 },
-  { x: 175, y: 70, r: 1.1 },
-  { x: 225, y: 70, r: 1.3 },
-  { x: 175, y: 95, r: 1.0 },
-  { x: 225, y: 95, r: 1.2 },
-  // Neck
-  { x: 195, y: 150, r: 1.0 },
-  { x: 205, y: 155, r: 1.1 },
-  // Shoulders
-  { x: 130, y: 210, r: 1.4 },
-  { x: 270, y: 210, r: 1.3 },
-  { x: 150, y: 200, r: 1.0 },
-  { x: 250, y: 200, r: 1.1 },
-  // Left arm
-  { x: 115, y: 250, r: 1.2 },
-  { x: 108, y: 290, r: 1.0 },
-  { x: 102, y: 330, r: 1.1 },
-  { x: 96, y: 370, r: 1.3 },
-  // Right arm
-  { x: 285, y: 250, r: 1.1 },
-  { x: 292, y: 290, r: 1.2 },
-  { x: 298, y: 330, r: 1.0 },
-  { x: 304, y: 370, r: 1.3 },
-  // Torso sides
-  { x: 165, y: 240, r: 1.0 },
-  { x: 235, y: 240, r: 1.1 },
-  { x: 160, y: 310, r: 1.2 },
-  { x: 240, y: 310, r: 1.0 },
-  { x: 165, y: 380, r: 1.1 },
-  { x: 235, y: 380, r: 1.2 },
-  // Hips
-  { x: 160, y: 450, r: 1.3 },
-  { x: 240, y: 450, r: 1.2 },
-  { x: 170, y: 470, r: 1.0 },
-  { x: 230, y: 470, r: 1.1 },
-  // Left leg
-  { x: 168, y: 510, r: 1.1 },
-  { x: 165, y: 550, r: 1.0 },
-  { x: 160, y: 600, r: 1.2 },
-  { x: 155, y: 640, r: 1.1 },
-  { x: 150, y: 670, r: 1.3 },
-  // Right leg
-  { x: 232, y: 510, r: 1.0 },
-  { x: 235, y: 550, r: 1.2 },
-  { x: 240, y: 600, r: 1.1 },
-  { x: 245, y: 640, r: 1.0 },
-  { x: 250, y: 670, r: 1.3 },
-  // Spine accents
-  { x: 200, y: 250, r: 1.0 },
-  { x: 200, y: 310, r: 1.1 },
-  { x: 200, y: 440, r: 1.0 },
-  { x: 200, y: 530, r: 1.2 },
-];
-
-// ─────────────────────────────────────────────────────────────
-// Structural filament lines — extra edges that define the body
-// shape beyond the node-to-node connections.
-// Format: [x1, y1, x2, y2]
-// ─────────────────────────────────────────────────────────────
-
-const BODY_FILAMENTS: [number, number, number, number][] = [
-  // Shoulder span
-  [130, 210, 200, 180],
-  [270, 210, 200, 180],
-  // Arms — left
-  [130, 210, 115, 250],
-  [115, 250, 108, 290],
-  [108, 290, 100, 400],
-  // Arms — right
-  [270, 210, 285, 250],
-  [285, 250, 292, 290],
-  [292, 290, 300, 400],
-  // Torso left edge
-  [130, 210, 160, 310],
-  [160, 310, 165, 380],
-  [165, 380, 170, 470],
-  // Torso right edge
-  [270, 210, 240, 310],
-  [240, 310, 235, 380],
-  [235, 380, 230, 470],
-  // Left leg
-  [170, 470, 165, 550],
-  [165, 550, 155, 640],
-  [155, 640, 150, 670],
-  // Right leg
-  [230, 470, 235, 550],
-  [235, 550, 245, 640],
-  [245, 640, 250, 670],
-  // Hips cross
-  [170, 470, 200, 480],
-  [230, 470, 200, 480],
-  // Feet
-  [150, 670, 200, 580],
-  [250, 670, 200, 580],
-];
-
-// ─────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────
-
-/** Build a unique key for an edge so we don't render duplicates. */
-function edgeKey(a: string, b: string): string {
+function edgeKey(a: string, b: string) {
   return [a, b].sort().join("--");
 }
 
-/** Compute the SVG path d-string for a signal travelling between two points. */
 function signalPathD(
   from: { x: number; y: number },
-  to: { x: number; y: number }
-): string {
+  to: { x: number; y: number },
+) {
   const mx = (from.x + to.x) / 2;
   const my = (from.y + to.y) / 2;
-  // Slight curve for visual interest
-  const cx = mx + (to.y - from.y) * 0.15;
-  const cy = my - (to.x - from.x) * 0.15;
+  const cx = mx + (to.y - from.y) * 0.12;
+  const cy = my - (to.x - from.x) * 0.12;
   return `M ${from.x} ${from.y} Q ${cx} ${cy} ${to.x} ${to.y}`;
 }
 
-// ─────────────────────────────────────────────────────────────
-// Component
-// ─────────────────────────────────────────────────────────────
+function labelBoxX(
+  placement: { x: number; anchor: "start" | "middle" | "end" },
+  width: number,
+) {
+  if (placement.anchor === "end") return placement.x - width;
+  if (placement.anchor === "middle") return placement.x - width / 2;
+  return placement.x;
+}
 
 export default function HumanFigureSVG({
   activePart,
@@ -180,18 +73,19 @@ export default function HumanFigureSVG({
   onPartClick,
   className = "",
 }: HumanFigureSVGProps) {
-  // Pre-compute the list of unique connection edges
   const edges = useMemo(() => {
     const seen = new Set<string>();
     const result: { from: BodyPart; to: BodyPart; key: string }[] = [];
 
     Object.values(bodyParts).forEach((part) => {
-      part.connections.forEach((connId) => {
-        const key = edgeKey(part.id, connId);
-        if (!seen.has(key) && bodyParts[connId]) {
-          seen.add(key);
-          result.push({ from: part, to: bodyParts[connId], key });
-        }
+      part.connections.forEach((connectionId) => {
+        const connection = bodyParts[connectionId];
+        const key = edgeKey(part.id, connectionId);
+
+        if (!connection || seen.has(key)) return;
+
+        seen.add(key);
+        result.push({ from: part, to: connection, key });
       });
     });
 
@@ -202,37 +96,42 @@ export default function HumanFigureSVG({
 
   return (
     <svg
-      viewBox="0 0 400 700"
+      viewBox="0 0 420 760"
       xmlns="http://www.w3.org/2000/svg"
-      className={`w-full h-full ${className}`}
-      aria-label="Interactive AI-Human body constellation"
-      role="img"
+      className={`h-full w-full ${className}`}
+      aria-labelledby="ai-human-anatomy-title ai-human-anatomy-desc"
+      role="group"
     >
-      {/* ── Definitions: gradients, filters, glow effects ── */}
+      <title id="ai-human-anatomy-title">
+        Human anatomy mapped to AI architecture
+      </title>
+      <desc id="ai-human-anatomy-desc">
+        Interactive anatomy diagram comparing body systems with AI system
+        components such as LLMs, GraphRAG, MCP, tools, context, and guardrails.
+      </desc>
+
       <defs>
-        {/* Central radial glow behind the figure */}
-        <radialGradient id="figure-glow" cx="50%" cy="45%" r="50%">
-          <stop offset="0%" stopColor="rgba(245, 240, 232, 0.06)" />
-          <stop offset="100%" stopColor="rgba(245, 240, 232, 0)" />
+        <linearGradient id="skin-shell" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stopColor="#fbf5e8" stopOpacity="0.2" />
+          <stop offset="55%" stopColor="#f7c984" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.08" />
+        </linearGradient>
+
+        <radialGradient id="body-aura" cx="50%" cy="38%" r="58%">
+          <stop offset="0%" stopColor="#f8f3ea" stopOpacity="0.09" />
+          <stop offset="72%" stopColor="#0ea5e9" stopOpacity="0.03" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0" />
         </radialGradient>
 
-        {/* Soft blur for node glow */}
-        <filter id="node-glow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
+        <filter id="soft-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
 
-        {/* Stronger glow for active node */}
-        <filter
-          id="active-glow"
-          x="-150%"
-          y="-150%"
-          width="400%"
-          height="400%"
-        >
+        <filter id="active-glow" x="-120%" y="-120%" width="340%" height="340%">
           <feGaussianBlur stdDeviation="8" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
@@ -241,78 +140,146 @@ export default function HumanFigureSVG({
           </feMerge>
         </filter>
 
-        {/* Signal pulse filter */}
-        <filter
-          id="signal-glow"
-          x="-200%"
-          y="-200%"
-          width="500%"
-          height="500%"
-        >
-          <feGaussianBlur stdDeviation="6" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-
-        {/* Per-part colored glow filters */}
         {parts.map((part) => {
-          const hex = COLOR_MAP[part.color] ?? WARM_WHITE;
+          const color = COLOR_MAP[part.color] ?? WARM_WHITE;
+
           return (
-            <radialGradient key={`grad-${part.id}`} id={`grad-${part.id}`}>
-              <stop offset="0%" stopColor={hex} stopOpacity={0.6} />
-              <stop offset="100%" stopColor={hex} stopOpacity={0} />
+            <radialGradient key={part.id} id={`part-${part.id}`}>
+              <stop offset="0%" stopColor={color} stopOpacity="0.58" />
+              <stop offset="100%" stopColor={color} stopOpacity="0" />
             </radialGradient>
           );
         })}
       </defs>
 
-      {/* ── Background glow ── */}
-      <ellipse cx="200" cy="320" rx="180" ry="280" fill="url(#figure-glow)" />
+      <rect width="420" height="760" fill="transparent" />
+      <ellipse cx="210" cy="332" rx="186" ry="312" fill="url(#body-aura)" />
 
-      {/* ── Body outline filaments ── */}
-      {BODY_FILAMENTS.map(([x1, y1, x2, y2], i) => (
-        <motion.line
-          key={`bf-${i}`}
-          x1={x1}
-          y1={y1}
-          x2={x2}
-          y2={y2}
-          stroke={FILAMENT_COLOR}
-          strokeWidth={0.8}
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: [0.2, 0.4, 0.2] }}
-          transition={{
-            duration: 4 + (i % 3),
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+      <path
+        d="M210 34 C238 34 258 57 258 88 C258 118 239 141 222 149 L222 168 C273 173 315 198 333 241 C352 286 357 341 349 399 C346 418 323 419 318 399 C310 347 302 297 284 259 L274 409 C274 470 295 522 303 657 C305 687 263 692 257 661 L224 505 C221 488 199 488 196 505 L163 661 C157 692 115 687 117 657 C125 522 146 470 146 409 L136 259 C118 297 110 347 102 399 C97 419 74 418 71 399 C63 341 68 286 87 241 C105 198 147 173 198 168 L198 149 C181 141 162 118 162 88 C162 57 182 34 210 34 Z"
+        fill="url(#skin-shell)"
+        stroke="rgba(248, 243, 234, 0.32)"
+        strokeWidth="1.3"
+      />
+
+      <path
+        d="M142 219 C178 202 242 202 278 219 M146 243 C184 232 236 232 274 243 M154 331 C190 347 230 347 266 331"
+        fill="none"
+        stroke="rgba(248, 243, 234, 0.13)"
+        strokeLinecap="round"
+        strokeWidth="1.1"
+      />
+
+      <g aria-hidden="true">
+        <path
+          d="M178 83 C180 58 198 50 214 57 C230 50 245 62 245 84 C245 110 224 125 201 118 C186 122 174 108 178 83 Z"
+          fill="rgba(34, 211, 238, 0.18)"
+          stroke="rgba(34, 211, 238, 0.55)"
+          strokeWidth="1"
         />
-      ))}
+        <path
+          d="M186 78 C196 70 205 72 212 82 M214 63 C218 76 217 91 209 103 M196 103 C206 96 220 98 232 108 M186 94 C197 90 204 93 209 103"
+          fill="none"
+          stroke="rgba(34, 211, 238, 0.55)"
+          strokeLinecap="round"
+          strokeWidth="0.9"
+        />
 
-      {/* ── Connection filaments between body-part nodes ── */}
+        <circle cx="198" cy="122" r="3" fill="rgba(59, 130, 246, 0.9)" />
+        <circle cx="222" cy="122" r="3" fill="rgba(59, 130, 246, 0.9)" />
+        <path
+          d="M191 156 Q210 165 229 156"
+          fill="none"
+          stroke="rgba(139, 92, 246, 0.8)"
+          strokeLinecap="round"
+          strokeWidth="1.3"
+        />
+        <path
+          d="M150 111 C132 118 130 139 145 148 M270 111 C288 118 290 139 275 148"
+          fill="none"
+          stroke="rgba(59, 130, 246, 0.48)"
+          strokeLinecap="round"
+          strokeWidth="1.1"
+        />
+
+        <path
+          d="M210 151 C210 194 210 238 210 286 C210 338 210 410 210 488"
+          fill="none"
+          stroke="rgba(245, 158, 11, 0.75)"
+          strokeLinecap="round"
+          strokeWidth="3"
+        />
+        <path
+          d="M210 196 C190 208 168 219 151 239 M210 196 C230 208 252 219 269 239 M210 280 C188 292 166 306 147 327 M210 280 C232 292 254 306 273 327 M210 365 C188 379 164 393 135 408 M210 365 C232 379 256 393 285 408"
+          fill="none"
+          stroke="rgba(245, 158, 11, 0.28)"
+          strokeLinecap="round"
+          strokeWidth="1.2"
+        />
+
+        <path
+          d="M181 226 C153 225 137 252 144 288 C149 317 171 326 190 309 C195 286 194 248 181 226 Z"
+          fill="rgba(34, 211, 238, 0.13)"
+          stroke="rgba(34, 211, 238, 0.5)"
+          strokeWidth="1"
+        />
+        <path
+          d="M239 226 C267 225 283 252 276 288 C271 317 249 326 230 309 C225 286 226 248 239 226 Z"
+          fill="rgba(34, 211, 238, 0.13)"
+          stroke="rgba(34, 211, 238, 0.5)"
+          strokeWidth="1"
+        />
+
+        <path
+          d="M222 267 C236 250 258 263 254 284 C251 304 230 318 222 327 C214 318 193 304 190 284 C186 263 208 250 222 267 Z"
+          fill="rgba(239, 68, 68, 0.22)"
+          stroke="rgba(239, 68, 68, 0.65)"
+          strokeWidth="1"
+        />
+
+        <path
+          d="M189 388 C175 374 176 350 198 346 C217 342 232 357 226 376 C221 394 199 404 189 420"
+          fill="none"
+          stroke="rgba(249, 115, 22, 0.62)"
+          strokeLinecap="round"
+          strokeWidth="3"
+        />
+        <path
+          d="M181 430 C200 414 224 416 240 432 C222 451 198 451 181 430 Z"
+          fill="rgba(249, 115, 22, 0.12)"
+          stroke="rgba(249, 115, 22, 0.48)"
+          strokeWidth="1"
+        />
+
+        <path
+          d="M307 339 L330 351 L326 380 C321 397 307 407 293 412 C279 407 265 397 260 380 L256 351 L279 339 C287 344 299 344 307 339 Z"
+          fill="rgba(249, 115, 22, 0.1)"
+          stroke="rgba(249, 115, 22, 0.45)"
+          strokeWidth="1"
+        />
+      </g>
+
       {edges.map(({ from, to, key }) => {
-        const isOnSignalPath =
+        const active =
           signalPath &&
           ((signalPath.from === from.id && signalPath.to === to.id) ||
             (signalPath.from === to.id && signalPath.to === from.id));
+        const color = COLOR_MAP[to.color] ?? WARM_WHITE;
 
         return (
-          <motion.line
+          <motion.path
             key={key}
-            x1={from.position.x}
-            y1={from.position.y}
-            x2={to.position.x}
-            y2={to.position.y}
-            stroke={isOnSignalPath ? FILAMENT_ACTIVE : FILAMENT_COLOR}
-            strokeWidth={isOnSignalPath ? 1.5 : 1}
-            initial={{ opacity: 0.4 }}
+            d={signalPathD(from.position, to.position)}
+            fill="none"
+            stroke={active ? color : SOFT_LINE}
+            strokeLinecap="round"
+            strokeWidth={active ? 1.8 : 0.8}
+            initial={{ opacity: 0.28 }}
             animate={{
-              opacity: isOnSignalPath ? [0.5, 1, 0.5] : [0.3, 0.5, 0.3],
+              opacity: active ? [0.45, 0.95, 0.45] : [0.16, 0.32, 0.16],
             }}
             transition={{
-              duration: isOnSignalPath ? 0.8 : 3 + stableOffset(key, 5) * 0.4,
+              duration: active ? 0.9 : 4,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -320,191 +287,139 @@ export default function HumanFigureSVG({
         );
       })}
 
-      {/* ── Decorative outline dots ── */}
-      {OUTLINE_DOTS.map((dot, i) => (
-        <motion.circle
-          key={`dot-${i}`}
-          cx={dot.x}
-          cy={dot.y}
-          r={dot.r}
-          fill={WARM_WHITE}
-          initial={{ opacity: 0.15 }}
-          animate={{ opacity: [0.1, 0.3, 0.1] }}
-          transition={{
-            duration: 3 + (i % 5),
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: (i * 0.3) % 2,
-          }}
-        />
-      ))}
-
-      {/* ── Signal flow animation ── */}
       <AnimatePresence>
         {signalPath &&
           bodyParts[signalPath.from] &&
           bodyParts[signalPath.to] && (
             <motion.circle
-              key={`signal-${signalPath.from}-${signalPath.to}`}
+              key={`${signalPath.from}-${signalPath.to}`}
               r={5}
-              fill={
-                COLOR_MAP[bodyParts[signalPath.to].color] ?? WARM_WHITE
-              }
-              filter="url(#signal-glow)"
+              fill={COLOR_MAP[bodyParts[signalPath.to].color] ?? WARM_WHITE}
+              filter="url(#active-glow)"
               initial={{
                 cx: bodyParts[signalPath.from].position.x,
                 cy: bodyParts[signalPath.from].position.y,
                 opacity: 0,
-                scale: 0.5,
+                scale: 0.7,
               }}
               animate={{
                 cx: bodyParts[signalPath.to].position.x,
                 cy: bodyParts[signalPath.to].position.y,
                 opacity: [0, 1, 1, 0],
-                scale: [0.5, 1.2, 1.2, 0.5],
+                scale: [0.7, 1.2, 1.2, 0.7],
               }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
+              transition={{ duration: 0.85, ease: "easeInOut" }}
             />
           )}
       </AnimatePresence>
 
-      {/* ── Signal trail path (subtle line following signal) ── */}
-      <AnimatePresence>
-        {signalPath &&
-          bodyParts[signalPath.from] &&
-          bodyParts[signalPath.to] && (
-            <motion.path
-              key={`trail-${signalPath.from}-${signalPath.to}`}
-              d={signalPathD(
-                bodyParts[signalPath.from].position,
-                bodyParts[signalPath.to].position
-              )}
-              fill="none"
-              stroke={
-                COLOR_MAP[bodyParts[signalPath.to].color] ?? WARM_WHITE
-              }
-              strokeWidth={2}
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: [0, 0.6, 0] }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-            />
-          )}
-      </AnimatePresence>
-
-      {/* ── Body-part nodes ── */}
       {parts.map((part) => {
         const isActive = activePart === part.id;
-        const hex = COLOR_MAP[part.color] ?? WARM_WHITE;
-        const baseRadius = 6;
-        const activeRadius = 10;
+        const color = COLOR_MAP[part.color] ?? WARM_WHITE;
+        const placement = LABEL_PLACEMENTS[part.id];
+        const labelWidth = part.aiLabel.length > 17 ? 106 : 92;
+        const labelX = placement ? labelBoxX(placement, labelWidth) : 0;
 
         return (
-          <g
-            key={part.id}
-            onClick={() => onPartClick(part.id)}
-            style={{ cursor: "pointer" }}
-            role="button"
-            aria-label={`${part.label} — ${part.aiLabel}`}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onPartClick(part.id);
-              }
-            }}
-          >
-            {/* Active halo */}
-            {isActive && (
+          <g key={part.id}>
+            {placement ? (
+              <g pointerEvents="none">
+                <path
+                  d={`M ${part.position.x} ${part.position.y} L ${placement.x} ${placement.y + 4}`}
+                  stroke={isActive ? color : "rgba(248, 243, 234, 0.16)"}
+                  strokeWidth={isActive ? 1 : 0.7}
+                  strokeDasharray="3 4"
+                  fill="none"
+                />
+                <rect
+                  x={labelX}
+                  y={placement.y - 13}
+                  width={labelWidth}
+                  height={31}
+                  rx={4}
+                  fill={isActive ? `${color}22` : "rgba(10, 10, 12, 0.52)"}
+                  stroke={isActive ? `${color}aa` : "rgba(248, 243, 234, 0.12)"}
+                  strokeWidth="0.7"
+                />
+                <text
+                  x={placement.x}
+                  y={placement.y - 2}
+                  textAnchor={placement.anchor}
+                  fill={isActive ? color : "rgba(248, 243, 234, 0.72)"}
+                  fontFamily="ui-sans-serif, system-ui, sans-serif"
+                  fontSize="8.5"
+                  fontWeight="700"
+                >
+                  {part.label}
+                </text>
+                <text
+                  x={placement.x}
+                  y={placement.y + 10}
+                  textAnchor={placement.anchor}
+                  fill="rgba(248, 243, 234, 0.46)"
+                  fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+                  fontSize="6.8"
+                >
+                  {part.aiLabel}
+                </text>
+              </g>
+            ) : null}
+
+            <g
+              onClick={() => onPartClick(part.id)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  onPartClick(part.id);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`${part.label}: ${part.aiLabel}`}
+              style={{ cursor: "pointer" }}
+            >
+              {isActive ? (
+                <motion.circle
+                  cx={part.position.x}
+                  cy={part.position.y}
+                  r={24}
+                  fill={`url(#part-${part.id})`}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: [0.35, 0.7, 0.35], scale: [0.9, 1.12, 0.9] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                />
+              ) : null}
               <motion.circle
                 cx={part.position.x}
                 cy={part.position.y}
-                r={activeRadius * 2.5}
-                fill={`url(#grad-${part.id})`}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: [0.3, 0.6, 0.3], scale: 1 }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
+                r={isActive ? 11 : 8}
+                fill={isActive ? color : "rgba(10, 10, 12, 0.85)"}
+                stroke={isActive ? WARM_WHITE : color}
+                strokeOpacity={isActive ? 0.9 : 0.55}
+                strokeWidth={isActive ? 1.5 : 1}
+                filter={isActive ? "url(#active-glow)" : "url(#soft-glow)"}
+                style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                animate={{
+                  scale: isActive ? [0.92, 1.08, 0.92] : [0.94, 1.04, 0.94],
+                  opacity: isActive ? 1 : [0.74, 0.95, 0.74],
                 }}
+                transition={{ duration: isActive ? 1.4 : 2.6, repeat: Infinity }}
               />
-            )}
-
-            {/* Outer glow ring */}
-            <motion.circle
-              cx={part.position.x}
-              cy={part.position.y}
-              r={isActive ? activeRadius + 2 : baseRadius + 1}
-              fill="none"
-              stroke={isActive ? hex : WARM_WHITE}
-              strokeWidth={0.5}
-              strokeOpacity={isActive ? 0.5 : 0.2}
-              animate={{
-                r: isActive
-                  ? [activeRadius + 1, activeRadius + 4, activeRadius + 1]
-                  : [baseRadius, baseRadius + 2, baseRadius],
-                strokeOpacity: isActive ? [0.3, 0.6, 0.3] : [0.1, 0.25, 0.1],
-              }}
-              transition={{
-                duration: isActive ? 1.5 : 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-
-            {/* Core node — breathing pulse */}
-            <motion.circle
-              cx={part.position.x}
-              cy={part.position.y}
-              fill={isActive ? hex : WARM_WHITE}
-              filter={isActive ? "url(#active-glow)" : "url(#node-glow)"}
-              animate={{
-                r: isActive
-                  ? [activeRadius - 1, activeRadius, activeRadius - 1]
-                  : [baseRadius - 1, baseRadius, baseRadius - 1],
-                opacity: isActive ? 1 : [0.6, 0.85, 0.6],
-              }}
-              transition={{
-                duration: isActive ? 1.2 : 2.5 + stableOffset(part.id, 4) * 0.25,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-
-            {/* Hover hit area (larger invisible circle for easier clicking) */}
-            <circle
-              cx={part.position.x}
-              cy={part.position.y}
-              r={18}
-              fill="transparent"
-            />
-
-            {/* Label — shown only for the active part */}
-            <AnimatePresence>
-              {isActive && (
-                <motion.text
-                  x={part.position.x}
-                  y={part.position.y - activeRadius - 10}
-                  textAnchor="middle"
-                  fill={hex}
-                  fontSize={11}
-                  fontFamily="system-ui, sans-serif"
-                  fontWeight={500}
-                  initial={{ opacity: 0, y: part.position.y - activeRadius }}
-                  animate={{
-                    opacity: 1,
-                    y: part.position.y - activeRadius - 10,
-                  }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {part.label}
-                </motion.text>
-              )}
-            </AnimatePresence>
+              <text
+                x={part.position.x}
+                y={part.position.y + 2.6}
+                textAnchor="middle"
+                fill={isActive ? "#09090b" : WARM_WHITE}
+                fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+                fontSize={part.icon.length > 3 ? 4.7 : 6.3}
+                fontWeight="800"
+                pointerEvents="none"
+              >
+                {part.icon}
+              </text>
+              <circle cx={part.position.x} cy={part.position.y} r={22} fill="transparent" />
+            </g>
           </g>
         );
       })}
