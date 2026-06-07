@@ -537,7 +537,7 @@ export const articles = [
 		topic: "AI agents",
 		description:
 			"Exploring tool invocation dynamics, parameter schemas, and error boundaries using LLaMA 3 models locally.",
-		url: "https://medium.com/@manojmukherjee777/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-51c6c0628e93",
+		url: "https://medium.com/@manojmukherjee777/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-95a80ded5489",
 	},
 	{
 		title: "Extracting Information from Images with OCR, Vision AI, and Language Models",
@@ -553,7 +553,7 @@ export const articles = [
 		topic: "Multimodal AI",
 		description:
 			"Setting up local multimodal workloads using LLaVA and Ollama to parse visual diagrams and document charts locally.",
-		url: "https://medium.com/@manojmukherjee777/local-image-understanding-with-opensource-llava-and-ollama-84f93a901046",
+		url: "https://medium.com/@manojmukherjee777/local-image-understanding-with-opensource-llava-and-ollama-dbb76a79b393",
 	},
 	{
 		title: "React Testing Library: Portal Modal",
@@ -577,7 +577,7 @@ export const articles = [
 		topic: "Frontend testing",
 		description:
 			"Testing strategy guides for end-to-end browser regression checks and component level testing under Cypress 10.",
-		url: "https://medium.com/@manojmukherjee777/cypress-10-as-frontend-or-javascript-engineer-f5e6a91d1e4e",
+		url: "https://medium.com/@manojmukherjee777/cypress-10-as-frontend-or-javascript-engineer-333198bba587",
 	},
 ] as const;
 
@@ -610,7 +610,7 @@ export const publications = [
 		platform: "Medium / Systems Journal",
 		contribution: "Designed token-compaction formulas and hybrid search scoring formulas that reduced context payload sizes by 45%.",
 		tags: ["pgvector", "Qdrant", "Cross-Encoder", "Hybrid Search"],
-		url: "https://medium.com/@manojmukherjee777/advanced-retrieval-augmented-generation-rag-with-langchain-langgraph-and-ai-agents-588aab108abf"
+		url: "https://medium.com/@manojmukherjee777/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-95a80ded5489"
 	},
 	{
 		title: "Real-Time AI Agents with LangChain & LangGraph",
