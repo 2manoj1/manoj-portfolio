@@ -12,7 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: "https://www.manojmukherjee.co.in/sitemap.xml",
-    host: "https://www.manojmukherjee.co.in",
+    sitemap: "https://www.manojmukherjee.co.in/sitemap.xml"
   };
 }
