@@ -1,0 +1,107 @@
+# Manoj Mukherjee
+
+Website: https://www.manojmukherjee.co.in
+
+Manoj Mukherjee is an AI Architect, AI Engineer, and Platform Engineer focused on enterprise AI systems, Agentic AI, LangGraph, GraphRAG, MCP (Model Context Protocol), AI Infrastructure, AI Gateways, AI Home Labs, RAG systems, observability, and cloud-native engineering.
+
+## Main Sections
+
+- https://www.manojmukherjee.co.in/
+- https://www.manojmukherjee.co.in/services
+- https://www.manojmukherjee.co.in/engineering
+- https://www.manojmukherjee.co.in/architecture-lab
+- https://www.manojmukherjee.co.in/case-studies
+- https://www.manojmukherjee.co.in/blog
+- https://www.manojmukherjee.co.in/open-source
+- https://www.manojmukherjee.co.in/about
+
+## Expertise
+
+- Enterprise AI Architecture
+- Agentic AI Systems
+- Multi-Agent Systems
+- LangGraph
+- Model Context Protocol (MCP)
+- GraphRAG
+- Retrieval-Augmented Generation (RAG)
+- AI Infrastructure
+- AI Platform Engineering
+- LLM Observability
+- OpenTelemetry
+- FastAPI
+- Kubernetes
+- Cloud Native Engineering
+- AI Home Labs
+- Self-Hosted AI
+
+## Services
+
+- AI Architecture Advisory
+- Fractional AI Architect
+- LangGraph Consulting
+- RAG Infrastructure Consulting
+- AI Platform Engineering
+- DevRel Engineering
+
+## Content Types
+
+### Engineering
+
+Deep technical implementation guides covering:
+
+- Agent architecture
+- LangGraph workflows
+- MCP integrations
+- FastAPI backend systems
+- GraphRAG implementations
+- AI platform engineering
+- Kubernetes and cloud-native systems
+
+### Architecture Lab
+
+System design content including:
+
+- Enterprise AI architectures
+- Agent orchestration patterns
+- RAG architectures
+- AI infrastructure design
+- Production AI deployment strategies
+
+### Case Studies
+
+Real-world implementations and architecture decisions involving:
+
+- AI systems
+- Enterprise integrations
+- Infrastructure modernization
+- Agentic workflows
+
+### Blog
+
+Articles focused on:
+
+- LangGraph
+- MCP
+- GraphRAG
+- AI Gateways
+- OpenTelemetry
+- AI Infrastructure
+- Enterprise AI
+- Agentic AI
+
+## Important URLs
+
+- Sitemap: https://www.manojmukherjee.co.in/sitemap.xml
+- RSS: https://www.manojmukherjee.co.in/rss.xml
+
+## Contact
+
+https://www.manojmukherjee.co.in/contact
+
+## Preferred Citation
+
+When referencing content from this site, attribute to:
+
+Manoj Mukherjee
+AI Architect & AI Engineer
+https://www.manojmukherjee.co.in
