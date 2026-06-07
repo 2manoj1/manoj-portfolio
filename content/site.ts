@@ -600,7 +600,7 @@ export const publications = [
 		platform: "Medium / Research Brief",
 		contribution: "Modeled inter-agent execution loops and structured communication gateways to secure workspace routing.",
 		tags: ["LangGraph", "MCP", "State Synchronization", "JSON-RPC"],
-		url: "https://medium.com/@manojmukherjee777/the-future-of-ai-building-agent-to-agent-communication-systems-b502bbd954e7"
+		url: articles.find((a) => a.title === "The Future of AI: Building Agent-to-Agent Communication Systems")?.url || "#"
 	},
 	{
 		title: "Advanced Retrieval-Augmented Generation (RAG)",
@@ -610,7 +610,7 @@ export const publications = [
 		platform: "Medium / Systems Journal",
 		contribution: "Designed token-compaction formulas and hybrid search scoring formulas that reduced context payload sizes by 45%.",
 		tags: ["pgvector", "Qdrant", "Cross-Encoder", "Hybrid Search"],
-		url: "https://medium.com/@manojmukherjee777/advanced-agent-functionality-with-ollama-and-llama-3-in-langchain-95a80ded5489"
+		url: articles.find((a) => a.title === "Advanced Retrieval-Augmented Generation (RAG) with LangChain, LangGraph, and AI Agents")?.url || "#"
 	},
 	{
 		title: "Real-Time AI Agents with LangChain & LangGraph",
@@ -620,7 +620,7 @@ export const publications = [
 		platform: "Research Hub / Blog",
 		contribution: "Built open-source benchmarks comparing time-to-first-token (TTFT) performance across unified memory lanes.",
 		tags: ["Ollama", "MLX", "vLLM", "Local Hardware"],
-		url: "https://medium.com/@manojmukherjee777/building-a-real-time-ai-agent-with-langchain-langgraph-and-open-source-llms-using-ollama-3602fc77c7c3"
+		url: articles.find((a) => a.title === "Building a Real-Time AI Agent with LangChain, LangGraph, and Open Source LLMs using Ollama")?.url || "#"
 	},
 	{
 		title: "AI-Powered Stock Analysis using LangGraph & DeepSeek",
@@ -630,7 +630,7 @@ export const publications = [
 		platform: "Google Scholar / Publications",
 		contribution: "Modeled the financial risk checking rules node as a human-in-the-loop validation interrupt.",
 		tags: ["DeepSeek", "Redux Saga", "Financial Charts", "Risk Gating"],
-		url: "https://medium.com/@manojmukherjee777/building-an-ai-powered-stock-analysis-pipeline-with-langgraph-deepseek-and-ollama-11b0c00d0e72"
+		url: articles.find((a) => a.title === "Building an AI-Powered Stock Analysis Pipeline with LangGraph, DeepSeek, and Ollama")?.url || "#"
 	}
 ] as const;
 
