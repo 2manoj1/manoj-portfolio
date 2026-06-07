@@ -713,7 +713,7 @@ export function ManojAgentChat() {
 				<Button
 					type="button"
 					size="lg"
-					className="h-12 rounded-2xl px-3 shadow-2xl shadow-black/20"
+					className="h-12 w-12 rounded-full p-0 shadow-2xl shadow-black/20 sm:w-auto sm:rounded-2xl sm:px-3"
 					onClick={() => setOpen(true)}
 					aria-label="Open Astra">
 					<span className="relative size-6 overflow-hidden rounded-lg border border-amber-foreground/20">
@@ -725,8 +725,8 @@ export function ManojAgentChat() {
 							className="object-cover object-top"
 						/>
 					</span>
-					Astra
-					<MessageSquareText className="size-4" />
+					<span className="hidden sm:inline">Astra</span>
+					<MessageSquareText className="hidden size-4 sm:block" />
 				</Button>
 			)}
 		</div>
