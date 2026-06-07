@@ -545,7 +545,7 @@ export const articles = [
 		topic: "OCR & Vision AI",
 		description:
 			"Extracting valuable information from images for applications ranging from document analysis to intelligent data processing using OCR, Vision AI, and Language Models.",
-		url: "https://medium.com/@manojmukherjee777/extracting-information-from-images-with-ocr-vision-ai-and-language-models-a678d21c172a",
+		url: "https://medium.com/@manojmukherjee777/extracting-information-from-images-with-ocr-vision-ai-and-language-models-7ab8dd271bae",
 	},
 	{
 		title: "Local Image Understanding with OpenSource LLaVA and Ollama",
@@ -569,7 +569,7 @@ export const articles = [
 		topic: "Developer tools",
 		description:
 			"Time-travel debugging analysis using Replay.io to track asynchronous race conditions and state changes in application workflows.",
-		url: "https://medium.com/@manojmukherjee777/replay-io-a-game-changing-tool-for-web-developers-89d1a37c3547",
+		url: "https://medium.com/@manojmukherjee777/replay-io-a-game-changing-tool-for-web-developers-514ea82f2919",
 	},
 	{
 		title: "Cypress 10 — As Frontend or JavaScript Engineer",
