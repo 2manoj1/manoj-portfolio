@@ -96,6 +96,7 @@ export function GlobalAudioWidget() {
   const currentSectionLabel =
     currentSectionTitle ??
     (currentSegmentKind === "takeaway" ? "Why this matters" : "Article");
+  const rateLabel = `${rate.toFixed(2)}x`;
   const PlayStateIcon = isPlaying ? Pause : Play;
   const canGoPrev = currentIdx > 0;
   const canGoNext = currentIdx < paragraphs.length - 1;
@@ -108,7 +109,8 @@ export function GlobalAudioWidget() {
     }
   };
 
-  let positionClasses = "bottom-[5.5rem] left-4 right-4 md:bottom-6";
+  let positionClasses =
+    "bottom-[calc(env(safe-area-inset-bottom)+4.75rem)] left-3 right-3 max-[360px]:left-2 max-[360px]:right-2 md:bottom-6";
   if (chatState.open) {
     positionClasses += chatState.expanded
       ? " md:left-6 md:right-auto"
@@ -132,7 +134,7 @@ export function GlobalAudioWidget() {
             key="global-audio-mini"
             aria-label="Floating audio mini player"
             className={cn(
-              "fixed z-[60] flex min-h-16 items-center gap-3 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-2.5 text-zinc-900 shadow-[0_20px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-100 dark:shadow-[0_22px_65px_rgba(0,0,0,0.48)] md:w-[min(calc(100vw-2rem),430px)]",
+              "fixed z-[60] flex min-h-14 items-center gap-2 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-2 text-zinc-900 shadow-[0_20px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-100 dark:shadow-[0_22px_65px_rgba(0,0,0,0.48)] sm:min-h-16 sm:gap-3 sm:p-2.5 md:w-[min(calc(100vw-2rem),430px)]",
               positionClasses,
             )}
             initial={motionInitial}
@@ -153,6 +155,7 @@ export function GlobalAudioWidget() {
                 paused={isPaused}
                 progress={progressPercent}
                 size="sm"
+                className="max-[360px]:size-9"
               >
                 <Volume2 className="size-4" aria-hidden="true" />
               </AudioProgressOrb>
@@ -165,7 +168,7 @@ export function GlobalAudioWidget() {
               title="Expand player"
               type="button"
             >
-              <p className="truncate text-sm font-semibold tracking-tight">
+              <p className="truncate text-xs font-semibold tracking-tight sm:text-sm">
                 {title}
               </p>
               <div className="mt-1 flex items-center gap-2">
@@ -178,6 +181,7 @@ export function GlobalAudioWidget() {
 
             <div className="flex items-center gap-1.5">
               <AudioIconButton
+                className="max-[390px]:hidden"
                 disabled={!canGoPrev}
                 label="Previous segment"
                 onClick={prev}
@@ -185,6 +189,7 @@ export function GlobalAudioWidget() {
                 <SkipBack className="size-3.5" aria-hidden="true" />
               </AudioIconButton>
               <AudioIconButton
+                className="max-[360px]:size-9"
                 label={isPlaying ? "Pause reading" : "Resume reading"}
                 onClick={handlePlayToggle}
                 prominent
@@ -192,6 +197,7 @@ export function GlobalAudioWidget() {
                 <PlayStateIcon className="size-4 fill-current" aria-hidden="true" />
               </AudioIconButton>
               <AudioIconButton
+                className="max-[390px]:hidden"
                 disabled={!canGoNext}
                 label="Next segment"
                 onClick={next}
@@ -209,7 +215,7 @@ export function GlobalAudioWidget() {
             key="global-audio-expanded"
             aria-label="Floating audio full player"
             className={cn(
-              "fixed z-[60] w-[min(calc(100vw-2rem),390px)] overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-4 text-zinc-900 shadow-[0_24px_70px_rgba(0,0,0,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/72 dark:text-zinc-100 dark:shadow-[0_24px_75px_rgba(0,0,0,0.52)]",
+              "fixed z-[60] w-auto overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-3 text-zinc-900 shadow-[0_24px_70px_rgba(0,0,0,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/72 dark:text-zinc-100 dark:shadow-[0_24px_75px_rgba(0,0,0,0.52)] sm:p-4 md:w-[min(calc(100vw-2rem),390px)]",
               positionClasses,
             )}
             initial={motionInitial}
@@ -225,13 +231,14 @@ export function GlobalAudioWidget() {
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber/50 to-transparent" />
 
             <div className="relative z-10 grid gap-4">
-              <header className="flex items-start justify-between gap-3">
+              <header className="flex items-start justify-between gap-2 sm:gap-3">
                 <div className="flex min-w-0 items-center gap-3">
                   <AudioProgressOrb
                     active={isPlaying}
                     paused={isPaused}
                     progress={progressPercent}
                     size="md"
+                    className="max-[360px]:size-12"
                   >
                     <Volume2 className="size-4.5" aria-hidden="true" />
                   </AudioProgressOrb>
@@ -242,10 +249,13 @@ export function GlobalAudioWidget() {
                     <h4 className="mt-1 line-clamp-2 text-sm font-semibold leading-5 tracking-tight text-zinc-950 dark:text-white">
                       {title}
                     </h4>
+                    <p className="mt-0.5 line-clamp-1 text-xs leading-4 text-zinc-500 dark:text-zinc-400 sm:hidden">
+                      {currentSectionLabel}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex shrink-0 items-center gap-1.5">
                   <AudioIconButton
                     label="Minimize player"
                     onClick={() => {
@@ -261,19 +271,27 @@ export function GlobalAudioWidget() {
                 </div>
               </header>
 
-              <div className="grid gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-y border-zinc-200/70 py-3 dark:border-white/10">
+              <div className="grid gap-2 sm:gap-3">
+                <div className="flex items-center gap-2">
+                  <AudioProgressRail progress={progressPercent} />
+                  <span className="shrink-0 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                    {segmentLabel}
+                  </span>
+                </div>
+                <div className="hidden border-y border-zinc-200/70 py-3 dark:border-white/10 sm:flex sm:flex-wrap sm:items-center sm:justify-between">
                   <div className="flex min-w-0 flex-wrap items-center gap-2">
                     <AudioMetric
                       className="max-w-full"
                       label="section"
                       value={currentSectionLabel}
                     />
-                    <AudioMetric label="segment" value={segmentLabel} />
                   </div>
-                  <AudioSpectrum active={isPlaying} compact />
+                  <AudioSpectrum
+                    active={isPlaying}
+                    compact
+                    className="justify-start max-[420px]:hidden sm:justify-center"
+                  />
                 </div>
-                <AudioProgressRail progress={progressPercent} />
               </div>
 
               <div className="flex items-center justify-between gap-3">
@@ -339,13 +357,13 @@ export function GlobalAudioWidget() {
                           type="range"
                           min="0.8"
                           max="2.0"
-                          step="0.1"
+                          step="0.05"
                           value={rate}
                           onChange={(event) => setRate(Number(event.target.value))}
                           className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-zinc-200 accent-amber dark:bg-white/[0.1]"
                         />
                         <span className="w-11 text-right font-mono text-xs text-amber">
-                          {rate.toFixed(1)}x
+                          {rateLabel}
                         </span>
                       </div>
                     </label>

@@ -108,7 +108,7 @@ function BlogArchitectureNode({ data, selected }: NodeProps) {
   return (
     <div
       className={cn(
-        "blog-architecture-node relative h-full w-full rounded-lg border p-3 text-left shadow-2xl backdrop-blur transition-colors",
+        "blog-architecture-node relative h-full w-full rounded-lg border p-2.5 text-left shadow-2xl backdrop-blur transition-colors sm:p-3",
         node.active || selected
           ? "border-amber/85 bg-white dark:bg-zinc-950/95 shadow-[0_0_28px_rgba(245,158,11,0.14)] dark:shadow-[0_0_28px_rgba(245,158,11,0.2)]"
           : "border-zinc-200 bg-white dark:border-white/[0.16] dark:bg-zinc-950/95 shadow-zinc-200/40 dark:shadow-black/40",
@@ -147,10 +147,10 @@ function BlogArchitectureNode({ data, selected }: NodeProps) {
           <span className="block font-mono text-[9px] uppercase tracking-wide text-amber/80">
             {node.layer}
           </span>
-          <span className="mt-1 block text-sm font-semibold leading-snug text-zinc-900 dark:text-zinc-100">
+          <span className="mt-1 block break-words text-[13px] font-semibold leading-snug text-zinc-900 dark:text-zinc-100 sm:text-sm">
             {node.label}
           </span>
-          <span className="mt-1 block font-mono text-[10px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
+          <span className="mt-1 block break-words font-mono text-[9px] uppercase tracking-wide text-zinc-600 dark:text-zinc-400 sm:text-[10px]">
             {node.role}
           </span>
         </span>
@@ -222,7 +222,7 @@ function buildFlowElements(
     id: node.id,
     type: "blogArchitecture",
     position: isMobile
-      ? { x: 32, y: index * 132 }
+      ? { x: 18, y: index * 124 }
       : { x: index * 235, y: index % 2 === 0 ? 34 : 168 },
     data: {
       label: node.label,
@@ -239,8 +239,8 @@ function buildFlowElements(
     deletable: false,
     focusable: true,
     style: {
-      width: isMobile ? 224 : 218,
-      height: isMobile ? 88 : 112,
+      width: isMobile ? 204 : 218,
+      height: isMobile ? 94 : 112,
     },
   }));
 
@@ -343,7 +343,7 @@ export function BlogArchitectureFlow({
         )}
       </figcaption>
 
-      <div className="blog-architecture-flow h-[440px] w-full sm:h-[380px] lg:h-[350px]">
+      <div className="blog-architecture-flow h-[380px] w-full min-[420px]:h-[430px] sm:h-[380px] lg:h-[350px]">
         <ReactFlowProvider>
           <ReactFlow
             nodes={nodes}

@@ -39,6 +39,10 @@ const WARM_WHITE = "#f5f0e8";
 const FILAMENT_COLOR = "rgba(245, 240, 232, 0.15)";
 const FILAMENT_ACTIVE = "rgba(245, 240, 232, 0.35)";
 
+function stableOffset(value: string, modulo: number) {
+  return Array.from(value).reduce((total, char) => total + char.charCodeAt(0), 0) % modulo;
+}
+
 // ─────────────────────────────────────────────────────────────
 // Decorative outline points — small dots that trace a
 // recognizable human silhouette (head → shoulders → arms →
@@ -308,7 +312,7 @@ export default function HumanFigureSVG({
               opacity: isOnSignalPath ? [0.5, 1, 0.5] : [0.3, 0.5, 0.3],
             }}
             transition={{
-              duration: isOnSignalPath ? 0.8 : 3 + Math.random() * 2,
+              duration: isOnSignalPath ? 0.8 : 3 + stableOffset(key, 5) * 0.4,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -464,7 +468,7 @@ export default function HumanFigureSVG({
                 opacity: isActive ? 1 : [0.6, 0.85, 0.6],
               }}
               transition={{
-                duration: isActive ? 1.2 : 2.5 + Math.random(),
+                duration: isActive ? 1.2 : 2.5 + stableOffset(part.id, 4) * 0.25,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}

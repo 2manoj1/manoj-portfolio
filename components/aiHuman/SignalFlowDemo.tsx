@@ -53,13 +53,22 @@ export default function SignalFlowDemo() {
 
   // Trigger on scroll into view
   useEffect(() => {
-    if (isInView) {
-      const cleanup = playSequence();
-      return cleanup;
-    } else {
+    let cleanup: (() => void) | undefined;
+
+    const timer = window.setTimeout(() => {
+      if (isInView) {
+        cleanup = playSequence();
+        return;
+      }
+
       setActiveStep(-1);
       setHasPlayed(false);
-    }
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+      cleanup?.();
+    };
   }, [isInView, replayKey, playSequence]);
 
   const handleReplay = () => {

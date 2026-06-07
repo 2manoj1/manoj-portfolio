@@ -36,7 +36,7 @@ export function AudioSpectrum({
       aria-hidden="true"
       className={cn(
         "flex shrink-0 items-end justify-center",
-        compact ? "h-4 gap-1" : "h-6 gap-1.5",
+        compact ? "h-4 gap-1" : "h-6 gap-1 max-[420px]:gap-0.5 sm:gap-1.5",
         className,
       )}
     >
@@ -82,8 +82,8 @@ export function AudioProgressOrb({
     <span
       className={cn(
         "audio-progress-orb relative grid shrink-0 place-items-center rounded-full",
-        size === "sm" && "size-10",
-        size === "md" && "size-14",
+        size === "sm" && "size-8",
+        size === "md" && "size-12",
         size === "lg" && "size-16",
         active && "is-active",
         paused && "is-paused",
@@ -150,7 +150,7 @@ export function AudioIconButton({
       title={label}
       type="button"
       className={cn(
-        "group relative grid size-9 shrink-0 place-items-center rounded-full border transition duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/55 active:scale-95 disabled:pointer-events-none disabled:opacity-35",
+        "group relative grid size-9 shrink-0 place-items-center rounded-full border transition duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/55 active:scale-95 disabled:pointer-events-none disabled:opacity-35 max-[360px]:size-8",
         prominent
           ? "border-amber/40 bg-amber text-zinc-950 shadow-[0_12px_28px_rgba(245,158,11,0.26)] hover:bg-amber/90"
           : "border-zinc-200/80 bg-white/60 text-zinc-650 shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-amber/35 hover:bg-white hover:text-zinc-950 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-350 dark:shadow-black/25 dark:hover:bg-white/[0.08] dark:hover:text-white",
@@ -178,7 +178,7 @@ export function AudioMetric({
   return (
     <span
       className={cn(
-        "inline-flex min-w-0 items-center gap-2 rounded-full border border-zinc-200/75 bg-white/55 px-3 py-1.5 font-mono text-[10px] uppercase text-zinc-650 shadow-[0_6px_18px_rgba(0,0,0,0.035)] dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-350",
+        "inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-full border border-zinc-200/75 bg-white/55 px-2.5 py-1.5 font-mono text-[9.5px] uppercase text-zinc-650 shadow-[0_6px_18px_rgba(0,0,0,0.035)] dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-350 sm:gap-2 sm:px-3 sm:text-[10px]",
         className,
       )}
     >

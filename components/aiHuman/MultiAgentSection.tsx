@@ -222,7 +222,6 @@ export default function MultiAgentSection() {
           >
             {/* Horizontal connecting lines rendered at ~40% from top */}
             {[0, 1, 2, 3].map((i) => {
-              const totalGaps = FIGURES.length - 1;
               const segmentWidth = 100 / FIGURES.length;
               const x1 = segmentWidth * i + segmentWidth / 2;
               const x2 = segmentWidth * (i + 1) + segmentWidth / 2;

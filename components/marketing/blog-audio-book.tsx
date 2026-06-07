@@ -40,6 +40,15 @@ const springTransition = {
   mass: 0.8,
 } as const;
 
+const mobileDockMediaQuery = "(max-width: 640px)";
+
+function shouldDockOnMobile() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia(mobileDockMediaQuery).matches
+  );
+}
+
 export function BlogAudioBook({
   paragraphs,
   title,
@@ -76,7 +85,6 @@ export function BlogAudioBook({
   const isPlaying = isActiveTrack && globalIsPlaying;
   const isPaused = isActiveTrack && globalIsPaused;
   const activeIdx = isActiveTrack ? currentIdx : 0;
-  const totalSegments = Math.max(paragraphs.length, 1);
   const currentSegment = paragraphs.length
     ? Math.min(activeIdx + 1, paragraphs.length)
     : 0;
@@ -91,6 +99,7 @@ export function BlogAudioBook({
       : isActiveTrack && currentSegmentKind === "takeaway"
         ? "Why this matters"
         : "Ready";
+  const rateLabel = `${rate.toFixed(2)}x`;
   const PlayStateIcon = isPlaying ? Pause : Play;
   const canGoPrev = isActiveTrack && currentIdx > 0;
   const canGoNext = isActiveTrack && currentIdx < paragraphs.length - 1;
@@ -123,17 +132,27 @@ export function BlogAudioBook({
     return null;
   }
 
+  const dockAfterMobilePlay = () => {
+    if (shouldDockOnMobile()) {
+      setIsMinimized(true);
+      setIsSettingsOpen(false);
+    }
+  };
+
   const handlePlayToggle = () => {
     if (isActiveTrack) {
       if (isPaused) {
         resume();
+        dockAfterMobilePlay();
       } else if (isPlaying) {
         pause();
       } else {
         play(title, paragraphs, slug, activeIdx);
+        dockAfterMobilePlay();
       }
     } else {
       play(title, paragraphs, slug, 0);
+      dockAfterMobilePlay();
     }
   };
 
@@ -145,6 +164,7 @@ export function BlogAudioBook({
 
     if (!isActiveTrack && paragraphs.length > 1) {
       play(title, paragraphs, slug, 1);
+      dockAfterMobilePlay();
     }
   };
 
@@ -156,10 +176,12 @@ export function BlogAudioBook({
 
     if (!isActiveTrack) {
       play(title, paragraphs, slug, 0);
+      dockAfterMobilePlay();
     }
   };
 
-  let floatingPositionClasses = "bottom-[5.5rem] left-4 right-4 md:bottom-6";
+  let floatingPositionClasses =
+    "bottom-[calc(env(safe-area-inset-bottom)+4.75rem)] left-3 right-3 max-[360px]:left-2 max-[360px]:right-2 md:bottom-6";
   if (chatState.open) {
     floatingPositionClasses += chatState.expanded
       ? " md:left-6 md:right-auto"
@@ -183,7 +205,7 @@ export function BlogAudioBook({
             key="article-audio-mini"
             aria-label="Floating audio mini player"
             className={cn(
-              "fixed z-[60] flex min-h-16 items-center gap-3 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-2.5 text-zinc-900 shadow-[0_20px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-100 dark:shadow-[0_22px_65px_rgba(0,0,0,0.48)] md:w-[min(calc(100vw-2rem),430px)]",
+              "fixed z-[60] flex min-h-14 items-center gap-2 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/78 p-2 text-zinc-900 shadow-[0_20px_55px_rgba(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-100 dark:shadow-[0_22px_65px_rgba(0,0,0,0.48)] sm:min-h-16 sm:gap-3 sm:p-2.5 md:w-[min(calc(100vw-2rem),430px)]",
               floatingPositionClasses,
             )}
             initial={motionInitial}
@@ -204,6 +226,7 @@ export function BlogAudioBook({
                 paused={isPaused}
                 progress={progressPercent}
                 size="sm"
+                className="max-[360px]:size-9"
               >
                 <Volume2 className="size-4" aria-hidden="true" />
               </AudioProgressOrb>
@@ -216,7 +239,7 @@ export function BlogAudioBook({
               title="Restore player"
               type="button"
             >
-              <p className="truncate text-sm font-semibold tracking-tight">
+              <p className="truncate text-xs font-semibold tracking-tight sm:text-sm">
                 {title}
               </p>
               <div className="mt-1 flex items-center gap-2">
@@ -229,6 +252,7 @@ export function BlogAudioBook({
 
             <div className="flex items-center gap-1.5">
               <AudioIconButton
+                className="max-[390px]:hidden"
                 disabled={isActiveTrack && currentIdx <= 0}
                 label="Previous segment"
                 onClick={handlePrev}
@@ -236,6 +260,7 @@ export function BlogAudioBook({
                 <SkipBack className="size-3.5" aria-hidden="true" />
               </AudioIconButton>
               <AudioIconButton
+                className="max-[360px]:size-9"
                 label={isPlaying ? "Pause reading" : "Play reading"}
                 onClick={handlePlayToggle}
                 prominent
@@ -243,6 +268,7 @@ export function BlogAudioBook({
                 <PlayStateIcon className="size-4 fill-current" aria-hidden="true" />
               </AudioIconButton>
               <AudioIconButton
+                className="max-[390px]:hidden"
                 disabled={isActiveTrack && currentIdx >= paragraphs.length - 1}
                 label="Next segment"
                 onClick={handleNext}
@@ -259,7 +285,7 @@ export function BlogAudioBook({
           <motion.section
             key="article-audio-docked"
             aria-label="Article audio player"
-            className="relative mt-5 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/72 p-4 text-zinc-900 shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/62 dark:text-zinc-100 dark:shadow-[0_24px_75px_rgba(0,0,0,0.46)] sm:p-5"
+            className="relative mt-4 overflow-hidden rounded-[8px] border border-zinc-200/80 bg-white/72 p-3 text-zinc-900 shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/62 dark:text-zinc-100 dark:shadow-[0_24px_75px_rgba(0,0,0,0.46)] sm:mt-5 sm:p-5"
             initial={motionInitial}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={motionExit}
@@ -272,33 +298,37 @@ export function BlogAudioBook({
             />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber/50 to-transparent" />
 
-            <div className="relative z-10 grid gap-5">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex min-w-0 items-center gap-4">
+            <div className="relative z-10 grid gap-3 sm:gap-5">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                   <AudioProgressOrb
                     active={isPlaying}
                     paused={isPaused}
                     progress={progressPercent}
-                    size="lg"
+                    size="md"
+                    className="size-12 sm:size-16"
                   >
                     <Volume2 className="size-5" aria-hidden="true" />
                   </AudioProgressOrb>
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] uppercase text-amber">
+                    <p className="font-mono text-[9px] uppercase text-amber sm:text-[10px]">
                       {isPlaying
                         ? "stream active"
                         : isPaused
                           ? "stream held"
                           : "audio gateway"}
                     </p>
-                    <h4 className="mt-1 truncate text-base font-semibold leading-6 tracking-tight text-zinc-950 dark:text-white">
+                    <h4 className="mt-0.5 line-clamp-1 text-sm font-semibold leading-5 tracking-tight text-zinc-950 dark:text-white sm:mt-1 sm:line-clamp-2 sm:text-base sm:leading-6">
                       {title}
                     </h4>
+                    <p className="mt-0.5 line-clamp-1 text-xs leading-4 text-zinc-500 dark:text-zinc-400 sm:hidden">
+                      {currentSectionLabel}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between gap-3 sm:justify-end">
-                  <AudioSpectrum active={isPlaying} />
+                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                  <AudioSpectrum active={isPlaying} className="hidden sm:flex" />
                   <AudioIconButton
                     label="Minimize player"
                     onClick={() => {
@@ -311,26 +341,26 @@ export function BlogAudioBook({
                 </div>
               </div>
 
-              <div className="grid gap-3">
-                <div className="flex flex-wrap items-center gap-2">
+              <div className="grid gap-2 sm:gap-3">
+                <div className="flex items-center gap-2">
+                  <AudioProgressRail progress={progressPercent} />
+                  <span className="shrink-0 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                    {segmentLabel}
+                  </span>
+                </div>
+                <div className="hidden flex-wrap items-center gap-2 sm:flex">
                   <AudioMetric
-                    className="max-w-full sm:max-w-[280px]"
+                    className="sm:max-w-[320px]"
                     label="section"
                     value={currentSectionLabel}
                   />
-                  <AudioMetric label="segment" value={segmentLabel} />
-                  <AudioMetric label="rate" value={`${rate.toFixed(1)}x`}>
+                  <AudioMetric label="rate" value={rateLabel}>
                     <Gauge className="size-3.5 text-amber" aria-hidden="true" />
                   </AudioMetric>
-                  <AudioMetric
-                    label="queue"
-                    value={`${Math.max(totalSegments - currentSegment, 0)} left`}
-                  />
                 </div>
-                <AudioProgressRail progress={progressPercent} />
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <AudioIconButton
                     disabled={!canGoPrev}
@@ -340,7 +370,7 @@ export function BlogAudioBook({
                     <SkipBack className="size-4" aria-hidden="true" />
                   </AudioIconButton>
                   <AudioIconButton
-                    className="size-12"
+                    className="size-11 sm:size-12"
                     label={isPlaying ? "Pause reading" : "Play reading"}
                     onClick={handlePlayToggle}
                     prominent
@@ -377,7 +407,7 @@ export function BlogAudioBook({
                 {isSettingsOpen ? (
                   <motion.div
                     key="article-audio-settings"
-                    className="grid gap-4 rounded-[8px] border border-zinc-200/80 bg-white/68 p-4 shadow-inner dark:border-white/10 dark:bg-black/22 sm:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]"
+                    className="grid gap-4 rounded-[8px] border border-zinc-200/80 bg-white/68 p-3 shadow-inner dark:border-white/10 dark:bg-black/22 sm:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] sm:p-4"
                     initial={
                       prefersReducedMotion
                         ? false
@@ -400,13 +430,13 @@ export function BlogAudioBook({
                           type="range"
                           min="0.8"
                           max="2.0"
-                          step="0.1"
+                          step="0.05"
                           value={rate}
                           onChange={(event) => setRate(Number(event.target.value))}
                           className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-zinc-200 accent-amber dark:bg-white/[0.1]"
                         />
                         <span className="w-11 text-right font-mono text-xs text-amber">
-                          {rate.toFixed(1)}x
+                          {rateLabel}
                         </span>
                       </div>
                     </label>

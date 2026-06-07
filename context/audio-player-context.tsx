@@ -59,6 +59,8 @@ const subscribeToSpeechSupport = () => () => {};
 const getSpeechSupportSnapshot = () =>
   typeof window !== "undefined" && "speechSynthesis" in window;
 const getServerSpeechSupportSnapshot = () => false;
+const goldenNarrationRate = 0.95;
+const goldenNarrationVolume = 1;
 
 const defaultPauseByKind: Record<SpeechSegmentKind, number> = {
   takeaway: 720,
@@ -81,7 +83,15 @@ const voicePreferencePatterns = [
   /aria/i,
   /guy/i,
   /zira/i,
+  /david/i,
+  /mark/i,
+  /daniel/i,
+  /karen/i,
+  /moira/i,
+  /tessa/i,
   /google us english/i,
+  /google uk english/i,
+  /microsoft .* natural/i,
 ] as const;
 
 const lowQualityVoicePatterns = [
@@ -239,15 +249,21 @@ function getPauseAfter(segment: SpeechSegment) {
 
 function getNarrationRate(baseRate: number, kind: SpeechSegmentKind) {
   const multiplier =
-    kind === "heading" ? 0.88 : kind === "takeaway" ? 0.92 : kind === "callout" ? 0.9 : 0.96;
+    kind === "heading"
+      ? 0.92
+      : kind === "takeaway"
+        ? 0.96
+        : kind === "callout"
+          ? 0.94
+          : 0.98;
 
   return Math.min(2, Math.max(0.72, baseRate * multiplier));
 }
 
 function getNarrationPitch(kind: SpeechSegmentKind) {
-  if (kind === "heading") return 1.04;
-  if (kind === "takeaway") return 1.02;
-  if (kind === "callout") return 0.98;
+  if (kind === "heading") return 1.02;
+  if (kind === "takeaway") return 1.01;
+  if (kind === "callout") return 0.99;
   return 1;
 }
 
@@ -255,13 +271,18 @@ function scoreVoice(voice: SpeechSynthesisVoice) {
   const name = voice.name.toLowerCase();
   let score = 0;
 
-  if (voice.lang.startsWith("en-US")) score += 16;
-  if (voice.lang.startsWith("en-GB")) score += 12;
-  if (voice.lang.startsWith("en-AU")) score += 8;
-  if (voice.default) score += 5;
+  if (voice.lang.startsWith("en-US")) score += 24;
+  else if (voice.lang.startsWith("en-GB")) score += 20;
+  else if (voice.lang.startsWith("en-AU")) score += 14;
+  else if (voice.lang.startsWith("en-CA")) score += 10;
+  else if (voice.lang.startsWith("en-IN")) score += 8;
+  else if (voice.lang.startsWith("en")) score += 4;
+
+  if (voice.default) score += 4;
+  if (voice.localService) score += 2;
 
   for (const pattern of voicePreferencePatterns) {
-    if (pattern.test(name)) score += 12;
+    if (pattern.test(name)) score += 14;
   }
 
   for (const pattern of lowQualityVoicePatterns) {
@@ -280,7 +301,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
-  const [rate, setRate] = useState<number>(1.0); // Default to 1.0x speed as requested
+  const [rate, setRate] = useState<number>(goldenNarrationRate);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   
@@ -415,6 +436,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     }
     utterance.rate = getNarrationRate(stateRef.current.rate, segment.kind);
     utterance.pitch = getNarrationPitch(segment.kind);
+    utterance.volume = goldenNarrationVolume;
 
     utterance.onend = () => {
       if (activeUtteranceIdRef.current !== currentUtteranceId) return;

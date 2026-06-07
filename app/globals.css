@@ -142,10 +142,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   html {
     @apply font-sans;
+    overflow-x: clip;
     scroll-behavior: smooth;
   }
   a, button {
@@ -648,6 +649,8 @@
   border: 0 !important;
   background: transparent !important;
   padding: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
@@ -655,6 +658,7 @@
 .streamdown-code-clean code {
   background: transparent !important;
   padding: 0 !important;
+  white-space: pre !important;
 }
 
 .streamdown-code-clean [data-streamdown="code-block-header"] {

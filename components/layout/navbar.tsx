@@ -24,9 +24,9 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md transition-colors duration-300">
-      <div className="mx-auto max-w-6xl px-6">
-        <nav className="flex h-12 items-center justify-between">
+    <header className="fixed left-0 top-0 z-50 w-dvw max-w-dvw overflow-x-clip border-b border-border/60 bg-background/80 backdrop-blur-md transition-colors duration-300">
+      <div className="mx-auto max-w-6xl min-w-0 px-4 sm:px-6">
+        <nav className="flex h-12 min-w-0 items-center justify-between">
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Homepage" className="inline-flex items-center">
@@ -62,7 +62,7 @@ export function Navbar() {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <Button
               asChild
               size="sm"
@@ -89,7 +89,7 @@ export function Navbar() {
       {/* Mobile Navigation Dropdown */}
       {mobileOpen && (
         <div className="border-t border-border/60 bg-background/95 backdrop-blur-md lg:hidden max-h-[85vh] overflow-y-auto animate-fadeIn">
-          <div className="mx-auto flex max-w-6xl flex-col px-6 py-4 gap-1">
+          <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => {
               const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (

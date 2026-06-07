@@ -58,12 +58,12 @@ const streamdownPlugins = { cjk, code, math, mermaid };
 const disabledLinkSafety = { enabled: false };
 
 const markdownClassName =
-  "blog-reader-markdown text-base leading-8 text-zinc-800 dark:text-zinc-300 " +
-  "[&_p]:my-0 [&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-900 dark:[&_strong]:text-zinc-100 " +
-  "[&_em]:text-zinc-800 dark:[&_em]:text-zinc-300 [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
+  "blog-reader-markdown min-w-0 text-[0.96rem] leading-7 text-zinc-800 dark:text-zinc-300 sm:text-base sm:leading-8 " +
+  "[&_p]:my-0 [&_p]:break-words [&_p]:leading-7 sm:[&_p]:leading-8 [&_strong]:font-semibold [&_strong]:text-zinc-900 dark:[&_strong]:text-zinc-100 " +
+  "[&_em]:text-zinc-800 dark:[&_em]:text-zinc-300 [&_a]:break-words [&_a]:font-medium [&_a]:text-amber [&_a]:underline-offset-4 [&_a:hover]:underline " +
   "[&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_li]:pl-1 " +
   "[&_blockquote]:my-4 [&_blockquote]:border-l-2 [&_blockquote]:border-amber/45 [&_blockquote]:pl-4 [&_blockquote]:text-zinc-650 dark:text-zinc-400 [&_blockquote]:italic " +
-  "[&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:bg-zinc-100 dark:[&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
+  "[&_table]:my-4 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-sm sm:[&_table]:table [&_th]:border [&_th]:border-border [&_th]:bg-zinc-100 dark:[&_th]:bg-zinc-900/45 [&_th]:px-3 [&_th]:py-2 [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 " +
   "[&_[data-streamdown='inline-code']]:rounded [&_[data-streamdown='inline-code']]:border [&_[data-streamdown='inline-code']]:border-zinc-200/60 dark:[&_[data-streamdown='inline-code']]:border-white/10 [&_[data-streamdown='inline-code']]:bg-zinc-150/70 dark:[&_[data-streamdown='inline-code']]:bg-zinc-900/70 [&_[data-streamdown='inline-code']]:px-1.5 [&_[data-streamdown='inline-code']]:font-mono [&_[data-streamdown='inline-code']]:text-xs [&_[data-streamdown='inline-code']]:text-amber-800 dark:[&_[data-streamdown='inline-code']]:text-amber";
 
 const alertClassMap: Record<string, string> = {
@@ -268,13 +268,13 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
   };
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(260px,0.28fr)] lg:gap-12">
+    <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(260px,0.28fr)] lg:gap-12">
       
       {/* Left Column: Article Body & Interactive Player */}
-      <div className="min-w-0 space-y-8">
+      <div className="min-w-0 space-y-6 sm:space-y-8">
         
         {/* Audiobook controller section */}
-        <div className="sticky top-14 z-[70] lg:top-20">
+        <div className="relative z-[70] lg:sticky lg:top-20">
           <div className="pointer-events-none absolute -inset-0.5 rounded-lg bg-gradient-to-r from-amber/25 to-zinc-500/10 opacity-50 blur-sm" />
           <BlogAudioBook 
             paragraphs={speechSegments}
@@ -286,7 +286,7 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
         <nav
           aria-label="Mobile article outline"
-          className="lg:hidden"
+          className="-mx-4 px-4 lg:hidden"
         >
           <div className="flex gap-2 overflow-x-auto border-y border-border py-3">
             <button
@@ -323,45 +323,45 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
         </nav>
 
         {/* Content Article */}
-        <article className="min-w-0 space-y-12">
+        <article className="min-w-0 space-y-10 sm:space-y-12">
 
           {/* Why this matters / Hero takeaway */}
           <div
             ref={el => { paragraphRefs.current[0] = el; }}
-            className={`border-y border-border py-8 transition-all duration-300 relative ${
+            className={`relative border-y border-border py-6 transition-all duration-300 sm:py-8 ${
               activeParagraphIndex === takeawayIdx
-                ? "border-amber bg-amber/5 px-4 shadow-[0_0_20px_rgba(245,158,11,0.08)]"
+                ? "border-amber bg-amber/5 px-3 shadow-[0_0_20px_rgba(245,158,11,0.08)] sm:px-4"
                 : ""
             }`}
           >
             {activeParagraphIndex === takeawayIdx && (
-              <span className="absolute top-2 right-4 font-mono text-[8px] text-amber uppercase tracking-wider animate-pulse">
-                [AUDIO EMISSION ACTIVE]
+              <span className="absolute right-3 top-2 font-mono text-[7px] uppercase tracking-wider text-amber animate-pulse sm:right-4 sm:text-[8px]">
+                Audio active
               </span>
             )}
             <p className="font-mono text-xs uppercase tracking-wide text-amber">
               Why this matters
             </p>
-            <p className="mt-4 text-xl leading-8 text-foreground sm:text-2xl sm:leading-10">
+            <p className="mt-4 text-lg leading-8 text-foreground sm:text-2xl sm:leading-10">
               {article.heroTakeaway}
             </p>
           </div>
 
           {/* Render Sections */}
-          <div className="space-y-14">
+          <div className="space-y-10 sm:space-y-14">
             {article.sections.map((section, sIdx) => (
-              <section key={section.heading} className="scroll-mt-20">
+              <section key={section.heading} className="scroll-mt-24 lg:scroll-mt-28">
                 <h2
                   id={`section-heading-${sIdx}`}
                   ref={el => { paragraphRefs.current[sectionHeadingIndices[sIdx]] = el; }}
-                  className={`font-display text-2xl md:text-3xl font-normal text-foreground border-b border-border pb-3 transition-colors duration-300 ${
+                  className={`break-words border-b border-border pb-3 font-display text-xl font-normal leading-7 text-foreground transition-colors duration-300 sm:text-2xl sm:leading-8 md:text-3xl ${
                     activeSectionIdx === sIdx ? "text-amber" : ""
                   }`}
                 >
                   {section.heading}
                 </h2>
                 
-                <div className="mt-6 space-y-6">
+                <div className="mt-5 space-y-5 sm:mt-6 sm:space-y-6">
                   {section.body.map((paragraph, pIdx) => {
                     const globalIdx = sectionIndices[sIdx][pIdx];
                     const isActive = activeParagraphIndex === globalIdx;
@@ -382,12 +382,12 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
 
                 {/* Code Block */}
                 {section.codeBlock && (
-                  <div className="mt-7 overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-[#0d0d0d] shadow-lg">
-                    <div className="bg-[#141416] px-4 py-2 border-b border-zinc-800/80 text-[10px] text-zinc-400 tracking-wide flex justify-between select-none">
-                      <span>{section.codeBlock.filename}</span>
+                  <div className="mt-7 min-w-0 overflow-hidden rounded-lg border border-zinc-200 bg-[#0d0d0d] shadow-lg dark:border-zinc-800">
+                    <div className="flex flex-wrap justify-between gap-2 border-b border-zinc-800/80 bg-[#141416] px-3 py-2 text-[10px] tracking-wide text-zinc-400 select-none sm:px-4">
+                      <span className="min-w-0 break-words">{section.codeBlock.filename}</span>
                       <span className="uppercase text-[9px] text-amber">{section.codeBlock.language}</span>
                     </div>
-                    <div className="streamdown-code-clean p-4 text-zinc-300">
+                    <div className="streamdown-code-clean overflow-x-auto p-3 text-zinc-300 sm:p-4">
                       <MarkdownBlock>
                         {`\`\`\`${section.codeBlock.language}\n${section.codeBlock.code}\n\`\`\``}
                       </MarkdownBlock>
@@ -401,8 +401,8 @@ export function BlogArticleReader({ article }: BlogArticleReaderProps) {
         </article>
 
         {/* Futuristic Interaction Footer Stats */}
-        <div className="border-t border-border pt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-muted-foreground">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-border pt-6 font-mono text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <button 
               onClick={handleLike}
               className={`flex items-center gap-1.5 transition-colors ${hasLiked ? "text-rose-500" : "hover:text-foreground"}`}
