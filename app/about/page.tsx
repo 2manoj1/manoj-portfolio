@@ -375,7 +375,7 @@ export default function AboutPage() {
 					</div>
 					<div className="flex items-center gap-3">
 						<Button asChild variant="outline" className="bg-background">
-							<a href="/resume.pdf" download="Manoj_Mukherjee_AI_Architect_Resume.pdf">
+							<a href="/api/resume?download=1">
 								Download PDF
 							</a>
 						</Button>
