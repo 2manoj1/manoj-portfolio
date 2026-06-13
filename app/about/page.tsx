@@ -176,7 +176,7 @@ export default function AboutPage() {
 											size="lg"
 											className="w-full justify-between sm:col-span-2 bg-amber text-amber-foreground hover:bg-amber/90 font-medium shadow-sm">
 											<Link href="/resume">
-												<span>View Systems Resume</span>
+												<span>View / Download Resume</span>
 												<FileText className="size-4" />
 											</Link>
 										</Button>
