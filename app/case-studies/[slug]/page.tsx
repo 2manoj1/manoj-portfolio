@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createMetadata } from "@/lib/seo";
 import { caseStudies } from "../_data/case-studies";
@@ -28,8 +28,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return createMetadata({
-    title: `${study.title} Case Study | AI Systems Architecture Lab`,
+    title: `${study.title} | AI Case Study`,
     description: `${study.kicker}: ${study.problem.slice(0, 145)}...`,
+    path: `/case-studies/${study.slug}`,
   });
 }
 

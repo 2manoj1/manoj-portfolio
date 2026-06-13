@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import AiHumanClient from "@/app/engineering/ai-human/AiHumanClient";
 
 export const metadata: Metadata = {
-  title: "Humans Are Agentic Systems Too — Interactive AI Guide",
+  title: "AI Agents as Human Systems",
   description:
     "Explore how AI agents mirror the human body. Brain = LLM, Nervous System = MCP, Memory = GraphRAG. An interactive experience by Manoj Mukherjee.",
+  alternates: {
+    canonical: "https://www.manojmukherjee.co.in/engineering/ai-human",
+  },
   openGraph: {
-    title: "Humans Are Agentic Systems Too",
+    title: "AI Agents as Human Systems",
     description:
       "Interactive guide mapping AI agent architecture to the human body — LLMs, MCP, GraphRAG, Tools, and Multi-Agent Systems explained through biology.",
     url: "https://www.manojmukherjee.co.in/engineering/ai-human",
