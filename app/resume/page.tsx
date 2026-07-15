@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Download, FileText, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createMetadata } from "@/lib/seo";
+import { resumePageSchema } from "@/lib/schema";
 
 const mobileValueMetrics = [
 	{
@@ -49,16 +50,39 @@ const mobileSkillGroups = [
 	},
 ];
 
+const credentials = [
+	{
+		title: "AWS Certified AI Practitioner",
+		detail: "Amazon Web Services · Issued July 12, 2026 · Credly verified",
+		href: "https://www.credly.com/badges/7ea65b79-ee4d-449f-8d98-f52fd0734b88",
+	},
+	{
+		title: "AWS Partner: Generative AI Essentials",
+		detail: "Amazon Web Services · Training badge · Credly verified",
+		href: "https://www.credly.com/badges/d73299c5-9799-40e3-aa36-3154e0e85933",
+	},
+];
+
 export const metadata = createMetadata({
-	title: "Professional Resume | Manoj Mukherjee",
+	title: "Manoj Mukherjee Resume | Enterprise AI Architect",
 	description:
-		"Professional systems architecture resume for Manoj Mukherjee, detailing 10+ years of engineering leadership, Agentic RAG systems, and AI platform infrastructure.",
+		"Resume of Manoj Mukherjee, Enterprise AI Architect in Bengaluru with 10+ years in Agentic AI, LangGraph, enterprise RAG, FastAPI, AWS, GCP, and AI platforms.",
 	path: "/resume",
+	keywords: [
+		"Manoj Mukherjee resume",
+		"AI Architect resume India",
+		"Enterprise AI Architect CV",
+		"GenAI Engineering Leader resume",
+	],
 });
 
 export default function ResumePage() {
 	return (
 		<main className="min-h-screen bg-background pt-20 pb-16">
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(resumePageSchema()) }}
+			/>
 			<div className="mx-auto max-w-5xl px-6">
 				{/* Top Navigation & Info */}
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-border/60 pb-6 mb-8">
@@ -122,7 +146,7 @@ export default function ResumePage() {
 							<span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 							Verified Production Experience
 						</span>
-						<span className="text-[11px] text-muted-foreground/60">Last updated: June 2026</span>
+						<span className="text-[11px] text-muted-foreground/60">Last updated: July 2026</span>
 					</div>
 
 					{/* Embedded PDF Viewer - Desktop Only */}
@@ -222,6 +246,23 @@ export default function ResumePage() {
 							</div>
 						</div>
 
+						<div className="mt-5 rounded border border-border/50 bg-secondary/30 p-3">
+							<div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground">
+								Credentials & continuing education
+							</div>
+							<div className="mt-3 space-y-3">
+								{credentials.map((credential) => (
+									<a key={credential.title} href={credential.href} target="_blank" rel="noopener noreferrer" className="block text-xs text-foreground hover:text-amber">
+										{credential.title}
+										<span className="mt-1 block text-[10px] leading-relaxed text-muted-foreground">{credential.detail}</span>
+									</a>
+								))}
+							</div>
+							<p className="mt-3 border-t border-border/40 pt-3 text-[10px] leading-relaxed text-muted-foreground">
+								Google AI Leadership — Udemy coursework completed; Google certification exam planned.
+							</p>
+						</div>
+
 						<div className="mt-6 border-t border-border/40 pt-5 text-center">
 							<h3 className="text-sm font-semibold text-foreground">
 								Download the resume or view it in your native PDF viewer.
@@ -248,6 +289,23 @@ export default function ResumePage() {
 						</div>
 					</div>
 				</div>
+
+				<section className="mt-6 hidden rounded-lg border border-border/80 bg-card/30 p-5 md:block" aria-labelledby="resume-credentials-title">
+					<h2 id="resume-credentials-title" className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground">
+						Credentials & continuing education
+					</h2>
+					<div className="mt-4 grid gap-3 lg:grid-cols-2">
+						{credentials.map((credential) => (
+							<a key={credential.title} href={credential.href} target="_blank" rel="noopener noreferrer" className="rounded border border-border/60 bg-background/60 p-4 transition-colors hover:border-amber/40">
+								<span className="text-sm font-medium text-foreground">{credential.title}</span>
+								<span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{credential.detail}</span>
+							</a>
+						))}
+					</div>
+					<p className="mt-3 rounded border border-dashed border-border p-4 text-xs leading-relaxed text-muted-foreground">
+						<span className="font-medium text-foreground">Google AI Leadership:</span> Udemy coursework completed; Google certification exam planned.
+					</p>
+				</section>
 
 				{/* Bottom Footer Info */}
 				<div className="mt-6 text-center text-xs text-muted-foreground/40">

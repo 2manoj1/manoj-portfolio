@@ -11,16 +11,24 @@ import { CtaBand } from "@/components/marketing/cta-band";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
 import { CareerJourneySection } from "@/components/marketing/career-journey";
+import { AiCredentialsSection } from "@/components/marketing/ai-credentials";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { GITHUB, GOOGLE_SCHOLAR, LINKEDIN, MEDIUM } from "@/lib/links";
 import { createMetadata } from "@/lib/seo";
+import { profilePageSchema } from "@/lib/schema";
 
 export const metadata = createMetadata({
-  title: "About Manoj Mukherjee | AI Systems Architect",
-  description:
-    "About Manoj Mukherjee, AI Architect Consultant and engineering leader specializing in Agentic RAG, LangGraph, FastAPI, AI platforms, and enterprise systems.",
-  path: "/about",
+	title: "About Manoj Mukherjee | Enterprise AI Architect Bengaluru",
+	description:
+		"Profile of Manoj Mukherjee, an Enterprise AI Architect and engineering leader in Bengaluru specializing in Agentic AI, LangGraph, RAG, FastAPI, and AI platforms.",
+	path: "/about",
+	keywords: [
+		"Manoj Mukherjee Publicis Sapient",
+		"AI Architect Bengaluru",
+		"Enterprise AI Engineering Leader",
+		"Multi-Agent Systems Specialist",
+	],
 });
 
 const operatingPillars = [
@@ -102,8 +110,12 @@ const profileLinks = [
 ] as const;
 
 export default function AboutPage() {
-  return (
-    <>
+	return (
+		<>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema()) }}
+			/>
       <header className="border-b border-border pt-14 bg-background/5">
         <div className="mx-auto max-w-6xl px-6 pt-10 pb-16 md:pt-14 md:pb-24">
           <p className="font-mono text-xs uppercase tracking-wide text-amber mb-6">
@@ -164,12 +176,12 @@ export default function AboutPage() {
                 >
                   <header>
                     <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 justify-center md:justify-start">
-                      <h2
-                        id="about-profile-title"
+						<h1
+							id="about-profile-title"
                         className="font-display text-3xl font-normal text-foreground"
                       >
                         Manoj Mukherjee
-                      </h2>
+						</h1>
                       <span className="inline-flex self-center sm:self-baseline items-center rounded-full bg-amber/10 px-2.5 py-0.5 text-xs font-mono uppercase tracking-wider text-amber border border-amber/20">
                         AI Systems Architect
                       </span>
@@ -370,6 +382,7 @@ export default function AboutPage() {
         </div>
       </Section>
       <CareerJourneySection className="border-b border-border bg-transparent" />
+      <AiCredentialsSection />
       <Section className="border-b border-border">
         <SectionHeader
           kicker="Recognition"

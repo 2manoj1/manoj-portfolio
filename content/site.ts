@@ -24,6 +24,39 @@ export const proofMetrics = [
   { value: "2.8K", label: "LinkedIn technical audience" },
 ];
 
+export const aiCredentials = [
+  {
+    title: "AWS Certified AI Practitioner",
+    issuer: "Amazon Web Services Training and Certification",
+    status: "Certified",
+    date: "Issued July 12, 2026",
+    href: "https://www.credly.com/badges/7ea65b79-ee4d-449f-8d98-f52fd0734b88",
+    image: "/credentials/aws-certified-ai-practitioner.png",
+    alt: "AWS Certified AI Practitioner Foundational badge",
+    description:
+      "Verified foundational knowledge of AI, machine learning, generative AI, responsible AI, and AWS AI services and use cases.",
+  },
+  {
+    title: "AWS Partner: Generative AI Essentials",
+    issuer: "Amazon Web Services Training and Certification",
+    status: "Training badge",
+    date: "Verified on Credly",
+    href: "https://www.credly.com/badges/d73299c5-9799-40e3-aa36-3154e0e85933",
+    image: "/credentials/aws-generative-ai-essentials.png",
+    alt: "AWS Partner Generative AI Essentials trained badge",
+    description:
+      "Demonstrates foundational knowledge of AWS Generative AI Essentials for business and partner contexts.",
+  },
+] as const;
+
+export const currentLearning = {
+  title: "Google AI Leadership",
+  provider: "Udemy coursework completed",
+  status: "Google certification exam planned",
+  description:
+    "Continuing structured preparation in AI strategy, responsible adoption, and leadership decision-making.",
+} as const;
+
 export const productionSignals = [
   {
     label: "Enterprise AI platforms",

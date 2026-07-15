@@ -17,6 +17,11 @@ Databases & Retrieval: PostgreSQL, MongoDB, pgvector, Pinecone, ChromaDB, Vector
 Cloud & DevOps: AWS, GCP, Docker, Kubernetes, OpenShift, GitHub Actions, Jenkins, CI/CD
 Leadership & Architecture: AI Solution Architecture, Engineering Leadership, System Design, Stakeholder Management, Technical Mentorship
 
+CERTIFICATIONS & PROFESSIONAL DEVELOPMENT
+● AWS Certified AI Practitioner — Amazon Web Services Training and Certification | Issued Jul 12, 2026 | Credly verified
+● AWS Partner: Generative AI Essentials — Training Badge | Amazon Web Services Training and Certification | Credly verified
+● Google AI Leadership — Udemy coursework completed; Google certification exam planned
+
 PROFESSIONAL EXPERIENCE
 PUBLICIS SAPIENT | Bengaluru, India
 AI Architect / Technical Lead | Mar 2023 – Present

@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
 
-  return [
+	return [
     ...routes.map((route) => ({
       url: `${siteConfig.url}${route.href === "/" ? "" : route.href}`,
       lastModified: now,
@@ -33,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...serviceRoutes,
     ...blogRoutes,
-    ...caseStudyRoutes,
-  ];
+		...caseStudyRoutes,
+		{
+			url: `${siteConfig.url}/resume.pdf`,
+			lastModified: new Date("2026-07-15"),
+			changeFrequency: "monthly" as const,
+			priority: 0.7,
+		},
+	];
 }

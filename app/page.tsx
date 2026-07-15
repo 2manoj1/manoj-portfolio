@@ -9,6 +9,7 @@ import { CtaBand } from "@/components/marketing/cta-band";
 import { GitHubIcon } from "@/components/marketing/icons";
 import { MotionReveal } from "@/components/marketing/motion-reveal";
 import { ProductionProofSection } from "@/components/marketing/production-proof";
+import { AiCredentialsSection } from "@/components/marketing/ai-credentials";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { TestimonialSlider } from "@/components/marketing/testimonial-slider";
 import {
@@ -23,10 +24,16 @@ import { GITHUB } from "@/lib/links";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Manoj Mukherjee | AI Architect & GenAI Systems Builder",
-  description:
-    "CTO-grade AI Architect Consultant for LangGraph multi-agent systems, RAG infrastructure, FastAPI AI backends, and AI platform engineering.",
-  path: "/",
+	title: "Manoj Mukherjee | Enterprise AI Architect in Bengaluru",
+	description:
+		"Manoj Mukherjee is an Enterprise AI Architect in Bengaluru with 10+ years of experience building Agentic AI, LangGraph, RAG, FastAPI, and cloud AI platforms.",
+	path: "/",
+	keywords: [
+		"Enterprise AI Architect Bengaluru",
+		"Agentic AI Architect India",
+		"GenAI Engineering Leader",
+		"AWS Certified AI Practitioner",
+	],
 });
 
 export default function Home() {
@@ -118,6 +125,8 @@ export default function Home() {
       </header>
 
       <ProductionProofSection />
+
+      <AiCredentialsSection compact />
 
       <Section>
         <MotionReveal>
