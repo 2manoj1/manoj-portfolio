@@ -42,17 +42,17 @@ type SceneBase = {
 	subtitle?: string;
 	notes: SpeakerNotes;
 	sourceIds?: string[];
+	image?: {
+		src: string;
+		alt: string;
+		preload?: boolean;
+	};
 };
 
 export type HeroScene = SceneBase & {
 	kind: "hero";
 	lines?: string[];
 	callout?: string;
-	image?: {
-		src: string;
-		alt: string;
-		preload?: boolean;
-	};
 };
 
 export type StatementScene = SceneBase & {
@@ -128,7 +128,7 @@ export type SourcesScene = SceneBase & {
 		title: string;
 		detail: string;
 		status: LectureSource["status"];
-		sourceId: string;
+		sourceId?: string;
 	}>;
 };
 
@@ -147,9 +147,11 @@ export type Lecture = {
 	slug: string;
 	title: string;
 	shortTitle: string;
+	subtitle?: string;
 	description: string;
 	audience: string;
-	presenter: string;
+	presenter?: string;
+	university?: string;
 	totalMinutes: number;
 	scenes: LectureScene[];
 	sources: LectureSource[];

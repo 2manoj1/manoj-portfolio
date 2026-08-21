@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ArrowRight, ExternalLink, FlaskConical, MonitorPlay } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, ExternalLink, FlaskConical, MonitorPlay, ImageIcon, X, Sparkles } from "lucide-react";
 import { ArchitectureDiagram } from "@/components/lectures/diagrams/architecture-diagram";
 import { InteractiveFlow } from "@/components/lectures/interactive-flow";
 import { InteractiveQuestion } from "@/components/lectures/interactive-question";
@@ -85,6 +86,41 @@ function DemoLoading() {
 	);
 }
 
+function InfographicModal({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+	return (
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-lg" role="dialog" aria-modal="true">
+			<div className="relative flex max-h-[90vh] max-w-6xl flex-col items-center overflow-hidden rounded-3xl border border-amber-400/40 bg-zinc-950 p-4 shadow-[0_0_80px_rgba(251,191,36,0.2)]">
+				<div className="flex w-full items-center justify-between border-b border-white/10 pb-3">
+					<div className="flex items-center gap-2">
+						<Sparkles className="size-4 text-amber-300" />
+						<span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-300">
+							NotebookLM High-Resolution Systems Infographic
+						</span>
+					</div>
+					<button
+						type="button"
+						onClick={onClose}
+						className="rounded-full bg-white/10 p-1.5 text-zinc-400 transition hover:bg-white/20 hover:text-white"
+						aria-label="Close image">
+						<X className="size-5" />
+					</button>
+				</div>
+				<div className="relative mt-3 max-h-[75vh] w-full overflow-auto rounded-2xl">
+					<Image
+						src={src}
+						alt={alt}
+						width={1920}
+						height={1080}
+						className="h-auto w-full rounded-2xl object-contain shadow-2xl"
+						priority
+					/>
+				</div>
+				<p className="mt-2 text-center font-mono text-xs text-zinc-400">{alt}</p>
+			</div>
+		</div>
+	);
+}
+
 function Hero({ scene }: { scene: HeroScene }) {
 	return (
 		<div className="relative flex min-h-full flex-col items-center justify-center overflow-hidden rounded-3xl text-center py-6">
@@ -130,24 +166,56 @@ function Hero({ scene }: { scene: HeroScene }) {
 }
 
 function Diagram({ scene }: { scene: DiagramScene }) {
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col justify-center py-3">
-			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
+			<div className="flex items-center justify-between">
+				{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : <div />}
+				{scene.image ? (
+					<button
+						type="button"
+						onClick={() => setShowModal(true)}
+						className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 font-mono text-[10px] font-bold uppercase text-amber-300 transition hover:bg-amber-400/20">
+						<ImageIcon className="size-3.5" /> View Visual Infographic
+					</button>
+				) : null}
+			</div>
+
 			<h2 className="mx-auto mt-2 max-w-[22ch] text-balance text-center font-display text-[clamp(2rem,4vw,4.2rem)] font-bold leading-[0.98] tracking-[-0.04em] text-white">
 				{scene.title}
 			</h2>
+
 			<div className="mt-4">
 				<ArchitectureDiagram diagramId={scene.diagramId} />
 			</div>
+
 			{scene.callout ? <p className="mt-3 text-center font-mono text-xs uppercase tracking-[0.16em] text-amber-200">{scene.callout}</p> : null}
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }
 
 function Statement({ scene }: { scene: StatementScene }) {
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col items-center justify-center text-center py-6">
-			{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
+			<div className="flex items-center justify-between w-full max-w-5xl">
+				{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : <div />}
+				{scene.image ? (
+					<button
+						type="button"
+						onClick={() => setShowModal(true)}
+						className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1 font-mono text-[10px] font-bold uppercase text-amber-300 transition hover:bg-amber-400/20">
+						<ImageIcon className="size-3.5" /> View Infographic
+					</button>
+				) : null}
+			</div>
+
 			<h2 className="mt-4 max-w-[18ch] text-balance font-display text-[clamp(2.5rem,5.8vw,6.5rem)] font-bold leading-[0.92] tracking-[-0.045em] text-white">
 				{scene.title}
 			</h2>
@@ -163,17 +231,50 @@ function Statement({ scene }: { scene: StatementScene }) {
 					))}
 				</div>
 			) : null}
+
+			{/* Inline preview teaser if image exists */}
+			{scene.image ? (
+				<div
+					onClick={() => setShowModal(true)}
+					className="mt-6 max-w-xl cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-black/40 p-2 shadow-2xl transition hover:border-amber-400/60 hover:scale-[1.01]">
+					<div className="relative h-44 w-full overflow-hidden rounded-xl">
+						<Image src={scene.image.src} alt={scene.image.alt} fill sizes="600px" className="object-cover opacity-90" />
+						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3">
+							<span className="font-mono text-[10px] font-bold text-amber-300 uppercase">Click to expand full infographic</span>
+							<ImageIcon className="size-4 text-amber-300" />
+						</div>
+					</div>
+				</div>
+			) : null}
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }
 
 function Cards({ scene }: { scene: CardsScene }) {
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col justify-center py-3">
-			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
+			<div className="flex items-center justify-between">
+				{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : <div />}
+				{scene.image ? (
+					<button
+						type="button"
+						onClick={() => setShowModal(true)}
+						className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1 font-mono text-[10px] font-bold uppercase text-amber-300 transition hover:bg-amber-400/20">
+						<ImageIcon className="size-3.5" /> View Roadmap Infographic
+					</button>
+				) : null}
+			</div>
+
 			<h2 className="mx-auto mt-2 max-w-[20ch] text-balance text-center font-display text-[clamp(2.1rem,4.2vw,4.6rem)] font-bold leading-[0.96] tracking-[-0.04em] text-white">
 				{scene.title}
 			</h2>
+
 			<div className="mt-5 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
 				{scene.items.map((item, index) => (
 					<article key={item.title} className="rounded-3xl border border-white/15 bg-white/[0.035] p-5.5 backdrop-blur-sm transition-all hover:border-amber-400/50 hover:bg-white/[0.06]">
@@ -187,13 +288,31 @@ function Cards({ scene }: { scene: CardsScene }) {
 				))}
 			</div>
 			{scene.callout ? <p className="mt-4 text-center text-xs font-semibold text-amber-200">{scene.callout}</p> : null}
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }
 
 function Comparison({ scene }: { scene: ComparisonScene }) {
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col justify-center py-4">
+			<div className="flex items-center justify-between">
+				{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : <div />}
+				{scene.image ? (
+					<button
+						type="button"
+						onClick={() => setShowModal(true)}
+						className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1 font-mono text-[10px] font-bold uppercase text-amber-300 transition hover:bg-amber-400/20">
+						<ImageIcon className="size-3.5" /> View Infographic Image
+					</button>
+				) : null}
+			</div>
+
 			<h2 className="text-center font-display text-[clamp(2.2rem,4.5vw,4.8rem)] font-bold leading-none tracking-[-0.04em] text-white">{scene.title}</h2>
 			<div className="mt-6 grid gap-5 lg:grid-cols-2">
 				{[scene.left, scene.right].map((side, sideIndex) => (
@@ -211,6 +330,10 @@ function Comparison({ scene }: { scene: ComparisonScene }) {
 					</div>
 				))}
 			</div>
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }
@@ -227,9 +350,22 @@ const statusClasses: Record<LectureSource["status"], string> = {
 };
 
 function SourceCases({ scene, sources }: { scene: SourcesScene; sources: LectureSource[] }) {
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col justify-center py-4">
-			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
+			<div className="flex items-center justify-between">
+				{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : <div />}
+				{scene.image ? (
+					<button
+						type="button"
+						onClick={() => setShowModal(true)}
+						className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1 font-mono text-[10px] font-bold uppercase text-amber-300 transition hover:bg-amber-400/20">
+						<ImageIcon className="size-3.5" /> View Infographic
+					</button>
+				) : null}
+			</div>
+
 			<h2 className="mx-auto mt-2 max-w-[20ch] text-balance text-center font-display text-[clamp(2.2rem,4.5vw,4.8rem)] font-bold leading-[0.98] tracking-[-0.04em] text-white">{scene.title}</h2>
 			<div className={`mx-auto mt-6 grid w-full max-w-6xl gap-4 ${scene.items.length > 2 ? "sm:grid-cols-2" : ""}`}>
 				{scene.items.map((item) => {
@@ -248,12 +384,18 @@ function SourceCases({ scene, sources }: { scene: SourcesScene; sources: Lecture
 					);
 				})}
 			</div>
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }
 
 function Demo({ scene }: { scene: Extract<LectureScene, { kind: "demo" }> }) {
 	const guide = demoGuides[scene.demoId] ?? ["Explore simulation", "Test parameters", "Observe results"];
+	const [showModal, setShowModal] = useState(false);
+
 	return (
 		<div className="flex min-h-full flex-col justify-center py-2">
 			{/* Sleek Compact Header */}
@@ -270,9 +412,19 @@ function Demo({ scene }: { scene: Extract<LectureScene, { kind: "demo" }> }) {
 					</div>
 				</div>
 
-				<div className="hidden items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300 sm:flex font-mono">
-					<MonitorPlay className="size-3.5" />
-					<span>Web Crypto Engine</span>
+				<div className="flex items-center gap-2">
+					{scene.image ? (
+						<button
+							type="button"
+							onClick={() => setShowModal(true)}
+							className="inline-flex items-center gap-1.5 rounded-xl border border-amber-400/40 bg-amber-400/10 px-3 py-1 font-mono text-xs text-amber-300 transition hover:bg-amber-400/20">
+							<ImageIcon className="size-3.5" /> Infographic Visual
+						</button>
+					) : null}
+					<div className="hidden items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300 sm:flex font-mono">
+						<MonitorPlay className="size-3.5" />
+						<span>Web Crypto Engine</span>
+					</div>
 				</div>
 			</div>
 
@@ -303,6 +455,10 @@ function Demo({ scene }: { scene: Extract<LectureScene, { kind: "demo" }> }) {
 				</span>
 				<span className="hidden sm:inline">Interactive Classroom Mode</span>
 			</div>
+
+			{showModal && scene.image && (
+				<InfographicModal src={scene.image.src} alt={scene.image.alt} onClose={() => setShowModal(false)} />
+			)}
 		</div>
 	);
 }

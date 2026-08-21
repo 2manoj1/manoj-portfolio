@@ -210,6 +210,10 @@ export const blockchainLecture: Lecture = {
 			durationSeconds: 150,
 			title: "FIVE COMPANIES. FIVE DATABASES.",
 			callout: "Manufacturer → Distributor → Warehouse → Retailer → Clinic. Who has the single source of truth?",
+			image: {
+				src: "/images/lectures/trust-silo-infographic.webp",
+				alt: "Fragmented Corporate Database Silos vs Unified Cryptographic Blockchain Ledger",
+			},
 			sourceIds: ["nist-blockchain"],
 			notes: notes(
 				"Click 'Simulate Silo Conflict'. Notice how Distributor logged 85 units while Warehouse logged 100 units. Neither party can prove who is right because both are looking at their own private SQL databases. Now click 'Switch to Shared Ledger'. When every custody event is cryptographically signed and replicated, consensus enforces a single shared truth.",
@@ -251,6 +255,10 @@ export const blockchainLecture: Lecture = {
 			title: "A SHARED, TAMPER-EVIDENT LEDGER",
 			statement: "Maintained by multiple independently governed participants.",
 			fragments: ["Shared State", "Tamper-Evident", "Cryptographic Link", "Consensus Rules"],
+			image: {
+				src: "/images/lectures/cryptographic-blocks-infographic.webp",
+				alt: "Blockchain Block Anatomy and SHA-256 Avalanche Effect",
+			},
 			sourceIds: ["nist-blockchain"],
 			notes: notes(
 				"Notice what is NOT in this sentence: Bitcoin, mining, tokens, or speculation. Blockchain is a distributed coordination architecture. 'Shared' means replicated history. 'Tamper-evident' means any unauthorized modification is mathematically exposed.",
@@ -489,6 +497,10 @@ export const blockchainLecture: Lecture = {
 			durationSeconds: 120,
 			title: "Traditional vs. Programmable Settlement",
 			callout: "Left: 7 Steps & 3 Days · Right: Atomic Real-Time Settlement",
+			image: {
+				src: "/images/lectures/programmable-finance-infographic.webp",
+				alt: "Traditional Cross-Border Banking Rails vs Modern Sub-Second Atomic Blockchain Settlement",
+			},
 			notes: notes(
 				"Left side: Bank A → Correspondent Bank 1 → SWIFT → Correspondent Bank 2 → Bank B. Each bank maintains a separate ledger that requires batch reconciliation. Right side: Both banks participate on a shared programmable settlement rail. Money and assets swap atomically in seconds.",
 				"Let's look at the real-world bank doing this in production right now.",
@@ -572,6 +584,10 @@ export const blockchainLecture: Lecture = {
 			durationSeconds: 150,
 			title: "FOLLOW BATCH PCM-001",
 			callout: "Manufacturer → Distributor → Warehouse → Hospital → Patient",
+			image: {
+				src: "/images/lectures/pharma-provenance-infographic.webp",
+				alt: "Tamper-Proof Pharmaceutical Supply Chain from Factory to Hospital and Patient",
+			},
 			notes: notes(
 				"Click through the 5 stages of Paracetamol Batch PCM-001. Now click 'Tamper distributor quantity'. The quantity becomes 1,000, and the cryptographic verification badge immediately switches from Verified to Integrity Failed. We can trace backwards from the patient to the original factory lot number.",
 				"Let's look at India's live government deployment in medicine logistics.",
@@ -691,6 +707,10 @@ export const blockchainLecture: Lecture = {
 			durationSeconds: 180,
 			title: "AI ACTS. BLOCKCHAIN PROVES.",
 			callout: "AI Can Reason · Blockchain Can Verify · Smart Contracts Can Execute · Cloud Can Scale",
+			image: {
+				src: "/images/lectures/ai-agent-blockchain-infographic.webp",
+				alt: "AI Agent Reasoning & LangGraph Planning with Blockchain Cryptographic Settlement",
+			},
 			sourceIds: ["google-ap2", "coinbase-x402"],
 			notes: notes(
 				"AI models (LLMs and agents) are probabilistic: they reason, plan, and propose actions. But when an AI agent needs to book a server, hire a sub-agent, or pay an API, it needs a deterministic rail with strict spending limits and cryptographic receipts. Google recently open-sourced AP2 with FIDO, and Coinbase launched x402 for HTTP agent payments. AI provides the intelligence; Blockchain provides the verifiable ledger.",
@@ -750,6 +770,10 @@ export const blockchainLecture: Lecture = {
 			durationSeconds: 150,
 			eyebrow: "BCA Year 1 · Master in this sequence",
 			title: "YOUR SYSTEMS ROADMAP STARTS TODAY",
+			image: {
+				src: "/images/lectures/bca-systems-roadmap-infographic.webp",
+				alt: "BCA 1st Year Systems Roadmap: Programming, Networks, Cryptography, Blockchain, Smart Contracts & AI Agents",
+			},
 			items: [
 				{ title: "01 · Programming & Data Structures", detail: "TypeScript or Python, Git, memory structures, algorithms, and linked lists." },
 				{ title: "02 · Systems & Networks", detail: "HTTP, TCP/IP, client-server models, REST APIs, Linux, and PostgreSQL." },
