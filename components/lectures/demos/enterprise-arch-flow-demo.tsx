@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
 	ReactFlow,
 	Background,
@@ -12,48 +12,68 @@ import {
 	type Edge,
 	type NodeProps,
 } from "@xyflow/react";
-import { Layers, Server, Database, ShieldCheck, Globe, Cpu, ArrowRight, RefreshCw } from "lucide-react";
+import {
+	Layers,
+	ShieldCheck,
+	ArrowRight,
+	RefreshCw,
+} from "lucide-react";
 
 type ArchNodeData = {
 	title: string;
 	subtitle: string;
+	avatar: string;
 	type: "frontend" | "gateway" | "enterprise" | "blockchain" | "shared";
 	tech: string;
-	active?: boolean;
+	percentage: string;
+	highlight?: boolean;
+	roleExplanation: string;
 };
 
 function ArchNode({ data }: NodeProps<Node<ArchNodeData>>) {
 	const borderStyles = {
-		frontend: "border-sky-400/80 bg-sky-950/50 text-sky-200 shadow-[0_0_25px_rgba(56,189,248,0.2)]",
-		gateway: "border-violet-400/80 bg-violet-950/50 text-violet-200 shadow-[0_0_25px_rgba(168,85,247,0.2)]",
-		enterprise: "border-zinc-400/80 bg-zinc-900/80 text-zinc-200 shadow-[0_0_25px_rgba(161,161,170,0.15)]",
-		blockchain: "border-amber-400/90 bg-amber-950/50 text-amber-200 shadow-[0_0_35px_rgba(251,191,36,0.3)]",
-		shared: "border-emerald-400/90 bg-emerald-950/50 text-emerald-200 shadow-[0_0_35px_rgba(52,211,153,0.3)]",
+		frontend: "border-sky-400/80 bg-sky-950/60 text-sky-200 shadow-[0_0_30px_rgba(56,189,248,0.25)]",
+		gateway: "border-violet-400/80 bg-violet-950/60 text-violet-200 shadow-[0_0_30px_rgba(168,85,247,0.25)]",
+		enterprise: "border-zinc-400/80 bg-zinc-900/85 text-zinc-200 shadow-[0_0_30px_rgba(161,161,170,0.2)]",
+		blockchain: "border-amber-400/90 bg-amber-950/60 text-amber-200 shadow-[0_0_40px_rgba(251,191,36,0.35)]",
+		shared: "border-emerald-400/90 bg-emerald-950/60 text-emerald-200 shadow-[0_0_40px_rgba(52,211,153,0.35)]",
 	};
 
-	const icons = {
-		frontend: <Globe className="size-4 text-sky-400" />,
-		gateway: <Server className="size-4 text-violet-400" />,
-		enterprise: <Database className="size-4 text-zinc-400" />,
-		blockchain: <Cpu className="size-4 text-amber-400" />,
-		shared: <ShieldCheck className="size-4 text-emerald-400" />,
+	const badgeStyles = {
+		frontend: "bg-sky-500/20 text-sky-300 border-sky-400/30",
+		gateway: "bg-violet-500/20 text-violet-300 border-violet-400/30",
+		enterprise: "bg-zinc-500/20 text-zinc-300 border-zinc-400/30",
+		blockchain: "bg-amber-500/20 text-amber-300 border-amber-400/40",
+		shared: "bg-emerald-500/20 text-emerald-300 border-emerald-400/40",
 	};
 
 	return (
-		<div className={`w-[210px] rounded-2xl border p-4 backdrop-blur-md transition-all duration-300 ${borderStyles[data.type]}`}>
-			<Handle type="target" position={Position.Top} className="!bg-amber-400 !size-2" />
-			<Handle type="target" position={Position.Left} className="!bg-amber-400 !size-2" />
-			<div className="flex items-center justify-between gap-2 border-b border-white/10 pb-2">
-				<span className="flex items-center gap-1.5 text-xs font-bold text-white">
-					{icons[data.type]} {data.title}
-				</span>
-				<span className="rounded bg-black/50 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase text-zinc-400">
-					{data.tech}
+		<div
+			className={`w-[230px] rounded-3xl border p-4.5 backdrop-blur-xl transition-all duration-300 ${
+				borderStyles[data.type]
+			} ${data.highlight ? "ring-2 ring-amber-300 scale-105" : "hover:scale-[1.02]"}`}>
+			<Handle type="target" position={Position.Top} className="!bg-amber-400 !size-2.5" />
+			<Handle type="target" position={Position.Left} className="!bg-amber-400 !size-2.5" />
+
+			<div className="flex items-center justify-between gap-2 border-b border-white/15 pb-2.5">
+				<div className="flex items-center gap-2">
+					<span className="text-xl" aria-hidden="true">{data.avatar}</span>
+					<span className="text-xs font-bold text-white tracking-wide">{data.title}</span>
+				</div>
+				<span className={`rounded-full border px-2 py-0.5 font-mono text-[9px] font-bold uppercase ${badgeStyles[data.type]}`}>
+					{data.percentage}
 				</span>
 			</div>
-			<p className="mt-2 text-xs leading-relaxed text-zinc-300">{data.subtitle}</p>
-			<Handle type="source" position={Position.Bottom} className="!bg-amber-400 !size-2" />
-			<Handle type="source" position={Position.Right} className="!bg-amber-400 !size-2" />
+
+			<p className="mt-2 text-xs leading-relaxed text-zinc-300 font-medium">{data.subtitle}</p>
+
+			<div className="mt-3 flex items-center justify-between rounded-xl bg-black/60 px-2.5 py-1 font-mono text-[9px] text-zinc-400 border border-white/5">
+				<span className="text-zinc-500 uppercase">Stack:</span>
+				<span className="font-semibold text-zinc-200">{data.tech}</span>
+			</div>
+
+			<Handle type="source" position={Position.Bottom} className="!bg-amber-400 !size-2.5" />
+			<Handle type="source" position={Position.Right} className="!bg-amber-400 !size-2.5" />
 		</div>
 	);
 }
@@ -62,111 +82,211 @@ const nodeTypes = {
 	arch: ArchNode,
 };
 
-// Generous spacing to guarantee zero overlap across tablet, 1080p, desktop and projector
+// Generous, wide architecture topology layout preventing any node overlap
 const initialNodes: Node<ArchNodeData>[] = [
 	{
 		id: "n-user",
 		type: "arch",
-		position: { x: 300, y: 10 },
-		data: { title: "User Client", subtitle: "Web / Mobile App", type: "frontend", tech: "Next.js 16 + React" },
+		position: { x: 340, y: 10 },
+		data: {
+			title: "User Web & Mobile",
+			subtitle: "High-speed UI, Responsive Views, Client Auth",
+			avatar: "📱",
+			type: "frontend",
+			tech: "Next.js 16 + React 19",
+			percentage: "Frontend UI",
+			roleExplanation: "Users interact with a clean modern Next.js interface. They never directly execute complex raw blockchain RPC calls.",
+		},
 	},
 	{
 		id: "n-gateway",
 		type: "arch",
-		position: { x: 300, y: 130 },
-		data: { title: "API Gateway / BFF", subtitle: "Auth, Orchestration, Validation", type: "gateway", tech: "FastAPI / Node.js" },
+		position: { x: 340, y: 140 },
+		data: {
+			title: "API Gateway & BFF",
+			subtitle: "Token Validation, Route Orchestration, Rate Limits",
+			avatar: "⚡",
+			type: "gateway",
+			tech: "FastAPI / Node.js",
+			percentage: "Orchestration",
+			roleExplanation: "The API Gateway validates JWT tokens, handles business authorization, and splits queries between SQL databases and blockchain nodes.",
+		},
 	},
 	{
 		id: "n-enterprise",
 		type: "arch",
-		position: { x: 60, y: 260 },
-		data: { title: "Enterprise Tier (90%)", subtitle: "Customer DB, ERP, Private Logs", type: "enterprise", tech: "PostgreSQL / SAP / Kafka" },
+		position: { x: 70, y: 280 },
+		data: {
+			title: "Enterprise Core (90%)",
+			subtitle: "Customer PII, ERP, Inventory, Private Records",
+			avatar: "🗄️",
+			type: "enterprise",
+			tech: "PostgreSQL / SAP / Kafka",
+			percentage: "90% Cloud DB",
+			roleExplanation: "90% of application data belongs here: user profiles, private chats, caching, logs, and high-frequency writes that need microsecond latency.",
+		},
 	},
 	{
 		id: "n-blockchain",
 		type: "arch",
-		position: { x: 540, y: 260 },
-		data: { title: "Blockchain Rail (10%)", subtitle: "Smart Contracts & Verification", type: "blockchain", tech: "EVM / Vishvasya / BFT" },
+		position: { x: 610, y: 280 },
+		data: {
+			title: "Smart Contract Rail (10%)",
+			subtitle: "Escrow Logic, State Locks & Audit Fingerprints",
+			avatar: "📜",
+			type: "blockchain",
+			tech: "EVM / Vishvasya / BFT",
+			percentage: "10% Ledger Rail",
+			roleExplanation: "Only the multi-party coordination events (custody handoffs, asset transfers, credential signatures) are submitted to the blockchain.",
+		},
 	},
 	{
 		id: "n-shared",
 		type: "arch",
-		position: { x: 300, y: 390 },
-		data: { title: "Shared Final State", subtitle: "Multi-Party Cryptographic Consensus", type: "shared", tech: "Tamper-Evident Ledger" },
+		position: { x: 340, y: 420 },
+		data: {
+			title: "Shared Consensus State",
+			subtitle: "Multi-Organization Immutable Ledger Truth",
+			avatar: "🛡️",
+			type: "shared",
+			tech: "Tamper-Evident Chain",
+			percentage: "Consensus Finality",
+			roleExplanation: "All independent external institutions (banks, regulators, supply chain partners) verify the cryptographic proof on this shared ledger.",
+		},
 	},
 ];
 
 const initialEdges: Edge[] = [
-	{ id: "e-user-gw", source: "n-user", target: "n-gateway", animated: true, style: { stroke: "#38bdf8", strokeWidth: 2.5 }, markerEnd: { type: MarkerType.ArrowClosed } },
-	{ id: "e-gw-erp", source: "n-gateway", target: "n-enterprise", animated: true, style: { stroke: "#a855f7", strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed } },
-	{ id: "e-gw-bc", source: "n-gateway", target: "n-blockchain", animated: true, style: { stroke: "#f59e0b", strokeWidth: 2.5 }, markerEnd: { type: MarkerType.ArrowClosed } },
+	{ id: "e-user-gw", source: "n-user", target: "n-gateway", animated: true, style: { stroke: "#38bdf8", strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
+	{ id: "e-gw-erp", source: "n-gateway", target: "n-enterprise", animated: true, style: { stroke: "#a855f7", strokeWidth: 2.5 }, markerEnd: { type: MarkerType.ArrowClosed } },
+	{ id: "e-gw-bc", source: "n-gateway", target: "n-blockchain", animated: true, style: { stroke: "#f59e0b", strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
 	{ id: "e-erp-shared", source: "n-enterprise", target: "n-shared", animated: true, style: { stroke: "#71717a", strokeWidth: 1.5 } },
-	{ id: "e-bc-shared", source: "n-blockchain", target: "n-shared", animated: true, style: { stroke: "#34d399", strokeWidth: 2.5 }, markerEnd: { type: MarkerType.ArrowClosed } },
+	{ id: "e-bc-shared", source: "n-blockchain", target: "n-shared", animated: true, style: { stroke: "#34d399", strokeWidth: 3 }, markerEnd: { type: MarkerType.ArrowClosed } },
 ];
 
 export default function EnterpriseArchFlowDemo() {
 	const [activeStep, setActiveStep] = useState<number>(0);
+	const [selectedNodeId, setSelectedNodeId] = useState<string>("n-blockchain");
 
 	const steps = [
-		{ label: "Step 1 · User Triggers Action", detail: "A client initiates a medicine dispatch or high-value cross-border payment on Next.js UI." },
-		{ label: "Step 2 · API Gateway Validates", detail: "FastAPI checks user permissions and orchestrates internal PostgreSQL and SAP ERP records." },
-		{ label: "Step 3 · Smart Contract Execution", detail: "Gateway concurrently submits the cryptographic event payload to the shared Blockchain rail." },
-		{ label: "Step 4 · Shared Tamper-Evident State", detail: "Independent external parties (regulators, buyers, banks) verify the transaction on the shared ledger." },
+		{ label: "Step 1 · User Submits Request", detail: "Client clicks 'Transfer Medicine Batch' on Next.js UI → Sends encrypted payload to API Gateway." },
+		{ label: "Step 2 · API Gateway Validates", detail: "FastAPI checks user permissions and writes private customer details into internal PostgreSQL & ERP." },
+		{ label: "Step 3 · Smart Contract Triggered", detail: "Gateway concurrently invokes the EVM Smart Contract with the cryptographic hash of the custody handoff." },
+		{ label: "Step 4 · Shared Cryptographic State", detail: "Regional consensus nodes commit the transaction. Regulators and buyers independently verify against the shared state." },
 	];
 
-	const advanceStep = () => {
+	const advanceStep = useCallback(() => {
 		setActiveStep((prev) => (prev + 1) % steps.length);
-	};
+	}, [steps.length]);
+
+	const reset = useCallback(() => {
+		setActiveStep(0);
+		setSelectedNodeId("n-blockchain");
+	}, []);
+
+	const activeNode = initialNodes.find((n) => n.id === selectedNodeId) ?? initialNodes[3];
 
 	return (
-		<div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-center">
-			{/* Top Bar */}
-			<div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/40 p-4 backdrop-blur-md">
+		<div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-center">
+			{/* Top Control Bar */}
+			<div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/50 p-4 backdrop-blur-md">
 				<div>
-					<span className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Enterprise Systems Architecture</span>
-					<h3 className="font-display text-lg text-white">Blockchain is a Component — Not The Entire Application</h3>
+					<span className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-300">
+						Enterprise Architecture Blueprint
+					</span>
+					<h3 className="font-display text-lg font-bold text-white">
+						Blockchain is a Component (10%) — Not The Entire Application (90%)
+					</h3>
 				</div>
+
 				<div className="flex items-center gap-2">
 					<button
 						type="button"
 						onClick={advanceStep}
-						className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-amber-400 px-5 text-xs font-bold text-zinc-950 transition hover:bg-amber-300 shadow-lg shadow-amber-950/40">
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-amber-400 px-5 text-xs font-bold text-zinc-950 transition hover:bg-amber-300 shadow-lg shadow-amber-950/40">
 						<Layers className="size-4" /> Simulate Request Flow <ArrowRight className="size-4" />
 					</button>
 					<button
 						type="button"
-						onClick={() => setActiveStep(0)}
-						className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/15 px-3 text-xs text-zinc-300 hover:text-white">
+						onClick={reset}
+						className="inline-flex min-h-11 items-center gap-1.5 rounded-2xl border border-white/15 px-3.5 text-xs text-zinc-300 transition hover:border-white/30 hover:text-white">
 						<RefreshCw className="size-3.5" /> Reset
 					</button>
 				</div>
 			</div>
 
-			{/* React Flow Viewport with Zero Overlap */}
-			<div className="relative mt-4 h-[440px] w-full overflow-hidden rounded-3xl border border-white/15 bg-black/60 shadow-2xl">
-				<ReactFlow
-					nodes={initialNodes}
-					edges={initialEdges}
-					nodeTypes={nodeTypes}
-					fitView
-					fitViewOptions={{ padding: 0.22 }}
-					minZoom={0.5}
-					maxZoom={1.5}
-					attributionPosition="bottom-left"
-					className="h-full w-full">
-					<Background color="#52525b" gap={28} size={1} />
-					<Controls showInteractive={false} className="!bg-zinc-900 !border-white/10 !text-white" />
-				</ReactFlow>
+			{/* Main Split Grid: ReactFlow Canvas on Left (70%) + Deep Inspector Card on Right (30%) */}
+			<div className="mt-4 grid gap-4 lg:grid-cols-[1.55fr_0.85fr]">
+				{/* React Flow Full Visualizer */}
+				<div className="relative h-[460px] sm:h-[480px] md:h-[500px] w-full overflow-hidden rounded-3xl border border-white/15 bg-black/70 shadow-2xl">
+					<ReactFlow
+						nodes={initialNodes.map((n) => ({
+							...n,
+							data: {
+								...n.data,
+								highlight: n.id === selectedNodeId,
+							},
+						}))}
+						edges={initialEdges}
+						nodeTypes={nodeTypes}
+						onNodeClick={(_, node) => setSelectedNodeId(node.id)}
+						fitView
+						fitViewOptions={{ padding: 0.2 }}
+						minZoom={0.5}
+						maxZoom={1.5}
+						attributionPosition="bottom-left"
+						className="h-full w-full cursor-grab active:cursor-grabbing">
+						<Background color="#52525b" gap={30} size={1} />
+						<Controls showInteractive={false} className="!bg-zinc-900 !border-white/15 !text-white" />
+					</ReactFlow>
 
-				{/* Active Step Indicator Overlay */}
-				<div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-white/15 bg-zinc-950/90 px-4 py-3 backdrop-blur-md">
-					<div>
-						<p className="font-mono text-xs font-bold text-amber-300">{steps[activeStep].label}</p>
-						<p className="mt-0.5 text-xs text-zinc-300">{steps[activeStep].detail}</p>
+					{/* Live Flow Step Banner */}
+					<div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-2xl border border-white/15 bg-zinc-950/95 px-4 py-2.5 backdrop-blur-md">
+						<div className="flex items-center gap-2.5">
+							<span className="flex size-2.5 rounded-full bg-amber-400 animate-pulse" />
+							<p className="font-mono text-xs font-bold text-amber-300">{steps[activeStep].label}</p>
+						</div>
+						<span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">
+							Step {activeStep + 1} of 4
+						</span>
 					</div>
-					<span className="hidden rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 font-mono text-[10px] uppercase font-bold text-emerald-300 sm:inline-block">
-						Simulating Live Flow
-					</span>
+				</div>
+
+				{/* Component Deep-Dive Inspector */}
+				<div className="flex flex-col justify-between rounded-3xl border border-amber-300/40 bg-amber-300/[0.04] p-5 shadow-xl backdrop-blur-md">
+					<div>
+						<div className="flex items-center justify-between border-b border-white/10 pb-3">
+							<div className="flex items-center gap-2">
+								<span className="text-2xl" aria-hidden="true">{activeNode.data.avatar}</span>
+								<div>
+									<h4 className="font-display text-base font-bold text-white">{activeNode.data.title}</h4>
+									<p className="font-mono text-[10px] text-amber-200">{activeNode.data.tech}</p>
+								</div>
+							</div>
+							<span className="rounded-full bg-amber-400/20 px-2.5 py-0.5 font-mono text-[10px] font-bold text-amber-300">
+								{activeNode.data.percentage}
+							</span>
+						</div>
+
+						<div className="mt-4 space-y-3">
+							<div className="rounded-2xl border border-white/10 bg-black/40 p-3.5">
+								<p className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">Architectural Role</p>
+								<p className="mt-1 text-xs leading-relaxed text-zinc-200 font-medium">{activeNode.data.roleExplanation}</p>
+							</div>
+
+							<div className="rounded-2xl border border-white/10 bg-black/40 p-3.5">
+								<p className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-300">Current Flow Action</p>
+								<p className="mt-1 text-xs leading-relaxed text-amber-100">{steps[activeStep].detail}</p>
+							</div>
+						</div>
+					</div>
+
+					<div className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-950/40 p-2.5 text-xs text-emerald-200">
+						<ShieldCheck className="size-4 shrink-0 text-emerald-400" />
+						<p className="text-[11px] leading-tight">
+							<strong>Founder Rule:</strong> Never store user passwords, media files, or private PII on-chain. Blockchain is purely for multi-party consensus verification.
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
