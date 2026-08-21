@@ -34,8 +34,8 @@ function HashChip({ children, tone = "zinc" }: { children: ReactNode; tone?: "zi
 }
 
 const anatomyFields = [
-	{ id: "data", label: "Data Payload", value: "Distributor received 100 boxes PCM-001", explanation: "The verified real-world business event recorded into this block." },
-	{ id: "previous", label: "Previous Hash Pointer", value: "…9cbf6e03cddd0588", explanation: "The 256-bit cryptographic fingerprint of the previous block. This creates the unbreakable chain link." },
+	{ id: "data", label: "Data Payload", value: "Distributor recorded 100 boxes PCM-001", explanation: "The digital event submitted to this simplified classroom block. External evidence is needed to establish whether the physical event was true." },
+	{ id: "previous", label: "Previous Hash Pointer", value: "…9cbf6e03cddd0588", explanation: "The cryptographic fingerprint accepted for the previous block. This creates a tamper-evident link." },
 	{ id: "hash", label: "This Block's Calculated Hash", value: "…ed604c9b2dacc714", explanation: "The SHA-256 fingerprint generated from this block's data and the previous hash pointer." },
 ] as const;
 
@@ -130,7 +130,7 @@ function ChainLinks() {
 		<figure className="mx-auto max-w-6xl" aria-label="Interactive three-block chain">
 			<div className="mb-4 flex flex-wrap items-center justify-between gap-3">
 				<p className="text-sm font-medium text-zinc-300">
-					Change Block #1 and watch the cryptographic breakdown cascade across all downstream blocks.
+					Change Block #1: its stored hash mismatches, Block #2 loses its link, and later history becomes untrusted.
 				</p>
 				<div className="flex gap-2">
 					<button
@@ -292,9 +292,9 @@ function BranchingTree() {
 					</div>
 					<h3 className="mt-3 font-display text-xl font-bold text-white">Finance & Banking</h3>
 					<ul className="mt-3 space-y-2 text-xs text-zinc-300 font-mono">
-						<li className="flex items-center gap-2"><Check className="size-3.5 text-amber-400" /> Programmable Money (e₹ / Digital Rupee)</li>
+						<li className="flex items-center gap-2"><Check className="size-3.5 text-amber-400" /> Digital Rupee programmability (RBI pilot)</li>
 						<li className="flex items-center gap-2"><Check className="size-3.5 text-amber-400" /> 24/7 Institutional Settlement (Kinexys)</li>
-						<li className="flex items-center gap-2"><Check className="size-3.5 text-amber-400" /> Securities Tokenization (DTCC)</li>
+						<li className="flex items-center gap-2"><Check className="size-3.5 text-amber-400" /> Securities tokenisation (DTCC prelaunch)</li>
 					</ul>
 				</div>
 
@@ -316,8 +316,8 @@ function BranchingTree() {
 					<h3 className="mt-3 font-display text-xl font-bold text-white">Supply Chain & Medicine</h3>
 					<ul className="mt-3 space-y-2 text-xs text-zinc-300 font-mono">
 						<li className="flex items-center gap-2"><Check className="size-3.5 text-emerald-400" /> Drug Logistics Chain (NIC India)</li>
-						<li className="flex items-center gap-2"><Check className="size-3.5 text-emerald-400" /> Cold-Chain Sensor Telemetry</li>
-						<li className="flex items-center gap-2"><Check className="size-3.5 text-emerald-400" /> Counterfeit-Proof Food Provenance</li>
+						<li className="flex items-center gap-2"><Check className="size-3.5 text-emerald-400" /> Authenticated sensor evidence</li>
+						<li className="flex items-center gap-2"><Check className="size-3.5 text-emerald-400" /> Food provenance verification</li>
 					</ul>
 				</div>
 
@@ -340,7 +340,7 @@ function BranchingTree() {
 					<ul className="mt-3 space-y-2 text-xs text-zinc-300 font-mono">
 						<li className="flex items-center gap-2"><Check className="size-3.5 text-cyan-400" /> CBSE Certificate Chain (India)</li>
 						<li className="flex items-center gap-2"><Check className="size-3.5 text-cyan-400" /> Vishvasya BaaS by MeitY</li>
-						<li className="flex items-center gap-2"><Check className="size-3.5 text-cyan-400" /> Self-Sovereign Identity (W3C DID)</li>
+						<li className="flex items-center gap-2"><Check className="size-3.5 text-cyan-400" /> W3C Verifiable Credentials 2.0</li>
 					</ul>
 				</div>
 			</div>
@@ -357,14 +357,14 @@ function SettlementFlow() {
 					<div className="flex items-center justify-between border-b border-white/10 pb-3">
 						<div className="flex items-center gap-2">
 							<Building2 className="size-4 text-rose-300" />
-							<span className="font-mono text-xs font-bold uppercase tracking-wider text-rose-300">Traditional Intermediated Rail</span>
+							<span className="font-mono text-xs font-bold uppercase tracking-wider text-rose-300">Illustrative Multi-Ledger Route</span>
 						</div>
 						<span className="flex items-center gap-1 rounded bg-rose-400/20 px-2 py-0.5 font-mono text-[9px] font-bold text-rose-200">
-							<Clock className="size-3" /> 2–3 Days
+							<Clock className="size-3" /> Timing varies by corridor
 						</span>
 					</div>
 					<div className="mt-4 space-y-2">
-						{["1. Payer Initiates Transfer", "2. Originating Domestic Bank", "3. Correspondent Bank A (Ledger #1)", "4. Global Clearing House / SWIFT", "5. Correspondent Bank B (Ledger #2)", "6. Beneficiary Domestic Bank", "7. Final Payee Account Credited"].map((step, idx) => (
+						{["1. Payer and bank submit instruction", "2. Institutions validate compliance and account state", "3. Messages cross the relevant payment corridor", "4. Ledgers reconcile and settlement completes"].map((step, idx) => (
 							<div key={step} className="flex items-center gap-2.5 rounded-xl border border-white/5 bg-black/40 px-3 py-1.5 text-xs text-zinc-300">
 								<span className="font-mono text-[10px] font-bold text-rose-300">0{idx + 1}</span>
 								<span>{step}</span>
@@ -372,7 +372,7 @@ function SettlementFlow() {
 						))}
 					</div>
 					<p className="mt-4 text-xs text-zinc-400 leading-relaxed">
-						Multiple siloed ledgers require batch clearing, manual reconciliations, and correspondent fee deductions.
+						Routes, intermediaries, operating hours, costs, and settlement timing differ. The G20 targets focus on better outcomes rather than one mandated technology.
 					</p>
 				</div>
 
@@ -384,15 +384,15 @@ function SettlementFlow() {
 							<span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-300">Programmable Shared Settlement Rail</span>
 						</div>
 						<span className="rounded bg-emerald-400/20 px-2 py-0.5 font-mono text-[9px] font-bold text-emerald-200">
-							Sub-Second Atomic
+							Finality depends on design
 						</span>
 					</div>
 					<div className="mt-4 space-y-2.5">
 						{[
-							"1. Authorized Institutional Participant Submits Payment",
-							"2. Smart Contract Executes Atomic Payment vs Delivery (PvP)",
-							"3. Cryptographic Consensus Validates in Real-Time",
-							"4. Immediate Final Settlement Across Shared State (e.g. Kinexys)",
+							"1. Authorized participant submits a payment instruction",
+							"2. Shared rules validate identity, balance, and conditions",
+							"3. The network applies its protocol-specific acceptance process",
+							"4. Participants update an agreed state with fewer reconciliation gaps",
 						].map((step) => (
 							<div key={step} className="flex items-center gap-2.5 rounded-xl border border-emerald-400/20 bg-emerald-950/40 px-3 py-2.5 text-xs text-emerald-100">
 								<Check className="size-4 text-emerald-400 shrink-0" />

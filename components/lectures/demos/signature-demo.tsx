@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 
 type DemoStatus = "idle" | "working" | "signed" | "valid" | "invalid" | "error";
 
-const INITIAL_MESSAGE = "Approve credential KJU-2026-001 for Student Rahul";
+const INITIAL_MESSAGE = "Approve example credential DEMO-2026-001 for Student Rahul";
 
 function toHex(buffer: ArrayBuffer) {
 	return Array.from(new Uint8Array(buffer), (byte) => byte.toString(16).padStart(2, "0")).join("");
@@ -180,16 +180,16 @@ export default function SignatureDemo() {
 						<div>
 							<p className="font-display text-lg font-bold text-white">
 								{status === "valid" && "SIGNATURE VERIFIED ✓"}
-								{status === "invalid" && "SIGNATURE FORGERY DETECTED ✗"}
+								{status === "invalid" && "SIGNATURE MISMATCH ✗"}
 								{status === "signed" && "Signature Ready · Click Verify"}
 								{status === "working" && "Calculating Web Crypto Hash…"}
 								{status === "idle" && "Awaiting Digital Signature"}
 							</p>
 							<p className="mt-0.5 text-xs text-zinc-400">
 								{status === "valid" && "Public key confirms this exact message was signed by the private key holder."}
-								{status === "invalid" && "Message was altered! Mathematical verification rejects the forged payload."}
-								{status === "signed" && "Private key remains private in browser memory."}
-								{status === "idle" && "Digital signatures guarantee identity and non-repudiation."}
+								{status === "invalid" && "The stored signature does not verify against the current message and public key."}
+								{status === "signed" && "This session-only key is created locally and is not sent to a server."}
+								{status === "idle" && "Signatures support authenticity and integrity; identity depends on trusted key binding."}
 							</p>
 						</div>
 					</div>

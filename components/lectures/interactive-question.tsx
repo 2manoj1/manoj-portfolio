@@ -8,14 +8,11 @@ export function InteractiveQuestion({ scene }: { scene: QuestionScene }) {
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 	const answered = selectedIndex !== null;
 
-	// Default or scene-provided simulated student voting percentages
-	const defaultStats = scene.stats ?? [18, 72, 10];
-
 	return (
 		<div className="mx-auto flex h-full w-full max-w-5xl flex-col justify-center">
 			<div className="text-center">
 				<span className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-1.5 font-mono text-xs uppercase tracking-wider text-amber-300">
-					<Users className="size-3.5" /> Classroom Interactive Poll · Think → Vote → Reveal
+					<Users className="size-3.5" /> Classroom question · Think → choose → reveal
 				</span>
 				<h2 className="mt-5 text-balance font-display text-[clamp(2rem,4vw,4.2rem)] leading-[1.04] text-white">
 					{scene.question}
@@ -26,8 +23,6 @@ export function InteractiveQuestion({ scene }: { scene: QuestionScene }) {
 				{scene.options.map((option, index) => {
 					const correct = index === scene.correctIndex;
 					const selected = index === selectedIndex;
-					const votePercent = defaultStats[index] ?? Math.round(100 / scene.options.length);
-
 					return (
 						<button
 							key={option}
@@ -40,25 +35,15 @@ export function InteractiveQuestion({ scene }: { scene: QuestionScene }) {
 										? "border-rose-400/80 bg-rose-950/40 text-rose-100"
 										: "border-white/15 bg-white/[0.035] text-zinc-200 hover:border-white/30 hover:bg-white/[0.06]"
 							}`}>
-							{/* Background percentage fill on answered */}
-							{answered && (
-								<div
-									className={`absolute inset-y-0 left-0 transition-all duration-700 ${
-										correct ? "bg-emerald-500/15" : selected ? "bg-rose-500/15" : "bg-white/5"
-									}`}
-									style={{ width: `${votePercent}%` }}
-								/>
-							)}
-
 							<div className="relative z-10 flex items-start justify-between gap-3">
 								<span className="grid size-7 place-items-center rounded-lg border border-white/20 bg-black/40 font-mono text-xs font-bold text-amber-300">
 									{String.fromCharCode(65 + index)}
 								</span>
-								{answered && (
-									<span className="font-mono text-xs font-bold text-zinc-300">
-										{votePercent}% votes
-									</span>
-								)}
+								{answered && correct ? (
+									<span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-300">Correct answer</span>
+								) : answered && selected ? (
+									<span className="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-300">Your choice</span>
+								) : null}
 							</div>
 
 							<div className="relative z-10 mt-4 flex items-center justify-between gap-2">
@@ -97,7 +82,7 @@ export function InteractiveQuestion({ scene }: { scene: QuestionScene }) {
 				</div>
 			) : (
 				<p className="mt-6 text-center font-mono text-xs text-zinc-500">
-					Select an option to reveal live classroom voting breakdown and engineering logic.
+					Select an option to reveal the engineering logic. No simulated vote data is shown.
 				</p>
 			)}
 		</div>

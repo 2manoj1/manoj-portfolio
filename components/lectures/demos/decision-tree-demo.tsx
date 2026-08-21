@@ -17,26 +17,26 @@ const QUESTIONS: QuestionStep[] = [
 		title: "Are there multiple independent organizations involved?",
 		subtitle: "e.g., Banks, hospitals, government agencies, logistics vendors with separate legal governance.",
 		avatar: "🏢 🏛️",
-		hint: "If only ONE company owns the data, internal access controls and PostgreSQL are 10,000x faster and cheaper.",
+		hint: "If one company owns and governs the data, a conventional database is usually faster, cheaper, and simpler to operate.",
 	},
 	{
 		id: 2,
 		title: "Do these parties need to write to and read from a shared record?",
 		subtitle: "e.g., Shared custody of medicine batches, cross-border payment settlement, or academic credentials.",
 		avatar: "🔄 ✍️",
-		hint: "If parties only read static reports, standard REST APIs with digital signatures are completely sufficient.",
+		hint: "If parties only read signed reports, standard APIs and digital signatures may be sufficient.",
 	},
 	{
 		id: 3,
 		title: "Is there limited mutual trust between the participants?",
 		subtitle: "No single party can be trusted to run the master database without potential conflict of interest.",
 		avatar: "🤝 ⚖️",
-		hint: "If all parties 100% trust a single neutral central authority (e.g. AWS or a single bank), a centralized DB wins.",
+		hint: "If all participants accept one neutral operator and its governance, a centrally managed database usually wins.",
 	},
 	{
 		id: 4,
 		title: "Is tamper-evident auditability or provenance strictly required?",
-		subtitle: "Past records must never be secretly altered or deleted by any administrator without detection.",
+		subtitle: "Important changes to accepted history must be detectable and attributable under shared governance.",
 		avatar: "🔒 🛡️",
 		hint: "If regular backups and standard database audit logs are sufficient, blockchain overhead is unnecessary.",
 	},
@@ -168,7 +168,7 @@ export default function DecisionTreeDemo() {
 							USE A NORMAL DATABASE (PostgreSQL / Redis)
 						</h2>
 						<p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-zinc-200">
-							A single organization or fully trusted environment does not require consensus overhead, gas fees, or decentralized synchronization. PostgreSQL with SSL, row-level security, and audit logs delivers 10,000x faster throughput with simpler operational maintenance.
+							A single organization or accepted central operator usually does not need distributed consensus or cross-organization key governance. A well-secured conventional database provides simpler operations, mature access controls, and strong audit options.
 						</p>
 						<div className="mt-8">
 							<button
@@ -191,7 +191,7 @@ export default function DecisionTreeDemo() {
 							BLOCKCHAIN MAY BE APPROPRIATE ✓
 						</h2>
 						<p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-zinc-200">
-							All 4 criteria met: Multiple independently governed parties require a shared, tamper-evident state without trusting a single central master database. Deploy as a permissioned enterprise consortium (e.g. Vishvasya / Hyperledger) or public verifiable smart contract.
+							All four answers justify deeper evaluation, not automatic deployment. Compare permissioned and public designs, then test privacy, throughput, regulation, governance, key recovery, operating ownership, and an exit or migration plan.
 						</p>
 						<div className="mt-8">
 							<button

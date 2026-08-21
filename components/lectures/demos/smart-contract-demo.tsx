@@ -22,10 +22,10 @@ export default function SmartContractDemo() {
 	const released = inputs.received && inputs.qualityPassed && inputs.tempMaintained && !inputs.expired;
 
 	const rows: Array<{ key: keyof ContractInputs; label: string; passWhen: boolean; hint: string }> = [
-		{ key: "received", label: "Medicine Batch Received by Hospital", passWhen: true, hint: "Hospital IoT scanner signs custody receipt" },
-		{ key: "qualityPassed", label: "Lab Chemical Assay Verified", passWhen: true, hint: "Certified lab digital signature on-chain" },
-		{ key: "tempMaintained", label: "Cold-Chain Sensor (< 8°C Throughout)", passWhen: true, hint: "Continuous IoT temperature logger threshold" },
-		{ key: "expired", label: "Batch Passed Expiry Date", passWhen: false, hint: "Current blockchain timestamp < batch expiry" },
+		{ key: "received", label: "Medicine batch received", passWhen: true, hint: "Scenario input: authenticated custody event" },
+		{ key: "qualityPassed", label: "Quality check passed", passWhen: true, hint: "Scenario input: authorized laboratory result" },
+		{ key: "tempMaintained", label: "Cold-chain threshold maintained", passWhen: true, hint: "Scenario input: accepted sensor evidence" },
+		{ key: "expired", label: "Medicine expired", passWhen: false, hint: "Scenario input: expiry rule evaluation" },
 	];
 
 	return (
@@ -37,7 +37,7 @@ export default function SmartContractDemo() {
 						<div className="flex items-center gap-2">
 							<Code2 className="size-4 text-amber-300" />
 							<span className="font-mono text-xs uppercase tracking-wider text-amber-300">
-								Smart Contract Logic (EVM Bytecode)
+								Local Deterministic Rule Simulation · Not Deployed
 							</span>
 						</div>
 						<button
@@ -99,21 +99,21 @@ export default function SmartContractDemo() {
 					</div>
 
 					<span className="mt-5 font-mono text-xs uppercase tracking-widest text-zinc-400">
-						Automated Contract Execution
+						Simulated Contract Decision
 					</span>
 
 					<h3 className={`mt-2 font-display text-3xl font-bold md:text-4xl ${released ? "text-emerald-300" : "text-rose-300"}`}>
-						{released ? "₹5,00,000 RELEASED ✓" : "PAYMENT BLOCKED ✗"}
+						{released ? "RELEASE CONDITION MET ✓" : "PAYMENT CONDITION BLOCKED ✗"}
 					</h3>
 
 					<p className="mt-4 text-sm leading-relaxed text-zinc-300">
 						{released
-							? "All cryptographic preconditions passed. Escrow automatically settled directly from Distributor to Manufacturer without manual accountant approvals."
-							: "Precondition check failed. Payment remains securely locked in smart contract until supplier rectifies the dispute or triggers penalty clauses."}
+							? "The example rules permit a ₹5,00,000 payment instruction. No account, escrow, or blockchain is connected to this classroom demo."
+							: "At least one example rule failed, so this local model does not permit the payment instruction. Production handling would require authenticated evidence and a dispute path."}
 					</p>
 
 					<div className="mt-6 rounded-2xl border border-white/10 bg-black/40 px-4 py-2 font-mono text-[11px] text-zinc-400">
-						Deterministic Code Execution · Zero Intermediary Discretion
+						Same inputs → same decision · No money moved
 					</div>
 				</div>
 			</div>

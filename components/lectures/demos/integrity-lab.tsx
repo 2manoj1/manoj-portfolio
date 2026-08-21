@@ -13,23 +13,23 @@ const INITIAL_BLOCKS: DemoBlock[] = [
 	{
 		index: 1,
 		timestamp: "2026-08-21T09:00:00.000Z",
-		transaction: "PharmaCorp created Batch PCM-001 (Paracetamol 500mg)",
+		transaction: "Example manufacturer created classroom Batch PCM-001",
 		previousHash: "0".repeat(64),
-		hash: "9cbf6e03cddd058882ee5897fa6949986bb90ed06a3b33671d97c34ef16e3add",
+		hash: "97a906d5db43a9d69fc97f5dd9fc1f6b288db5c0ed41d3f64bf84808e032bd89",
 	},
 	{
 		index: 2,
 		timestamp: "2026-08-21T09:05:00.000Z",
-		transaction: "Distributor received Batch PCM-001 · Quantity: 100 boxes",
-		previousHash: "9cbf6e03cddd058882ee5897fa6949986bb90ed06a3b33671d97c34ef16e3add",
-		hash: "ed604c9b2dacc7145cebc2c7d27b15325609f4eafe25195ff2127bf5e6d32fc5",
+		transaction: "Example distributor recorded Batch PCM-001 · Quantity: 100 boxes",
+		previousHash: "97a906d5db43a9d69fc97f5dd9fc1f6b288db5c0ed41d3f64bf84808e032bd89",
+		hash: "597d0622d465293564b8047fe725230190e8c086036d7ca76d12dc49bc4f8584",
 	},
 	{
 		index: 3,
 		timestamp: "2026-08-21T09:15:00.000Z",
-		transaction: "Hospital Clinic received Batch PCM-001 for patient care",
-		previousHash: "ed604c9b2dacc7145cebc2c7d27b15325609f4eafe25195ff2127bf5e6d32fc5",
-		hash: "d97bc83061f67d64ee4308121a35358fcec617375ed71c04d9ca1d44d47c9aee",
+		transaction: "Example clinic recorded receipt of Batch PCM-001",
+		previousHash: "597d0622d465293564b8047fe725230190e8c086036d7ca76d12dc49bc4f8584",
+		hash: "181248746d188aff38d7e3b9f792dfe9620285e42d477a82eb80a72419fb77f7",
 	},
 ];
 
@@ -78,7 +78,7 @@ export default function IntegrityLab() {
 	const tamperBlock1 = () => {
 		const tampered = blocks.map((block) =>
 			block.index === 1
-				? { ...block, transaction: block.transaction + " [EXPIRED INGREDIENT INJECTED]" }
+				? { ...block, transaction: block.transaction + " [edited after commit]" }
 				: block,
 		);
 		void verify(tampered);
@@ -129,12 +129,12 @@ export default function IntegrityLab() {
 					</div>
 					<div>
 						<span className={`font-mono text-sm font-bold ${chainValid ? "text-emerald-300" : "text-rose-300"}`}>
-							{chainValid ? "CHAIN INTEGRITY: VERIFIED ✓" : "TAMPER DETECTED: TRUST BROKEN ✗"}
+							{chainValid ? "CLASSROOM CHAIN: CONSISTENT ✓" : "RECORD MISMATCH: HISTORY UNTRUSTED ✗"}
 						</span>
 						<p className="text-xs text-zinc-400">
 							{chainValid
 								? "Every block's stored hash matches its transaction payload and links to its predecessor."
-								: "Data was secretly modified in past history. Downstream cryptographic hashes no longer reconcile!"}
+								: "A stored payload no longer matches its accepted fingerprint; downstream trust is invalid from that point."}
 						</p>
 					</div>
 				</div>
@@ -158,7 +158,7 @@ export default function IntegrityLab() {
 						type="button"
 						onClick={reset}
 						className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-4 font-display text-xs font-bold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-300">
-						<RotateCcw className="size-4" /> RESTORE CHAIN
+						<RotateCcw className="size-4" /> RESTORE ORIGINAL
 					</button>
 				</div>
 			</div>
@@ -169,7 +169,8 @@ export default function IntegrityLab() {
 					const check = checks[index];
 					const valid = check?.chainValidThroughHere ?? false;
 					const isTamperedBlock = check && !check.hashMatches;
-					const isDownstreamBroken = check && check.hashMatches && !check.chainValidThroughHere;
+					const isLinkBroken = check && check.hashMatches && !check.linkMatches;
+					const isDownstreamUntrusted = check && check.hashMatches && check.linkMatches && !check.chainValidThroughHere;
 
 					return (
 						<div
@@ -235,9 +236,13 @@ export default function IntegrityLab() {
 								<div className="mt-4 rounded-xl border border-rose-500/40 bg-rose-950/40 p-2.5 text-center font-mono text-[10px] font-bold text-rose-300">
 									❌ TAMPER DETECTED: Stored Hash ≠ Calculated Hash
 								</div>
-							) : isDownstreamBroken ? (
+							) : isLinkBroken ? (
 								<div className="mt-4 rounded-xl border border-rose-500/30 bg-rose-950/30 p-2.5 text-center font-mono text-[10px] text-rose-300">
 									⚠️ LINK BROKEN: Previous Hash pointer mismatch
+								</div>
+							) : isDownstreamUntrusted ? (
+								<div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-950/30 p-2.5 text-center font-mono text-[10px] text-amber-300">
+									⚠️ DOWNSTREAM TRUST INVALID: upstream verification failed
 								</div>
 							) : (
 								<div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-2 text-center font-mono text-[10px] text-emerald-300">
@@ -255,7 +260,7 @@ export default function IntegrityLab() {
 					value={draft}
 					onChange={(event) => setDraft(event.target.value)}
 					maxLength={100}
-					placeholder="Type a new transaction event to append to the live chain..."
+					placeholder="Type a classroom transaction event to append..."
 					className="min-h-12 flex-1 rounded-2xl border border-white/15 bg-black/40 px-5 text-sm text-white outline-none focus:border-amber-400"
 				/>
 				<button

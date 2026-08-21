@@ -6,22 +6,22 @@ import { Globe, Users, ShieldCheck, Sparkles, Server, KeyRound } from "lucide-re
 const ERAS = [
 	{
 		id: "web1",
-		era: "1990s – 2004",
+		era: "1990s – early 2000s",
 		label: "Web 1.0",
 		tagline: "The Static Information Web",
 		verb: "READ",
 		icon: Globe,
 		color: "border-sky-400/50 bg-sky-950/30 text-sky-200",
 		glow: "shadow-[0_0_35px_rgba(56,189,248,0.2)]",
-		example: "You visit a university notice board or Wikipedia page to read published HTML.",
+		example: "You open an early university page or personal homepage and read what its publisher posted.",
 		mechanic: "Client sends HTTP GET → Server returns static HTML file.",
-		control: "The server owner controls 100% of the published content.",
+		control: "The site operator controls the server and published content.",
 		genZAnalogy: "Like reading a physical newspaper or printed book through a screen.",
 		avatarEmoji: "🖥️ 📄",
 	},
 	{
 		id: "web2",
-		era: "2005 – Present",
+		era: "2000s – today",
 		label: "Web 2.0",
 		tagline: "The Platform & Social Web",
 		verb: "READ + WRITE",
@@ -29,24 +29,24 @@ const ERAS = [
 		color: "border-violet-400/50 bg-violet-950/30 text-violet-200",
 		glow: "shadow-[0_0_35px_rgba(168,85,247,0.2)]",
 		example: "You post videos on YouTube, share stories on Instagram, and stream music on Spotify.",
-		mechanic: "Users write data to centralized databases (AWS, Meta, Google SQL servers).",
-		control: "The centralized platform owns the database, your account, and your followers.",
-		genZAnalogy: "If a platform deletes your account, your entire digital presence and history vanish instantly.",
+		mechanic: "Users create content while a platform operates the application, policies, and databases.",
+		control: "The platform operator controls the account database and access policy; users contribute the content.",
+		genZAnalogy: "An account suspension can remove access to an audience built inside that platform.",
 		avatarEmoji: "📱 ☁️",
 	},
 	{
 		id: "web3",
-		era: "2025 – 2030+",
-		label: "Web3 & AI Era",
-		tagline: "The Verifiable & Sovereign Web",
+		era: "Emerging pattern",
+		label: "Web3 Patterns",
+		tagline: "User-Held Keys & Verifiable State",
 		verb: "READ + WRITE + OWN / PROVE",
 		icon: ShieldCheck,
 		color: "border-amber-400/60 bg-amber-950/40 text-amber-200",
 		glow: "shadow-[0_0_40px_rgba(251,191,36,0.25)]",
-		example: "Your cryptographic wallet holds portable credentials, smart contracts, and sovereign AI agent wallets.",
-		mechanic: "State is maintained on distributed peer consensus ledgers and zero-knowledge proofs.",
-		control: "You hold the private keys. No single intermediary can secretly alter or delete your history.",
-		genZAnalogy: "Your degree, gaming assets, and AI identity travel with you everywhere—guaranteed by mathematics.",
+		example: "A user can present a portable signed credential or control a self-custodied digital asset across compatible services.",
+		mechanic: "Some state is verified through signatures, credentials, or shared ledgers; applications still use servers and databases.",
+		control: "Control depends on custody and governance. User-held keys increase agency but make recovery and key loss serious design problems.",
+		genZAnalogy: "A credential can travel between compatible apps without every verifier calling one platform database.",
 		avatarEmoji: "🤖 🔐",
 	},
 ] as const;
@@ -129,7 +129,7 @@ export default function WebEvolutionDemo() {
 
 				<div className="mt-5 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3.5 text-xs text-zinc-300">
 					<KeyRound className="size-4 shrink-0 text-amber-300" />
-					<p><strong className="text-white">Engineering Insight:</strong> Web3 is not just about tokens—it is an open protocol standard for cryptographic identity, data provenance, and verifiable computing.</p>
+					<p><strong className="text-white">Engineering Insight:</strong> Web3 is an umbrella term, not one standard. Evaluate the actual credential, ledger, custody, privacy, and governance protocols separately.</p>
 				</div>
 			</section>
 		</div>

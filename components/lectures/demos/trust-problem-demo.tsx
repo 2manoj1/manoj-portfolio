@@ -13,11 +13,11 @@ type OrgNode = {
 };
 
 const INITIAL_ORGS: OrgNode[] = [
-	{ id: "1", role: "Manufacturer", name: "PharmaCorp BLR", avatar: "🏭", dbRecord: "Dispatched 100 boxes · Batch PCM-001", status: "synced" },
-	{ id: "2", role: "Distributor", name: "Speedy Logistics", avatar: "🚚", dbRecord: "Received 100 boxes · In Transit", status: "synced" },
-	{ id: "3", role: "Warehouse", name: "Cold Storage Zone 4", avatar: "🏬", dbRecord: "Received 100 boxes · Temp: 4.5°C", status: "synced" },
-	{ id: "4", role: "Retailer / Pharmacy", name: "City Care Pharmacy", avatar: "💊", dbRecord: "Stocked 100 boxes on shelves", status: "synced" },
-	{ id: "5", role: "Hospital / Patient", name: "Kristu Health Clinic", avatar: "🏥", dbRecord: "Dispensed 10 boxes to patients", status: "synced" },
+	{ id: "1", role: "Manufacturer", name: "Example manufacturer", avatar: "🏭", dbRecord: "Dispatched 100 boxes · Batch PCM-001", status: "synced" },
+	{ id: "2", role: "Distributor", name: "Example logistics partner", avatar: "🚚", dbRecord: "Recorded 100 boxes · In transit", status: "synced" },
+	{ id: "3", role: "Warehouse", name: "Example cold store", avatar: "🏬", dbRecord: "Recorded 100 boxes · Temp: 4.5°C", status: "synced" },
+	{ id: "4", role: "Retailer / Pharmacy", name: "Example pharmacy", avatar: "💊", dbRecord: "Recorded 100 boxes in stock", status: "synced" },
+	{ id: "5", role: "Hospital / Patient", name: "Example clinic", avatar: "🏥", dbRecord: "Recorded 10 boxes dispensed", status: "synced" },
 ];
 
 export default function TrustProblemDemo() {
@@ -46,13 +46,13 @@ export default function TrustProblemDemo() {
 					<div>
 						<p className="font-mono text-[11px] uppercase tracking-wider text-amber-300">
 							{mode === "silos" && "Stage 1 · Five Independent Database Silos"}
-							{mode === "dispute" && "Stage 2 · Private Record Dispute (Who has the truth?)"}
-							{mode === "shared" && "Stage 3 · Cryptographic Shared State (Consensus Truth)"}
+							{mode === "dispute" && "Stage 2 · Private Record Dispute (Which record is accepted?)"}
+							{mode === "shared" && "Stage 3 · Agreed Shared Record"}
 						</p>
 						<p className="text-xs text-zinc-400">
 							{mode === "silos" && "Each company runs its own private PostgreSQL database."}
-							{mode === "dispute" && "Distributor logged 85 units; Warehouse logged 100 units. Neither can prove truth."}
-							{mode === "shared" && "All 5 parties sign and verify every event on an immutable shared chain."}
+							{mode === "dispute" && "Distributor recorded 85 units; warehouse recorded 100. The records conflict."}
+							{mode === "shared" && "In this scenario, authorized parties validate signed custody events under common rules."}
 						</p>
 					</div>
 				</div>
@@ -180,13 +180,13 @@ export default function TrustProblemDemo() {
 					<div>
 						<h4 className="font-display text-lg font-bold text-white">
 							{mode === "silos" && "The Database Silo Problem"}
-							{mode === "dispute" && "Who Has The Truth When Ledgers Disagree?"}
-							{mode === "shared" && "Cryptographic Shared State: Single Source of Truth"}
+							{mode === "dispute" && "Which Record Can The Parties Accept?"}
+							{mode === "shared" && "Cryptographic Shared State: One Agreed Record"}
 						</h4>
 						<p className="mt-1 text-sm text-zinc-300">
 							{mode === "silos" && "5 independent companies have 5 separate database copies. If an error occurs, resolving disputes requires manual phone calls and audit overhead."}
-							{mode === "dispute" && "Distributor claims 85 units arrived; Warehouse logged 100 units. Neither party can prove who is right because both look only at their own private database."}
-							{mode === "shared" && "With blockchain, every handoff is cryptographically signed. Replicating the verified state ensures all 5 companies view exact identical truth."}
+							{mode === "dispute" && "Distributor and warehouse records disagree. Reconciliation, supporting evidence, and governance are needed to establish what should be accepted."}
+							{mode === "shared" && "This classroom ledger gives all five parties the same accepted digital record. It still cannot prove whether 85 or 100 boxes physically arrived; sensors, audits, and dispute rules remain essential."}
 						</p>
 					</div>
 				</div>

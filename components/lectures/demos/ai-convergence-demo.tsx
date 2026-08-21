@@ -7,31 +7,31 @@ import { ArrowRight, Bot, BrainCircuit, Check, RotateCcw, ShieldCheck, WalletCar
 const stages = [
 	{
 		label: "1. Intent & Reasoning",
-		owner: "AI Intelligence Core (LLM)",
-		detail: "Autonomous logistics agent searches 14 transport carriers, analyzes weather forecasts, and selects the lowest compliant cold-chain route.",
+		owner: "AI Proposal Layer",
+		detail: "In this classroom scenario, an AI assistant proposes a cold-chain route from the inputs and tools available to it. A proposal is not authorization.",
 		icon: BrainCircuit,
-		tech: "FastAPI + LangGraph Agent",
+		tech: "Model + application tools",
 	},
 	{
 		label: "2. Policy & Guardrails",
 		owner: "Deterministic Policy Gate",
-		detail: "Security firewall verifies the agent's proposed action against user budget limits (Max ₹25,000 / transaction) and authorized suppliers.",
+		detail: "Deterministic application policy checks a fixed example budget, supplier allowlist, and required human-approval boundary.",
 		icon: Bot,
-		tech: "Policy Engine / Spending Caps",
+		tech: "Policy engine / spending cap",
 	},
 	{
-		label: "3. Cryptographic Signature",
-		owner: "Scoped Agent Wallet",
-		detail: "Agent uses its ephemeral session key to cryptographically sign the purchase order and dispatch instructions (x402 / Google AP2 protocol).",
+		label: "3. Intent & Payment Protocol",
+		owner: "Scoped Authorization",
+		detail: "AP2 illustrates verifiable user mandates; x402 illustrates HTTP payment requests and responses. They are separate emerging protocol projects, not one universal wallet system.",
 		icon: WalletCards,
-		tech: "ECDSA Keypair / x402 Protocol",
+		tech: "AP2 mandates / x402 HTTP flow",
 	},
 	{
 		label: "4. Settlement & Proof",
-		owner: "Distributed Blockchain Rail",
-		detail: "Smart contract validates carrier delivery signature, releases payment escrow, and commits immutable tamper-evident proof to the shared ledger.",
+		owner: "Optional Shared Settlement Rail",
+		detail: "If independently governed parties need common settlement state, a ledger can record the accepted result. Delivery evidence still comes from trusted off-chain systems.",
 		icon: ShieldCheck,
-		tech: "EVM Smart Contract / Kinexys",
+		tech: "Ledger or conventional payment rail",
 	},
 ] as const;
 
@@ -42,6 +42,7 @@ export default function AiConvergenceDemo() {
 
 	return (
 		<div className="mx-auto flex h-full w-full max-w-6xl flex-col justify-center">
+			<p className="mb-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">2030 design pattern · scenario, not forecast</p>
 			{/* 4 Pipeline Stages Infographic */}
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="AI agent transaction stages">
 				{stages.map((item, index) => {
@@ -121,7 +122,7 @@ export default function AiConvergenceDemo() {
 						/>
 						<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-5 pb-3.5 pt-12">
 							<p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-amber-300">
-								Reason → Propose → Sign → Settle
+								Propose → Constrain → Authorize → Record
 							</p>
 						</div>
 					</div>
@@ -132,7 +133,7 @@ export default function AiConvergenceDemo() {
 						</div>
 						<div className="p-4">
 							<p className="font-display text-sm font-bold text-cyan-300">Blockchain Role (Deterministic)</p>
-							<p className="mt-1 text-xs leading-relaxed text-zinc-400">Enforces hard spending limits, executes code, and proves state.</p>
+							<p className="mt-1 text-xs leading-relaxed text-zinc-400">Can enforce on-ledger rules and preserve shared state; it cannot prove an off-chain event was true.</p>
 						</div>
 					</div>
 				</section>

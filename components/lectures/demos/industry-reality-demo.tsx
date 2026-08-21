@@ -66,7 +66,7 @@ const sectors: readonly Sector[] = [
 				id: "agora",
 				name: "Project Agorá",
 				status: "prototype",
-				metric: "28 institutions · ~CHF 800k · 17 scenarios",
+				metric: "Public-private prototype · controlled real-value testing",
 				flow: ["Tokenized deposits", "Central-bank reserves", "Atomic exchange", "Cross-border result"],
 				why: "Explores whether money and assets can settle together with less reconciliation and liquidity friction.",
 				reality: "Controlled real-value testing; BIS explicitly says this is not a finished product.",
@@ -77,7 +77,7 @@ const sectors: readonly Sector[] = [
 				id: "dtcc",
 				name: "DTCC tokenization",
 				status: "prelaunch",
-				metric: "~40 firms · production trades · Oct 2026 expected launch",
+				metric: "Production trades demonstrated · broader launch expected Oct 2026",
 				flow: ["Custodied asset", "Tokenized form", "Onchain trade", "Existing market rails"],
 				why: "Connects regulated custody and market infrastructure to programmable digital networks.",
 				reality: "Production trades are real; the broader service is still described as prelaunch.",
@@ -122,7 +122,7 @@ const sectors: readonly Sector[] = [
 		cases: [
 			{
 				id: "drug-logistics",
-				name: "Karnataka drug logistics",
+				name: "NIC drug logistics",
 				status: "production",
 				metric: "Manufacturer → supplier → warehouse → hospital",
 				flow: ["Batch created", "Custody changes", "Hospital receives", "Journey verifies"],
@@ -135,7 +135,7 @@ const sectors: readonly Sector[] = [
 				id: "walmart",
 				name: "Walmart traceability",
 				status: "deployment",
-				metric: "7 days → 2.2 seconds in the documented pilot",
+				metric: "About 7 days → a few seconds, reported in 2018",
 				flow: ["Farm event", "Supplier event", "Store receipt", "Trace query"],
 				why: "Faster provenance can narrow a food-safety investigation instead of discarding everything.",
 				reality: "A strong historic deployment example—not proof of the platform's exact 2026 scope.",
@@ -146,10 +146,10 @@ const sectors: readonly Sector[] = [
 				id: "tradelens",
 				name: "TradeLens",
 				status: "closed",
-				metric: "Viable technology · insufficient global adoption",
+				metric: "Closure announced in 2022 · platform withdrawn in 2023",
 				flow: ["Shipping ecosystem", "Shared platform", "Network effects", "Commercial outcome"],
 				why: "Global logistics only improves when enough independent participants join and share value.",
-				reality: "Good technology could not manufacture incentives, governance or commercial viability.",
+				reality: "Maersk cited insufficient collaboration and commercial viability; the source does not assign one simple cause.",
 				source: "https://www.maersk.com/news/articles/2022/12/01/information-on-the-closure-of-tradeLens",
 				publisher: "A.P. Moller–Maersk",
 			},
@@ -164,7 +164,7 @@ const sectors: readonly Sector[] = [
 				id: "ap2",
 				name: "Google AP2",
 				status: "reference",
-				metric: "v0.2 · donated to FIDO Alliance",
+				metric: "Open protocol work · verifiable payment mandates",
 				flow: ["Human intent", "Verifiable mandate", "Agent action", "Accountable record"],
 				why: "Autonomous payments need explicit authority, auditability and dispute evidence.",
 				reality: "A standards effort for agent payments—not evidence that every AI agent belongs onchain.",
@@ -174,8 +174,8 @@ const sectors: readonly Sector[] = [
 			{
 				id: "x402",
 				name: "x402",
-				status: "deployment",
-				metric: "HTTP 402 · signed payment · programmatic settlement",
+				status: "reference",
+				metric: "HTTP 402 · machine-readable payment flow",
 				flow: ["Agent request", "402 payment terms", "Signed payment", "Resource unlocked"],
 				why: "Lets software pay software without a human checkout screen for each tiny transaction.",
 				reality: "Useful machine-payment infrastructure still needs scoped wallets, limits and recovery controls.",
@@ -238,7 +238,7 @@ export default function IndustryRealityDemo() {
 				<div className="p-4 md:p-5" aria-live="polite">
 					<div className="flex flex-wrap items-start justify-between gap-3">
 						<div>
-							<p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">2026 evidence console</p>
+							<p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">Primary-source check · 21 Aug 2026</p>
 							<h3 className="mt-1 text-2xl font-semibold tracking-tight text-white">{selected.name}</h3>
 						</div>
 						<p className="max-w-md text-right font-mono text-xs leading-5 text-amber-200">{selected.metric}</p>

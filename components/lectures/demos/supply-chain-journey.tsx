@@ -5,11 +5,11 @@ import { useState } from "react";
 import { RotateCcw, ShieldAlert, ShieldCheck, Zap } from "lucide-react";
 
 const EVENTS = [
-	{ stage: "Manufacturer", participant: "PharmaCorp Bengaluru", time: "09:00 AM", quantity: 100, lot: "LOT-BLR-884", temp: "4.2°C", status: "Batch PCM-001 created & sealed" },
-	{ stage: "Distributor", participant: "South Zone Logistics", time: "11:30 AM", quantity: 100, lot: "LOT-BLR-884", temp: "4.8°C", status: "Custody accepted & GPS tracked" },
-	{ stage: "Warehouse", participant: "Cold Storage Zone 4", time: "03:10 PM", quantity: 100, lot: "LOT-BLR-884", temp: "5.1°C", status: "Cold-chain telemetry verified" },
-	{ stage: "Hospital", participant: "Kristu Health Centre", time: "06:45 PM", quantity: 100, lot: "LOT-BLR-884", temp: "4.9°C", status: "Delivery verified & inspected" },
-	{ stage: "Patient", participant: "Dispensing Desk", time: "07:15 PM", quantity: 1, lot: "LOT-BLR-884", temp: "Room Temp", status: "1 Strip dispensed to patient" },
+	{ stage: "Manufacturer", participant: "Example manufacturer", time: "09:00 AM", quantity: 100, lot: "LOT-DEMO-884", temp: "4.2°C", status: "Example batch record created" },
+	{ stage: "Distributor", participant: "Example logistics partner", time: "11:30 AM", quantity: 100, lot: "LOT-DEMO-884", temp: "4.8°C", status: "Example custody record accepted" },
+	{ stage: "Warehouse", participant: "Example cold store", time: "03:10 PM", quantity: 100, lot: "LOT-DEMO-884", temp: "5.1°C", status: "Example sensor record accepted" },
+	{ stage: "Hospital", participant: "Example hospital", time: "06:45 PM", quantity: 100, lot: "LOT-DEMO-884", temp: "4.9°C", status: "Example delivery record accepted" },
+	{ stage: "Patient", participant: "Example dispensing desk", time: "07:15 PM", quantity: 1, lot: "LOT-DEMO-884", temp: "Room temp", status: "Example dispensing record added" },
 ] as const;
 
 export default function SupplyChainJourney() {
@@ -39,13 +39,13 @@ export default function SupplyChainJourney() {
 					{/* Top Header Overlay */}
 					<div className="relative z-10 flex items-center justify-between gap-3 p-4">
 						<span className="rounded-full border border-white/20 bg-black/70 px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider text-white backdrop-blur-md">
-							Batch PCM-001 · Live Custody Provenance
+							Batch PCM-001 · Classroom Custody Scenario
 						</span>
 						<span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs font-bold uppercase backdrop-blur-md ${
 							tampered ? "border-rose-400/70 bg-rose-950/80 text-rose-300" : "border-emerald-400/70 bg-emerald-950/80 text-emerald-300"
 						}`} role={tampered ? "alert" : "status"}>
 							{tampered ? <ShieldAlert className="size-4" /> : <ShieldCheck className="size-4" />}
-							{tampered ? "INTEGRITY FAILED ✗" : "CRYPTOGRAPHICALLY VERIFIED ✓"}
+							{tampered ? "MISMATCH DETECTED ✗" : "RECORDS CONSISTENT ✓"}
 						</span>
 					</div>
 
@@ -112,9 +112,9 @@ export default function SupplyChainJourney() {
 								: "border-emerald-500/30 bg-emerald-950/20 text-emerald-200"
 						}`}>
 							{tampered ? (
-								<p>❌ <strong>Tamper detected at distributor handoff:</strong> Quantity secretly altered from 100 to 1,000. Downstream nodes reject the shipment because the manufacturer root digital signature is invalid.</p>
+								<p>❌ <strong>Record mismatch at distributor handoff:</strong> This simulation changes quantity from 100 to 1,000 without updating the accepted fingerprint. Validation detects the mismatch; it does not prove what physically shipped.</p>
 							) : (
-								<p>✓ <strong>Reverse Trace Provenance:</strong> A patient at Node 05 can scan the packet QR code and verify the manufacturer factory signature and continuous cold-chain log all the way back to 09:00 AM.</p>
+								<p>✓ <strong>Illustrative provenance:</strong> A verifier could inspect the issuer and custody records. Identity, sensors, audits, and exception handling still connect the digital trail to the physical batch.</p>
 							)}
 						</div>
 					</div>
@@ -134,6 +134,7 @@ export default function SupplyChainJourney() {
 							<RotateCcw className="size-3.5" /> Restore Journey
 						</button>
 					</div>
+					<p className="mt-2 font-mono text-[9px] uppercase tracking-wider text-zinc-500">Illustrative data · no live shipment or payment</p>
 				</section>
 			</div>
 		</div>

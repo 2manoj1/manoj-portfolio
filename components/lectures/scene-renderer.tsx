@@ -94,7 +94,7 @@ function FullscreenLightbox({ src, alt, onClose }: { src: string; alt: string; o
 					<div className="flex items-center gap-2">
 						<Sparkles className="size-4 text-amber-300" />
 						<span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-300">
-							NotebookLM Systems Architecture Infographic
+							Systems Architecture Infographic
 						</span>
 					</div>
 					<button
@@ -166,7 +166,7 @@ function Hero({ scene }: { scene: HeroScene }) {
 }
 
 function Diagram({ scene }: { scene: DiagramScene }) {
-	const [viewMode, setViewMode] = useState<"diagram" | "infographic">(scene.image ? "infographic" : "diagram");
+	const [viewMode, setViewMode] = useState<"diagram" | "infographic">("diagram");
 	const [fullscreen, setFullscreen] = useState(false);
 
 	return (
@@ -183,7 +183,7 @@ function Diagram({ scene }: { scene: DiagramScene }) {
 									? "bg-amber-400 text-zinc-950 shadow-md shadow-amber-400/30"
 									: "border border-white/15 text-zinc-300 hover:border-white/30"
 							}`}>
-							<ImageIcon className="size-3.5" /> High-Res Infographic
+							<ImageIcon className="size-3.5" /> Concept Infographic
 						</button>
 						<button
 							type="button"
@@ -379,7 +379,7 @@ function Cards({ scene }: { scene: CardsScene }) {
 }
 
 function Comparison({ scene }: { scene: ComparisonScene }) {
-	const [viewMode, setViewMode] = useState<"comparison" | "infographic">(scene.image ? "infographic" : "comparison");
+	const [viewMode, setViewMode] = useState<"comparison" | "infographic">("comparison");
 	const [fullscreen, setFullscreen] = useState(false);
 
 	return (
@@ -396,7 +396,7 @@ function Comparison({ scene }: { scene: ComparisonScene }) {
 									? "bg-amber-400 text-zinc-950 shadow-md shadow-amber-400/30"
 									: "border border-white/15 text-zinc-300 hover:border-white/30"
 							}`}>
-							<ImageIcon className="size-3.5" /> Infographic Visual
+							<ImageIcon className="size-3.5" /> Concept Infographic
 						</button>
 						<button
 							type="button"
@@ -544,14 +544,14 @@ function Demo({ scene }: { scene: Extract<LectureScene, { kind: "demo" }> }) {
 										? "bg-amber-400 text-zinc-950 shadow-md"
 										: "text-zinc-400 hover:text-white"
 								}`}>
-								<ImageIcon className="size-3.5" /> Infographic Visual
+								<ImageIcon className="size-3.5" /> Concept Infographic
 							</button>
 						</div>
 					) : null}
 
 					<div className="hidden items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300 sm:flex font-mono">
 						<MonitorPlay className="size-3.5" />
-						<span>Web Crypto Engine</span>
+						<span>Local classroom simulation</span>
 					</div>
 				</div>
 			</div>

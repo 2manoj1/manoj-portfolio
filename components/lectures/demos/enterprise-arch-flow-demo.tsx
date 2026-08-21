@@ -95,7 +95,7 @@ const initialNodes: Node<ArchNodeData>[] = [
 			type: "frontend",
 			tech: "Next.js 16 + React 19",
 			percentage: "Frontend UI",
-			roleExplanation: "Users interact with a clean modern Next.js interface. They never directly execute complex raw blockchain RPC calls.",
+			roleExplanation: "Users interact with a conventional web or mobile interface; the application mediates identity, policy, and any ledger calls.",
 		},
 	},
 	{
@@ -109,7 +109,7 @@ const initialNodes: Node<ArchNodeData>[] = [
 			type: "gateway",
 			tech: "FastAPI / Node.js",
 			percentage: "Orchestration",
-			roleExplanation: "The API Gateway validates JWT tokens, handles business authorization, and splits queries between SQL databases and blockchain nodes.",
+			roleExplanation: "The application gateway validates identity and business authorization, then routes private data and shared events to the appropriate systems.",
 		},
 	},
 	{
@@ -117,13 +117,13 @@ const initialNodes: Node<ArchNodeData>[] = [
 		type: "arch",
 		position: { x: 70, y: 280 },
 		data: {
-			title: "Enterprise Core (90%)",
+			title: "Enterprise Core",
 			subtitle: "Customer PII, ERP, Inventory, Private Records",
 			avatar: "🗄️",
 			type: "enterprise",
 			tech: "PostgreSQL / SAP / Kafka",
-			percentage: "90% Cloud DB",
-			roleExplanation: "90% of application data belongs here: user profiles, private chats, caching, logs, and high-frequency writes that need microsecond latency.",
+			percentage: "Private Data",
+			roleExplanation: "User profiles, private records, search indexes, logs, and operational data normally remain in conventional enterprise systems.",
 		},
 	},
 	{
@@ -131,13 +131,13 @@ const initialNodes: Node<ArchNodeData>[] = [
 		type: "arch",
 		position: { x: 610, y: 280 },
 		data: {
-			title: "Smart Contract Rail (10%)",
-			subtitle: "Escrow Logic, State Locks & Audit Fingerprints",
+			title: "Shared Ledger Rail",
+			subtitle: "Selected Cross-Organization Events & Rules",
 			avatar: "📜",
 			type: "blockchain",
-			tech: "EVM / Vishvasya / BFT",
-			percentage: "10% Ledger Rail",
-			roleExplanation: "Only the multi-party coordination events (custody handoffs, asset transfers, credential signatures) are submitted to the blockchain.",
+			tech: "Permissioned ledger / contract",
+			percentage: "Shared Events",
+			roleExplanation: "Only events that earn cross-organization validation—such as a custody handoff or settlement instruction—should be considered for the ledger.",
 		},
 	},
 	{
@@ -145,13 +145,13 @@ const initialNodes: Node<ArchNodeData>[] = [
 		type: "arch",
 		position: { x: 340, y: 420 },
 		data: {
-			title: "Shared Consensus State",
-			subtitle: "Multi-Organization Immutable Ledger Truth",
+			title: "Accepted Shared State",
+			subtitle: "Multi-Organization Tamper-Evident Record",
 			avatar: "🛡️",
 			type: "shared",
 			tech: "Tamper-Evident Chain",
-			percentage: "Consensus Finality",
-			roleExplanation: "All independent external institutions (banks, regulators, supply chain partners) verify the cryptographic proof on this shared ledger.",
+			percentage: "Governed Validation",
+			roleExplanation: "Authorized participants can verify the accepted record according to the network's permissions, protocol, and governance rules.",
 		},
 	},
 ];
@@ -169,10 +169,10 @@ export default function EnterpriseArchFlowDemo() {
 	const [selectedNodeId, setSelectedNodeId] = useState<string>("n-blockchain");
 
 	const steps = [
-		{ label: "Step 1 · User Submits Request", detail: "Client clicks 'Transfer Medicine Batch' on Next.js UI → Sends encrypted payload to API Gateway." },
-		{ label: "Step 2 · API Gateway Validates", detail: "FastAPI checks user permissions and writes private customer details into internal PostgreSQL & ERP." },
-		{ label: "Step 3 · Smart Contract Triggered", detail: "Gateway concurrently invokes the EVM Smart Contract with the cryptographic hash of the custody handoff." },
-		{ label: "Step 4 · Shared Cryptographic State", detail: "Regional consensus nodes commit the transaction. Regulators and buyers independently verify against the shared state." },
+		{ label: "Step 1 · User Submits Request", detail: "The client sends a secured custody-transfer request to the application gateway." },
+		{ label: "Step 2 · Application Validates", detail: "The gateway checks identity and policy; private operational data remains in the ERP and database." },
+		{ label: "Step 3 · Shared Event Considered", detail: "If the event requires multi-party verification, the application submits the minimum approved data, hash, or pointer to the ledger rail." },
+		{ label: "Step 4 · Authorized Verification", detail: "The network applies its rules, records accepted state, and lets authorized participants independently verify it." },
 	];
 
 	const advanceStep = useCallback(() => {
@@ -195,7 +195,7 @@ export default function EnterpriseArchFlowDemo() {
 						Enterprise Architecture Blueprint
 					</span>
 					<h3 className="font-display text-lg font-bold text-white">
-						Blockchain is a Component (10%) — Not The Entire Application (90%)
+						Use a shared ledger only for the small set of events that earns it
 					</h3>
 				</div>
 
@@ -284,7 +284,7 @@ export default function EnterpriseArchFlowDemo() {
 					<div className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-950/40 p-2.5 text-xs text-emerald-200">
 						<ShieldCheck className="size-4 shrink-0 text-emerald-400" />
 						<p className="text-[11px] leading-tight">
-							<strong>Founder Rule:</strong> Never store user passwords, media files, or private PII on-chain. Blockchain is purely for multi-party consensus verification.
+							<strong>Founder rule:</strong> Minimize sensitive on-ledger data. Use hashes, pointers, permissions, and retention controls only after privacy, legal, and threat-model review.
 						</p>
 					</div>
 				</div>

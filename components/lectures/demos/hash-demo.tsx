@@ -92,7 +92,7 @@ export default function HashDemo() {
 						/>
 					</div>
 					<div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3 text-xs leading-relaxed text-zinc-400">
-						<strong className="text-amber-200">The Avalanche Effect:</strong> Changing even a single bit in the input produces a completely uncorrelated 256-bit output hash.
+						<strong className="text-amber-200">The avalanche effect:</strong> A tiny input change produces an unpredictably different digest; across many inputs, roughly half the output bits should change on average.
 					</div>
 				</div>
 
@@ -138,7 +138,7 @@ export default function HashDemo() {
 					</div>
 
 					<p className={`mt-4 font-display text-xl ${changed ? "text-rose-300 font-bold" : "text-emerald-300 font-semibold"}`}>
-						{changed ? "⚡ 1 CHARACTER CHANGED → ENTIRE 256-BIT HASH TRANSFORMED" : "✓ Identical Input Produces Exact Identical Hash (Deterministic)"}
+						{changed ? "⚡ INPUT CHANGED → DIGEST CHANGED ACROSS THE OUTPUT" : "✓ Identical Input Produces The Same Hash (Deterministic)"}
 					</p>
 				</div>
 			</div>

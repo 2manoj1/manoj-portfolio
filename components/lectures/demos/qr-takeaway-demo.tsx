@@ -136,7 +136,7 @@ export default function QrTakeawayDemo() {
 							</span>
 							<div>
 								<h4 className="font-display text-base font-bold text-white">Connect with Manoj Mukherjee</h4>
-								<p className="font-mono text-[10px] text-cyan-200">Founder · AI Scientist · Architect</p>
+								<p className="font-mono text-[10px] text-cyan-200">Founder · Enterprise AI Architect</p>
 							</div>
 						</div>
 						<span className="rounded-full bg-cyan-400/20 px-2 py-0.5 font-mono text-[9px] uppercase font-semibold text-cyan-300">
@@ -201,7 +201,7 @@ export default function QrTakeawayDemo() {
 					<strong className="text-white">Kristu Jayanti University BCA 1st Year:</strong> Build systems with cryptographic rigor and distributed consensus.
 				</p>
 				<span className="hidden font-mono text-[10px] uppercase text-emerald-300 sm:inline-block">
-					<ShieldCheck className="mr-1 inline size-3.5" /> 2026 Production Verified
+					<ShieldCheck className="mr-1 inline size-3.5" /> Sources checked · 21 Aug 2026
 				</span>
 			</div>
 		</div>
