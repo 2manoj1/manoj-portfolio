@@ -1,11 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import QRCode from "qrcode";
 import { Smartphone, Sparkles, Copy, Check, ExternalLink, ShieldCheck, Flame } from "lucide-react";
 
 export default function QrTakeawayDemo() {
+	const [qrDataUrl, setQrDataUrl] = useState<string>("");
 	const [copied, setCopied] = useState(false);
 	const lectureUrl = "https://www.manojmukherjee.co.in/lectures/blockchain-finance-supply-chain";
+
+	useEffect(() => {
+		QRCode.toDataURL(lectureUrl, {
+			width: 320,
+			margin: 2,
+			color: {
+				dark: "#09090b",
+				light: "#ffffff",
+			},
+			errorCorrectionLevel: "H",
+		})
+			.then((url) => setQrDataUrl(url))
+			.catch(() => {});
+	}, [lectureUrl]);
 
 	const copyLink = async () => {
 		try {
@@ -18,101 +34,55 @@ export default function QrTakeawayDemo() {
 	};
 
 	return (
-		<div className="mx-auto w-full max-w-5xl">
-			<div className="grid gap-6 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-				{/* Left: QR Code Card */}
-				<div className="flex flex-col items-center justify-center rounded-3xl border border-amber-300/40 bg-amber-300/[0.04] p-8 text-center shadow-[0_0_60px_rgba(251,191,36,0.08)]">
-					<div className="relative rounded-2xl bg-white p-4 shadow-2xl">
-						{/* Clean High-Contrast SVG QR code visual for lecture URL */}
-						<svg
-							viewBox="0 0 200 200"
-							className="size-48 sm:size-56"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-							{/* Background */}
-							<rect width="200" height="200" fill="white" />
-							{/* Corner finder patterns */}
-							{/* Top-Left */}
-							<rect x="15" y="15" width="45" height="45" rx="6" fill="#09090b" />
-							<rect x="23" y="23" width="29" height="29" rx="3" fill="white" />
-							<rect x="29" y="29" width="17" height="17" rx="2" fill="#d97706" />
-
-							{/* Top-Right */}
-							<rect x="140" y="15" width="45" height="45" rx="6" fill="#09090b" />
-							<rect x="148" y="23" width="29" height="29" rx="3" fill="white" />
-							<rect x="154" y="29" width="17" height="17" rx="2" fill="#d97706" />
-
-							{/* Bottom-Left */}
-							<rect x="15" y="140" width="45" height="45" rx="6" fill="#09090b" />
-							<rect x="23" y="148" width="29" height="29" rx="3" fill="white" />
-							<rect x="29" y="154" width="17" height="17" rx="2" fill="#d97706" />
-
-							{/* Matrix pattern elements */}
-							<rect x="70" y="20" width="10" height="10" fill="#09090b" />
-							<rect x="90" y="20" width="10" height="10" fill="#09090b" />
-							<rect x="110" y="20" width="10" height="10" fill="#09090b" />
-							<rect x="70" y="40" width="20" height="10" fill="#09090b" />
-							<rect x="100" y="40" width="10" height="20" fill="#09090b" />
-							<rect x="120" y="40" width="10" height="10" fill="#09090b" />
-
-							<rect x="20" y="70" width="10" height="20" fill="#09090b" />
-							<rect x="40" y="80" width="20" height="10" fill="#09090b" />
-							<rect x="70" y="70" width="20" height="20" rx="3" fill="#d97706" />
-							<rect x="100" y="70" width="30" height="10" fill="#09090b" />
-							<rect x="140" y="70" width="10" height="20" fill="#09090b" />
-							<rect x="160" y="70" width="20" height="10" fill="#09090b" />
-
-							<rect x="20" y="100" width="20" height="10" fill="#09090b" />
-							<rect x="50" y="100" width="10" height="30" fill="#09090b" />
-							<rect x="70" y="100" width="10" height="10" fill="#09090b" />
-							<rect x="90" y="90" width="20" height="20" rx="3" fill="#09090b" />
-							<rect x="120" y="100" width="20" height="10" fill="#09090b" />
-							<rect x="150" y="100" width="10" height="20" fill="#09090b" />
-							<rect x="170" y="100" width="10" height="20" fill="#09090b" />
-
-							<rect x="70" y="130" width="20" height="10" fill="#09090b" />
-							<rect x="100" y="120" width="10" height="20" fill="#09090b" />
-							<rect x="120" y="130" width="20" height="20" rx="3" fill="#d97706" />
-							<rect x="150" y="130" width="20" height="10" fill="#09090b" />
-
-							<rect x="70" y="150" width="10" height="30" fill="#09090b" />
-							<rect x="90" y="160" width="20" height="10" fill="#09090b" />
-							<rect x="120" y="160" width="10" height="20" fill="#09090b" />
-							<rect x="140" y="150" width="20" height="10" fill="#09090b" />
-							<rect x="170" y="160" width="10" height="20" fill="#09090b" />
-						</svg>
+		<div className="mx-auto flex h-full w-full max-w-5xl flex-col justify-center">
+			<div className="grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:items-center">
+				{/* Left: Scannable QR Code Card */}
+				<div className="flex flex-col items-center justify-center rounded-3xl border border-amber-300/40 bg-amber-300/[0.04] p-8 text-center shadow-[0_0_70px_rgba(251,191,36,0.1)]">
+					<div className="relative overflow-hidden rounded-2xl bg-white p-3.5 shadow-2xl transition hover:scale-105">
+						{qrDataUrl ? (
+							// eslint-disable-next-line @next/next/no-img-element
+							<img
+								src={qrDataUrl}
+								alt="Scan QR code to open the interactive lecture studio"
+								className="size-52 rounded-lg sm:size-60"
+							/>
+						) : (
+							<div className="grid size-52 place-items-center bg-white font-mono text-xs text-zinc-600 sm:size-60">
+								Generating scannable QR…
+							</div>
+						)}
 					</div>
 
-					<div className="mt-4 flex items-center gap-2 text-zinc-400">
+					<div className="mt-4 flex items-center gap-2 text-zinc-300">
 						<Smartphone className="size-4 text-amber-300" />
-						<p className="font-mono text-xs text-zinc-300">Scan with your phone camera</p>
+						<p className="font-mono text-xs text-amber-200">Point your phone camera to scan</p>
 					</div>
 				</div>
 
-				{/* Right: Actions & Student Challenge */}
+				{/* Right: Actions & Student Takeaway Lab */}
 				<div className="flex flex-col justify-center space-y-5">
 					<div>
-						<span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-amber-300">
-							<Sparkles className="size-3" /> Live Artifact Takeaway
+						<span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1 font-mono text-[10px] uppercase tracking-wider text-amber-300">
+							<Sparkles className="size-3" /> Live Artifact · Zero App Install
 						</span>
-						<h3 className="mt-3 font-display text-3xl text-white md:text-4xl">
-							Break The Blockchain on Your Phone
+						<h3 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">
+							You Control The Simulations Now
 						</h3>
-						<p className="mt-3 text-base leading-relaxed text-zinc-300">
-							You don&apos;t need a presentation to remember this. The entire interactive engine is live on the web. Run your own tamper attacks, test smart contract conditions, and explore real 2026 enterprise architectures.
+						<p className="mt-2 text-base leading-relaxed text-zinc-300">
+							This entire keynote is a live, browser-powered system. Open it on your phone or laptop to replay the SHA-256 avalanche simulator, test tamper attacks on Block #2, experiment with smart contract logic gates, and study real 2026 enterprise architectures.
 						</p>
 					</div>
 
 					<div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-						<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">Live URL</p>
+						<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">Live Studio URL</p>
 						<div className="mt-2 flex items-center justify-between gap-3">
-							<span className="truncate font-mono text-xs text-amber-200">{lectureUrl}</span>
+							<span className="truncate font-mono text-xs font-semibold text-amber-200">{lectureUrl}</span>
 							<button
 								type="button"
 								onClick={copyLink}
-								className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-zinc-200 transition hover:border-amber-300 hover:text-white">
+								className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs text-zinc-200 transition hover:border-amber-300 hover:text-white">
 								{copied ? <Check className="size-3.5 text-emerald-400" /> : <Copy className="size-3.5" />}
-								{copied ? "Copied!" : "Copy Link"}
+								{copied ? "Copied Link!" : "Copy Link"}
 							</button>
 						</div>
 					</div>
@@ -126,7 +96,7 @@ export default function QrTakeawayDemo() {
 							<Flame className="size-4" /> Open Full Studio <ExternalLink className="size-4" />
 						</a>
 						<div className="flex items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/5 px-4 text-center font-mono text-xs text-emerald-300">
-							<ShieldCheck className="mr-1.5 size-4" /> Zero Install / Runs in Browser
+							<ShieldCheck className="mr-1.5 size-4" /> Web Crypto Powered
 						</div>
 					</div>
 				</div>

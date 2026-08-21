@@ -66,10 +66,19 @@ export default function IntegrityLab() {
 		}
 	};
 
-	const tamper = () => {
+	const tamperBlock2 = () => {
 		const tampered = blocks.map((block) =>
 			block.index === 2
 				? { ...block, transaction: block.transaction.replace("100", "1000") }
+				: block,
+		);
+		void verify(tampered);
+	};
+
+	const tamperBlock1 = () => {
+		const tampered = blocks.map((block) =>
+			block.index === 1
+				? { ...block, transaction: block.transaction + " [EXPIRED INGREDIENT INJECTED]" }
 				: block,
 		);
 		void verify(tampered);
@@ -111,42 +120,51 @@ export default function IntegrityLab() {
 	const chainValid = checks.every((check) => check.chainValidThroughHere);
 
 	return (
-		<div className="mx-auto w-full max-w-7xl">
+		<div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-center">
 			{/* Top Control Header */}
 			<div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-white/15 bg-black/40 p-4 backdrop-blur-md">
 				<div className="flex items-center gap-3 px-2">
-					<div className={`grid size-10 place-items-center rounded-2xl ${chainValid ? "bg-emerald-500/20 text-emerald-300" : "bg-rose-500/20 text-rose-300"}`}>
+					<div className={`grid size-11 place-items-center rounded-2xl ${chainValid ? "bg-emerald-500/20 text-emerald-300" : "bg-rose-500/20 text-rose-300"}`}>
 						{chainValid ? <ShieldCheck className="size-6" /> : <AlertOctagon className="size-6" />}
 					</div>
 					<div>
 						<span className={`font-mono text-sm font-bold ${chainValid ? "text-emerald-300" : "text-rose-300"}`}>
-							{chainValid ? "CHAIN INTEGRITY: VERIFIED ✓" : "TRUST BROKEN: INTEGRITY FAILED ✗"}
+							{chainValid ? "CHAIN INTEGRITY: VERIFIED ✓" : "TAMPER DETECTED: TRUST BROKEN ✗"}
 						</span>
 						<p className="text-xs text-zinc-400">
-							{chainValid ? "Every stored hash matches block data and previous link pointers." : "Block #2 was secretly modified. Hashes no longer match!"}
+							{chainValid
+								? "Every block's stored hash matches its transaction payload and links to its predecessor."
+								: "Data was secretly modified in past history. Downstream cryptographic hashes no longer reconcile!"}
 						</p>
 					</div>
 				</div>
 
-				<div className="flex flex-wrap gap-2">
+				<div className="flex flex-wrap items-center gap-2">
 					<button
 						type="button"
-						onClick={tamper}
+						onClick={tamperBlock2}
 						disabled={status === "working" || !chainValid}
-						className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-rose-600 px-5 font-display text-sm font-bold text-white transition hover:bg-rose-500 disabled:opacity-40 shadow-lg shadow-rose-950/50">
-						<Zap className="size-4" /> ⚡ TAMPER WITH BLOCK #2
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-rose-600 px-4 font-display text-xs font-bold text-white transition hover:bg-rose-500 disabled:opacity-40 shadow-lg shadow-rose-950/50">
+						<Zap className="size-4" /> ⚡ Tamper Block #2 (100 → 1,000)
+					</button>
+					<button
+						type="button"
+						onClick={tamperBlock1}
+						disabled={status === "working" || !chainValid}
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-rose-800/80 px-4 font-display text-xs font-bold text-rose-200 transition hover:bg-rose-700 disabled:opacity-40">
+						<Zap className="size-4" /> ⚡ Tamper Block #1
 					</button>
 					<button
 						type="button"
 						onClick={reset}
-						className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 font-display text-sm font-bold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-300">
-						<RotateCcw className="size-4" /> RESTORE / REPAIR CHAIN
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-4 font-display text-xs font-bold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-300">
+						<RotateCcw className="size-4" /> RESTORE CHAIN
 					</button>
 				</div>
 			</div>
 
-			{/* Interactive Blocks Pipeline with visual connectors */}
-			<div className="mt-5 grid gap-4 lg:grid-cols-3">
+			{/* Interactive Blocks Pipeline with Zero Overlap */}
+			<div className="mt-4 grid gap-4 lg:grid-cols-3">
 				{blocks.map((block, index) => {
 					const check = checks[index];
 					const valid = check?.chainValidThroughHere ?? false;
@@ -160,7 +178,7 @@ export default function IntegrityLab() {
 								valid
 									? "border-emerald-500/40 bg-emerald-950/20 shadow-[0_0_40px_rgba(52,211,153,0.1)]"
 									: isTamperedBlock
-										? "border-rose-500 bg-rose-950/35 shadow-[0_0_50px_rgba(244,63,94,0.25)] ring-2 ring-rose-500/50"
+										? "border-rose-500 bg-rose-950/35 shadow-[0_0_50px_rgba(244,63,94,0.25)] ring-2 ring-rose-500/60"
 										: "border-rose-500/60 bg-rose-950/20 shadow-[0_0_40px_rgba(244,63,94,0.15)]"
 							}`}>
 							{/* Header */}
@@ -172,9 +190,9 @@ export default function IntegrityLab() {
 										}`}>
 											#{block.index}
 										</span>
-										<span className="font-display text-sm font-semibold text-white">BLOCK #{block.index}</span>
+										<span className="font-display text-sm font-bold text-white">BLOCK #{block.index}</span>
 									</div>
-									<span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase font-bold ${
+									<span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
 										valid ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-rose-500/20 text-rose-300 border border-rose-500/40"
 									}`}>
 										{valid ? "VALID" : "INVALID"}
@@ -192,7 +210,7 @@ export default function IntegrityLab() {
 								</div>
 
 								{/* Hashes */}
-								<dl className="mt-4 space-y-2 rounded-2xl border border-white/5 bg-black/25 p-3.5 font-mono text-[11px]">
+								<dl className="mt-4 space-y-2 rounded-2xl border border-white/5 bg-black/30 p-3.5 font-mono text-[11px]">
 									<div>
 										<dt className="text-[10px] uppercase tracking-wider text-zinc-500">PREV HASH:</dt>
 										<dd className="mt-0.5 break-all text-zinc-400">{shortHash(block.previousHash)}</dd>
@@ -215,11 +233,11 @@ export default function IntegrityLab() {
 							{/* Failure explanation banner inside block */}
 							{isTamperedBlock ? (
 								<div className="mt-4 rounded-xl border border-rose-500/40 bg-rose-950/40 p-2.5 text-center font-mono text-[10px] font-bold text-rose-300">
-									❌ TAMPER DETECTED: Data changed without recalculating hash!
+									❌ TAMPER DETECTED: Stored Hash ≠ Calculated Hash
 								</div>
 							) : isDownstreamBroken ? (
 								<div className="mt-4 rounded-xl border border-rose-500/30 bg-rose-950/30 p-2.5 text-center font-mono text-[10px] text-rose-300">
-									⚠️ LINK BROKEN: Points to old un-tampered hash
+									⚠️ LINK BROKEN: Previous Hash pointer mismatch
 								</div>
 							) : (
 								<div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-2 text-center font-mono text-[10px] text-emerald-300">
@@ -232,12 +250,12 @@ export default function IntegrityLab() {
 			</div>
 
 			{/* Add Block Form */}
-			<div className="mt-5 flex flex-col gap-2 sm:flex-row">
+			<div className="mt-4 flex flex-col gap-2 sm:flex-row">
 				<input
 					value={draft}
 					onChange={(event) => setDraft(event.target.value)}
 					maxLength={100}
-					placeholder="Append a new verified transaction event..."
+					placeholder="Type a new transaction event to append to the live chain..."
 					className="min-h-12 flex-1 rounded-2xl border border-white/15 bg-black/40 px-5 text-sm text-white outline-none focus:border-amber-400"
 				/>
 				<button
