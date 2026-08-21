@@ -193,9 +193,9 @@ export const blockchainLecture: Lecture = {
 			kind: "hero",
 			variant: "founder",
 			section: "hook",
-			sectionLabel: "00 · Founder Introduction",
+			sectionLabel: "00 · Opening",
 			durationSeconds: 60,
-			eyebrow: "Future Systems Keynote · Bengaluru · 2026",
+			eyebrow: "Founder Keynote · Bengaluru · 2026",
 			title: "Blockchain applications in finance, supply chain and beyond",
 			headlineLines: [
 				"Blockchain applications",
@@ -205,10 +205,8 @@ export const blockchainLecture: Lecture = {
 			speaker: {
 				name: "Manoj Mukherjee",
 				role: "Founder & AI Scientist @ NammaGuide",
-				summary: "Enterprise AI Architect · 10+ years building production-grade platforms and intelligent systems.",
+				summary: "Enterprise AI Architect · 10+ years building production AI and digital platforms.",
 			},
-			lines: ["Agentic AI", "Multi-Agent Systems", "AI Platform Engineering"],
-			callout: "Build it · break it · decide where it belongs",
 			notes: notes(
 				"Good afternoon. I am Manoj Mukherjee, Founder and AI Scientist at NammaGuide, and an Enterprise AI Architect. For more than ten years, I have worked across enterprise platforms, cloud-native systems, and production AI. Today I want to bring that systems perspective to blockchain. We will build a small chain in this browser, break it, inspect why it failed, and use real industry evidence to decide where this architecture belongs—and where it does not.",
 				"Begin with a familiar payment and ask what digital trust actually requires.",
