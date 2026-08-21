@@ -134,6 +134,16 @@ const researchThreads = [
 			"Structured MDX specs viewer, dynamic Table of Contents, and custom React Flow integrations.",
 		url: "/case-studies/production-grade-ai-home-lab",
 	},
+	{
+		id: "LAB-06",
+		status: "Published",
+		title: "Interactive Lecture Studio",
+		focus:
+			"Projector-first technical lectures with verified evidence, presenter guidance, and deterministic browser-native simulations.",
+		nextDetail:
+			"Reusable lecture engine for blockchain, agentic AI, RAG, and enterprise architecture sessions.",
+		url: "/lectures",
+	},
 ] as const;
 
 const resourceTypes = [
