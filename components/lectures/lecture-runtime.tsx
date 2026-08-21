@@ -11,6 +11,10 @@ import {
 	RotateCcw,
 	Timer,
 	X,
+	Sparkles,
+	HelpCircle,
+	ArrowRight,
+	ShieldCheck,
 } from "lucide-react";
 import { SceneRenderer } from "@/components/lectures/scene-renderer";
 import { SessionTimer } from "@/components/lectures/session-timer";
@@ -215,10 +219,10 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 			aria-label={lecture.title}
 			onPointerDown={handlePointerDown}
 			onPointerUp={handlePointerUp}>
-			<div className="pointer-events-none absolute inset-0 opacity-40 lecture-grid" />
+			<div className="pointer-events-none absolute inset-0 opacity-35 lecture-grid" />
 
 			{/* Header Stage Navigation */}
-			<header className="relative z-10 flex min-h-14 items-center justify-between gap-3 border-b border-white/10 px-3 sm:px-5">
+			<header className="relative z-10 flex min-h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 px-3 sm:px-5">
 				<div className="flex min-w-0 items-center gap-3">
 					<Link
 						href="/lectures"
@@ -230,7 +234,7 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 						<p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
 							{scene.sectionLabel}
 						</p>
-						<p className="truncate text-xs text-zinc-400 sm:text-sm font-semibold">{lecture.shortTitle}</p>
+						<p className="truncate text-xs font-semibold text-zinc-300 sm:text-sm">{lecture.shortTitle}</p>
 					</div>
 				</div>
 				<div className="flex items-center gap-3">
@@ -244,27 +248,27 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 			</header>
 
 			{/* Progress Indicator */}
-			<div className="relative z-10 h-1 bg-white/[0.05]" aria-hidden="true">
+			<div className="relative z-10 h-1 shrink-0 bg-white/[0.05]" aria-hidden="true">
 				<div
-					className="h-full bg-amber-400 transition-[width] duration-300"
+					className="h-full bg-amber-400 transition-[width] duration-300 shadow-[0_0_10px_rgba(251,191,36,0.5)]"
 					style={{ width: `${progress}%` }}
 				/>
 			</div>
 
-			{/* Dynamic Stage Body */}
+			{/* Dynamic Stage Body: Centers content gracefully on 1080p, tablet & desktop */}
 			<div
 				ref={stageRef}
 				tabIndex={-1}
 				role="region"
-				className="relative z-10 min-h-0 flex-1 overflow-y-auto px-4 py-5 outline-none sm:px-7 md:py-6"
+				className="relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4 outline-none sm:px-6 md:py-5"
 				aria-label={`${scene.sectionLabel}: ${scene.title}`}>
-				<div key={scene.id} className="mx-auto h-full min-h-[32rem] w-full max-w-[1600px] lecture-scene">
+				<div key={scene.id} className="mx-auto flex h-full min-h-[30rem] w-full max-w-[1550px] flex-1 flex-col justify-center lecture-scene">
 					<SceneRenderer scene={scene} sources={lecture.sources} />
 				</div>
 			</div>
 
 			{/* Footer Presenter Bar */}
-			<footer className="relative z-20 flex min-h-16 items-center justify-between gap-3 border-t border-white/10 bg-black/40 px-3 backdrop-blur-md sm:px-5">
+			<footer className="relative z-20 flex min-h-15 shrink-0 items-center justify-between gap-3 border-t border-white/10 bg-black/50 px-3 backdrop-blur-md sm:px-5">
 				<div className="flex items-center gap-2">
 					<button
 						type="button"
@@ -279,18 +283,18 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 						onClick={next}
 						disabled={state.sceneIndex === lecture.scenes.length - 1}
 						className="inline-flex min-h-10 items-center gap-2 rounded-full bg-amber-400 px-5 text-sm font-bold text-zinc-950 transition hover:bg-amber-300 disabled:opacity-30 shadow-lg shadow-amber-950/30">
-						Next scene <ChevronRight className="size-4" />
+						Next <ChevronRight className="size-4" />
 					</button>
 				</div>
 				<div className="hidden min-w-0 items-center gap-2 md:flex">
 					{sceneSources.length ? (
-						<span className="truncate font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+						<span className="truncate font-mono text-[10px] uppercase tracking-wider text-zinc-400">
 							{sceneSources.length} verified source{sceneSources.length === 1 ? "" : "s"}
 						</span>
 					) : null}
 					<span className="h-4 w-px bg-white/10" />
 					<span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-						← → · Space · F · T · P · D
+						Keys: ← → · Space · F · T · P · D
 					</span>
 				</div>
 				<div className="flex items-center gap-1">
@@ -307,7 +311,7 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 						className={`grid size-10 place-items-center rounded-full hover:bg-white/[0.06] hover:text-white ${
 							state.notesVisible ? "text-amber-300 bg-white/10" : "text-zinc-400"
 						}`}
-						aria-label="Toggle presenter notes">
+						aria-label="Toggle discussion guide">
 						<BookOpen className="size-4" />
 					</button>
 					<button
@@ -327,61 +331,70 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 				</div>
 			</footer>
 
-			{/* Presenter Notes Drawer */}
+			{/* Keynote Discussion Guide & Storytelling Companion Drawer */}
 			{state.notesVisible ? (
 				<aside
-					className="absolute inset-y-0 right-0 z-40 w-full max-w-md overflow-y-auto border-l border-white/15 bg-zinc-950/98 p-6 shadow-2xl backdrop-blur-xl"
-					aria-label="Presenter notes">
-					<div className="flex items-center justify-between gap-4">
-						<div>
-							<p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300">
-								Presenter Mode
-							</p>
-							<p className="mt-0.5 text-xs text-amber-200/80">Speaker Guidance for Manoj</p>
+					className="absolute inset-y-0 right-0 z-40 w-full max-w-lg overflow-y-auto border-l border-white/15 bg-zinc-950/98 p-6 shadow-2xl backdrop-blur-xl"
+					aria-label="Keynote Discussion Guide">
+					<div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
+						<div className="flex items-center gap-2.5">
+							<div className="grid size-8 place-items-center rounded-xl bg-amber-400/20 text-amber-300">
+								<Sparkles className="size-4" />
+							</div>
+							<div>
+								<p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300">
+									Keynote Discussion Guide
+								</p>
+								<p className="text-xs font-medium text-zinc-300">Live Engineering Storyline</p>
+							</div>
 						</div>
 						<button
 							type="button"
 							onClick={() => dispatch({ type: "toggle-notes" })}
-							className="grid size-9 place-items-center rounded-full border border-white/15 text-zinc-400 hover:text-white"
-							aria-label="Close presenter notes">
+							className="grid size-8 place-items-center rounded-full border border-white/15 text-zinc-400 hover:text-white"
+							aria-label="Close discussion guide">
 							<X className="size-4" />
 						</button>
 					</div>
 
-					<p className="mt-6 font-mono text-xs uppercase text-zinc-500">
-						Scene {state.sceneIndex + 1} of {lecture.scenes.length}
-					</p>
-					<h2 className="mt-1 font-display text-2xl font-semibold text-white">{scene.title}</h2>
+					<div className="mt-4">
+						<span className="font-mono text-xs uppercase text-zinc-500">
+							Scene {state.sceneIndex + 1} of {lecture.scenes.length}
+						</span>
+						<h2 className="mt-1 font-display text-xl font-bold text-white">{scene.title}</h2>
+					</div>
 
-					<div className="mt-6 space-y-5 text-sm leading-relaxed text-zinc-300">
-						<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
-							<p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">What to Say</p>
-							<p className="mt-1.5 text-zinc-200">{scene.notes.say}</p>
+					<div className="mt-5 space-y-4 text-sm leading-relaxed text-zinc-300">
+						<div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+							<p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-amber-300">
+								<Sparkles className="size-3" /> Core Systems Narrative
+							</p>
+							<p className="mt-2 text-zinc-200">{scene.notes.say}</p>
 						</div>
 
 						{scene.notes.ask ? (
-							<div className="rounded-2xl border border-amber-400/20 bg-amber-400/5 p-4">
-								<p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">
-									Interactive Question to Class
+							<div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-4">
+								<p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-amber-300">
+									<HelpCircle className="size-3" /> Classroom Discussion Prompt
 								</p>
-								<p className="mt-1.5 text-amber-100 font-semibold">{scene.notes.ask}</p>
+								<p className="mt-2 font-semibold text-amber-100">{scene.notes.ask}</p>
 							</div>
 						) : null}
 
 						{scene.notes.expected ? (
-							<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
-								<p className="font-mono text-[10px] uppercase tracking-wider text-emerald-300">
-									Expected Response & Discovery
+							<div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-4">
+								<p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-emerald-300">
+									<ShieldCheck className="size-3" /> Architecture Insight & Takeaway
 								</p>
-								<p className="mt-1.5 text-zinc-300">{scene.notes.expected}</p>
+								<p className="mt-2 text-zinc-300">{scene.notes.expected}</p>
 							</div>
 						) : null}
 
-						<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
-							<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
-								Transition to Next Concept
+						<div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+							<p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+								<ArrowRight className="size-3" /> Conceptual Transition
 							</p>
-							<p className="mt-1.5 text-zinc-300">{scene.notes.transition}</p>
+							<p className="mt-2 text-zinc-300">{scene.notes.transition}</p>
 						</div>
 					</div>
 
@@ -411,9 +424,9 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 					{nextScene ? (
 						<div className="mt-6 border-t border-white/10 pt-5">
 							<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-								Next Up: Scene {state.sceneIndex + 2}
+								Next Scene: {state.sceneIndex + 2}
 							</p>
-							<p className="mt-1 text-base font-semibold text-zinc-200">{nextScene.title}</p>
+							<p className="mt-1 text-sm font-semibold text-zinc-200">{nextScene.title}</p>
 						</div>
 					) : null}
 				</aside>

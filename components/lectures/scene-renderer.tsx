@@ -87,7 +87,7 @@ function DemoLoading() {
 
 function Hero({ scene }: { scene: HeroScene }) {
 	return (
-		<div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-3xl text-center">
+		<div className="relative flex min-h-full flex-col items-center justify-center overflow-hidden rounded-3xl text-center py-6">
 			{scene.image ? (
 				<>
 					<Image
@@ -98,29 +98,29 @@ function Hero({ scene }: { scene: HeroScene }) {
 						priority={scene.image.preload}
 						className="object-cover opacity-75"
 					/>
-					<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,8,10,0.3),rgba(7,8,10,0.6)_45%,rgba(7,8,10,0.92))]" />
+					<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,8,10,0.35),rgba(7,8,10,0.65)_45%,rgba(7,8,10,0.94))]" />
 				</>
 			) : null}
-			<div className="relative z-10 flex w-full flex-col items-center justify-center px-5 py-10">
+			<div className="relative z-10 flex w-full flex-col items-center justify-center px-5 py-6">
 				{scene.eyebrow ? (
-					<p className="font-mono text-xs uppercase tracking-[0.24em] text-amber-300 md:text-sm">
+					<p className="font-mono text-xs uppercase tracking-[0.24em] text-amber-300 md:text-sm font-semibold">
 						{scene.eyebrow}
 					</p>
 				) : null}
-				<h1 className="mt-5 max-w-[16ch] text-balance font-display text-[clamp(3.2rem,8vw,8.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-white">
+				<h1 className="mt-4 max-w-[16ch] text-balance font-display text-[clamp(2.8rem,7vw,7.5rem)] font-bold leading-[0.9] tracking-[-0.05em] text-white">
 					{scene.title}
 				</h1>
 				{scene.lines?.length ? (
-					<div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-mono text-[clamp(0.8rem,1.45vw,1.15rem)] uppercase tracking-[0.18em] text-amber-200">
+					<div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-mono text-[clamp(0.85rem,1.4vw,1.15rem)] uppercase tracking-[0.18em] text-amber-200">
 						{scene.lines.map((line) => (
-							<span key={line} className="rounded-full border border-amber-400/20 bg-amber-400/5 px-4 py-1.5 backdrop-blur-md">
+							<span key={line} className="rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 backdrop-blur-md shadow-md">
 								{line}
 							</span>
 						))}
 					</div>
 				) : null}
 				{scene.callout ? (
-					<p className="mt-8 max-w-4xl text-balance text-[clamp(1rem,1.7vw,1.45rem)] leading-relaxed text-zinc-300">
+					<p className="mt-6 max-w-4xl text-balance text-[clamp(1rem,1.6vw,1.35rem)] leading-relaxed text-zinc-300">
 						{scene.callout}
 					</p>
 				) : null}
@@ -131,33 +131,33 @@ function Hero({ scene }: { scene: HeroScene }) {
 
 function Diagram({ scene }: { scene: DiagramScene }) {
 	return (
-		<div className="flex h-full flex-col justify-center">
+		<div className="flex min-h-full flex-col justify-center py-3">
 			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
-			<h2 className="mx-auto mt-3 max-w-[22ch] text-balance text-center font-display text-[clamp(2.2rem,4.5vw,5rem)] leading-[0.98] tracking-[-0.04em] text-white">
+			<h2 className="mx-auto mt-2 max-w-[22ch] text-balance text-center font-display text-[clamp(2rem,4vw,4.2rem)] font-bold leading-[0.98] tracking-[-0.04em] text-white">
 				{scene.title}
 			</h2>
-			<div className="mt-6">
+			<div className="mt-4">
 				<ArchitectureDiagram diagramId={scene.diagramId} />
 			</div>
-			{scene.callout ? <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.16em] text-amber-200">{scene.callout}</p> : null}
+			{scene.callout ? <p className="mt-3 text-center font-mono text-xs uppercase tracking-[0.16em] text-amber-200">{scene.callout}</p> : null}
 		</div>
 	);
 }
 
 function Statement({ scene }: { scene: StatementScene }) {
 	return (
-		<div className="flex h-full flex-col items-center justify-center text-center">
+		<div className="flex min-h-full flex-col items-center justify-center text-center py-6">
 			{scene.eyebrow ? <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
-			<h2 className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(2.7rem,6.5vw,7.5rem)] leading-[0.92] tracking-[-0.045em] text-white">
+			<h2 className="mt-4 max-w-[18ch] text-balance font-display text-[clamp(2.5rem,5.8vw,6.5rem)] font-bold leading-[0.92] tracking-[-0.045em] text-white">
 				{scene.title}
 			</h2>
-			<p className="mt-8 max-w-5xl text-balance text-[clamp(1.3rem,2.6vw,2.45rem)] leading-snug text-zinc-300">
+			<p className="mt-6 max-w-5xl text-balance text-[clamp(1.2rem,2.3vw,2.2rem)] leading-snug text-zinc-300">
 				{scene.statement}
 			</p>
 			{scene.fragments?.length ? (
-				<div className="mt-10 flex flex-wrap justify-center gap-2">
+				<div className="mt-8 flex flex-wrap justify-center gap-2.5">
 					{scene.fragments.map((fragment) => (
-						<span key={fragment} className="rounded-full border border-amber-300/25 bg-amber-300/[0.06] px-5 py-2 font-mono text-xs uppercase tracking-wider text-amber-100 shadow-sm">
+						<span key={fragment} className="rounded-full border border-amber-300/30 bg-amber-300/[0.08] px-5 py-2 font-mono text-xs uppercase tracking-wider text-amber-100 shadow-md">
 							{fragment}
 						</span>
 					))}
@@ -169,45 +169,45 @@ function Statement({ scene }: { scene: StatementScene }) {
 
 function Cards({ scene }: { scene: CardsScene }) {
 	return (
-		<div className="flex h-full flex-col justify-center">
+		<div className="flex min-h-full flex-col justify-center py-3">
 			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
-			<h2 className="mx-auto mt-3 max-w-[20ch] text-balance text-center font-display text-[clamp(2.3rem,4.8vw,5.5rem)] leading-[0.96] tracking-[-0.04em] text-white">
+			<h2 className="mx-auto mt-2 max-w-[20ch] text-balance text-center font-display text-[clamp(2.1rem,4.2vw,4.6rem)] font-bold leading-[0.96] tracking-[-0.04em] text-white">
 				{scene.title}
 			</h2>
-			<div className="mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+			<div className="mt-5 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
 				{scene.items.map((item, index) => (
-					<article key={item.title} className="rounded-3xl border border-white/15 bg-white/[0.035] p-5.5 backdrop-blur-sm transition-all hover:border-amber-400/40">
+					<article key={item.title} className="rounded-3xl border border-white/15 bg-white/[0.035] p-5.5 backdrop-blur-sm transition-all hover:border-amber-400/50 hover:bg-white/[0.06]">
 						<div className="flex items-center justify-between gap-3">
 							<p className="font-mono text-xs font-bold text-amber-300">{String(index + 1).padStart(2, "0")}</p>
-							{item.status ? <span className="rounded-full border border-white/10 bg-black/40 px-2 py-0.5 font-mono text-[9px] uppercase text-zinc-400">{item.status}</span> : null}
+							{item.status ? <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-0.5 font-mono text-[9px] uppercase text-zinc-300">{item.status}</span> : null}
 						</div>
-						<h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
-						<p className="mt-2 text-sm leading-relaxed text-zinc-400">{item.detail}</p>
+						<h3 className="mt-3 text-lg font-bold text-white">{item.title}</h3>
+						<p className="mt-1.5 text-xs leading-relaxed text-zinc-300">{item.detail}</p>
 					</article>
 				))}
 			</div>
-			{scene.callout ? <p className="mt-5 text-center text-sm font-semibold text-amber-200">{scene.callout}</p> : null}
+			{scene.callout ? <p className="mt-4 text-center text-xs font-semibold text-amber-200">{scene.callout}</p> : null}
 		</div>
 	);
 }
 
 function Comparison({ scene }: { scene: ComparisonScene }) {
 	return (
-		<div className="flex h-full flex-col justify-center">
-			<h2 className="text-center font-display text-[clamp(2.3rem,4.8vw,5.5rem)] leading-none tracking-[-0.04em] text-white">{scene.title}</h2>
-			<div className="mt-8 grid gap-5 lg:grid-cols-2">
+		<div className="flex min-h-full flex-col justify-center py-4">
+			<h2 className="text-center font-display text-[clamp(2.2rem,4.5vw,4.8rem)] font-bold leading-none tracking-[-0.04em] text-white">{scene.title}</h2>
+			<div className="mt-6 grid gap-5 lg:grid-cols-2">
 				{[scene.left, scene.right].map((side, sideIndex) => (
 					<div key={side.label} className={`rounded-3xl border p-6 md:p-8 ${sideIndex === 1 ? "border-amber-300/40 bg-amber-300/[0.055] shadow-[0_0_50px_rgba(251,191,36,0.06)]" : "border-white/15 bg-white/[0.03]"}`}>
 						<p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400">{side.label}</p>
-						<div className="mt-5 flex flex-wrap items-center gap-2">
+						<div className="mt-4 flex flex-wrap items-center gap-2">
 							{side.steps.map((step, index) => (
 								<span key={`${side.label}-${index}-${step}`} className="contents">
-									<span className="rounded-xl border border-white/10 bg-black/30 px-3.5 py-2 text-sm font-medium text-zinc-100">{step}</span>
-									{index < side.steps.length - 1 ? <ArrowRight className="size-4 text-zinc-600" /> : null}
+									<span className="rounded-xl border border-white/10 bg-black/40 px-3.5 py-2 text-xs font-semibold text-zinc-100">{step}</span>
+									{index < side.steps.length - 1 ? <ArrowRight className="size-4 text-zinc-500" /> : null}
 								</span>
 							))}
 						</div>
-						<p className="mt-6 text-base leading-relaxed text-zinc-300">{side.caption}</p>
+						<p className="mt-5 text-sm leading-relaxed text-zinc-300">{side.caption}</p>
 					</div>
 				))}
 			</div>
@@ -228,20 +228,20 @@ const statusClasses: Record<LectureSource["status"], string> = {
 
 function SourceCases({ scene, sources }: { scene: SourcesScene; sources: LectureSource[] }) {
 	return (
-		<div className="flex h-full flex-col justify-center">
+		<div className="flex min-h-full flex-col justify-center py-4">
 			{scene.eyebrow ? <p className="text-center font-mono text-xs uppercase tracking-[0.22em] text-amber-300">{scene.eyebrow}</p> : null}
-			<h2 className="mx-auto mt-3 max-w-[20ch] text-balance text-center font-display text-[clamp(2.4rem,4.8vw,5.5rem)] leading-[0.98] tracking-[-0.04em] text-white">{scene.title}</h2>
-			<div className={`mx-auto mt-7 grid w-full max-w-6xl gap-3.5 ${scene.items.length > 2 ? "sm:grid-cols-2" : ""}`}>
+			<h2 className="mx-auto mt-2 max-w-[20ch] text-balance text-center font-display text-[clamp(2.2rem,4.5vw,4.8rem)] font-bold leading-[0.98] tracking-[-0.04em] text-white">{scene.title}</h2>
+			<div className={`mx-auto mt-6 grid w-full max-w-6xl gap-4 ${scene.items.length > 2 ? "sm:grid-cols-2" : ""}`}>
 				{scene.items.map((item) => {
 					const source = sources.find((entry) => entry.id === item.sourceId);
 					return (
 						<article key={`${item.title}-${item.status}`} className="rounded-3xl border border-white/15 bg-white/[0.035] p-6 backdrop-blur-sm">
-							<span className={`inline-flex rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-wider ${statusClasses[item.status]}`}>{item.status}</span>
-							<h3 className="mt-4 text-2xl font-semibold text-white">{item.title}</h3>
-							<p className="mt-2 text-sm leading-relaxed text-zinc-400">{item.detail}</p>
+							<span className={`inline-flex rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-wider font-bold ${statusClasses[item.status]}`}>{item.status}</span>
+							<h3 className="mt-3 text-xl font-bold text-white">{item.title}</h3>
+							<p className="mt-2 text-sm leading-relaxed text-zinc-300">{item.detail}</p>
 							{source ? (
-								<a href={source.url} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-amber-200">
-									<ExternalLink className="size-3" /> {source.publisher}
+								<a href={source.url} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs text-amber-300 hover:text-amber-200">
+									<ExternalLink className="size-3" /> {source.publisher} · Verify source
 								</a>
 							) : null}
 						</article>
@@ -255,49 +255,54 @@ function SourceCases({ scene, sources }: { scene: SourcesScene; sources: Lecture
 function Demo({ scene }: { scene: Extract<LectureScene, { kind: "demo" }> }) {
 	const guide = demoGuides[scene.demoId] ?? ["Explore simulation", "Test parameters", "Observe results"];
 	return (
-		<div className="flex h-full flex-col justify-center">
-			<div className="mb-3 flex flex-wrap items-end justify-between gap-3">
-				<div>
-					<p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-amber-300">
-						<FlaskConical className="size-4" /> Live Interactive Lab · Browser Engine
-					</p>
-					<h2 className="mt-1.5 font-display text-[clamp(1.8rem,3.2vw,3.8rem)] leading-none tracking-[-0.035em] text-white">
-						{scene.title}
-					</h2>
-				</div>
-				<div className="flex max-w-xl items-center gap-3 rounded-2xl border border-emerald-400/25 bg-emerald-400/[0.045] px-4 py-2.5">
-					<MonitorPlay className="size-5 shrink-0 text-emerald-300" />
-					<div>
-						<p className="font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-200">Zero Network Lag · Web Crypto Powered</p>
-						{scene.callout ? <p className="mt-0.5 text-xs text-zinc-400">{scene.callout}</p> : null}
+		<div className="flex min-h-full flex-col justify-center py-2">
+			{/* Sleek Compact Header */}
+			<div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+				<div className="flex items-center gap-3">
+					<div className="grid size-8 place-items-center rounded-xl bg-amber-400/20 text-amber-300">
+						<FlaskConical className="size-4" />
 					</div>
+					<div>
+						<h2 className="font-display text-lg font-bold text-white sm:text-xl">
+							{scene.title}
+						</h2>
+						{scene.callout ? <p className="font-mono text-xs text-amber-200/90">{scene.callout}</p> : null}
+					</div>
+				</div>
+
+				<div className="hidden items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300 sm:flex font-mono">
+					<MonitorPlay className="size-3.5" />
+					<span>Web Crypto Engine</span>
 				</div>
 			</div>
 
-			<ol className="mb-3.5 grid grid-cols-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]" aria-label="Live demonstration sequence">
-				{guide.map((step, index) => (
-					<li key={step} className="flex min-h-10 items-center gap-2 border-r border-white/10 px-3 last:border-r-0">
-						<span className="font-mono text-[10px] text-amber-300">0{index + 1}</span>
-						<span className="truncate text-xs text-zinc-300">{step}</span>
-					</li>
-				))}
-			</ol>
+			{/* Interactive Demo Body */}
+			<div className="flex-1 min-h-0">
+				{scene.demoId === "trust-problem" ? <TrustProblemDemo /> : null}
+				{scene.demoId === "shared-ledger" ? <SharedLedgerDemo /> : null}
+				{scene.demoId === "hash" ? <HashDemo /> : null}
+				{scene.demoId === "integrity" ? <IntegrityLab /> : null}
+				{scene.demoId === "consensus-flow" ? <ConsensusFlowDemo /> : null}
+				{scene.demoId === "smart-contract" ? <SmartContractDemo /> : null}
+				{scene.demoId === "supply-chain" ? <SupplyChainJourney /> : null}
+				{scene.demoId === "enterprise-arch-flow" ? <EnterpriseArchFlowDemo /> : null}
+				{scene.demoId === "decision-tree" ? <DecisionTreeDemo /> : null}
+				{scene.demoId === "ecosystem-radial" ? <EcosystemRadialDemo /> : null}
+				{scene.demoId === "web-evolution" ? <WebEvolutionDemo /> : null}
+				{scene.demoId === "signature" ? <SignatureDemo /> : null}
+				{scene.demoId === "ai-convergence" ? <AiConvergenceDemo /> : null}
+				{scene.demoId === "industry-reality" ? <IndustryRealityDemo /> : null}
+				{scene.demoId === "qr-takeaway" ? <QrTakeawayDemo /> : null}
+			</div>
 
-			{scene.demoId === "trust-problem" ? <TrustProblemDemo /> : null}
-			{scene.demoId === "shared-ledger" ? <SharedLedgerDemo /> : null}
-			{scene.demoId === "hash" ? <HashDemo /> : null}
-			{scene.demoId === "integrity" ? <IntegrityLab /> : null}
-			{scene.demoId === "consensus-flow" ? <ConsensusFlowDemo /> : null}
-			{scene.demoId === "smart-contract" ? <SmartContractDemo /> : null}
-			{scene.demoId === "supply-chain" ? <SupplyChainJourney /> : null}
-			{scene.demoId === "enterprise-arch-flow" ? <EnterpriseArchFlowDemo /> : null}
-			{scene.demoId === "decision-tree" ? <DecisionTreeDemo /> : null}
-			{scene.demoId === "ecosystem-radial" ? <EcosystemRadialDemo /> : null}
-			{scene.demoId === "web-evolution" ? <WebEvolutionDemo /> : null}
-			{scene.demoId === "signature" ? <SignatureDemo /> : null}
-			{scene.demoId === "ai-convergence" ? <AiConvergenceDemo /> : null}
-			{scene.demoId === "industry-reality" ? <IndustryRealityDemo /> : null}
-			{scene.demoId === "qr-takeaway" ? <QrTakeawayDemo /> : null}
+			{/* Subtle Bottom Steps Guide */}
+			<div className="mt-2.5 flex items-center justify-between font-mono text-[10px] uppercase text-zinc-500">
+				<span className="flex items-center gap-2">
+					<span className="size-1.5 rounded-full bg-amber-400" />
+					Flow: {guide.join(" → ")}
+				</span>
+				<span className="hidden sm:inline">Interactive Classroom Mode</span>
+			</div>
 		</div>
 	);
 }
@@ -317,7 +322,7 @@ const demoGuides: Record<Extract<LectureScene, { kind: "demo" }>["demoId"], read
 	signature: ["Sign the original", "Edit the message", "Verify again"],
 	"ai-convergence": ["Give the intent", "Scope authority", "Settle and prove"],
 	"industry-reality": ["Choose a sector", "Inspect the maturity", "Challenge the claim"],
-	"qr-takeaway": ["Scan mobile QR code", "Open live lecture on phone", "Break blockchain independently"],
+	"qr-takeaway": ["Scan mobile QR code", "Open live lecture on phone", "Connect on LinkedIn"],
 };
 
 export function SceneRenderer({ scene, sources }: { scene: LectureScene; sources: LectureSource[] }) {
