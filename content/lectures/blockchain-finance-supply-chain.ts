@@ -14,7 +14,7 @@ export const blockchainLecture: Lecture = {
 	description:
 		"A research-backed 60-minute interactive lecture that builds blockchain from first principles, tests it in the browser, examines documented industry systems, and frames a responsible 2030 outlook.",
 	audience: "BCA 1st Year · Kristu Jayanti University, Bengaluru",
-	presenter: "Manoj Mukherjee · Founder · Enterprise AI Architect",
+	presenter: "Manoj Mukherjee · Founder & AI Scientist @ NammaGuide · Enterprise AI Architect",
 	totalMinutes: 60,
 	sources: [
 		{
@@ -191,20 +191,26 @@ export const blockchainLecture: Lecture = {
 		{
 			id: "opening",
 			kind: "hero",
+			variant: "founder",
 			section: "hook",
-			sectionLabel: "00 · The Keynote Hook",
+			sectionLabel: "00 · Founder Introduction",
 			durationSeconds: 60,
-			eyebrow: "Kristu Jayanti University · Bengaluru · BCA Year 1",
-			title: "Blockchain Applications",
-			lines: ["FINANCE", "SUPPLY CHAIN", "& BEYOND"],
-			callout: "Manoj Mukherjee · Founder · Enterprise AI Architect",
-			image: {
-				src: "/images/lectures/blockchain-ai-network.webp",
-				alt: "Distributed interconnected cryptographic nodes with an AI agent intelligence layer",
-				preload: true,
+			eyebrow: "Future Systems Keynote · Bengaluru · 2026",
+			title: "Blockchain applications in finance, supply chain and beyond",
+			headlineLines: [
+				"Blockchain applications",
+				"in finance, supply chain",
+				"and beyond",
+			],
+			speaker: {
+				name: "Manoj Mukherjee",
+				role: "Founder & AI Scientist @ NammaGuide",
+				summary: "Enterprise AI Architect · 10+ years building production-grade platforms and intelligent systems.",
 			},
+			lines: ["Agentic AI", "Multi-Agent Systems", "AI Platform Engineering"],
+			callout: "Build it · break it · decide where it belongs",
 			notes: notes(
-				"Good afternoon. For the next hour, we will treat blockchain as an engineering decision—not a coin-price story. We will build a small chain in this browser, change its data, inspect the failure, and then compare that model with documented systems in finance, government, and supply chains. By the end, you should know where a ledger earns its complexity and where a database is the better answer.",
+				"Good afternoon. I am Manoj Mukherjee, Founder and AI Scientist at NammaGuide, and an Enterprise AI Architect. For more than ten years, I have worked across enterprise platforms, cloud-native systems, and production AI. Today I want to bring that systems perspective to blockchain. We will build a small chain in this browser, break it, inspect why it failed, and use real industry evidence to decide where this architecture belongs—and where it does not.",
 				"Begin with a familiar payment and ask what digital trust actually requires.",
 			),
 		},

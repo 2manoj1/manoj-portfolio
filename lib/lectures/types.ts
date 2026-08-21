@@ -51,6 +51,13 @@ type SceneBase = {
 
 export type HeroScene = SceneBase & {
 	kind: "hero";
+	variant?: "default" | "founder";
+	headlineLines?: string[];
+	speaker?: {
+		name: string;
+		role: string;
+		summary: string;
+	};
 	lines?: string[];
 	callout?: string;
 };

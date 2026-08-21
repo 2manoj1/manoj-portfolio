@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, ExternalLink, FlaskConical, MonitorPlay, ImageIcon, Sparkles, Layers, Maximize2, X } from "lucide-react";
 import { ArchitectureDiagram } from "@/components/lectures/diagrams/architecture-diagram";
+import { FounderOpening } from "@/components/lectures/founder-opening";
 import { InteractiveFlow } from "@/components/lectures/interactive-flow";
 import { InteractiveQuestion } from "@/components/lectures/interactive-question";
 import type {
@@ -122,6 +123,10 @@ function FullscreenLightbox({ src, alt, onClose }: { src: string; alt: string; o
 }
 
 function Hero({ scene }: { scene: HeroScene }) {
+	if (scene.variant === "founder") {
+		return <FounderOpening scene={scene} />;
+	}
+
 	return (
 		<div className="relative flex min-h-full flex-col items-center justify-center overflow-hidden rounded-3xl text-center py-6">
 			{scene.image ? (
