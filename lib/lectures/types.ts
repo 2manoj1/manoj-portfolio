@@ -94,6 +94,7 @@ export type QuestionScene = SceneBase & {
 	options: string[];
 	correctIndex: number;
 	explanation: string;
+	stats?: number[];
 };
 
 export type DiagramScene = SceneBase & {
