@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Plus, RotateCcw, ShieldAlert, ShieldCheck, Wrench } from "lucide-react";
+import { Plus, RotateCcw, ShieldCheck, Zap, AlertOctagon } from "lucide-react";
 import {
 	buildBlock,
 	type BlockVerification,
@@ -13,21 +13,21 @@ const INITIAL_BLOCKS: DemoBlock[] = [
 	{
 		index: 1,
 		timestamp: "2026-08-21T09:00:00.000Z",
-		transaction: "Manufacturer created medicine batch PCM-001",
+		transaction: "PharmaCorp created Batch PCM-001 (Paracetamol 500mg)",
 		previousHash: "0".repeat(64),
 		hash: "9cbf6e03cddd058882ee5897fa6949986bb90ed06a3b33671d97c34ef16e3add",
 	},
 	{
 		index: 2,
 		timestamp: "2026-08-21T09:05:00.000Z",
-		transaction: "Distributor received PCM-001 · Quantity: 100",
+		transaction: "Distributor received Batch PCM-001 · Quantity: 100 boxes",
 		previousHash: "9cbf6e03cddd058882ee5897fa6949986bb90ed06a3b33671d97c34ef16e3add",
 		hash: "ed604c9b2dacc7145cebc2c7d27b15325609f4eafe25195ff2127bf5e6d32fc5",
 	},
 	{
 		index: 3,
 		timestamp: "2026-08-21T09:15:00.000Z",
-		transaction: "Hospital received PCM-001",
+		transaction: "Hospital Clinic received Batch PCM-001 for patient care",
 		previousHash: "ed604c9b2dacc7145cebc2c7d27b15325609f4eafe25195ff2127bf5e6d32fc5",
 		hash: "d97bc83061f67d64ee4308121a35358fcec617375ed71c04d9ca1d44d47c9aee",
 	},
@@ -84,7 +84,7 @@ export default function IntegrityLab() {
 	};
 
 	const addBlock = async () => {
-		if (!draft.trim() || blocks.length >= 6) return;
+		if (!draft.trim() || blocks.length >= 5) return;
 		const operation = ++operationRef.current;
 		setStatus("working");
 		try {
@@ -112,54 +112,142 @@ export default function IntegrityLab() {
 
 	return (
 		<div className="mx-auto w-full max-w-7xl">
-			<div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/30 p-3">
-				<div className="flex items-center gap-2 px-2" role={chainValid ? "status" : "alert"}>
-					{chainValid ? <ShieldCheck className="size-5 text-emerald-300" /> : <ShieldAlert className="size-5 text-rose-300" />}
-					<span className={`font-mono text-sm font-semibold ${chainValid ? "text-emerald-200" : "text-rose-200"}`}>
-						INTEGRITY {chainValid ? "VERIFIED" : "FAILED"}
-					</span>
+			{/* Top Control Header */}
+			<div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-white/15 bg-black/40 p-4 backdrop-blur-md">
+				<div className="flex items-center gap-3 px-2">
+					<div className={`grid size-10 place-items-center rounded-2xl ${chainValid ? "bg-emerald-500/20 text-emerald-300" : "bg-rose-500/20 text-rose-300"}`}>
+						{chainValid ? <ShieldCheck className="size-6" /> : <AlertOctagon className="size-6" />}
+					</div>
+					<div>
+						<span className={`font-mono text-sm font-bold ${chainValid ? "text-emerald-300" : "text-rose-300"}`}>
+							{chainValid ? "CHAIN INTEGRITY: VERIFIED ✓" : "TRUST BROKEN: INTEGRITY FAILED ✗"}
+						</span>
+						<p className="text-xs text-zinc-400">
+							{chainValid ? "Every stored hash matches block data and previous link pointers." : "Block #2 was secretly modified. Hashes no longer match!"}
+						</p>
+					</div>
 				</div>
+
 				<div className="flex flex-wrap gap-2">
-					<button type="button" onClick={tamper} disabled={status === "working" || !chainValid} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-rose-700 px-4 text-sm font-semibold text-white transition hover:bg-rose-600 disabled:opacity-40">
-						<Wrench className="size-4" /> Tamper with block
+					<button
+						type="button"
+						onClick={tamper}
+						disabled={status === "working" || !chainValid}
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-rose-600 px-5 font-display text-sm font-bold text-white transition hover:bg-rose-500 disabled:opacity-40 shadow-lg shadow-rose-950/50">
+						<Zap className="size-4" /> ⚡ TAMPER WITH BLOCK #2
 					</button>
-					<button type="button" onClick={reset} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/15 px-4 text-sm text-zinc-200 hover:border-white/30">
-						<RotateCcw className="size-4" /> Restore / reset
+					<button
+						type="button"
+						onClick={reset}
+						className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 font-display text-sm font-bold text-zinc-200 transition hover:border-emerald-400 hover:text-emerald-300">
+						<RotateCcw className="size-4" /> RESTORE / REPAIR CHAIN
 					</button>
 				</div>
 			</div>
 
-			<ol className="mt-4 grid gap-3 lg:grid-cols-3">
+			{/* Interactive Blocks Pipeline with visual connectors */}
+			<div className="mt-5 grid gap-4 lg:grid-cols-3">
 				{blocks.map((block, index) => {
 					const check = checks[index];
 					const valid = check?.chainValidThroughHere ?? false;
+					const isTamperedBlock = check && !check.hashMatches;
+					const isDownstreamBroken = check && check.hashMatches && !check.chainValidThroughHere;
+
 					return (
-						<li key={`${block.index}-${block.hash}`} className={`relative min-w-0 rounded-2xl border p-4 ${valid ? "border-emerald-400/30 bg-emerald-400/[0.04]" : "border-rose-400/50 bg-rose-400/[0.07]"}`}>
-							<div className="flex items-center justify-between gap-3">
-								<span className="font-mono text-xs uppercase text-zinc-500">Block #{block.index}</span>
-								<span className={`size-2.5 rounded-full ${valid ? "bg-emerald-300" : "bg-rose-300"}`} />
+						<div
+							key={`${block.index}-${block.hash}`}
+							className={`relative flex flex-col justify-between rounded-3xl border p-5 transition-all duration-300 ${
+								valid
+									? "border-emerald-500/40 bg-emerald-950/20 shadow-[0_0_40px_rgba(52,211,153,0.1)]"
+									: isTamperedBlock
+										? "border-rose-500 bg-rose-950/35 shadow-[0_0_50px_rgba(244,63,94,0.25)] ring-2 ring-rose-500/50"
+										: "border-rose-500/60 bg-rose-950/20 shadow-[0_0_40px_rgba(244,63,94,0.15)]"
+							}`}>
+							{/* Header */}
+							<div>
+								<div className="flex items-center justify-between border-b border-white/10 pb-3">
+									<div className="flex items-center gap-2">
+										<span className={`grid size-6 place-items-center rounded-lg font-mono text-xs font-bold ${
+											valid ? "bg-emerald-400/20 text-emerald-300" : "bg-rose-500/20 text-rose-300"
+										}`}>
+											#{block.index}
+										</span>
+										<span className="font-display text-sm font-semibold text-white">BLOCK #{block.index}</span>
+									</div>
+									<span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase font-bold ${
+										valid ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-rose-500/20 text-rose-300 border border-rose-500/40"
+									}`}>
+										{valid ? "VALID" : "INVALID"}
+									</span>
+								</div>
+
+								{/* Transaction Payload */}
+								<div className="mt-4 rounded-2xl border border-white/10 bg-black/40 p-3.5">
+									<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Transaction Payload</p>
+									<p className={`mt-1.5 text-sm font-medium leading-relaxed ${
+										isTamperedBlock ? "text-rose-200 font-bold" : "text-zinc-100"
+									}`}>
+										{block.transaction}
+									</p>
+								</div>
+
+								{/* Hashes */}
+								<dl className="mt-4 space-y-2 rounded-2xl border border-white/5 bg-black/25 p-3.5 font-mono text-[11px]">
+									<div>
+										<dt className="text-[10px] uppercase tracking-wider text-zinc-500">PREV HASH:</dt>
+										<dd className="mt-0.5 break-all text-zinc-400">{shortHash(block.previousHash)}</dd>
+									</div>
+									<div className="border-t border-white/5 pt-2">
+										<dt className="text-[10px] uppercase tracking-wider text-zinc-500">STORED HASH:</dt>
+										<dd className={`mt-0.5 break-all ${isTamperedBlock ? "text-rose-400 line-through" : "text-emerald-300"}`}>
+											{shortHash(block.hash)}
+										</dd>
+									</div>
+									{check && !check.hashMatches && (
+										<div className="border-t border-rose-500/20 pt-2 text-rose-300">
+											<dt className="text-[10px] uppercase tracking-wider font-bold text-rose-400">CALCULATED HASH:</dt>
+											<dd className="mt-0.5 break-all font-bold">{shortHash(check.calculatedHash)}</dd>
+										</div>
+									)}
+								</dl>
 							</div>
-							<p className="mt-4 min-h-14 text-sm leading-6 text-zinc-100">{block.transaction}</p>
-							<dl className="mt-4 space-y-2 font-mono text-[10px] leading-5 text-zinc-500">
-								<div><dt className="inline text-zinc-600">PREV </dt><dd className="inline break-all">{shortHash(block.previousHash)}</dd></div>
-								<div><dt className="inline text-zinc-600">STORED </dt><dd className="inline break-all">{shortHash(block.hash)}</dd></div>
-								{check && !check.hashMatches ? <div className="text-rose-300"><dt className="inline">CALCULATED </dt><dd className="inline">{shortHash(check.calculatedHash)}</dd></div> : null}
-							</dl>
-							{check && !check.hashMatches ? <p className="mt-3 text-xs font-semibold text-rose-300">Stored hash no longer matches data.</p> : null}
-							{check && check.hashMatches && !check.linkMatches ? <p className="mt-3 text-xs font-semibold text-rose-300">Previous link is broken.</p> : null}
-							{check && check.hashMatches && check.linkMatches && !check.chainValidThroughHere ? <p className="mt-3 text-xs font-semibold text-amber-300">Downstream trust is invalid.</p> : null}
-						</li>
+
+							{/* Failure explanation banner inside block */}
+							{isTamperedBlock ? (
+								<div className="mt-4 rounded-xl border border-rose-500/40 bg-rose-950/40 p-2.5 text-center font-mono text-[10px] font-bold text-rose-300">
+									❌ TAMPER DETECTED: Data changed without recalculating hash!
+								</div>
+							) : isDownstreamBroken ? (
+								<div className="mt-4 rounded-xl border border-rose-500/30 bg-rose-950/30 p-2.5 text-center font-mono text-[10px] text-rose-300">
+									⚠️ LINK BROKEN: Points to old un-tampered hash
+								</div>
+							) : (
+								<div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-2 text-center font-mono text-[10px] text-emerald-300">
+									✓ Cryptographic Link Verified
+								</div>
+							)}
+						</div>
 					);
 				})}
-			</ol>
+			</div>
 
-			<div className="mt-4 flex flex-col gap-2 sm:flex-row">
-				<input value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={100} placeholder="Add a new transaction" className="min-h-11 flex-1 rounded-xl border border-white/15 bg-black/30 px-4 text-sm text-white outline-none focus:border-amber-300/60" />
-				<button type="button" onClick={() => void addBlock()} disabled={status === "working" || !draft.trim() || blocks.length >= 6 || !chainValid} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-amber-400 px-5 text-sm font-semibold text-zinc-950 disabled:opacity-40">
-					<Plus className="size-4" /> Add linked block
+			{/* Add Block Form */}
+			<div className="mt-5 flex flex-col gap-2 sm:flex-row">
+				<input
+					value={draft}
+					onChange={(event) => setDraft(event.target.value)}
+					maxLength={100}
+					placeholder="Append a new verified transaction event..."
+					className="min-h-12 flex-1 rounded-2xl border border-white/15 bg-black/40 px-5 text-sm text-white outline-none focus:border-amber-400"
+				/>
+				<button
+					type="button"
+					onClick={() => void addBlock()}
+					disabled={status === "working" || !draft.trim() || blocks.length >= 5 || !chainValid}
+					className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-amber-400 px-6 font-display text-sm font-bold text-zinc-950 transition hover:bg-amber-300 disabled:opacity-40 shadow-lg shadow-amber-950/40">
+					<Plus className="size-4 stroke-[3]" /> Add Block #{blocks.length + 1}
 				</button>
 			</div>
-			{status === "error" ? <p className="mt-3 text-sm text-rose-300">Web Crypto failed. Reset and retry in a modern secure browser.</p> : null}
 		</div>
 	);
 }

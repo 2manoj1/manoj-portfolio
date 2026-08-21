@@ -15,7 +15,6 @@ import {
 import { SceneRenderer } from "@/components/lectures/scene-renderer";
 import { SessionTimer } from "@/components/lectures/session-timer";
 import type { Lecture } from "@/lib/lectures/types";
-import styles from "@/components/lectures/lecture-stage.module.css";
 
 type RuntimeState = {
 	sceneIndex: number;
@@ -69,7 +68,7 @@ function isInteractiveTarget(target: EventTarget | null) {
 	if (!(target instanceof Element)) return false;
 	return Boolean(
 		target.closest(
-			'input, textarea, select, button, a, [contenteditable="true"], [role="button"]',
+			'input, textarea, select, button, a, [contenteditable="true"], [role="button"], .react-flow',
 		),
 	);
 }
@@ -212,80 +211,225 @@ export function LectureRuntime({ lecture }: { lecture: Lecture }) {
 	return (
 		<section
 			ref={shellRef}
-			className={`dark relative flex h-dvh min-h-0 w-full flex-col overflow-hidden text-white ${styles.stage}`}
+			className="dark relative flex h-dvh min-h-0 w-full flex-col overflow-hidden text-white lecture-stage"
 			aria-label={lecture.title}
 			onPointerDown={handlePointerDown}
 			onPointerUp={handlePointerUp}>
-			<div className={`pointer-events-none absolute inset-0 opacity-45 ${styles.grid}`} />
+			<div className="pointer-events-none absolute inset-0 opacity-40 lecture-grid" />
 
+			{/* Header Stage Navigation */}
 			<header className="relative z-10 flex min-h-14 items-center justify-between gap-3 border-b border-white/10 px-3 sm:px-5">
 				<div className="flex min-w-0 items-center gap-3">
-					<Link href="/lectures" className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 text-zinc-400 transition hover:border-white/30 hover:text-white" aria-label="Exit lecture">
+					<Link
+						href="/lectures"
+						className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 text-zinc-400 transition hover:border-white/30 hover:text-white"
+						aria-label="Exit lecture">
 						<X className="size-4" />
 					</Link>
 					<div className="min-w-0">
-						<p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">{scene.sectionLabel}</p>
-						<p className="truncate text-xs text-zinc-500 sm:text-sm">{lecture.shortTitle}</p>
+						<p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+							{scene.sectionLabel}
+						</p>
+						<p className="truncate text-xs text-zinc-400 sm:text-sm font-semibold">{lecture.shortTitle}</p>
 					</div>
 				</div>
 				<div className="flex items-center gap-3">
-					{state.timerVisible ? <SessionTimer key={state.timerKey} targetSeconds={cumulativeTargetSeconds} /> : null}
-					<span className="font-mono text-xs tabular-nums text-zinc-500">{String(state.sceneIndex + 1).padStart(2, "0")} / {lecture.scenes.length}</span>
+					{state.timerVisible ? (
+						<SessionTimer key={state.timerKey} targetSeconds={cumulativeTargetSeconds} />
+					) : null}
+					<span className="font-mono text-xs tabular-nums text-zinc-400">
+						{String(state.sceneIndex + 1).padStart(2, "0")} / {lecture.scenes.length}
+					</span>
 				</div>
 			</header>
 
+			{/* Progress Indicator */}
 			<div className="relative z-10 h-1 bg-white/[0.05]" aria-hidden="true">
-				<div className="h-full bg-amber-300 transition-[width] duration-300" style={{ width: `${progress}%` }} />
+				<div
+					className="h-full bg-amber-400 transition-[width] duration-300"
+					style={{ width: `${progress}%` }}
+				/>
 			</div>
 
-			<div ref={stageRef} tabIndex={-1} role="region" className="relative z-10 min-h-0 flex-1 overflow-y-auto px-4 py-5 outline-none sm:px-7 md:py-7" aria-label={`${scene.sectionLabel}: ${scene.title}`}>
-				<div key={scene.id} className={`mx-auto h-full min-h-[32rem] w-full max-w-[1600px] ${styles.scene}`}>
+			{/* Dynamic Stage Body */}
+			<div
+				ref={stageRef}
+				tabIndex={-1}
+				role="region"
+				className="relative z-10 min-h-0 flex-1 overflow-y-auto px-4 py-5 outline-none sm:px-7 md:py-6"
+				aria-label={`${scene.sectionLabel}: ${scene.title}`}>
+				<div key={scene.id} className="mx-auto h-full min-h-[32rem] w-full max-w-[1600px] lecture-scene">
 					<SceneRenderer scene={scene} sources={lecture.sources} />
 				</div>
 			</div>
 
-			<footer className="relative z-20 flex min-h-16 items-center justify-between gap-3 border-t border-white/10 bg-black/30 px-3 backdrop-blur-sm sm:px-5">
+			{/* Footer Presenter Bar */}
+			<footer className="relative z-20 flex min-h-16 items-center justify-between gap-3 border-t border-white/10 bg-black/40 px-3 backdrop-blur-md sm:px-5">
 				<div className="flex items-center gap-2">
-					<button type="button" onClick={previous} disabled={state.sceneIndex === 0} className="grid size-10 place-items-center rounded-full border border-white/15 text-zinc-300 transition hover:border-white/30 hover:text-white disabled:opacity-30" aria-label="Previous scene"><ChevronLeft className="size-5" /></button>
-					<button type="button" onClick={next} disabled={state.sceneIndex === lecture.scenes.length - 1} className="inline-flex min-h-10 items-center gap-2 rounded-full bg-amber-300 px-4 text-sm font-semibold text-zinc-950 transition hover:bg-amber-200 disabled:opacity-30">
+					<button
+						type="button"
+						onClick={previous}
+						disabled={state.sceneIndex === 0}
+						className="grid size-10 place-items-center rounded-full border border-white/15 text-zinc-300 transition hover:border-white/30 hover:text-white disabled:opacity-30"
+						aria-label="Previous scene">
+						<ChevronLeft className="size-5" />
+					</button>
+					<button
+						type="button"
+						onClick={next}
+						disabled={state.sceneIndex === lecture.scenes.length - 1}
+						className="inline-flex min-h-10 items-center gap-2 rounded-full bg-amber-400 px-5 text-sm font-bold text-zinc-950 transition hover:bg-amber-300 disabled:opacity-30 shadow-lg shadow-amber-950/30">
 						Next scene <ChevronRight className="size-4" />
 					</button>
 				</div>
 				<div className="hidden min-w-0 items-center gap-2 md:flex">
-					{sceneSources.length ? <span className="truncate font-mono text-[10px] uppercase tracking-wider text-zinc-600">{sceneSources.length} verified source{sceneSources.length === 1 ? "" : "s"}</span> : null}
+					{sceneSources.length ? (
+						<span className="truncate font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+							{sceneSources.length} verified source{sceneSources.length === 1 ? "" : "s"}
+						</span>
+					) : null}
 					<span className="h-4 w-px bg-white/10" />
-					<span className="font-mono text-[10px] uppercase tracking-wider text-zinc-600">← → · Space · F · T · P · D</span>
+					<span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+						← → · Space · F · T · P · D
+					</span>
 				</div>
 				<div className="flex items-center gap-1">
-					<button type="button" onClick={() => dispatch({ type: "toggle-timer" })} className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white" aria-label="Toggle timer"><Timer className="size-4" /></button>
-					<button type="button" onClick={() => dispatch({ type: "toggle-notes" })} className={`grid size-10 place-items-center rounded-full hover:bg-white/[0.06] hover:text-white ${state.notesVisible ? "text-amber-200" : "text-zinc-400"}`} aria-label="Toggle presenter notes"><BookOpen className="size-4" /></button>
-					<button type="button" onClick={() => void toggleFullscreen()} className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white" aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}>{isFullscreen ? <Minimize className="size-4" /> : <Expand className="size-4" />}</button>
-					<button type="button" onClick={() => dispatch({ type: "restart" })} className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white" aria-label="Restart lecture"><RotateCcw className="size-4" /></button>
+					<button
+						type="button"
+						onClick={() => dispatch({ type: "toggle-timer" })}
+						className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white"
+						aria-label="Toggle timer">
+						<Timer className="size-4" />
+					</button>
+					<button
+						type="button"
+						onClick={() => dispatch({ type: "toggle-notes" })}
+						className={`grid size-10 place-items-center rounded-full hover:bg-white/[0.06] hover:text-white ${
+							state.notesVisible ? "text-amber-300 bg-white/10" : "text-zinc-400"
+						}`}
+						aria-label="Toggle presenter notes">
+						<BookOpen className="size-4" />
+					</button>
+					<button
+						type="button"
+						onClick={() => void toggleFullscreen()}
+						className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white"
+						aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}>
+						{isFullscreen ? <Minimize className="size-4" /> : <Expand className="size-4" />}
+					</button>
+					<button
+						type="button"
+						onClick={() => dispatch({ type: "restart" })}
+						className="grid size-10 place-items-center rounded-full text-zinc-400 hover:bg-white/[0.06] hover:text-white"
+						aria-label="Restart lecture">
+						<RotateCcw className="size-4" />
+					</button>
 				</div>
 			</footer>
 
+			{/* Presenter Notes Drawer */}
 			{state.notesVisible ? (
-				<aside className="absolute inset-y-0 right-0 z-40 w-full max-w-md overflow-y-auto border-l border-white/15 bg-zinc-950/98 p-6 shadow-2xl" aria-label="Presenter notes">
+				<aside
+					className="absolute inset-y-0 right-0 z-40 w-full max-w-md overflow-y-auto border-l border-white/15 bg-zinc-950/98 p-6 shadow-2xl backdrop-blur-xl"
+					aria-label="Presenter notes">
 					<div className="flex items-center justify-between gap-4">
-						<div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300">Presenter mode</p><p className="mt-1 text-xs text-rose-300">Visible in this presentation window</p></div>
-						<button type="button" onClick={() => dispatch({ type: "toggle-notes" })} className="grid size-9 place-items-center rounded-full border border-white/15 text-zinc-400 hover:text-white" aria-label="Close presenter notes"><X className="size-4" /></button>
+						<div>
+							<p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300">
+								Presenter Mode
+							</p>
+							<p className="mt-0.5 text-xs text-amber-200/80">Speaker Guidance for Manoj</p>
+						</div>
+						<button
+							type="button"
+							onClick={() => dispatch({ type: "toggle-notes" })}
+							className="grid size-9 place-items-center rounded-full border border-white/15 text-zinc-400 hover:text-white"
+							aria-label="Close presenter notes">
+							<X className="size-4" />
+						</button>
 					</div>
-					<p className="mt-8 font-mono text-xs uppercase text-zinc-500">Current scene · {state.sceneIndex + 1}</p>
-					<h2 className="mt-2 text-2xl font-semibold text-white">{scene.title}</h2>
-					<div className="mt-6 space-y-5 text-sm leading-7 text-zinc-300">
-						<div><p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Say</p><p className="mt-1">{scene.notes.say}</p></div>
-						{scene.notes.ask ? <div><p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Ask</p><p className="mt-1">{scene.notes.ask}</p></div> : null}
-						{scene.notes.expected ? <div><p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Expected</p><p className="mt-1">{scene.notes.expected}</p></div> : null}
-						<div><p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Transition</p><p className="mt-1">{scene.notes.transition}</p></div>
+
+					<p className="mt-6 font-mono text-xs uppercase text-zinc-500">
+						Scene {state.sceneIndex + 1} of {lecture.scenes.length}
+					</p>
+					<h2 className="mt-1 font-display text-2xl font-semibold text-white">{scene.title}</h2>
+
+					<div className="mt-6 space-y-5 text-sm leading-relaxed text-zinc-300">
+						<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+							<p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">What to Say</p>
+							<p className="mt-1.5 text-zinc-200">{scene.notes.say}</p>
+						</div>
+
+						{scene.notes.ask ? (
+							<div className="rounded-2xl border border-amber-400/20 bg-amber-400/5 p-4">
+								<p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">
+									Interactive Question to Class
+								</p>
+								<p className="mt-1.5 text-amber-100 font-semibold">{scene.notes.ask}</p>
+							</div>
+						) : null}
+
+						{scene.notes.expected ? (
+							<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+								<p className="font-mono text-[10px] uppercase tracking-wider text-emerald-300">
+									Expected Response & Discovery
+								</p>
+								<p className="mt-1.5 text-zinc-300">{scene.notes.expected}</p>
+							</div>
+						) : null}
+
+						<div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+							<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+								Transition to Next Concept
+							</p>
+							<p className="mt-1.5 text-zinc-300">{scene.notes.transition}</p>
+						</div>
 					</div>
-					{sceneSources.length ? <div className="mt-8 border-t border-white/10 pt-6"><p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">Verified sources</p><div className="mt-3 space-y-3">{sceneSources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer" className="block rounded-xl border border-white/10 p-3 text-xs leading-5 text-zinc-400 hover:border-amber-300/40 hover:text-white"><span className={`mr-2 uppercase ${statusClassForNotes(source.status)}`}>{source.status}</span>{source.publisher} · {source.label}</a>)}</div></div> : null}
-					{nextScene ? <div className="mt-8 border-t border-white/10 pt-6"><p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">Next scene</p><p className="mt-2 text-lg text-zinc-200">{nextScene.title}</p></div> : null}
+
+					{sceneSources.length ? (
+						<div className="mt-6 border-t border-white/10 pt-5">
+							<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+								Verified Academic & Industry Citations
+							</p>
+							<div className="mt-3 space-y-2">
+								{sceneSources.map((source) => (
+									<a
+										key={source.id}
+										href={source.url}
+										target="_blank"
+										rel="noreferrer"
+										className="block rounded-xl border border-white/10 p-3 text-xs leading-5 text-zinc-400 hover:border-amber-300/40 hover:text-white">
+										<span className={`mr-2 uppercase font-mono text-[9px] ${statusClassForNotes(source.status)}`}>
+											[{source.status}]
+										</span>
+										{source.publisher} · {source.label}
+									</a>
+								))}
+							</div>
+						</div>
+					) : null}
+
+					{nextScene ? (
+						<div className="mt-6 border-t border-white/10 pt-5">
+							<p className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+								Next Up: Scene {state.sceneIndex + 2}
+							</p>
+							<p className="mt-1 text-base font-semibold text-zinc-200">{nextScene.title}</p>
+						</div>
+					) : null}
 				</aside>
 			) : null}
 
-			<div className="sr-only" aria-live="polite">Scene {state.sceneIndex + 1}: {scene.title}</div>
-			{fullscreenMessage ? <div className="absolute bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-amber-300/30 bg-zinc-950 px-4 py-2 text-sm text-amber-100" role="status">{fullscreenMessage}</div> : null}
-	</section>
+			<div className="sr-only" aria-live="polite">
+				Scene {state.sceneIndex + 1}: {scene.title}
+			</div>
+			{fullscreenMessage ? (
+				<div
+					className="absolute bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-amber-300/30 bg-zinc-950 px-4 py-2 text-sm text-amber-100"
+					role="status">
+					{fullscreenMessage}
+				</div>
+			) : null}
+		</section>
 	);
 }
 

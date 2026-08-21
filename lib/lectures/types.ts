@@ -71,7 +71,7 @@ export type FlowScene = SceneBase & {
 
 export type CardsScene = SceneBase & {
 	kind: "cards";
-	items: Array<{ title: string; detail: string; status?: string }>;
+	items: Array<{ title: string; detail: string; status?: string; tag?: string }>;
 	callout?: string;
 };
 
@@ -87,26 +87,38 @@ export type QuestionScene = SceneBase & {
 	options: string[];
 	correctIndex: number;
 	explanation: string;
+	stats?: number[];
 };
 
 export type DiagramScene = SceneBase & {
 	kind: "diagram";
-	diagramId: "block-anatomy" | "chain-links" | "consensus-network";
+	diagramId:
+		| "block-anatomy"
+		| "chain-links"
+		| "consensus-network"
+		| "branching-tree"
+		| "settlement-flow";
 	callout?: string;
 };
 
 export type DemoScene = SceneBase & {
 	kind: "demo";
 	demoId:
+		| "trust-problem"
 		| "shared-ledger"
 		| "hash"
 		| "integrity"
+		| "consensus-flow"
 		| "smart-contract"
 		| "supply-chain"
+		| "enterprise-arch-flow"
+		| "decision-tree"
+		| "ecosystem-radial"
 		| "web-evolution"
 		| "signature"
 		| "ai-convergence"
-		| "industry-reality";
+		| "industry-reality"
+		| "qr-takeaway";
 	callout?: string;
 };
 
