@@ -664,3 +664,165 @@
 .streamdown-code-clean [data-streamdown="code-block-header"] {
   display: none !important;
 }
+
+/* =========================================================================
+   2030 Lecture Studio Styling & React Flow Dark Theme
+   ========================================================================= */
+
+.lecture-stage {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(245, 158, 11, 0.16), transparent 38%),
+    radial-gradient(circle at 80% 85%, rgba(16, 185, 129, 0.11), transparent 36%),
+    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.06), transparent 55%),
+    #07080a;
+}
+
+.lecture-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 45%, transparent 88%);
+}
+
+.lecture-ambient-aura {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.08), transparent 40%);
+  transition: background 0.3s ease;
+}
+
+.lecture-scene {
+  animation: lectureSceneEnter 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lecture-glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lecture-glass-card:hover {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(251, 191, 36, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(245, 158, 11, 0.12);
+  transform: translateY(-2px);
+}
+
+.lecture-glass-card-amber {
+  background: rgba(245, 158, 11, 0.045);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 50px rgba(245, 158, 11, 0.1);
+}
+
+.lecture-glass-card-emerald {
+  background: rgba(16, 185, 129, 0.045);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.1);
+}
+
+.lecture-glass-card-rose {
+  background: rgba(244, 63, 94, 0.045);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  box-shadow: 0 0 50px rgba(244, 63, 94, 0.1);
+}
+
+.lecture-glow-amber {
+  box-shadow: 0 0 55px rgba(245, 158, 11, 0.22);
+}
+
+.lecture-glow-emerald {
+  box-shadow: 0 0 55px rgba(16, 185, 129, 0.22);
+}
+
+.lecture-glow-rose {
+  box-shadow: 0 0 55px rgba(244, 63, 94, 0.22);
+}
+
+.lecture-pulse-node {
+  animation: lectureNodePulse 2.4s ease-in-out infinite;
+}
+
+.lecture-float-slow {
+  animation: lectureFloat 6s ease-in-out infinite;
+}
+
+.lecture-shimmer-text {
+  background: linear-gradient(90deg, #ffffff 0%, #fde68a 50%, #ffffff 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: lectureShimmerText 4s linear infinite;
+}
+
+@keyframes lectureSceneEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.994);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes lectureNodePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(245, 158, 11, 0);
+  }
+}
+
+@keyframes lectureFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes lectureShimmerText {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* React Flow custom styling in dark mode */
+.react-flow__background {
+  background: transparent !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  border: 2px solid #07080a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lecture-scene,
+  .lecture-pulse-node,
+  .lecture-float-slow,
+  .lecture-shimmer-text {
+    animation: none;
+  }
+}
+

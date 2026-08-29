@@ -871,6 +871,7 @@ export const routes = [
   { href: "/engineering", label: "Engineering", priority: 1 },
   { href: "/engineering/ai-human", label: "AI & Human", priority: 1 },
   { href: "/architecture-lab", label: "Architecture Lab", priority: 1 },
+  { href: "/lectures", label: "Lectures", priority: 0.9 },
   { href: "/case-studies", label: "Case Studies", priority: 0.8 },
   { href: "/blog", label: "Blog", priority: 1 },
   { href: "/open-source", label: "Open Source", priority: 0.7 },

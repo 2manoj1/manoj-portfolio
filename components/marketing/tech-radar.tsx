@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { 
 	Radio, 
 	Compass, 
@@ -27,6 +27,7 @@ export function TechRadar() {
 	const [pan, setPan] = useState({ x: 0, y: 0 });
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [groupBy, setGroupBy] = useState<"ring" | "quadrant">("ring");
+	const [scrollRequest, setScrollRequest] = useState(0);
 
 	// Spotlight Hover states
 	const [hoveredRing, setHoveredRing] = useState<string | null>(null);
@@ -66,6 +67,12 @@ export function TechRadar() {
 			document.body.classList.remove("overflow-hidden");
 		};
 	}, [isFullscreen]);
+
+	useEffect(() => {
+		if (scrollRequest === 0) return;
+
+		inspectorRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+	}, [scrollRequest]);
 
 	// Convert polar coordinates to cartesian relative to SVG center (200, 200)
 	const getCoordinates = (radius: number, angle: number) => {
@@ -184,10 +191,9 @@ export function TechRadar() {
 		};
 		setPan(centers[item.quadrant]);
 
-		// Smooth scroll to inspector card on desktop/mobile
-		setTimeout(() => {
-			inspectorRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-		}, 100);
+
+		// Request a scroll after React commits the selected item update.
+		setScrollRequest((request) => request + 1);
 	};
 
 	// Calculate if point is filtered out (spotlight dimming)
@@ -770,7 +776,7 @@ export function TechRadar() {
 				</div>
  
 				{/* Pane B: ADR Inspector Technical Document */}
-				<div 
+				<div
 					ref={inspectorRef}
 					className="border border-zinc-200 dark:border-border/80 bg-zinc-50 dark:bg-zinc-900/10 rounded-xl p-5 md:p-6 space-y-4 max-h-[560px] overflow-y-auto scroll-mt-20"
 				>

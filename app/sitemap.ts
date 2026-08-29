@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { blogArticles } from "@/content/blog";
+import { lectures } from "@/content/lectures/catalog";
 import { caseStudies, routes, services, siteConfig } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -22,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 1.0,
   }));
+  const lectureRoutes = lectures.map((lecture) => ({
+    url: `${siteConfig.url}/lectures/${lecture.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
 
 
 	return [
@@ -34,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...serviceRoutes,
     ...blogRoutes,
 		...caseStudyRoutes,
+		...lectureRoutes,
 		{
 			url: `${siteConfig.url}/resume.pdf`,
 			lastModified: new Date("2026-07-15"),
